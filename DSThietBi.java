@@ -22,9 +22,11 @@ public class DSThietBi {
             System.out.println("Sai thoi gian bao hanh");
         }
     }
-    public void xoa(int intdex)
+    public void xoa(String maThietBi)
     {
-        dsThietBi.remove(intdex);
+        for(ThietBi i:dsThietBi)
+        if(i.getMaThietBi().equals(maThietBi))
+        dsThietBi.remove(i);
     }
     public void sua(String maThietBi, String tenThietBi, int thoiGianBaoHanh)
     {

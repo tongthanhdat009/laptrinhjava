@@ -16,8 +16,10 @@ public class DSThietBiCoSo
         ThietBiCoSo newThietBiCoSo = new ThietBiCoSo(maThietBi, maCoSo, ngayNhap);
         dsThietBiCoSo.add(newThietBiCoSo);
     }
-    public void xoa(int index)
+    public void xoa(String maThietBi, String maCoSo)
     {
-        dsThietBiCoSo.remove(index);
+        for(ThietBiCoSo i:dsThietBiCoSo)
+        if(i.getMaCoSo().equals(maCoSo)&&i.getMaThietBi().equals(maThietBi))
+        dsThietBiCoSo.remove(i);
     }
 }

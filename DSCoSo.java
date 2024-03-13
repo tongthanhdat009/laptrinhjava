@@ -22,9 +22,10 @@ public class DSCoSo implements Iterable<CoSo> {
             System.out.println("SDT khong hop le");
         }
     }
-    public void xoa(int index)
+    public void xoa(String maCoSo)
     {
-        dsCoSo.remove(index);
+        for(CoSo i:dsCoSo)
+        if(i.getMaCoSo().equals(maCoSo)) dsCoSo.remove(i);
     }
     public void sua(String maCoSo, String std, String diaChi)
     {

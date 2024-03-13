@@ -15,9 +15,9 @@ public class CoSo {
     }
     public CoSo(String diaChi, String std)
     {
+        setStd(std);
         maCoSo = String.valueOf(++soLuongCoSo);
         setDiaChi(diaChi);
-        setStd(std);
     }
     public String getDiaChi() {
         return diaChi;

@@ -26,12 +26,16 @@ public class DSThietBi {
     {
         dsThietBi.remove(intdex);
     }
-    public void sua(int index, String tenThietBi, int thoiGianBaoHanh)
+    public void sua(String maThietBi, String tenThietBi, int thoiGianBaoHanh)
     {
         try
         {
-            dsThietBi.get(index).setThoiGianBaoHanh(thoiGianBaoHanh);
-            dsThietBi.get(index).setTenThietBi(tenThietBi);
+            for(ThietBi i:dsThietBi)
+            if(i.getMaThietBi().equals(maThietBi))
+            {
+                i.setThoiGianBaoHanh(thoiGianBaoHanh);
+                i.setTenThietBi(tenThietBi);
+            }
         }
         catch (IllegalArgumentException e)
         {

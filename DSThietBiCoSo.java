@@ -20,10 +20,4 @@ public class DSThietBiCoSo
     {
         dsThietBiCoSo.remove(index);
     }
-    public void sua(int index, String maThietBi, String maCoSo, LocalDate ngayNhap)
-    {
-        dsThietBiCoSo.get(index).setMaCoSo(maCoSo);
-        dsThietBiCoSo.get(index).setMaThietBi(maThietBi);
-        dsThietBiCoSo.get(index).setNgayNhap(ngayNhap);
-    }
 }

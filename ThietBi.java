@@ -11,9 +11,9 @@ public class ThietBi {
     }
     public ThietBi(String tenThietBi, int thoiGianBaoHanh)
     {
+        setThoiGianBaoHanh(thoiGianBaoHanh);
         maThietBi = String.valueOf(++soLuongLoaiThietBi);
         setTenThietBi(tenThietBi);
-        setThoiGianBaoHanh(thoiGianBaoHanh);
     }
     public String getMaThietBi() {
         return maThietBi;

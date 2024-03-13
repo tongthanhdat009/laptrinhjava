@@ -26,12 +26,16 @@ public class DSCoSo implements Iterable<CoSo> {
     {
         dsCoSo.remove(index);
     }
-    public void sua(int index, String std, String diaChi)
+    public void sua(String maCoSo, String std, String diaChi)
     {
         try
         {
-            dsCoSo.get(index).setStd(std);
-            dsCoSo.get(index).setDiaChi(diaChi);
+            for(CoSo i:dsCoSo)
+            if(i.getMaCoSo().equals(maCoSo))
+            {
+                i.setStd(std);
+                i.setDiaChi(diaChi);
+            }
         }
         catch(IllegalArgumentException e) 
         {

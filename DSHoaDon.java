@@ -13,8 +13,7 @@ public class DSHoaDon {
     }
     public void them(String maHoiVien,String maCoSo,int tongTien, LocalDate ngayXuatHoaDon)
     {
-        HoaDon newHoaDon = new HoaDon(maHoiVien,maCoSo,tongTien,ngayXuatHoaDon);
-        dsHoaDon.add(newHoaDon);
+        dsHoaDon.add(new HoaDon(maHoiVien,maCoSo,tongTien,ngayXuatHoaDon));
     }
     public void xoa(String maHoaDon)
     {

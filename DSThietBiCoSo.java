@@ -13,8 +13,7 @@ public class DSThietBiCoSo
     }
     public void them(String maThietBi, String maCoSo, LocalDate ngayNhap)
     {
-        ThietBiCoSo newThietBiCoSo = new ThietBiCoSo(maThietBi, maCoSo, ngayNhap);
-        dsThietBiCoSo.add(newThietBiCoSo);
+        dsThietBiCoSo.add(new ThietBiCoSo(maThietBi, maCoSo, ngayNhap);
     }
     public void xoa(String maThietBi, String maCoSo)
     {

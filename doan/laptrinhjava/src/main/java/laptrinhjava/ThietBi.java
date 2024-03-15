@@ -1,3 +1,5 @@
+package laptrinhjava;
+
 public class ThietBi {
     private String maThietBi;
     private String tenThietBi;

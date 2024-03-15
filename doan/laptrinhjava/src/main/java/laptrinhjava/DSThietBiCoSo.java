@@ -1,3 +1,5 @@
+package laptrinhjava;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 public class DSThietBiCoSo
@@ -13,7 +15,7 @@ public class DSThietBiCoSo
     }
     public void them(String maThietBi, String maCoSo, LocalDate ngayNhap)
     {
-        dsThietBiCoSo.add(new ThietBiCoSo(maThietBi, maCoSo, ngayNhap);
+        dsThietBiCoSo.add(new ThietBiCoSo(maThietBi, maCoSo, ngayNhap));
     }
     public void xoa(String maThietBi, String maCoSo)
     {

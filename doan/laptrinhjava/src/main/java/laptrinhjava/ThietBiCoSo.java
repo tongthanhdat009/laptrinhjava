@@ -1,3 +1,5 @@
+package laptrinhjava;
+
 import java.time.LocalDate;
 
 public class ThietBiCoSo

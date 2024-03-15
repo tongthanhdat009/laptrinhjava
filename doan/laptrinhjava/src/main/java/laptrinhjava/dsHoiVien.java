@@ -1,4 +1,5 @@
-package doanJava;
+package laptrinhjava;
+
 
 import java.util.Scanner;
 

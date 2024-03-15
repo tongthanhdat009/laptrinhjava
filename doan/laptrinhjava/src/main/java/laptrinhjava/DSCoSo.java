@@ -1,3 +1,5 @@
+package laptrinhjava;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 public class DSCoSo implements Iterable<CoSo> {

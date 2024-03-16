@@ -5,17 +5,40 @@ public class hangHoa {
     private String loaiHangHoa;
     private String tenHangHoa;
     //hàm khởi tạo
-    hangHoa(){}
+    public hangHoa(String maHangHoa, String loaiHangHoa, String tenHangHoa){
+        setMaHangHoa(maHangHoa);
+        setLoaiHangHoa(loaiHangHoa);
+        setTenHangHoa(tenHangHoa);
+    }
+    
+    public hangHoa(){
+        this.maHangHoa = "none";
+        this.loaiHangHoa = "none";
+        this.tenHangHoa = "none";
+    }
+
     //hàm get&set
     void setMaHangHoa(String maHangHoa){
-        this.maHangHoa = maHangHoa;
+        if(!(maHangHoa.equals("")))
+            this.maHangHoa = maHangHoa;
+        else 
+            throw new IllegalArgumentException("Mã Hàng Hóa Không Hợp Lệ");
     }
+    
     void setLoaiHangHoa(String loaiHangHoa){
-        this.loaiHangHoa = loaiHangHoa;
+        if(!(loaiHangHoa.equals("")))
+            this.loaiHangHoa = loaiHangHoa;
+        else
+            throw new IllegalArgumentException("Loại Hàng Hóa Không Hợp Lệ");
     }
+
     void setTenHangHoa(String tenHangHoa){
-        this.tenHangHoa = tenHangHoa;
+        if(!(tenHangHoa.equals("") && tenHangHoa.length()<=0))
+            this.tenHangHoa = tenHangHoa;
+        else
+            throw new IllegalArgumentException("Tên Hàng Hóa Không Hợp");
     }
+
     String getMaHangHoa(){
         return this.maHangHoa;        
     }

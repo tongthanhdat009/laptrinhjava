@@ -26,6 +26,7 @@ public class GUILogin extends JFrame implements ActionListener{
         JLabel tieuDe = new JLabel("Đăng nhập");
         tieuDe.setFont(new Font("Arial",Font.BOLD,30));
         header.add(tieuDe);
+        header.setBackground(new Color(900));
         TTDN.add(header, BorderLayout.NORTH);
 
         JPanel TTDNMain = new JPanel();
@@ -62,6 +63,7 @@ public class GUILogin extends JFrame implements ActionListener{
         TTDNSub.add(dangKy);
         TTDNSub.add(dangNhap);
         TTDN.add(TTDNSub,BorderLayout.SOUTH);
+        TTDNSub.setBackground(new Color(900));
 
         // JPanel anhPanel = new JPanel();
         JLabel anh = new JLabel();

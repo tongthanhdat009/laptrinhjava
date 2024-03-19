@@ -7,7 +7,7 @@ public class GUILogin extends JFrame implements ActionListener{
     private JTextField tenTK = new JTextField();
     private JPasswordField mk = new JPasswordField();
     //CHỈNH ẢNH
-    ImageIcon icon = new ImageIcon("./asset/gif/login.gif");
+    ImageIcon icon = new ImageIcon("doan/src/laptrinhjava/src/asset/gif/login.gif");
     Image scaleImage = icon.getImage().getScaledInstance(775/2 + 5, 265,Image.SCALE_DEFAULT);
     public GUILogin()
     {
@@ -43,6 +43,7 @@ public class GUILogin extends JFrame implements ActionListener{
         matKhau.setBounds(5,75,150,30);
         mk.setBounds(160,75,175,30);
         
+        TTDNMain.setBackground(new Color(900));
         TTDNMain.add(tenDangNhap);
         TTDNMain.add(tenTK);
         TTDNMain.add(matKhau);
@@ -71,6 +72,7 @@ public class GUILogin extends JFrame implements ActionListener{
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+        getContentPane().setBackground(new Color(900));
         setVisible(true);
     }
     public void actionPerformed(ActionEvent e)

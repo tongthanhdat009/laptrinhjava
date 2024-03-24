@@ -1,55 +1,52 @@
+package doanJava;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class dsHoiVien {
 	Scanner sc = new Scanner(System.in);
-	private HoiVien dshv[];
-	private int soluong;
+	private ArrayList<HoiVien> dshv;
 	
 	public dsHoiVien() {
-		System.out.println("nhập số lượng hội viên: ");
-		soluong = sc.nextInt();
-		dshv = new HoiVien[soluong];
-		soluong = 0;
+		dshv = new ArrayList<HoiVien>();
 	}
-	public void themHoiVien() {
-		HoiVien hv = new HoiVien();
-		hv.nhap();
-		dshv[soluong++] = hv;
+
+	public dsHoiVien(ArrayList<HoiVien> dshv) {
+		this.dshv = dshv;
 	}
-	public void xoaHoivien() {
-		if(soluong == 0) {
-			System.out.println("không có hội viên để xóa");
-			return;
-		}
-		System.out.println("nhập mã hội viên cần xóa: ");
-		String maXoa = sc.nextLine();
-		boolean daXoa = false;
-		for(int i = 0; i < soluong; i++) {
-			if(dshv[i].getMaHoiVien().equals(maXoa)) {
-				for(int j = i; j < soluong - 1; j++) {
-					dshv[j] = dshv[j + 1];
-				}
-				soluong--;
-				daXoa = true;
-				break;
+	//thêm hội viên
+	public void themHoiVien(HoiVien hv) {
+		this.dshv.add(hv);
+	}
+	
+	//xóa hội viên
+	public boolean xoaHoiVien(HoiVien hv) {
+		for (HoiVien hoiVien : dshv) {
+			if(hoiVien.getMaHoiVien().equals(hv.getMaHoiVien())) {
+				dshv.remove(hoiVien);
+				return true;
 			}
 		}
+		return false;
 	}
-	public void suaHoiVien() {
-		if(soluong == 0) {
-			System.out.println("Không có họi viên để sửa");
-			return;
-		}
-		System.out.println("nhập mã hội viên để sửa thông tin: ");
-		String maSua = sc.nextLine();
-		boolean daSua = false;
-		for(int i = 0; i < soluong;i++) {
-			if(dshv[i].getMaHoiVien().equals(maSua)) {
+	//sửa hội viên
+	public void suaHoiVien(String mahv) {
+		boolean timthay = false;
+		for (HoiVien hv : dshv) {
+			if(hv.getMaHoiVien().equals(mahv)) {
 				System.out.println("nhập thông tin mới cho hội viên: ");
-				dshv[i].nhap();
-				daSua = true;
+				hv.nhap();
+				timthay = true;
 				break;
 			}
+		}
+		if (!timthay) {
+	        System.out.println("Không tìm thấy hội viên với mã " + mahv);
+	    }
+	}
+	public void xuatHoiVien() {
+		for (HoiVien hv : dshv) {
+			System.out.println(hv);
 		}
 	}
 }

@@ -10,7 +10,7 @@ public class admin{
     //loading
     private JPanel loadingPanel = new JPanel();
     private JProgressBar pBar = new JProgressBar();
-    private JLabel pBarLabel = new JLabel("Loading...");
+    private JLabel pBarLabel = new JLabel("Loading");
 
     //main
     private JPanel mainPanel = new JPanel();
@@ -22,7 +22,8 @@ public class admin{
         adminFrame.setResizable(false);
         adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adminFrame.setLayout(null);
-        
+        adminFrame.getContentPane().setBackground(Color.WHITE);
+
         //loading
         loadingPanel.setSize(new Dimension(width,height));
         loadingPanel.setLayout(null);
@@ -61,10 +62,20 @@ public class admin{
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            count++;
+            if(count % 3 == 0){
+                pBarLabel.setText("Loading.");
+            }
+            else if(count % 3 == 1){
+                pBarLabel.setText("Loading..");
+            }
+            else{
+                pBarLabel.setText("Loading...");
+            }
+            count+=2;
         }
         pBar.setString("Done!");
         loadingPanel.setVisible(false);
+        pBarLabel.setVisible(false);
     }
     public static void main(String[] args){
         new admin();

@@ -1,12 +1,12 @@
 package laptrinhjava.src;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class admin{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
-    private final int width = 1280;
-    private final int height = 720;
-    private JLabel test = new JLabel("Bất ngờ chưa thằng Lồn");
+    private final int width = 1600;
+    private final int height = 900;
     //loading
     private JPanel loadingPanel = new JPanel();
     private JProgressBar pBar = new JProgressBar();
@@ -14,7 +14,8 @@ public class admin{
 
     //main
     private JPanel mainPanel = new JPanel();
-
+    private JPanel leftPanel = new JPanel();
+    private JPanel rightPanel = new JPanel();
     public admin(){
         //main frame
         adminFrame.setSize(width, height);
@@ -23,11 +24,11 @@ public class admin{
         adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adminFrame.setLayout(null);
         adminFrame.getContentPane().setBackground(Color.WHITE);
-
+    
         //loading
         loadingPanel.setSize(new Dimension(width,height));
         loadingPanel.setLayout(null);
-
+    
         pBarLabel.setBounds(width/2 - 50,275,300,50);
         pBarLabel.setFont(new java.awt.Font("Arial", 1, 25));
         
@@ -40,18 +41,30 @@ public class admin{
         
         //main
         mainPanel.setSize(new Dimension(width,height));
-        test.setBounds(width/2 - 50,275,300,50);
-        test.setFont(new java.awt.Font("Arial", 1, 25));
         mainPanel.setLayout(null);
-        mainPanel.add(test);
-
-        adminFrame.add(loadingPanel);
+    
+        //left panel
+        leftPanel.setBounds(0,0,(int)(width * 0.3),height);
+        leftPanel.setBackground(Color.RED);
+    
+        JLabel leftLabel = new JLabel("Quản lý");
+        leftLabel.setFont(new java.awt.Font("Times New Roman", 1, 50));
+        
+        leftPanel.add(leftLabel);
+        //right panel
+        rightPanel.setBounds((int)(width * 0.3),0,(int)(width * 0.7),height);
+        
+        //thêm thuộc tính
+        mainPanel.add(leftPanel);
+        mainPanel.add(rightPanel);
+        // adminFrame.add(loadingPanel);
         adminFrame.add(mainPanel);
         adminFrame.setVisible(true);
         
         //hàm chạy load
-        fill();
+        // fill();
     }
+    
     private void fill(){
         int count = 0;
         while(count<=100){

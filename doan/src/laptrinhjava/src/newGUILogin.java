@@ -29,7 +29,7 @@ public class newGUILogin extends JFrame implements ActionListener{
             dangNhap.setBounds(0, 0, 400, 900);
             dangNhap.setBackground(Color.WHITE);
     
-            ImageIcon logo = new ImageIcon("src/asset/img/logo.png");
+            ImageIcon logo = new ImageIcon("doan/src/laptrinhjava/src/asset/img/logo.png");
             JLabel labelLogo = new JLabel(logo);
             labelLogo.setBounds(200 - logo.getIconWidth()/2 ,0,logo.getIconWidth(),logo.getIconHeight());
             dangNhap.add(labelLogo);
@@ -51,10 +51,10 @@ public class newGUILogin extends JFrame implements ActionListener{
             
             JPanel dangNhapKieuKhac = new JPanel(new GridLayout(1,4,10,0));
             dangNhapKieuKhac.setBounds(40,450,320,30);
-            ImageIcon imgFb = new ImageIcon("src/asset/img/button fb.png");
-            ImageIcon imgGg = new ImageIcon("src/asset/img/button gg.png");
-            ImageIcon imgIc = new ImageIcon("src/asset/img/button ic.png");
-            ImageIcon imgXb = new ImageIcon("src/asset/img/button xb.png");
+            ImageIcon imgFb = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button fb.png");
+            ImageIcon imgGg = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button gg.png");
+            ImageIcon imgIc = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button ic.png");
+            ImageIcon imgXb = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button xb.png");
             JButton fb = new JButton(imgFb);
             fb.setBackground(Color.BLUE);
             JButton gg = new JButton(imgGg);
@@ -82,11 +82,11 @@ public class newGUILogin extends JFrame implements ActionListener{
             dangKy.addActionListener(this);
             dangNhap.add(dangKy);
     
-            ImageIcon backGround = new ImageIcon("src/asset/img/gym.jpg");
+            ImageIcon backGround = new ImageIcon("doan/src/laptrinhjava/src/asset/img/gym.jpg");
             JLabel imageBackground = new JLabel(backGround);
             imageBackground.setBounds(0, 0, backGround.getIconWidth(), backGround.getIconHeight());
     
-            ImageIcon muiTenDi = new ImageIcon("src/asset/img/mui ten.png");
+            ImageIcon muiTenDi = new ImageIcon("doan/src/laptrinhjava/src/asset/img/mui ten.png");
             go = new JButton(muiTenDi);
             go.setBounds(200 - 75/2, 650, 80, 80);
             go.setBackground(Color.white);
@@ -107,6 +107,7 @@ public class newGUILogin extends JFrame implements ActionListener{
             add(imageBackground);
     
             setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setResizable(false);
             setVisible(true);
         }catch(Exception ex)
         {

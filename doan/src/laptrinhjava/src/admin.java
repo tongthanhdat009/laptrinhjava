@@ -10,6 +10,18 @@ public class admin{
     //logo
     ImageIcon logo = new ImageIcon("doan/src/laptrinhjava/src/asset/img/logo.png");
     ImageIcon logo1 = new ImageIcon("doan/src/laptrinhjava/src/asset/img/logo1.png");
+    
+    //icon chức năng thống kê
+    ImageIcon analyticsIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/analytics.png");
+    Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    
+    //icon chức năng danh sách
+    ImageIcon checkListIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/checklist.png");
+    Image scaleCheckListIcon = checkListIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    
+    //icon tiêu đề phụ chức năng
+    ImageIcon managementIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/project-management.png");
+    Image scaleManagementIcon = managementIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
 
     //loading
     private JPanel loadingPanel = new JPanel();
@@ -37,7 +49,6 @@ public class admin{
         adminFrame.setResizable(false);
         adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adminFrame.setLayout(null);
-        adminFrame.getContentPane().setBackground(Color.WHITE);
         adminFrame.setIconImage(logo.getImage());
 
         //loading
@@ -57,6 +68,7 @@ public class admin{
         //main
         mainPanel.setSize(new Dimension(width,height));
         mainPanel.setLayout(null);
+
 
         // //menu bar
         // mbar = new JMenuBar();
@@ -89,17 +101,22 @@ public class admin{
 
         //left panel
         leftPanel.setBounds(0,0,(int)(width * 0.3),height);
-        leftPanel.setBackground(Color.RED);
+        leftPanel.setBackground(Color.WHITE);
 
         //tiêu đề + logo
         JLabel leftLabel = new JLabel("Quản lý");
+        
+        //tiêu đề phụ
         JLabel subTitle = new JLabel("Chức năng");
         subTitle.setFont(new java.awt.Font("Times New Roman", 1, 30));
+        subTitle.setIcon(new ImageIcon(scaleManagementIcon));
+        
         leftLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         leftLabel.setIcon(logo1);
 
         JPanel logoPanel = new JPanel();
         logoPanel.setPreferredSize(new Dimension((int)(width * 0.3),250));
+        logoPanel.setBackground(Color.WHITE);
         logoPanel.add(leftLabel);
         leftPanel.add(logoPanel);
         leftPanel.add(subTitle);
@@ -108,9 +125,14 @@ public class admin{
         JPanel managementPanel = new JPanel();
         JPanel statisticsPanel = new JPanel();
         JPanel listPanel = new JPanel();
-        
+
+        //chức năng thống kê        
         JLabel statisticLabel = new JLabel("Thống kê đơn hàng");
+        statisticLabel.setIcon(new ImageIcon(scaleAnalyticsIcon));
+        
+        //chức năng quản lý danh sách
         JLabel listLabel = new JLabel("Quản lý danh sách");
+        listLabel.setIcon(new ImageIcon(scaleCheckListIcon));
 
         statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         listLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
@@ -125,12 +147,14 @@ public class admin{
         listPanel.add(listLabel);
 
         managementPanel.setPreferredSize(new Dimension((int)(width * 0.3),height - 250));
+        managementPanel.setBackground(Color.WHITE);
         managementPanel.add(listPanel);
         managementPanel.add(statisticsPanel);
         leftPanel.add(managementPanel);
 
         //right panel
         rightPanel.setBounds((int)(width * 0.3),0,(int)(width * 0.7),height);
+        rightPanel.setBackground(Color.WHITE);
         
         //thêm đối tượng
         mainPanel.add(leftPanel);

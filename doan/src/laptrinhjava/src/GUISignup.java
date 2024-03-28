@@ -193,7 +193,7 @@ public class GUISignup extends JFrame {
 							+ "tự số và chữ)","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(!jtf_pass.getText().equals(jtf_comfirm)) {
+				if(!jtf_pass.getText().equals(jtf_comfirm.getText())) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Xác thực mật khẩu không chính xác","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}

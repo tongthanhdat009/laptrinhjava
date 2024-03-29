@@ -1,5 +1,3 @@
-package doanJava;
-
 import java.awt.EventQueue;
 import doanJava.GUILogin;
 
@@ -53,50 +51,51 @@ public class GUISignup extends JFrame {
 
 	public GUISignup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(825, 680);
 		setLocationRelativeTo(null);
 
-		setBounds(100, 100, 825, 680);
 		getContentPane().setLayout(null);
-		
+		getContentPane().setBackground(Color.WHITE);
+
 		JLabel lblNewLabel = new JLabel("Register");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\Kearone-Platecons-Adressbook-add-user.128.png"));
+		lblNewLabel.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\Kearone-Platecons-Adressbook-add-user.128.png"));
 		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 35));
 		lblNewLabel.setBounds(250, 3, 312, 128);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tên đăng kí");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\Administrator-icon.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\Administrator-icon.png"));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1.setBounds(80, 130, 180, 48);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Địa chỉ Email");
-		lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\Mail-icon.png"));
+		lblNewLabel_1_1.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\Mail-icon.png"));
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_1.setBounds(80, 200, 180, 42);
 		getContentPane().add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Số điện thoại");
-		lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\phone-icon.png"));
+		lblNewLabel_1_2.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\phone-icon.png"));
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_2.setBounds(80, 270, 180, 42);
 		getContentPane().add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Số căn cước công dân");
-		lblNewLabel_1_3.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\id-card-icon.png"));
+		lblNewLabel_1_3.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\id-card-icon.png"));
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_3.setBounds(80, 330, 259, 42);
 		getContentPane().add(lblNewLabel_1_3);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Mật khẩu");
-		lblNewLabel_1_4.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\Dialog-Password-Lock-icon.png"));
+		lblNewLabel_1_4.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\Dialog-Password-Lock-icon.png"));
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_4.setBounds(80, 400, 180, 47);
 		getContentPane().add(lblNewLabel_1_4);
 		
 		JLabel lblNewLabel_1_5 = new JLabel("Xác thực mật khẩu");
-		lblNewLabel_1_5.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\Status-dialog-password-icon.png"));
+		lblNewLabel_1_5.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\Status-dialog-password-icon.png"));
 		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_5.setBounds(80, 470, 236, 47);
 		getContentPane().add(lblNewLabel_1_5);
@@ -134,13 +133,12 @@ public class GUISignup extends JFrame {
 		JButton btn_login = new JButton("Đăng nhập");
 		btn_login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUILogin login = new GUILogin();
-				login.setVisible(true);
+				new newGUILogin();
 				dispose();
 			}
 		});
 		btn_login.setBackground(new Color(11, 244, 122));
-		btn_login.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\Login-icon.png"));
+		btn_login.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\Login-icon.png"));
 		btn_login.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btn_login.setBounds(100, 544, 180, 70);
 		getContentPane().add(btn_login);
@@ -241,7 +239,7 @@ public class GUISignup extends JFrame {
 				
 			}
 		});
-		btn_signup.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Bán hàng\\add-user-icon.png"));
+		btn_signup.setIcon(new ImageIcon("doan\\src\\laptrinhjava\\src\\asset\\img\\add-user-icon.png"));
 		btn_signup.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btn_signup.setBounds(472, 544, 180, 70);
 		getContentPane().add(btn_signup);

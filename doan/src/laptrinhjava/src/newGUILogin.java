@@ -41,7 +41,8 @@ public class newGUILogin extends JFrame implements ActionListener{
     
             JPanel nhapLieu = new JPanel(new GridLayout(4,1,0,0));
             nhapLieu.setBounds(40,280,320,150);
-    
+            nhapLieu.setBackground(Color.WHITE);
+
             username.setToolTipText("Tên đăng nhập");
             pass.setToolTipText("Mật khẩu");
             nhapLieu.add(new JLabel("Tên tài khoản"));
@@ -51,6 +52,7 @@ public class newGUILogin extends JFrame implements ActionListener{
             
             JPanel dangNhapKieuKhac = new JPanel(new GridLayout(1,4,10,0));
             dangNhapKieuKhac.setBounds(40,450,320,30);
+            dangNhapKieuKhac.setBackground(Color.WHITE);
             ImageIcon imgFb = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button fb.png");
             ImageIcon imgGg = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button gg.png");
             ImageIcon imgIc = new ImageIcon("doan/src/laptrinhjava/src/asset/img/button ic.png");
@@ -141,7 +143,12 @@ public class newGUILogin extends JFrame implements ActionListener{
         // {
         //     JOptionPane.showMessageDialog(this,"Chưa năng hiện đang phát triển");
         // }
+        if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
+            new GUISignup();
+            dispose();
+        }
     }
+    
     public static void main(String[] args) {
         new newGUILogin();
     }

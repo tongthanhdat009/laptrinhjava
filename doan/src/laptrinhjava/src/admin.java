@@ -1,6 +1,8 @@
 package laptrinhjava.src;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.*;
 public class admin{
@@ -22,17 +24,27 @@ public class admin{
     //icon tiêu đề phụ chức năng
     ImageIcon managementIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/project-management.png");
     Image scaleManagementIcon = managementIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    
+    //tạo viền cho panel
+    Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
     //loading
     private JPanel loadingPanel = new JPanel();
     private JProgressBar pBar = new JProgressBar();
-    private JLabel pBarLabel = new JLabel("Loading");
+    private JLabel pBarLabel = new JLabel("Đang tải");
+    private JLabel loadingLogo = new JLabel();
 
     //main
     private JPanel mainPanel = new JPanel();
     private JPanel leftPanel = new JPanel();
     private JPanel rightPanel = new JPanel();
     
+    //tiêu đề + logo
+    JLabel leftLabel = new JLabel("Quản lý");
+        
+    //tiêu đề phụ
+    JLabel subTitle = new JLabel("Chức năng");
+
     // //menu bar
     // private JMenuBar mbar;
     // private JMenuItem loadItem;
@@ -54,14 +66,19 @@ public class admin{
         //loading
         loadingPanel.setSize(new Dimension(width,height));
         loadingPanel.setLayout(null);
-    
-        pBarLabel.setBounds(width/2 - 50,275,300,50);
+        loadingPanel.setBackground(Color.WHITE);
+        
+        loadingLogo.setIcon(logo);
+        loadingLogo.setBounds(675,100,(int)(width * 0.3),250);
+
+        pBarLabel.setBounds(width/2 - 50,350,300,50);
         pBarLabel.setFont(new java.awt.Font("Arial", 1, 25));
         
         pBar.setValue(0);
         pBar.setBounds(width/2 - 210,height/2 -25,420,50);
         pBar.setStringPainted(true);//thêm % cho thanh tiến trình
-        
+
+        loadingPanel.add(loadingLogo);
         loadingPanel.add(pBarLabel);
         loadingPanel.add(pBar);
         
@@ -69,45 +86,10 @@ public class admin{
         mainPanel.setSize(new Dimension(width,height));
         mainPanel.setLayout(null);
 
-
-        // //menu bar
-        // mbar = new JMenuBar();
-        // mbar.setBounds(0,0,500,100);
-        // fileMenu = new JMenu("file");
-        // editMenu = new JMenu("edit");
-        // helpMenu = new JMenu("help");
-        // mbar.add(fileMenu);
-        // mbar.add(editMenu);
-        // mbar.add(helpMenu);
-
-        // loadItem  =  new JMenuItem("Load");
-        // saveItem  =  new JMenuItem("save");
-        // exitItem  =  new JMenuItem("exit");
-
-        // loadItem.addActionListener(this);
-        // saveItem.addActionListener(this);
-        // exitItem.addActionListener(this);
-
-        // fileMenu.setMnemonic(KeyEvent.VK_F);//thêm sự kiện sử dụng phím tắt alt + F là load
-        // editMenu.setMnemonic(KeyEvent.VK_E);//thêm sự kiện sử dụng phím tắt alt + E là save
-        // helpMenu.setMnemonic(KeyEvent.VK_H);//thêm sự kiện sử dụng phím tắt alt + H là Exit
-        // loadItem.setMnemonic(KeyEvent.VK_L);//thêm sự kiện sử dụng phím tắt L là load
-        // saveItem.setMnemonic(KeyEvent.VK_S);//thêm sự kiện sử dụng phím tắt S là save
-        // exitItem.setMnemonic(KeyEvent.VK_E);//thêm sự kiện sử dụng phím tắt E là Exit
-
-        // fileMenu.add(loadItem);
-        // fileMenu.add(saveItem);
-        // fileMenu.add(exitItem);
-
         //left panel
         leftPanel.setBounds(0,0,(int)(width * 0.3),height);
         leftPanel.setBackground(Color.WHITE);
-
-        //tiêu đề + logo
-        JLabel leftLabel = new JLabel("Quản lý");
         
-        //tiêu đề phụ
-        JLabel subTitle = new JLabel("Chức năng");
         subTitle.setFont(new java.awt.Font("Times New Roman", 1, 30));
         subTitle.setIcon(new ImageIcon(scaleManagementIcon));
         
@@ -115,7 +97,7 @@ public class admin{
         leftLabel.setIcon(logo1);
 
         JPanel logoPanel = new JPanel();
-        logoPanel.setPreferredSize(new Dimension((int)(width * 0.3),250));
+        logoPanel.setPreferredSize(new Dimension((int)(width * 0.3)-10,240));
         logoPanel.setBackground(Color.WHITE);
         logoPanel.add(leftLabel);
         leftPanel.add(logoPanel);
@@ -139,9 +121,12 @@ public class admin{
 
         statisticsPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         statisticsPanel.setBackground(Color.BLUE);
+        statisticsPanel.setBorder(border);
+
 
         listPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         listPanel.setBackground(Color.GREEN);
+        listPanel.setBorder(border);
 
         statisticsPanel.add(statisticLabel);        
         listPanel.add(listLabel);
@@ -155,7 +140,53 @@ public class admin{
         //right panel
         rightPanel.setBounds((int)(width * 0.3),0,(int)(width * 0.7),height);
         rightPanel.setBackground(Color.WHITE);
+        rightPanel.setBorder(border);
+
+        //tiêu đề bên phải
+        JLabel rightTitle = new JLabel("Quản lý danh sách");
+        rightTitle.setFont(new java.awt.Font("Times New Roman", 1, 40));
+
+        JPanel rightTitlePanel = new JPanel();
+        rightTitlePanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
+        rightTitlePanel.setLocation((int)(width * 0.3),0);
+        rightTitlePanel.setBackground(Color.YELLOW);
+
+        rightTitlePanel.add(rightTitle);
+        rightPanel.add(rightTitlePanel);
+
+        //chức năng:
+        //quản lý danh sách:
+
+        //chọn danh sách
+        JPanel chooseListPanel = new JPanel();
+        chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
+
+        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn"};
+        JComboBox chooseList = new JComboBox<String>(list);
+        chooseList.setFont(new java.awt.Font("Arial", 1, 16));
         
+        JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
+        chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
+        chooseListLabel.setIcon(new ImageIcon(scaleCheckListIcon));
+        chooseListPanel.add(chooseListLabel);
+        chooseListPanel.add(chooseList);
+
+        rightPanel.add(chooseListPanel);
+        //chỉnh sử thông tin
+        JPanel infoDisplay = new JPanel();
+        infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),300));
+        
+        JLabel infoLabel = new JLabel("Chỉnh sửa thông tin");
+        infoLabel.setFont(new java.awt.Font("Arial", 1, 20));
+
+        infoDisplay.add(infoLabel);
+        rightPanel.add(infoDisplay);
+        
+        //Bảng dữ liệu
+        JPanel disDataPanel = new JPanel();
+        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 300 - 50 - 50));   
+        rightPanel.add(disDataPanel);
+
         //thêm đối tượng
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
@@ -172,19 +203,19 @@ public class admin{
         while(count<=100){
             pBar.setValue(count);
             try {
-                Thread.sleep(30);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             if(count % 3 == 0){
-                pBarLabel.setText("Loading.");
+                pBarLabel.setText("Đang tải.");
             }
             else if(count % 3 == 1){
-                pBarLabel.setText("Loading..");
+                pBarLabel.setText("Đang tải..");
             }
             else{
-                pBarLabel.setText("Loading...");
+                pBarLabel.setText("Đang tải...");
             }
             count+=2;
         }

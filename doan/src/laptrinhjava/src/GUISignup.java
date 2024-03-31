@@ -245,7 +245,7 @@ public class GUISignup extends JFrame {
 					gioitinh = "Nam";
 				}
 				else if(rdbtnNu.isSelected()) {
-					gioitinh = "Nu";
+					gioitinh = "Nữ";
 				}
 				if(btn_grp.getSelection() == null) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giớ tính","Error",JOptionPane.ERROR_MESSAGE);

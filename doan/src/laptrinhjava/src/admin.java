@@ -45,14 +45,15 @@ public class admin{
     //tiêu đề phụ
     JLabel subTitle = new JLabel("Chức năng");
 
-    // //menu bar
-    // private JMenuBar mbar;
-    // private JMenuItem loadItem;
-    // private JMenuItem saveItem;
-    // private JMenuItem exitItem;
-    // private JMenu fileMenu;
-    // private JMenu editMenu;
-    // private JMenu helpMenu;
+    //bảng dữ liệu
+    private String[][] rows = {{"test1", "test2", "test3","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"},
+                              {"test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"}
+                             };
+    private String[] columnns =   {"test7", "test8", "test9","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"};
+
+    private JTable dataTable = new JTable(rows,columnns);
+
+    private JScrollPane scrollPane = new JScrollPane(dataTable);
 
     public admin(){
         //main frame
@@ -164,6 +165,9 @@ public class admin{
         String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn"};
         JComboBox chooseList = new JComboBox<String>(list);
         chooseList.setFont(new java.awt.Font("Arial", 1, 16));
+        // chooseList.addActionListener(new ActionListener() {
+            
+        // });
         
         JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
         chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
@@ -172,19 +176,41 @@ public class admin{
         chooseListPanel.add(chooseList);
 
         rightPanel.add(chooseListPanel);
+
         //chỉnh sử thông tin
         JPanel infoDisplay = new JPanel();
-        infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),300));
+        infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),200));
         
         JLabel infoLabel = new JLabel("Chỉnh sửa thông tin");
         infoLabel.setFont(new java.awt.Font("Arial", 1, 20));
 
         infoDisplay.add(infoLabel);
         rightPanel.add(infoDisplay);
+        //nút chức năng
+        JPanel btnPanel = new JPanel();
+        btnPanel.setPreferredSize(new Dimension((int)(width * 0.697),40));
         
+        JButton addBtn = new JButton("Thêm");
+        JButton removeBtn = new JButton("Xóa");
+        JButton editBtn = new JButton("Sửa");
+        JButton updateBtn = new JButton("Cập nhật");
+        
+        addBtn.setPreferredSize(new Dimension(100,25));
+        removeBtn.setPreferredSize(new Dimension(100,25));
+        editBtn.setPreferredSize(new Dimension(100,25));
+        updateBtn.setPreferredSize(new Dimension(100,25));
+
+        btnPanel.add(addBtn);
+        btnPanel.add(removeBtn);
+        btnPanel.add(editBtn);
+        btnPanel.add(updateBtn);
+        
+        rightPanel.add(btnPanel);
+
         //Bảng dữ liệu
         JPanel disDataPanel = new JPanel();
-        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 300 - 50 - 50));   
+        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
+        
         rightPanel.add(disDataPanel);
 
         //thêm đối tượng

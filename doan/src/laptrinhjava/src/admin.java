@@ -157,16 +157,21 @@ public class admin{
 
         //chức năng:
         //quản lý danh sách:
+        
+        // THÊM:
+        // nhập hàng hóa
+        // nhập thiết bị
+        // duyệt đơn hàng
 
         //chọn danh sách
         JPanel chooseListPanel = new JPanel();
         chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
 
-        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn"};
+        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Duyệt Hóa Đơn","Nhập Hàng Hóa","Hàng Hóa Cơ Sở"};
         JComboBox chooseList = new JComboBox<String>(list);
         chooseList.setFont(new java.awt.Font("Arial", 1, 16));
         // chooseList.addActionListener(new ActionListener() {
-            
+        
         // });
         
         JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
@@ -186,6 +191,7 @@ public class admin{
 
         infoDisplay.add(infoLabel);
         rightPanel.add(infoDisplay);
+
         //nút chức năng
         JPanel btnPanel = new JPanel();
         btnPanel.setPreferredSize(new Dimension((int)(width * 0.697),40));
@@ -217,7 +223,6 @@ public class admin{
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
         adminFrame.add(loadingPanel);
-        adminFrame.add(mainPanel);
         adminFrame.setVisible(true);
         
         //hàm chạy load
@@ -248,6 +253,7 @@ public class admin{
         pBar.setString("Done!");
         loadingPanel.setVisible(false);
         pBarLabel.setVisible(false);
+        adminFrame.add(mainPanel);
         // adminFrame.setJMenuBar(mbar);
     }
     public static void main(String[] args){

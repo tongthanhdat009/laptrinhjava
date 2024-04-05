@@ -170,9 +170,40 @@ public class admin{
         String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Duyệt Hóa Đơn","Nhập Hàng Hóa","Hàng Hóa Cơ Sở"};
         JComboBox chooseList = new JComboBox<String>(list);
         chooseList.setFont(new java.awt.Font("Arial", 1, 16));
-        // chooseList.addActionListener(new ActionListener() {
-        
-        // });
+
+        //Xử lý sự kiện         
+        chooseList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(chooseList.getSelectedIndex()==0){ //bảng cơ sở
+                    xuLyBangCoSo();
+                }
+                else if(chooseList.getSelectedIndex()==1){//Bảng dịch vụ
+                    xuLyBangDichVu();
+                }
+                else if(chooseList.getSelectedIndex()==2){//Bảng hội viên
+                    xuLyBangHoiVien();
+                }
+                else{
+                    System.out.println(chooseList.getSelectedItem());
+                }
+            }
+            
+            //hàm xử lý bảng cơ sở
+            private void xuLyBangCoSo(){
+
+            }
+
+            //hàm xử lý bảng dịch vụ
+            private void xuLyBangDichVu(){
+
+            }
+
+            //hàm xử lý bảng hội viên
+            private void xuLyBangHoiVien(){
+
+            }
+        });
         
         JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
         chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));

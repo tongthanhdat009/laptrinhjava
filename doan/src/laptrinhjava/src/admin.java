@@ -1,10 +1,12 @@
 package laptrinhjava.src;
 
+
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
+
 public class admin{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
     private final int width = 1600;
@@ -117,6 +119,15 @@ public class admin{
         JLabel listLabel = new JLabel("Quản lý danh sách");
         listLabel.setIcon(new ImageIcon(scaleCheckListIcon));
 
+        JButton nhapThietBi = new JButton("Nhập thiết bị");
+        nhapThietBi.setBounds(0,0,100,100);
+        nhapThietBi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                xuLyNhapHang();
+            }
+        });
+
         statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         listLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
 
@@ -131,6 +142,7 @@ public class admin{
 
         statisticsPanel.add(statisticLabel);        
         listPanel.add(listLabel);
+        listPanel.add(nhapThietBi);
 
         managementPanel.setPreferredSize(new Dimension((int)(width * 0.3),height - 250));
         managementPanel.setBackground(Color.WHITE);
@@ -286,6 +298,101 @@ public class admin{
         pBarLabel.setVisible(false);
         adminFrame.add(mainPanel);
         // adminFrame.setJMenuBar(mbar);
+    }
+    public void xuLyNhapHang()
+    {
+        try
+        {
+            rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+            rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+            rightPanel.repaint(); // Vẽ lại JPanel
+
+            rightPanel.setLayout(null);
+            
+            JPanel canGiua = new JPanel(new FlowLayout());
+            canGiua.setBounds(5,5,rightPanel.getWidth(),55);
+            canGiua.setBackground(Color.yellow);
+            JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
+            titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
+
+            canGiua.add(titleNhapThietBi);
+            rightPanel.add(canGiua);
+
+            JPanel filler = new JPanel(null);
+            filler.setBounds(5,70,rightPanel.getWidth(),55);
+            JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên");
+            timTheoTen.setBounds(10, 15, 130, 30);
+            JTextField nhapTen = new JTextField();
+            nhapTen.setBounds(145, 15, 175, 30);
+            JButton timkiem = new JButton(">");
+            timkiem.setBounds(320, 15, 45, 29);
+            filler.add(timTheoTen);
+            filler.add(nhapTen);
+            filler.add(timkiem);
+
+            rightPanel.add(filler);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
+            String userName = "sa"; String password= "123456";
+            Connection con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+
+            
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS sl FROM LoaiThietBi");
+            rs.next();
+            int soLuongLoaiThietBi = rs.getInt("sl");
+            int soHangHienThi = soLuongLoaiThietBi / 3 + 1;
+            JPanel hienThiThietBi = new JPanel(new GridLayout(soHangHienThi,3,30,30));
+            rs = stmt.executeQuery("SELECT * FROM LoaiThietBi");
+            while(rs.next())
+            {
+                JPanel thongTinThietBi = new JPanel(new BorderLayout());
+                ImageIcon anhThietBi = new ImageIcon(rs.getString("HinhAnh"));
+                Image chinhAnhThietBi = anhThietBi.getImage().getScaledInstance(330, 330,Image.SCALE_DEFAULT);
+                anhThietBi = new ImageIcon(chinhAnhThietBi);
+                String tenThietBi = rs.getString("MaThietBi");
+                JLabel labelAnhThietBi = new JLabel(anhThietBi);
+                JLabel labelTenThietBi = new JLabel(tenThietBi);
+                thongTinThietBi.add(labelAnhThietBi,BorderLayout.CENTER);
+                thongTinThietBi.add(labelTenThietBi,BorderLayout.SOUTH);
+                hienThiThietBi.add(thongTinThietBi);
+
+                thongTinThietBi.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        JOptionPane.showMessageDialog(null, tenThietBi);
+                    }
+                
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        // Không cần xử lý
+                    }
+                
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        // Không cần xử lý
+                    }
+                
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        // Không cần xử lý
+                    }
+                
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // Không cần xử lý
+                    }
+                });
+            }   
+            for(int i=0;i<soHangHienThi*3 - soLuongLoaiThietBi;i++)
+            hienThiThietBi.add(new Label());
+            JScrollPane scrollPane = new JScrollPane(hienThiThietBi);
+            scrollPane.setBounds(5, 150, rightPanel.getWidth()-20,700);
+            rightPanel.add(scrollPane);
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
     }
     public static void main(String[] args){
         new admin();

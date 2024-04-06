@@ -9,16 +9,16 @@ public class newGUILogin extends JFrame implements ActionListener{
     JTextField username = new JTextField();
     JPasswordField pass = new JPasswordField();
     JButton go;
-    // String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=DAJAVA;encrypt=false";
-    // String userName = "sa"; String password= "minhtuan123";
-    // Connection con; 
-    // Statement stmt;
+    String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main;encrypt=false";
+    String userName = "sa"; String password= "minhtuan123";
+    Connection con; 
+    Statement stmt;
     public newGUILogin() {
         try
         {
-            // Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            // con = DriverManager.getConnection(dbUrl, userName, password);
-            // stmt = con.createStatement();
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            stmt = con.createStatement();
 
             setSize(1600, 900);
             setLocationRelativeTo(null);

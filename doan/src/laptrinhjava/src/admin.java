@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class admin{
+public class admin implements ActionListener{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
     private final int width = 1600;
     private final int height = 900;
@@ -27,6 +27,18 @@ public class admin{
     ImageIcon managementIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/project-management.png");
     Image scaleManagementIcon = managementIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     
+    //icon chức năng nhập thiết bị
+    ImageIcon dumbbellIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/dumbbell-icon.png");
+    Image scaleDumbbellIcon = dumbbellIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    
+    //icon chức năng nhập hàng hóa
+    ImageIcon goodsIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/goods-icon.png");
+    Image scaleGoodsIcon = goodsIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+
+    //icon chức năng nhập hàng hóa
+    ImageIcon billIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/bill-icon.png");
+    Image scaleBillIcon = billIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
@@ -110,6 +122,9 @@ public class admin{
         JPanel managementPanel = new JPanel();
         JPanel statisticsPanel = new JPanel();
         JPanel listPanel = new JPanel();
+        JPanel nhapThietBiPanel = new JPanel();
+        JPanel duyetDonHangPanel = new JPanel();
+        JPanel nhapHangHoaPanel = new JPanel();
 
         //chức năng thống kê        
         JLabel statisticLabel = new JLabel("Thống kê đơn hàng");
@@ -119,148 +134,214 @@ public class admin{
         JLabel listLabel = new JLabel("Quản lý danh sách");
         listLabel.setIcon(new ImageIcon(scaleCheckListIcon));
 
-        JButton nhapThietBi = new JButton("Nhập thiết bị");
-        nhapThietBi.setBounds(0,0,100,100);
-        nhapThietBi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                xuLyNhapHang();
-            }
-        });
+        //Chức năng nhập thiết bị
+        JLabel nhapThietBiLabel = new JLabel("Nhập thiết bị");
+        nhapThietBiLabel.setIcon(new ImageIcon(scaleDumbbellIcon));
 
+        //chức năng duyệt đơn hàng
+        JLabel duyetDonHangLabel = new JLabel("Duyệt đơn hàng");
+        duyetDonHangLabel.setIcon(new ImageIcon(scaleBillIcon));
+        
+        //chức năng nhập hàng hóa
+        JLabel nhapHangHoaLabel = new JLabel("Nhập hàng hóa");
+        nhapHangHoaLabel.setIcon(new ImageIcon(scaleGoodsIcon));
+
+
+        // Chỉnh font chữ cho phần chọn chức năng
         statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         listLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
+        nhapThietBiLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
+        nhapHangHoaLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
+        duyetDonHangLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
 
         statisticsPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         statisticsPanel.setBackground(Color.BLUE);
         statisticsPanel.setBorder(border);
 
-
         listPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         listPanel.setBackground(Color.GREEN);
         listPanel.setBorder(border);
 
+        nhapThietBiPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
+        nhapThietBiPanel.setBackground(Color.YELLOW);
+        nhapThietBiPanel.setBorder(border);
+
+        duyetDonHangPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
+        duyetDonHangPanel.setBackground(Color.RED);
+        duyetDonHangPanel.setBorder(border);
+
+        nhapHangHoaPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
+        nhapHangHoaPanel.setBackground(Color.CYAN);
+        nhapHangHoaPanel.setBorder(border);
+
+        //Sử lý sự kiện khi chọn chức năng
+        listPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                xuLyDanhSach();
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Không cần xử lý
+            }
+        });
+        
+        statisticsPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+                
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Không cần xử lý
+            }
+        });
+
+        nhapThietBiPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                xuLyNhapHang();
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Không cần xử lý
+            }
+        });
+
+        duyetDonHangPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+                
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Không cần xử lý
+            }
+        });
+        
+        nhapHangHoaPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+                
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Không cần xử lý
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Không cần xử lý
+            }
+        });
+        
+        // thêm đối tượng
         statisticsPanel.add(statisticLabel);        
         listPanel.add(listLabel);
-        listPanel.add(nhapThietBi);
+        nhapThietBiPanel.add(nhapThietBiLabel);
+        nhapHangHoaPanel.add(nhapHangHoaLabel);
+        duyetDonHangPanel.add(duyetDonHangLabel);
 
+        //bảng chọn chức năng
         managementPanel.setPreferredSize(new Dimension((int)(width * 0.3),height - 250));
         managementPanel.setBackground(Color.WHITE);
         managementPanel.add(listPanel);
         managementPanel.add(statisticsPanel);
+        managementPanel.add(nhapThietBiPanel);
+        managementPanel.add(nhapHangHoaPanel);
+        managementPanel.add(duyetDonHangPanel);
+
         leftPanel.add(managementPanel);
 
+        //chức năng:
+        //quản lý danh sách:
         //right panel
         rightPanel.setBounds((int)(width * 0.3),0,(int)(width * 0.7),height);
         rightPanel.setBackground(Color.WHITE);
         rightPanel.setBorder(border);
 
-        //tiêu đề bên phải
-        JLabel rightTitle = new JLabel("Quản lý danh sách");
-        rightTitle.setFont(new java.awt.Font("Times New Roman", 1, 40));
-
-        JPanel rightTitlePanel = new JPanel();
-        rightTitlePanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
-        rightTitlePanel.setLocation((int)(width * 0.3),0);
-        rightTitlePanel.setBackground(Color.YELLOW);
-
-        rightTitlePanel.add(rightTitle);
-        rightPanel.add(rightTitlePanel);
-
-        //chức năng:
-        //quản lý danh sách:
-        
-        // THÊM:
-        // nhập hàng hóa
-        // nhập thiết bị
-        // duyệt đơn hàng
-
-        //chọn danh sách
-        JPanel chooseListPanel = new JPanel();
-        chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
-
-        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Duyệt Hóa Đơn","Nhập Hàng Hóa","Hàng Hóa Cơ Sở"};
-        JComboBox chooseList = new JComboBox<String>(list);
-        chooseList.setFont(new java.awt.Font("Arial", 1, 16));
-
-        //Xử lý sự kiện         
-        chooseList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                if(chooseList.getSelectedIndex()==0){ //bảng cơ sở
-                    xuLyBangCoSo();
-                }
-                else if(chooseList.getSelectedIndex()==1){//Bảng dịch vụ
-                    xuLyBangDichVu();
-                }
-                else if(chooseList.getSelectedIndex()==2){//Bảng hội viên
-                    xuLyBangHoiVien();
-                }
-                else{
-                    System.out.println(chooseList.getSelectedItem());
-                }
-            }
-            
-            //hàm xử lý bảng cơ sở
-            private void xuLyBangCoSo(){
-
-            }
-
-            //hàm xử lý bảng dịch vụ
-            private void xuLyBangDichVu(){
-
-            }
-
-            //hàm xử lý bảng hội viên
-            private void xuLyBangHoiVien(){
-
-            }
-        });
-        
-        JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
-        chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
-        chooseListLabel.setIcon(new ImageIcon(scaleCheckListIcon));
-        chooseListPanel.add(chooseListLabel);
-        chooseListPanel.add(chooseList);
-
-        rightPanel.add(chooseListPanel);
-
-        //chỉnh sử thông tin
-        JPanel infoDisplay = new JPanel();
-        infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),200));
-        
-        JLabel infoLabel = new JLabel("Chỉnh sửa thông tin");
-        infoLabel.setFont(new java.awt.Font("Arial", 1, 20));
-
-        infoDisplay.add(infoLabel);
-        rightPanel.add(infoDisplay);
-
-        //nút chức năng
-        JPanel btnPanel = new JPanel();
-        btnPanel.setPreferredSize(new Dimension((int)(width * 0.697),40));
-        
-        JButton addBtn = new JButton("Thêm");
-        JButton removeBtn = new JButton("Xóa");
-        JButton editBtn = new JButton("Sửa");
-        JButton updateBtn = new JButton("Cập nhật");
-        
-        addBtn.setPreferredSize(new Dimension(100,25));
-        removeBtn.setPreferredSize(new Dimension(100,25));
-        editBtn.setPreferredSize(new Dimension(100,25));
-        updateBtn.setPreferredSize(new Dimension(100,25));
-
-        btnPanel.add(addBtn);
-        btnPanel.add(removeBtn);
-        btnPanel.add(editBtn);
-        btnPanel.add(updateBtn);
-        
-        rightPanel.add(btnPanel);
-
-        //Bảng dữ liệu
-        JPanel disDataPanel = new JPanel();
-        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
-        
-        rightPanel.add(disDataPanel);
+        //Xử lý danh sách
+        xuLyDanhSach();
 
         //thêm đối tượng
         mainPanel.add(leftPanel);
@@ -299,14 +380,13 @@ public class admin{
         adminFrame.add(mainPanel);
         // adminFrame.setJMenuBar(mbar);
     }
-    public void xuLyNhapHang()
+    private void xuLyNhapHang()
     {
         try
         {
             rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
             rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
             rightPanel.repaint(); // Vẽ lại JPanel
-
             rightPanel.setLayout(null);
             
             JPanel canGiua = new JPanel(new FlowLayout());
@@ -393,6 +473,106 @@ public class admin{
         {
             System.out.println(e);
         }
+    }
+
+    private void xuLyDanhSach(){
+        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        rightPanel.repaint(); // Vẽ lại JPanel
+        //tiêu đề bên phải
+        JLabel rightTitle = new JLabel("Quản lý danh sách");
+        rightTitle.setFont(new java.awt.Font("Times New Roman", 1, 40));
+
+        JPanel rightTitlePanel = new JPanel();
+        rightTitlePanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
+        rightTitlePanel.setLocation((int)(width * 0.3),0);
+        rightTitlePanel.setBackground(Color.YELLOW);
+
+        rightTitlePanel.add(rightTitle);
+        rightPanel.add(rightTitlePanel);
+
+        //chọn danh sách
+        JPanel chooseListPanel = new JPanel();
+        chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
+
+        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Duyệt Hóa Đơn","Nhập Hàng Hóa","Hàng Hóa Cơ Sở"};
+        JComboBox chooseList = new JComboBox<String>(list);
+        chooseList.setFont(new java.awt.Font("Arial", 1, 16));
+
+        //Xử lý sự kiện         
+        chooseList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(chooseList.getSelectedIndex()==0){ //bảng cơ sở
+                    xuLyBangCoSo();
+                }
+                else if(chooseList.getSelectedIndex()==1){//Bảng dịch vụ
+                    xuLyBangDichVu();
+                }
+                else if(chooseList.getSelectedIndex()==2){//Bảng hội viên
+                    xuLyBangHoiVien();
+                }
+                else{
+                    System.out.println(chooseList.getSelectedItem());
+                }
+            }
+            
+            //hàm xử lý bảng cơ sở
+            private void xuLyBangCoSo(){
+
+            }
+
+            //hàm xử lý bảng dịch vụ
+            private void xuLyBangDichVu(){
+
+            }
+
+            //hàm xử lý bảng hội viên
+            private void xuLyBangHoiVien(){
+
+            }
+        });
+        
+        JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
+        chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
+        chooseListLabel.setIcon(new ImageIcon(scaleCheckListIcon));
+        chooseListPanel.add(chooseListLabel);
+        chooseListPanel.add(chooseList);
+
+        rightPanel.add(chooseListPanel);
+
+        //chỉnh sử thông tin
+        JPanel infoDisplay = new JPanel();
+        infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),200));
+        
+        JLabel infoLabel = new JLabel("Chỉnh sửa thông tin");
+        infoLabel.setFont(new java.awt.Font("Arial", 1, 20));
+
+        infoDisplay.add(infoLabel);
+        rightPanel.add(infoDisplay);
+
+        //nút chức năng
+        JPanel btnPanel = new JPanel();
+        btnPanel.setPreferredSize(new Dimension((int)(width * 0.697),40));
+
+        String[] btnName = {"Thêm", "Xóa", "Sửa", "Cập nhật"};
+        String[] btnCommand = {"add", "delete", "edit", "update"};
+        
+        for(int i=0;i<btnName.length;i++){
+            JButton temp = new JButton(btnName[i]);
+            temp.setPreferredSize(new Dimension(100,25));
+            temp.addActionListener(this);
+            temp.setActionCommand(btnCommand[i]);
+            btnPanel.add(temp);
+        }
+        
+        rightPanel.add(btnPanel);
+        
+        //Bảng dữ liệu
+        JPanel disDataPanel = new JPanel();
+        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
+        
+        rightPanel.add(disDataPanel);
     }
     public static void main(String[] args){
         new admin();

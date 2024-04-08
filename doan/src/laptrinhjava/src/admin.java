@@ -38,7 +38,10 @@ public class admin implements ActionListener{
     //icon chức năng nhập hàng hóa
     ImageIcon billIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/bill-icon.png");
     Image scaleBillIcon = billIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
-
+    
+    //icon chức năng thống kê doanh thu
+    ImageIcon chartIcon = new ImageIcon("doan/src/laptrinhjava/src/asset/img/stonk.jpg");
+    Image scaleChartIcon = chartIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
@@ -125,7 +128,7 @@ public class admin implements ActionListener{
         JPanel nhapThietBiPanel = new JPanel();
         JPanel duyetDonHangPanel = new JPanel();
         JPanel nhapHangHoaPanel = new JPanel();
-
+        JPanel thongKeDoanhThuPanel = new JPanel();
         //chức năng thống kê        
         JLabel statisticLabel = new JLabel("Thống kê đơn hàng");
         statisticLabel.setIcon(new ImageIcon(scaleAnalyticsIcon));
@@ -145,7 +148,10 @@ public class admin implements ActionListener{
         //chức năng nhập hàng hóa
         JLabel nhapHangHoaLabel = new JLabel("Nhập hàng hóa");
         nhapHangHoaLabel.setIcon(new ImageIcon(scaleGoodsIcon));
-
+        
+        //Chức năng thống kê doanh thu
+        JLabel thongKeDoanhThuLabel = new JLabel("Thống kê doanh thu");
+        thongKeDoanhThuLabel.setIcon(new ImageIcon(scaleChartIcon));
 
         // Chỉnh font chữ cho phần chọn chức năng
         statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
@@ -153,6 +159,7 @@ public class admin implements ActionListener{
         nhapThietBiLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         nhapHangHoaLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         duyetDonHangLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
+        thongKeDoanhThuLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
 
         statisticsPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         statisticsPanel.setBackground(Color.BLUE);
@@ -174,6 +181,9 @@ public class admin implements ActionListener{
         nhapHangHoaPanel.setBackground(Color.CYAN);
         nhapHangHoaPanel.setBorder(border);
 
+        thongKeDoanhThuPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
+        thongKeDoanhThuPanel.setBackground(Color.MAGENTA);
+        thongKeDoanhThuPanel.setBorder(border);
         //Sử lý sự kiện khi chọn chức năng
         listPanel.addMouseListener(new MouseListener() {
             @Override
@@ -183,22 +193,18 @@ public class admin implements ActionListener{
             
             @Override
             public void mousePressed(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseReleased(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
-                // Không cần xử lý
             }
         });
         
@@ -238,22 +244,18 @@ public class admin implements ActionListener{
             }
             @Override
             public void mousePressed(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseReleased(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
-                // Không cần xử lý
             }
         });
 
@@ -263,26 +265,21 @@ public class admin implements ActionListener{
                 rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
-                
             }
             @Override
             public void mousePressed(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseReleased(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
-                // Không cần xử lý
             }
         });
         
@@ -296,40 +293,62 @@ public class admin implements ActionListener{
             }
             @Override
             public void mousePressed(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseReleased(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Không cần xử lý
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
-                // Không cần xử lý
             }
         });
         
+        thongKeDoanhThuPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+                
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         // thêm đối tượng
         statisticsPanel.add(statisticLabel);        
         listPanel.add(listLabel);
         nhapThietBiPanel.add(nhapThietBiLabel);
         nhapHangHoaPanel.add(nhapHangHoaLabel);
         duyetDonHangPanel.add(duyetDonHangLabel);
-
+        thongKeDoanhThuPanel.add(thongKeDoanhThuLabel);
         //bảng chọn chức năng
         managementPanel.setPreferredSize(new Dimension((int)(width * 0.3),height - 250));
         managementPanel.setBackground(Color.WHITE);
+
         managementPanel.add(listPanel);
         managementPanel.add(statisticsPanel);
         managementPanel.add(nhapThietBiPanel);
         managementPanel.add(nhapHangHoaPanel);
         managementPanel.add(duyetDonHangPanel);
+        managementPanel.add(thongKeDoanhThuPanel);
 
         leftPanel.add(managementPanel);
 
@@ -533,6 +552,7 @@ public class admin implements ActionListener{
             }
         });
         
+
         JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
         chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
         chooseListLabel.setIcon(new ImageIcon(scaleCheckListIcon));

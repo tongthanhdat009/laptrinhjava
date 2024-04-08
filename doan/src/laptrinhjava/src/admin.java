@@ -62,17 +62,18 @@ public class admin implements ActionListener{
     //tiêu đề phụ
     JLabel subTitle = new JLabel("Chức năng");
 
-    //bảng dữ liệu
-    private String[][] rows = {{"test1", "test2", "test3","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"},
-                              {"test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"}
-                             };
-    private String[] columnns =   {"test7", "test8", "test9","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"};
+    
 
-    private JTable dataTable = new JTable(rows,columnns);
-
-    private JScrollPane scrollPane = new JScrollPane(dataTable);
+    
 
     public admin(){
+        // //liên kết database
+        // Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        // String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
+        // String userName = "sa"; String password= "123456";
+        // Connection con = DriverManager.getConnection(dbUrl, userName, password);
+        // Statement stmt = con.createStatement();
+        
         //main frame
         adminFrame.setSize(width, height);
         adminFrame.setLocationRelativeTo(null);
@@ -240,7 +241,7 @@ public class admin implements ActionListener{
         nhapThietBiPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                xuLyNhapHang();
+                // xuLyNhapHang();
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -417,19 +418,19 @@ public class admin implements ActionListener{
             canGiua.add(titleNhapThietBi);
             rightPanel.add(canGiua);
 
-            JPanel filler = new JPanel(null);
-            filler.setBounds(5,70,rightPanel.getWidth(),55);
+            JPanel filter = new JPanel(null);
+            filter.setBounds(5,70,rightPanel.getWidth(),55);
             JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên");
             timTheoTen.setBounds(10, 15, 130, 30);
             JTextField nhapTen = new JTextField();
             nhapTen.setBounds(145, 15, 175, 30);
             JButton timkiem = new JButton(">");
             timkiem.setBounds(320, 15, 45, 29);
-            filler.add(timTheoTen);
-            filler.add(nhapTen);
-            filler.add(timkiem);
+            filter.add(timTheoTen);
+            filter.add(nhapTen);
+            filter.add(timkiem);
 
-            rightPanel.add(filler);
+            rightPanel.add(filter);
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
             String userName = "sa"; String password= "123456";
@@ -495,6 +496,8 @@ public class admin implements ActionListener{
     }
 
     private void xuLyDanhSach(){
+        
+        
         rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
         rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
         rightPanel.repaint(); // Vẽ lại JPanel
@@ -514,7 +517,7 @@ public class admin implements ActionListener{
         JPanel chooseListPanel = new JPanel();
         chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
 
-        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Duyệt Hóa Đơn","Nhập Hàng Hóa","Hàng Hóa Cơ Sở"};
+        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng Hóa Cơ Sở"};
         JComboBox chooseList = new JComboBox<String>(list);
         chooseList.setFont(new java.awt.Font("Arial", 1, 16));
 
@@ -530,6 +533,21 @@ public class admin implements ActionListener{
                 }
                 else if(chooseList.getSelectedIndex()==2){//Bảng hội viên
                     xuLyBangHoiVien();
+                }
+                else if(chooseList.getSelectedIndex()==3){//Bảng Nhân viên
+                    xuLyBangNhanVien();
+                }
+                else if(chooseList.getSelectedIndex()==4){//Bảng thiết bị
+                    xuLyBangThietBi();
+                }
+                else if(chooseList.getSelectedIndex()==5){//Bảng thiết bị ở một cơ sở
+                    xuLyBangThietBiCoSo();
+                }
+                else if(chooseList.getSelectedIndex()==6){//Bảng hóa đơn
+                    xuLyBangHoaDon();
+                }
+                else if(chooseList.getSelectedIndex()==7){//Bảng hàng hóa cơ sở
+                    xuLyBangHangHoaCoSo();
                 }
                 else{
                     System.out.println(chooseList.getSelectedItem());
@@ -550,6 +568,12 @@ public class admin implements ActionListener{
             private void xuLyBangHoiVien(){
 
             }
+            private void xuLyBangNhanVien(){}
+            private void xuLyBangThietBi(){}
+            private void xuLyBangThietBiCoSo(){}
+            private void xuLyBangHoaDon(){}
+            private void xuLyBangHangHoaCoSo(){}
+
         });
         
 
@@ -591,7 +615,17 @@ public class admin implements ActionListener{
         //Bảng dữ liệu
         JPanel disDataPanel = new JPanel();
         disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
-        
+
+        String[][] rows = {{"test1", "test2", "test3","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"},
+             {"test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"}
+            };
+        String[] columnns =   {"test7", "test8", "test9","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"};
+
+        JTable dataTable = new JTable(rows,columnns);
+
+        JScrollPane scrollPane = new JScrollPane(dataTable);
+        scrollPane.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
+        disDataPanel.add(scrollPane);
         rightPanel.add(disDataPanel);
     }
     public static void main(String[] args){

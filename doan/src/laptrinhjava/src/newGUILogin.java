@@ -9,8 +9,8 @@ public class newGUILogin extends JFrame implements ActionListener{
     JTextField username = new JTextField();
     JPasswordField pass = new JPasswordField();
     JButton go;
-    String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main;encrypt=false";
-    String userName = "sa"; String password= "minhtuan123";
+    String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
+    String userName = "sa"; String password= "123456";
     Connection con; 
     Statement stmt;
     public newGUILogin() {
@@ -118,34 +118,34 @@ public class newGUILogin extends JFrame implements ActionListener{
     }
     public void actionPerformed(ActionEvent e)
     {
-        // if(e.getSource() == go)
-        // {
-        //     if(username.getText().isEmpty()||new String(pass.getPassword()).isEmpty()) JOptionPane.showMessageDialog(this, "Thiếu thông tin đăng nhập");
-        //     else 
-        //     {
-        //         try
-        //         {
-        //             ResultSet rs = stmt.executeQuery("SELECT * FROM HOIVIEN WHERE TK ='" + username.getText() + "'");
-        //             if(rs.next())
-        //             {
-        //                 if(rs.getString("MK").equals(new String(pass.getPassword()))) JOptionPane.showMessageDialog(this, "Đang chuyển vào GUI hội viên");
-        //                 else JOptionPane.showMessageDialog(this, "Sai mật khẩu");
-        //             }
-        //             else JOptionPane.showMessageDialog(this, "Tên tài khoản không tồn tại");
+        if(e.getSource() == go)
+        {
+            if(username.getText().isEmpty()||new String(pass.getPassword()).isEmpty()) JOptionPane.showMessageDialog(this, "Thiếu thông tin đăng nhập");
+            else 
+            {
+                try
+                {
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien WHERE TaiKhoan ='" + username.getText() + "'");
+                    if(rs.next())
+                    {
+                        if(rs.getString("MatKhau").trim().equals(new String(pass.getPassword()))) JOptionPane.showMessageDialog(this, "Đang chuyển vào GUI hội viên");
+                        else JOptionPane.showMessageDialog(this,"Sai mật khẩu");
+                    }
+                    else JOptionPane.showMessageDialog(this, "Tên tài khoản không tồn tại");
 
-        //         }catch(Exception ex)
-        //         {
-        //             System.out.println(ex);
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //     JOptionPane.showMessageDialog(this,"Chưa năng hiện đang phát triển");
-        // }
-        if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
+                }catch(Exception ex)
+                {
+                    System.out.println(ex);
+                }
+            }
+        }
+        else if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
             new GUISignup();
             dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"Chưa năng hiện đang phát triển");
         }
     }
     

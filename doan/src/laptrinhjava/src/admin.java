@@ -1,5 +1,3 @@
-package laptrinhjava.src;
-
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -67,13 +65,16 @@ public class admin implements ActionListener{
     
 
     public admin(){
-        // //liên kết database
-        // Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        // String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
-        // String userName = "sa"; String password= "123456";
-        // Connection con = DriverManager.getConnection(dbUrl, userName, password);
-        // Statement stmt = con.createStatement();
-        
+        //liên kết database
+        try{
+            String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
+            String userName = "sa"; String password= "123456";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(dbUrl, userName, password);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }       
         //main frame
         adminFrame.setSize(width, height);
         adminFrame.setLocationRelativeTo(null);
@@ -630,5 +631,11 @@ public class admin implements ActionListener{
     }
     public static void main(String[] args){
         new admin();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }

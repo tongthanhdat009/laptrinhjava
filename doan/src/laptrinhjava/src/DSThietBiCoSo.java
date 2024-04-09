@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.ArrayList;
 public class DSThietBiCoSo
 {
@@ -11,14 +10,8 @@ public class DSThietBiCoSo
     {
         this.dsThietBiCoSo = dsThietBiCoSo;
     }
-    public void them(String maThietBi, String maCoSo, LocalDate ngayNhap)
+    public ArrayList<ThietBiCoSo> getDSThietBiCoSo()
     {
-        dsThietBiCoSo.add(new ThietBiCoSo(maThietBi, maCoSo, ngayNhap));
-    }
-    public void xoa(String maThietBi, String maCoSo)
-    {
-        for(ThietBiCoSo i:dsThietBiCoSo)
-        if(i.getMaCoSo().equals(maCoSo)&&i.getMaThietBi().equals(maThietBi))
-        dsThietBiCoSo.remove(i);
+        return dsThietBiCoSo;
     }
 }

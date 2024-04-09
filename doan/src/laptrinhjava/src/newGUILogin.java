@@ -3,23 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
 
 public class newGUILogin extends JFrame implements ActionListener{
     JTextField username = new JTextField();
     JPasswordField pass = new JPasswordField();
     JButton go;
-    String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
-    String userName = "sa"; String password= "123456";
-    Connection con; 
-    Statement stmt;
     public newGUILogin() {
-        try
-        {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            stmt = con.createStatement();
-
             setSize(1600, 900);
             setLocationRelativeTo(null);
             setLayout(null);
@@ -111,10 +100,6 @@ public class newGUILogin extends JFrame implements ActionListener{
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setResizable(false);
             setVisible(true);
-        }catch(Exception ex)
-        {
-            System.out.println(ex);
-        }
     }
     public void actionPerformed(ActionEvent e)
     {
@@ -123,19 +108,22 @@ public class newGUILogin extends JFrame implements ActionListener{
             if(username.getText().isEmpty()||new String(pass.getPassword()).isEmpty()) JOptionPane.showMessageDialog(this, "Thiếu thông tin đăng nhập");
             else 
             {
-                try
-                {
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien WHERE TaiKhoan ='" + username.getText() + "'");
-                    if(rs.next())
-                    {
-                        if(rs.getString("MatKhau").trim().equals(new String(pass.getPassword()))) JOptionPane.showMessageDialog(this, "Đang chuyển vào GUI hội viên");
-                        else JOptionPane.showMessageDialog(this,"Sai mật khẩu");
-                    }
-                    else JOptionPane.showMessageDialog(this, "Tên tài khoản không tồn tại");
-
-                }catch(Exception ex)
-                {
-                    System.out.println(ex);
+                TrungGianDangNhapSuaTenSau dangNhap = new TrungGianDangNhapSuaTenSau();
+                if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == -2){
+                    JOptionPane.showMessageDialog(this,"HỆ THỐNG ĐANG LỖI VUI LÒNG THỬ LẠI SAU");
+                }
+                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == -1){
+                    JOptionPane.showMessageDialog(this,"TÀI KHOẢN KHÔNG TỒN TẠI");
+                }
+                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 0){
+                    JOptionPane.showMessageDialog(this,"Sai MẬT KHẨU");
+                }
+                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 1){
+                    JOptionPane.showMessageDialog(this,"ĐĂNG NHẬP THÀNH CÔNG");
+                }
+                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 2){
+                    new admin();
+                    dispose();
                 }
             }
         }
@@ -143,10 +131,7 @@ public class newGUILogin extends JFrame implements ActionListener{
             new GUISignup();
             dispose();
         }
-        else
-        {
-            JOptionPane.showMessageDialog(this,"Chưa năng hiện đang phát triển");
-        }
+        else JOptionPane.showMessageDialog(this,"Chưa năng hiện đang phát triển");
     }
     
     public static void main(String[] args) {

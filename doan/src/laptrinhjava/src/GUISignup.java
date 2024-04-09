@@ -87,6 +87,7 @@ public class GUISignup extends JFrame {
 		GUISignup.this.setLocationRelativeTo(null);
 
 		setBounds(100, 100, 825, 784);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Register");

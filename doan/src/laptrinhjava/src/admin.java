@@ -1,3 +1,5 @@
+package laptrinhjava.src;
+
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -5,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class admin implements ActionListener{
+public class admin{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
     private final int width = 1600;
     private final int height = 900;

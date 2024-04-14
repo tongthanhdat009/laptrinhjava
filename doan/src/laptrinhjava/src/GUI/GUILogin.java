@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-import BLL.TrungGianDangNhapSuaTenSau;
+import BLL.BLLDangNhap;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -112,7 +112,7 @@ public class GUILogin extends JFrame implements ActionListener{
             if(username.getText().isEmpty()||new String(pass.getPassword()).isEmpty()) JOptionPane.showMessageDialog(this, "Thiếu thông tin đăng nhập");
             else 
             {
-                TrungGianDangNhapSuaTenSau dangNhap = new TrungGianDangNhapSuaTenSau();
+                BLLDangNhap dangNhap = new BLLDangNhap();
                 if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == -2){
                     JOptionPane.showMessageDialog(this,"HỆ THỐNG ĐANG LỖI VUI LÒNG THỬ LẠI SAU");
                 }

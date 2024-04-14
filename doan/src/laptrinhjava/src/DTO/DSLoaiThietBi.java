@@ -15,4 +15,8 @@ public class DSLoaiThietBi {
     {
         return dsThietBi;
     }
+    public void them(LoaiThietBi thietBi)
+    {
+        dsThietBi.add(thietBi);
+    }
 }

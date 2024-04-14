@@ -168,8 +168,27 @@ public class DataHoiVien {
         }
         return 0;
     }
-    public void sua(HoiVien a)
+    public int sua(HoiVien a)
     {
-        
+        //trả về 1 sửa thành công, 0 thất bại
+        String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, TaiKhoan = ?, MatKhau = ?, MaDV = ?, NgaySinh = ?, SDT = ? FROM HoiVien Where MaHV = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(0, a.getHoten());
+            statement.setString(1, a.getGioitinh());
+            statement.setString(2, a.getMail());
+            statement.setString(3, a.getTaiKhoanHoiVien());
+            statement.setString(4, a.getMatKhauHoiVien());
+            statement.setString(5, a.getMaDV());
+            statement.setString(6, a.getNgaysinh());
+            statement.setString(7, a.getSdt());
+            statement.setString(8, a.getMaDV());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
     }
 }

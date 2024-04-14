@@ -1,9 +1,9 @@
 package BLL;
 import DAL.DataHoiVien;
 
-public class TrungGianDangNhapSuaTenSau {
+public class BLLDangNhap {
     private DataHoiVien data;
-    public TrungGianDangNhapSuaTenSau()
+    public BLLDangNhap()
     {
         data = new DataHoiVien();
     }

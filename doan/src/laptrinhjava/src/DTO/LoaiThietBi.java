@@ -6,7 +6,7 @@ public class LoaiThietBi {
     private int ngayBaoHanh;
     private String hinhAnh;
     
-    public LoaiThietBi(String maThietBi,String tenThietBi,String giaThietBi, int ngayBaoHanh, String hinhAnh)
+    public LoaiThietBi(String maThietBi,String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh)
     {
         setMaThietBi(maThietBi);
         setTenLoaiThietBi(giaThietBi);

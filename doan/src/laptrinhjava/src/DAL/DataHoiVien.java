@@ -153,26 +153,23 @@ public class DataHoiVien {
         }
         return dsHoiVien;
     }
-    public int xoa(HoiVien a)
+    public int xoa(String maHoiVien)
     {
-        String truyVan = "DELETE FROM HoiVien Where MaHV = ? AND HoTenHV = ? AND GioiTinh = ? AND Gmail = ? AND TaiKhoan = ? AND MatKhau = ? AND MaDV = ? AND NgaySinh = ? AND SDT = ? ";
+        //trả về 1 xóa thành công, 0 xóa thất bại do dữ liệu nhập không có trong database
+        String truyVan = "DELETE FROM HoiVien Where MaHV = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(0, a.getMaHoiVien());
-            statement.setString(1, a.getHoten());
-            statement.setString(2, a.getGioitinh());
-            statement.setString(3, a.getMail());
-            statement.setString(4, a.getTaiKhoanHoiVien());
-            statement.setString(5, a.getMatKhauHoiVien());
-            statement.setString(6, a.getMaDV());
-            statement.setString(7, a.getNgaysinh());
-            statement.setString(8, a.getSdt());
+            statement.setString(0, maHoiVien);
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return 1;
         } catch (Exception e) {
             System.out.println(e);
         }
         return 0;
+    }
+    public void sua(HoiVien a)
+    {
+        
     }
 }

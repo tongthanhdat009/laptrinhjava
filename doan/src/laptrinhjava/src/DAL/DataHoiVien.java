@@ -147,7 +147,6 @@ public class DataHoiVien {
                 HoiVien b = new HoiVien(hoTen,GioiTinh,NgaySinh,SDT,maHoiVien,TaiKhoan,MatKhau,Mail,MaDV);
                 dsHoiVien.them(b);
             }
-            return dsHoiVien;
         }catch(Exception e)
         {
             System.out.println(e);

@@ -1,7 +1,8 @@
 package DAL;
 import java.sql.*;
-
+import java.util.ArrayList;
 import DTO.HoiVien;
+import DTO.dsHoiVien;
 public class DataHoiVien {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -41,7 +42,7 @@ public class DataHoiVien {
             preparedStatement.setString(5, hoiVien.getMail());
             preparedStatement.setString(6, hoiVien.getTaiKhoanHoiVien());
             preparedStatement.setString(7, hoiVien.getMatKhauHoiVien());
-            preparedStatement.setDate(4, hoiVien.getNgaysinh());
+            preparedStatement.setString(4, hoiVien.getNgaysinh());
             if (preparedStatement.executeUpdate() > 0)  return true;
         } catch(Exception e){
             System.out.println(e);
@@ -67,5 +68,90 @@ public class DataHoiVien {
             System.out.println(e);
         }
         return -2;
+    }
+    public dsHoiVien timKiem(HoiVien a)
+    {
+        ArrayList<String> ds = new ArrayList<String>();
+        dsHoiVien dsHoiVien = new dsHoiVien();
+        String truyVan = "SELECT * FROM HoiVien Where ";
+        if(!a.getMaHoiVien().equals("NULL"))
+        {
+            truyVan+= "MaHV = ? AND ";
+            ds.add(a.getMaHoiVien());
+        } 
+        if(!a.getHoten().equals("NULL"))
+        {
+            truyVan+="HoTenHV = ? AND ";
+            ds.add(a.getHoten());
+        } 
+        if(!a.getGioitinh().equals("NULL"))
+        {
+            truyVan+="GioiTinh = ? AND ";
+            ds.add(a.getGioitinh());
+        } 
+        if(!a.getMail().equals("NULL"))
+        {
+            truyVan+="Gmail = ? AND ";
+            ds.add(a.getMail());
+        } 
+        if(!a.getTaiKhoanHoiVien().equals("NULL"))
+        {
+            truyVan+="TaiKhoan = ? AND ";
+            ds.add(a.getTaiKhoanHoiVien());
+        } 
+        if(!a.getMatKhauHoiVien().equals("NULL"))
+        {
+            truyVan+="MatKhau = ? AND ";
+            ds.add(a.getMatKhauHoiVien());
+        } 
+        if(!a.getMaDV().equals("NULL"))
+        {
+            truyVan+="MaDV = ? AND ";
+            ds.add(a.getMaDV());
+        } 
+        if(!a.getNgaysinh().equals("2000-01-01"))
+        {
+            truyVan+="NgaySinh = ? ";
+            ds.add(a.getNgaysinh());
+        } 
+        if(!a.getSdt().equals("NULL"))
+        {
+            truyVan+="SDT = ? ";
+            ds.add(a.getSdt());
+        }
+        truyVan = truyVan.trim();
+        if (truyVan.endsWith("AND")) {
+            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+        }
+
+        try
+        {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            for(int i=0;i<ds.size();i++)
+            statement.setString(i+1, ds.get(i));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                String maHoiVien = rs.getString(1);
+                String hoTen = rs.getString(2);
+                String GioiTinh = rs.getString(3);
+                String Mail = rs.getString(4);
+                String TaiKhoan = rs.getString(5);
+                String MatKhau = rs.getString(6);
+                String MaDV = rs.getString(7);
+                Date NgaySinh = rs.getDate(8);
+                String SDT = rs.getString(9);
+
+                HoiVien b = new HoiVien(hoTen,GioiTinh,NgaySinh,SDT,maHoiVien,TaiKhoan,MatKhau,Mail,MaDV);
+                dsHoiVien.them(b);
+            }
+            return dsHoiVien;
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return dsHoiVien;
     }
 }

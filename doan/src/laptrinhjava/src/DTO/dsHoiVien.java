@@ -14,4 +14,8 @@ public class dsHoiVien {
 	{
 		return dshv;
 	}
+	public void them(HoiVien a)
+	{
+		dshv.add(a);
+	}
 }

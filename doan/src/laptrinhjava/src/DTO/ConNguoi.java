@@ -1,18 +1,22 @@
 package DTO;
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class ConNguoi {
-	private String hoten,gioitinh,diachi,sdt;
+	private String hoten,gioitinh,sdt;
 	private Date ngaysinh;
 	
-	public ConNguoi() {}
+	public ConNguoi() {
+		setHoten("NULL");
+		setGioitinh("NULL");
+		setSdt("NULL");
+		setNgaysinh(Date.valueOf("2000-01-01"));
+	}
 	
-	public ConNguoi(String hoten,String gioitinh,Date ngaysinh,String diachi,String sdt) {
+	public ConNguoi(String hoten,String gioitinh,Date ngaysinh,String sdt) {
 		this.hoten = hoten;
 		this.gioitinh  = gioitinh;
 		this.ngaysinh = ngaysinh;
-		this.diachi = diachi;
-
 		this.sdt =sdt;
 	}
 
@@ -32,14 +36,6 @@ public class ConNguoi {
 		this.gioitinh = gioitinh;
 	}
 
-	public String getDiachi() {
-		return diachi;
-	}
-
-	public void setDiachi(String diachi) {
-		this.diachi = diachi;
-	}
-
 	public String getSdt() {
 		return sdt;
 	}
@@ -48,8 +44,12 @@ public class ConNguoi {
 		this.sdt = sdt;
 	}
 
-	public Date getNgaysinh() {
-		return ngaysinh;
+	public String getNgaysinh() {
+		LocalDate a = ngaysinh.toLocalDate();
+		int y = a.getYear();
+		int m = a.getMonthValue();
+		int d = a.getDayOfMonth();
+		return y+"-"+m+"-"+d;
 	}
 
 	public void setNgaysinh(Date ngaysinh) {

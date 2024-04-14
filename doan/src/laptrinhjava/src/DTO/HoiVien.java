@@ -3,16 +3,22 @@ import java.sql.Date;
 
 public class HoiVien extends ConNguoi {
 	private String maHoiVien;
-	private String taiKhoanHoiVien,matKhauHoiVien, mail;
+	private String taiKhoanHoiVien,matKhauHoiVien, mail, maDV;
 	public HoiVien() {
-		
+		super();
+		setMaHoiVien("NULL");
+		setTaiKhoanHoiVien("NULL");
+		setMatKhauHoiVien("NULL");
+		setMail("NULL");
+		setMaDV("NULL");
 	}
-	public HoiVien(String hoten, String gioitinh, Date ngaysinh, String diachi, String sdt,String maHoiVien,String taiKhoanHoiVien,String matKhauHoiVien, String mail) {
-		super(hoten, gioitinh, ngaysinh, diachi, sdt);
+	public HoiVien(String hoten, String gioitinh, Date ngaysinh, String sdt,String maHoiVien,String taiKhoanHoiVien,String matKhauHoiVien, String mail, String maDV) {
+		super(hoten, gioitinh, ngaysinh, sdt);
 		this.maHoiVien = maHoiVien;
 		this.taiKhoanHoiVien = taiKhoanHoiVien;
 		this.matKhauHoiVien = matKhauHoiVien;
 		this.mail = mail;
+		this.maDV = maDV;
 	}
 	public String getMaHoiVien() {
 		return maHoiVien;
@@ -37,5 +43,11 @@ public class HoiVien extends ConNguoi {
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+	public String getMaDV() {
+		return maDV;
+	}
+	public void setMaDV(String maDV) {
+		this.maDV = maDV;
 	}
 }	

@@ -1,6 +1,5 @@
 package DTO;
 
-import java.util.Scanner;
 public class hangHoaCoSo{
     private int soLuong;
     private String maHangHoa;

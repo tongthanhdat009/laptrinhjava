@@ -1,7 +1,6 @@
-package doanJava;
+package GUI;
 
 import java.awt.EventQueue;
-import doanJava.GUILogin;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

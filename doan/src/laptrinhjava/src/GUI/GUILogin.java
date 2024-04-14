@@ -77,11 +77,11 @@ public class GUILogin extends JFrame implements ActionListener{
             dangKy.addActionListener(this);
             dangNhap.add(dangKy);
     
-            ImageIcon backGround = new ImageIcon("doan/src/laptrinhjava/src/asset/img/gym.jpg");
+            ImageIcon backGround = new ImageIcon("doan/src/laptrinhjava/src/asset/img/label/gym.jpg");
             JLabel imageBackground = new JLabel(backGround);
             imageBackground.setBounds(0, 0, backGround.getIconWidth(), backGround.getIconHeight());
     
-            ImageIcon muiTenDi = new ImageIcon("doan/src/laptrinhjava/src/asset/img/mui ten.png");
+            ImageIcon muiTenDi = new ImageIcon("doan/src/laptrinhjava/src/asset/img/icon/muiten-icon.png");
             go = new JButton(muiTenDi);
             go.setBounds(200 - 75/2, 650, 80, 80);
             go.setBackground(Color.white);

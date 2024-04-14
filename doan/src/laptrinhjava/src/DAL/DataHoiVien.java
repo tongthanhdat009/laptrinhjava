@@ -69,7 +69,7 @@ public class DataHoiVien {
         }
         return -2;
     }
-    public dsHoiVien timKiem(HoiVien a)
+    public dsHoiVien timKiem(HoiVien a) //Chưa test
     {
         ArrayList<String> ds = new ArrayList<String>();
         dsHoiVien dsHoiVien = new dsHoiVien();
@@ -153,7 +153,7 @@ public class DataHoiVien {
         }
         return dsHoiVien;
     }
-    public int xoa(String maHoiVien)
+    public int xoa(String maHoiVien) //Chưa test
     {
         //trả về 1 xóa thành công, 0 xóa thất bại do dữ liệu nhập không có trong database
         String truyVan = "DELETE FROM HoiVien Where MaHV = ? ";
@@ -168,7 +168,7 @@ public class DataHoiVien {
         }
         return 0;
     }
-    public int sua(HoiVien a)
+    public int sua(HoiVien a) //Chưa test
     {
         //trả về 1 sửa thành công, 0 thất bại
         String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, TaiKhoan = ?, MatKhau = ?, MaDV = ?, NgaySinh = ?, SDT = ? FROM HoiVien Where MaHV = ? ";

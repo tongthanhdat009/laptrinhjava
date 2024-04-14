@@ -111,7 +111,7 @@ public class DataHoiVien {
         } 
         if(!a.getNgaysinh().equals("2000-01-01"))
         {
-            truyVan+="NgaySinh = ? ";
+            truyVan+="NgaySinh = ? AND";
             ds.add(a.getNgaysinh());
         } 
         if(!a.getSdt().equals("NULL"))
@@ -152,5 +152,27 @@ public class DataHoiVien {
             System.out.println(e);
         }
         return dsHoiVien;
+    }
+    public int xoa(HoiVien a)
+    {
+        String truyVan = "DELETE FROM HoiVien Where MaHV = ? AND HoTenHV = ? AND GioiTinh = ? AND Gmail = ? AND TaiKhoan = ? AND MatKhau = ? AND MaDV = ? AND NgaySinh = ? AND SDT = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(0, a.getMaHoiVien());
+            statement.setString(1, a.getHoten());
+            statement.setString(2, a.getGioitinh());
+            statement.setString(3, a.getMail());
+            statement.setString(4, a.getTaiKhoanHoiVien());
+            statement.setString(5, a.getMatKhauHoiVien());
+            statement.setString(6, a.getMaDV());
+            statement.setString(7, a.getNgaysinh());
+            statement.setString(8, a.getSdt());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
     }
 }

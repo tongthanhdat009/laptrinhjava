@@ -2,7 +2,7 @@ package DTO;
 import java.util.ArrayList;
 
 public class DSLoaiThietBi {
-    private ArrayList<LoaiThietBi> dsThietBi;
+    public ArrayList<LoaiThietBi> dsThietBi;
     public DSLoaiThietBi()
     {
         dsThietBi = new ArrayList<>();

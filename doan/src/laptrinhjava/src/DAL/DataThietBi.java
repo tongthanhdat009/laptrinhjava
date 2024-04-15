@@ -35,4 +35,36 @@ public class DataThietBi {
         }
         return a;
     }
+    // public int laySoLuong()
+    // {
+    //     try {
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         Statement stmt = con.createStatement();
+    //         ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS SL FROM LoaiThietBi");
+    //         if(rs.next()) return rs.getInt("SL");
+    //     }
+    //     catch(Exception e){
+    //         System.out.println(e);
+    //     }
+    //     return 0;
+    // }
+    public DSLoaiThietBi timKiem(String ten)
+    {
+        String truyVan = "SELECT * FROM LoaiThietBi WHERE MaThietBi = ?";
+        DSLoaiThietBi ds = new DSLoaiThietBi();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setString(1, ten);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                LoaiThietBi thietBi = new LoaiThietBi(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                ds.them(thietBi);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
 }

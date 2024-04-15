@@ -9,7 +9,7 @@ public class LoaiThietBi {
     public LoaiThietBi(String maThietBi,String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh)
     {
         setMaThietBi(maThietBi);
-        setTenLoaiThietBi(giaThietBi);
+        setTenLoaiThietBi(tenThietBi);
         setGiaThietBi(giaThietBi);
         setNgayBaoHanh(ngayBaoHanh);
         setHinhAnh(hinhAnh);
@@ -43,5 +43,9 @@ public class LoaiThietBi {
     }
     public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
+    }
+    public void xuat()
+    {
+        System.out.println(maThietBi+" "+tenLoaiThietBi+" "+giaThietBi+" "+ngayBaoHanh+" "+hinhAnh);
     }
 }

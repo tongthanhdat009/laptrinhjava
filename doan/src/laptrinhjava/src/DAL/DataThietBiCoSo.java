@@ -18,44 +18,53 @@ public class DataThietBiCoSo {
     public int layMaThietBiCuoi()
     {
         String ma;
-        String truyVan = "SELECT TOP 1 FORM ThietBiOMotCoSo";
+        String truyVan = "SELECT * FROM ThietBiOMotCoSo";
         try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(truyVan);
-            if(rs.last()) 
+            int maxMa = 0;
+            while(rs.next()) 
             {
-                ma = rs.getString("MaThietBiCoSo");
-                ma = ma.substring(2);
-                return Integer.parseInt(ma);
+                ma = rs.getString("MaThietBiOCoSo");
+                ma = ma.substring(4);
+                ma = ma.trim();
+                if(Integer.parseInt(ma) > maxMa) maxMa = Integer.parseInt(ma);
             }
-            else return 1;
-
+            return maxMa;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return 0;
+        return -1;
     }
     public int nhapThietBi(String maLoaiThietBi,String maCoSo, int soLuong, int soNgayBaoHanh)
     {
 
         //soNgayBaoHanh từ bảng LoaiThietBi
         int maChuaCo = layMaThietBiCuoi() + 1;
+        if(maChuaCo == 0) 
+        {
+            System.out.println("helo");
+            return 0;
+        }
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             String truyVan = "INSERT INTO ThietBiOMotCoSo (MaThietBiOCoSo, MaCoSo, MaThietBi, NgayNhap, HanBaoHanh) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt;
             stmt = con.prepareStatement(truyVan);
+            int soHangUpdate = 0;
             for(int i=0;i<soLuong;i++)
             {
-                stmt.setString(1, "TB"+maChuaCo);  
+                stmt.setString(1, "TBCS"+maChuaCo);  
                 stmt.setString(2, maCoSo);
                 stmt.setString(3, maLoaiThietBi);
                 LocalDate ngayHetHan = LocalDate.now();
                 stmt.setDate(4, java.sql.Date.valueOf(ngayHetHan));
                 stmt.setDate(5, java.sql.Date.valueOf(ngayHetHan.plusDays(soNgayBaoHanh)));
+                soHangUpdate += stmt.executeUpdate();
                 maChuaCo++;
             }  
-            if(stmt.executeUpdate()>0) return 1; 
+            if(soHangUpdate == soLuong) return 1; 
         } catch (Exception e) {
             System.out.println(e);
         }

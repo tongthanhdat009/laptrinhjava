@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class dsHangHoa {
     ArrayList<hangHoa> dsHH;
     //hàm khởi tạo
-    dsHangHoa(){
+    public dsHangHoa(){
         this.dsHH = new ArrayList<>();
     }
     dsHangHoa(ArrayList<hangHoa> dsHangHoa){
@@ -66,5 +66,9 @@ public class dsHangHoa {
                 break;
             }
         }
+    }
+    public void them(hangHoa hh) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'them'");
     }
 }

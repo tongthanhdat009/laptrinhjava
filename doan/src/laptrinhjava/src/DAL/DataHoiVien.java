@@ -20,9 +20,15 @@ public class DataHoiVien {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT TOP 1 MAHV FROM HoiVien ORDER BY MAHV DESC");
-            if(rs.next()) return rs.getInt("MAHV") + 1;
-            return 1;
+            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien");
+            int max = 0;
+            while(rs.next())
+            {
+                String ma = rs.getString("MaHV");
+                ma = ma.substring(2);
+                if(max < Integer.parseInt(ma)) max = Integer.parseInt(ma);
+            }
+            return max;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -32,10 +38,10 @@ public class DataHoiVien {
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            int maHoiVienMoi = layMaHoiVienChuaTonTai();
+            String maHoiVienMoi = "HV"+layMaHoiVienChuaTonTai();
             String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, TaiKhoan, MatKhau, MADV, NgaySinh) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setInt(1, maHoiVienMoi);
+            preparedStatement.setString(1, maHoiVienMoi);
             preparedStatement.setString(2, hoiVien.getHoten());
             preparedStatement.setString(3, hoiVien.getMail());
             preparedStatement.setString(4, hoiVien.getGioitinh());
@@ -134,18 +140,7 @@ public class DataHoiVien {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-                String maHoiVien = rs.getString(1);
-                String hoTen = rs.getString(2);
-                String GioiTinh = rs.getString(3);
-                String Mail = rs.getString(4);
-                String TaiKhoan = rs.getString(5);
-                String MatKhau = rs.getString(6);
-                String MaDV = rs.getString(7);
-                Date NgaySinh = rs.getDate(8);
-                String SDT = rs.getString(9);
-
-                HoiVien b = new HoiVien(hoTen,GioiTinh,NgaySinh,SDT,maHoiVien,TaiKhoan,MatKhau,Mail,MaDV);
-                dsHoiVien.them(b);
+                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9)));
             }
         }catch(Exception e)
         {
@@ -190,5 +185,20 @@ public class DataHoiVien {
             System.out.println(e);
         }
         return 0;
+    }
+    public ArrayList<HoiVien> layDanhSachHoiVien()
+    {
+        ArrayList<HoiVien> dsHoiVien = new ArrayList<>();
+        String truyVan = "SELECT * FROM HoiVien";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            dsHoiVien.add(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return dsHoiVien;
     }
 }

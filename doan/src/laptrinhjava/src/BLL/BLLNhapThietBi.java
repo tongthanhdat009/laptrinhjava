@@ -1,16 +1,20 @@
 package BLL;
 
+import DAL.DataCoSo;
 import DAL.DataThietBi;
 import DAL.DataThietBiCoSo;
+import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 
 public class BLLNhapThietBi {
     private DataThietBi dataThietBi;
     private DataThietBiCoSo dataThietBiCoSo;
+    private DataCoSo dataCoSo;
     public BLLNhapThietBi()
     {
         dataThietBi = new DataThietBi();
         dataThietBiCoSo = new DataThietBiCoSo();
+        dataCoSo = new DataCoSo();
     }
     public DSLoaiThietBi layDSLoaiThietBi()
     {
@@ -27,5 +31,9 @@ public class BLLNhapThietBi {
     public DSLoaiThietBi timKiem(String ten)
     {
         return dataThietBi.timKiem(ten);
+    }
+    public DSCoSo layDsCoSo()
+    {
+        return dataCoSo.layDSCoSo();
     }
 }

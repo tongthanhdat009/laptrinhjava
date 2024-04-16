@@ -6,13 +6,13 @@ public class CoSo {
     private String tenCoSo;
     private String doanhThu;
     private String thoiGianHoatDong;
-    public CoSo(String maCoSo,String diaChi, String std,String doanhThu,String thoiGianHoatDong)
+    public CoSo(String maCoSo,String tenCoSo, String diaChi, String thoiGianHoatDong, String std,String doanhThu)
     {
         setStd(std);
         setDiaChi(diaChi);
         setMaCoSo(maCoSo);
         setDoanhThu(doanhThu);
-        setTenCoSo(maCoSo);
+        setTenCoSo(tenCoSo);
         setThoiGianHoatDong(thoiGianHoatDong);
     }
     public String getDiaChi() {

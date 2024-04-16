@@ -8,7 +8,6 @@ import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
-import DTO.ThietBiCoSo;
 import java.util.Vector;
 
 
@@ -288,9 +287,7 @@ public class GUIAdmin implements ActionListener{
         nhapHangHoaPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-                rightPanel.repaint(); // Vẽ lại JPanel
+                xuLyNhapHangHoa();
                 
             }
             @Override
@@ -497,7 +494,6 @@ public class GUIAdmin implements ActionListener{
                         DSCoSo dsCS = new DSCoSo();
                         dsCS = dataCoSo.layDSCoSo();
                         Vector<String> s = new Vector<>();
-                        int i = 0;
                         for(CoSo a : dsCS.dsCoSo)
                         {
                             s.add(a.getMaCoSo());
@@ -560,7 +556,46 @@ public class GUIAdmin implements ActionListener{
             else scrollPane.setBounds(5, 150, rightPanel.getWidth()-20,700);
             rightPanel.add(scrollPane);
     }
+    public void xuLyNhapHangHoa()
+    {
+        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        rightPanel.repaint(); // Vẽ lại JPanel
+        rightPanel.setLayout(null);
 
+        JPanel canGiua = new JPanel(new FlowLayout());
+        canGiua.setBounds(5,5,rightPanel.getWidth(),55);
+        canGiua.setBackground(Color.yellow);
+        JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
+        titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
+
+        canGiua.add(titleNhapThietBi);
+        rightPanel.add(canGiua);
+
+        JPanel filter = new JPanel(null);
+        filter.setBounds(5,70,rightPanel.getWidth(),55);
+        JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên");
+        timTheoTen.setBounds(10, 15, 130, 30);
+        JTextField nhapTen = new JTextField();
+        nhapTen.setBounds(145, 15, 175, 30);
+        JButton timkiem = new JButton(">");
+            // timkiem.addActionListener(new ActionListener() {
+            //     public void actionPerformed(ActionEvent e)
+            //     {
+            //         BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+            //         DSLoaiThietBi ds = new DSLoaiThietBi();
+            //         ds = bllNhapThietBi.timKiem(nhapTen.getText());
+            //         int soLuongLoaiThietBi = ds.dsThietBi.size();
+            //         xuLyNhapHang(ds, soLuongLoaiThietBi);
+            //     }
+            // });
+        timkiem.setBounds(320, 15, 45, 29);
+        filter.add(timTheoTen);
+        filter.add(nhapTen);
+        filter.add(timkiem);
+
+        rightPanel.add(filter);
+    }
     private void xuLyDanhSach(){
         
         

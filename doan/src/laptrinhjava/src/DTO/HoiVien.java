@@ -12,7 +12,7 @@ public class HoiVien extends ConNguoi {
 		setMail("NULL");
 		setMaDV("NULL");
 	}
-	public HoiVien(String hoten, String gioitinh, Date ngaysinh, String sdt,String maHoiVien,String taiKhoanHoiVien,String matKhauHoiVien, String mail, String maDV) {
+	public HoiVien(String maHoiVien, String hoten, String gioitinh, String mail, String taiKhoanHoiVien,String matKhauHoiVien, String maDV ,Date ngaysinh, String sdt) {
 		super(hoten, gioitinh, ngaysinh, sdt);
 		this.maHoiVien = maHoiVien;
 		this.taiKhoanHoiVien = taiKhoanHoiVien;

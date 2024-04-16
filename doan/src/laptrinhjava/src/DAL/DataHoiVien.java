@@ -140,18 +140,7 @@ public class DataHoiVien {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-                String maHoiVien = rs.getString(1);
-                String hoTen = rs.getString(2);
-                String GioiTinh = rs.getString(3);
-                String Mail = rs.getString(4);
-                String TaiKhoan = rs.getString(5);
-                String MatKhau = rs.getString(6);
-                String MaDV = rs.getString(7);
-                Date NgaySinh = rs.getDate(8);
-                String SDT = rs.getString(9);
-
-                HoiVien b = new HoiVien(hoTen,GioiTinh,NgaySinh,SDT,maHoiVien,TaiKhoan,MatKhau,Mail,MaDV);
-                dsHoiVien.them(b);
+                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9)));
             }
         }catch(Exception e)
         {
@@ -208,7 +197,7 @@ public class DataHoiVien {
             while(rs.next())
             dsHoiVien.add(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9)));
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
         return dsHoiVien;
     }

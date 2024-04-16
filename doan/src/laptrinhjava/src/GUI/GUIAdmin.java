@@ -633,36 +633,18 @@ public class GUIAdmin implements ActionListener{
         chooseList.setFont(new java.awt.Font("Arial", 1, 16));
 
         //Xử lý sự kiện         
-        chooseList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                // if(chooseList.getSelectedIndex()==0){ //bảng cơ sở
-                //     xuLyBangCoSo();
-                // }
-                // else if(chooseList.getSelectedIndex()==1){//Bảng dịch vụ
-                //     xuLyBangDichVu();
-                // }
-                if(chooseList.getSelectedIndex()==2){//Bảng hội viên
-                    hienThiThongTinHoiVien();
+        chooseList.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    switch ((String) e.getItem()) {
+                        case "Hội viên":
+                            hienThiThongTinHoiVien();
+                            break;
+                    
+                        default:
+                            break;
+                    }
                 }
-                // else if(chooseList.getSelectedIndex()==3){//Bảng Nhân viên
-                //     xuLyBangNhanVien();
-                // }
-                // else if(chooseList.getSelectedIndex()==4){//Bảng thiết bị
-                //     xuLyBangThietBi();
-                // }
-                // else if(chooseList.getSelectedIndex()==5){//Bảng thiết bị ở một cơ sở
-                //     xuLyBangThietBiCoSo();
-                // }
-                // else if(chooseList.getSelectedIndex()==6){//Bảng hóa đơn
-                //     xuLyBangHoaDon();
-                // }
-                // else if(chooseList.getSelectedIndex()==7){//Bảng hàng hóa cơ sở
-                //     xuLyBangHangHoaCoSo();
-                // }
-                // else{
-                //     System.out.println(chooseList.getSelectedItem());
-                // }
             }
             private void hienThiThongTinHoiVien(){
                 //Bảng dữ liệu

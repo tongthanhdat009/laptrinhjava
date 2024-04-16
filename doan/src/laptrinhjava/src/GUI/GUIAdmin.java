@@ -3,9 +3,14 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import BLL.BLLNhapThietBi;
+import DAL.DataCoSo;
+import DTO.CoSo;
+import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
 import DTO.ThietBiCoSo;
+import java.util.Vector;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -426,7 +431,6 @@ public class GUIAdmin implements ActionListener{
                     DSLoaiThietBi ds = new DSLoaiThietBi();
                     ds = bllNhapThietBi.timKiem(nhapTen.getText());
                     int soLuongLoaiThietBi = ds.dsThietBi.size();
-                    System.out.println(soLuongLoaiThietBi);
                     xuLyNhapHang(ds, soLuongLoaiThietBi);
                 }
             });
@@ -470,7 +474,7 @@ public class GUIAdmin implements ActionListener{
                 thongTinThietBi.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        JPanel thongTinChiTiet = new JPanel(new GridLayout(5,1));
+                        JPanel thongTinChiTiet = new JPanel(new GridLayout(6,1));
                         thongTinChiTiet.setPreferredSize(new Dimension(300,150));
                         JLabel ten = new JLabel("Tên: "+thietBi.getTenLoaiThietBi());
                         JLabel ma = new JLabel("Mã Loại: "+thietBi.getMaThietBi());
@@ -488,6 +492,25 @@ public class GUIAdmin implements ActionListener{
                         thongTinChiTiet.add(soNgayBaoHanh);
                         thongTinChiTiet.add(chonSoLuong);
                         boolean flag = false;
+
+                        DataCoSo dataCoSo = new DataCoSo();
+                        DSCoSo dsCS = new DSCoSo();
+                        dsCS = dataCoSo.layDSCoSo();
+                        Vector<String> s = new Vector<>();
+                        int i = 0;
+                        for(CoSo a : dsCS.dsCoSo)
+                        {
+                            s.add(a.getMaCoSo());
+                        }
+                        JComboBox chonCoSo = new JComboBox<>(s);
+                        JLabel labelCoSo = new JLabel("Chọn cơ sở: ");
+
+                        JPanel panelChonCoSo = new JPanel(new GridLayout(1,2));
+                        panelChonCoSo.add(labelCoSo);
+                        panelChonCoSo.add(chonCoSo);
+
+                        thongTinChiTiet.add(panelChonCoSo);
+
                         while(flag == false)
                         {
                             int qes = JOptionPane.showConfirmDialog(rightPanel, thongTinChiTiet,"Nhập thiết bị",JOptionPane.OK_OPTION);
@@ -498,7 +521,7 @@ public class GUIAdmin implements ActionListener{
                                     if(sl > 0) 
                                     {
                                         BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-                                        bllNhapThietBi.nhapHangVeCoSo(thietBi.getMaThietBi(),"CS001",sl,thietBi.getNgayBaoHanh());
+                                        bllNhapThietBi.nhapHangVeCoSo(thietBi.getMaThietBi(),chonCoSo.getSelectedItem().toString(),sl,thietBi.getNgayBaoHanh());
                                         flag = true;
                                     }
                                     else JOptionPane.showMessageDialog(rightPanel, "Số lượng phải lớn hơn 0");

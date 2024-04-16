@@ -50,7 +50,7 @@ public class DataThietBi {
     // }
     public DSLoaiThietBi timKiem(String ten)
     {
-        String truyVan = "SELECT * FROM LoaiThietBi WHERE MaThietBi = ?";
+        String truyVan = "SELECT * FROM LoaiThietBi WHERE TenLoaiThietBi = ?";
         DSLoaiThietBi ds = new DSLoaiThietBi();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);

@@ -1,7 +1,7 @@
 package DTO;
 import java.util.ArrayList;
 public class DSCoSo {
-    private ArrayList<CoSo> dsCoSo;
+    public ArrayList<CoSo> dsCoSo;
     public DSCoSo()
     {
         dsCoSo = new ArrayList<>();
@@ -13,5 +13,9 @@ public class DSCoSo {
     public ArrayList<CoSo> getDsCoSo()
     {
         return dsCoSo;
+    }
+    public void them(CoSo coSo)
+    {
+        dsCoSo.add(coSo);
     }
 }

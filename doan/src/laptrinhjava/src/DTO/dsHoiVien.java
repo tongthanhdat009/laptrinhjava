@@ -1,7 +1,7 @@
 package DTO;
 import java.util.ArrayList;
 public class dsHoiVien {
-	private ArrayList<HoiVien> dshv;
+	public ArrayList<HoiVien> dshv;
 	
 	public dsHoiVien() {
 		dshv = new ArrayList<HoiVien>();

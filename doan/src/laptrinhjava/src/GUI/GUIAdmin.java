@@ -1,13 +1,20 @@
 package GUI;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
+import BLL.BLLAdmin;
 import BLL.BLLNhapThietBi;
 import DAL.DataCoSo;
+import DAL.DataHoiVien;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
+import DTO.HoiVien;
 import DTO.LoaiThietBi;
+import DTO.dsHoiVien;
+
+import java.util.ArrayList;
 import java.util.Vector;
 
 
@@ -68,6 +75,9 @@ public class GUIAdmin implements ActionListener{
         
     //tiêu đề phụ
     JLabel subTitle = new JLabel("Chức năng");
+    
+    //BLLAdmin
+    BLLAdmin bllAdmin = new BLLAdmin();
 
     public GUIAdmin(){    
         //main frame
@@ -632,9 +642,9 @@ public class GUIAdmin implements ActionListener{
                 // else if(chooseList.getSelectedIndex()==1){//Bảng dịch vụ
                 //     xuLyBangDichVu();
                 // }
-                // else if(chooseList.getSelectedIndex()==2){//Bảng hội viên
-                //     xuLyBangHoiVien();
-                // }
+                if(chooseList.getSelectedIndex()==2){//Bảng hội viên
+                    hienThiThongTinHoiVien();
+                }
                 // else if(chooseList.getSelectedIndex()==3){//Bảng Nhân viên
                 //     xuLyBangNhanVien();
                 // }
@@ -654,6 +664,40 @@ public class GUIAdmin implements ActionListener{
                 //     System.out.println(chooseList.getSelectedItem());
                 // }
             }
+            private void hienThiThongTinHoiVien(){
+                //Bảng dữ liệu
+                JPanel disDataPanel = new JPanel();
+                disDataPanel.setLayout(null);
+                disDataPanel.setPreferredSize(new Dimension((int)(width * 0.6),height - 400));
+                DefaultTableModel hvList = new DefaultTableModel();
+                JTable dataTable = new JTable(hvList);
+                dataTable.setBounds(0,0,disDataPanel.getWidth(),disDataPanel.getHeight());
+
+                ArrayList<String> tenCotHV = bllAdmin.layTenCotHoiVien();
+
+                ArrayList<HoiVien> dsHV = bllAdmin.layDsHV();
+
+                
+                for(int i=0;i<tenCotHV.size();i++){
+                    hvList.addColumn(tenCotHV.get(i));
+                }
+
+                for(int i=0;i<dsHV.size();i++){
+                    hvList.addRow(new Object[]{ dsHV.get(i).getMaHoiVien(),
+                                                 dsHV.get(i).getHoten(),
+                                                 dsHV.get(i).getGioitinh(),
+                                                 dsHV.get(i).getNgaysinh(),
+                                                 dsHV.get(i).getSdt(),
+                                                 dsHV.get(i).getMail(),
+                                                 dsHV.get(i).getTaiKhoanHoiVien(),
+                                                 dsHV.get(i).getMatKhauHoiVien()});
+                }
+                JScrollPane scrollPane = new JScrollPane(dataTable);
+                scrollPane.setBounds(5,20,disDataPanel.getWidth()-300,disDataPanel.getHeight()-100);
+                disDataPanel.add(dataTable);
+                disDataPanel.add(scrollPane);
+                rightPanel.add(disDataPanel);
+            }  
         });
         
 
@@ -692,21 +736,7 @@ public class GUIAdmin implements ActionListener{
         
         rightPanel.add(btnPanel);
         
-        //Bảng dữ liệu
-        JPanel disDataPanel = new JPanel();
-        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
-
-        String[][] rows = {{"test1", "test2", "test3","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"},
-             {"test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"}
-            };
-        String[] columnns =   {"test7", "test8", "test9","test4", "test5", "test6","test4", "test5", "test6","test4", "test5", "test6"};
-
-        JTable dataTable = new JTable(rows,columnns);
-
-        JScrollPane scrollPane = new JScrollPane(dataTable);
-        scrollPane.setPreferredSize(new Dimension((int)(width * 0.697),height - 400));
-        disDataPanel.add(scrollPane);
-        rightPanel.add(disDataPanel);
+        
     }
     public static void main(String[] args){
         new GUIAdmin();

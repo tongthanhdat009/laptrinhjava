@@ -7,6 +7,8 @@ public class DataHoiVien {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
     private String userName = "sa"; String password= "123456";
+    public ArrayList<String> tenCot = new ArrayList<String>();
+    
     public DataHoiVien()
     {
         try{
@@ -14,6 +16,21 @@ public class DataHoiVien {
         }catch(Exception e){
             System.out.println(e);   
         }
+    }
+    public ArrayList<String> getTenCot(){
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for(int i=1; i<=rsmd.getColumnCount();i++){
+                this.tenCot.add(rsmd.getColumnName(i));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return this.tenCot; 
     }
     public int layMaHoiVienChuaTonTai()
     {

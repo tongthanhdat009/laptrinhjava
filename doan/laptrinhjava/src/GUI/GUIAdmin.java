@@ -13,6 +13,7 @@ import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
+import DTO.dsHangHoaCoSo;
 import DTO.dsHoiVien;
 
 import java.util.ArrayList;
@@ -719,14 +720,14 @@ public class GUIAdmin implements ActionListener{
         
         
     }
-    public void thongKeDoanhThu(DSCoSo dsCoSo)
+    public void thongKeDoanhThu(DSCoSo CoSods)
     {
         rightPanel.setLayout(null);
 
         JPanel canGiua = new JPanel(new FlowLayout());
         canGiua.setBounds(5,5,rightPanel.getWidth(),55);
         canGiua.setBackground(Color.yellow);
-        JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
+        JLabel titleNhapThietBi = new JLabel("Thống kê kinh doanh");
         titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
 
         canGiua.add(titleNhapThietBi);
@@ -739,6 +740,47 @@ public class GUIAdmin implements ActionListener{
         JTextField nhapTen = new JTextField();
         nhapTen.setBounds(145, 15, 175, 30);
         JButton timkiem = new JButton(">");
+        timkiem.setBounds(320, 15, 45, 29);
+        filter.add(timTheoTen);
+        filter.add(nhapTen);
+        filter.add(timkiem);
+        rightPanel.add(filter);
+
+        int chieuDocPanel = CoSods.dsCoSo.size()*200;
+        int chieuNgangPanel = rightPanel.getWidth() - 200;
+        int max = 0;
+        for(int i=0;i<CoSods.dsCoSo.size();i++)
+        {
+            if(CoSods.dsCoSo.get(i).getDoanhThu() > max) max = CoSods.dsCoSo.get(i).getDoanhThu();
+        }
+        double tiLe;
+        if(max != 0) tiLe = (double)chieuNgangPanel / max;
+        else tiLe = 0;
+        int y = 0;
+        System.out.println(tiLe);
+        JPanel thongKe = new JPanel(null);
+        thongKe.setBounds(2, 150, rightPanel.getWidth() - 10, chieuDocPanel);
+        for(CoSo a : CoSods.dsCoSo)
+        {
+            JPanel JPanelThongke1CoSo = new JPanel(null);
+            JPanelThongke1CoSo.setBounds(0, y, rightPanel.getWidth(), 50);
+            JLabel labelTenCoSo = new JLabel(a.getTenCoSo());
+            labelTenCoSo.setBounds(0,0,100,50);
+            JLabel doanhThuCot = new JLabel();
+            doanhThuCot.setBounds(100,0,(int)(tiLe*a.getDoanhThu()),50);
+            doanhThuCot.setBackground(Color.BLUE);
+            doanhThuCot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu
+
+            JLabel doanhThu = new JLabel(String.valueOf(a.getDoanhThu()));
+            doanhThu.setBounds(doanhThuCot.getWidth()+labelTenCoSo.getWidth()+10, 0, 100, 50);
+            
+            JPanelThongke1CoSo.add(labelTenCoSo);
+            JPanelThongke1CoSo.add(doanhThuCot);
+            JPanelThongke1CoSo.add(doanhThu);
+            thongKe.add(JPanelThongke1CoSo);
+            y=y+100;
+        }   
+        rightPanel.add(thongKe);
     }
     public static void main(String[] args){
         new GUIAdmin();

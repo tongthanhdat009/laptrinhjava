@@ -5,11 +5,7 @@ public class BLLThongKeDT {
     private DataCoSo dataCoSo;
     public BLLThongKeDT()
     {
-        try{
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        }catch(Exception e){
-            System.out.println(e);   
-        }
+        dataCoSo = new DataCoSo();
     }
     public DSCoSo layDSCoSo()
     {

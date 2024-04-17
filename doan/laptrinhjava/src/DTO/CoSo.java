@@ -4,9 +4,9 @@ public class CoSo {
     private String diaChi;
     private String std;
     private String tenCoSo;
-    private String doanhThu;
+    private int doanhThu;
     private String thoiGianHoatDong;
-    public CoSo(String maCoSo,String tenCoSo, String diaChi, String thoiGianHoatDong, String std,String doanhThu)
+    public CoSo(String maCoSo,String tenCoSo, String diaChi, String thoiGianHoatDong, String std,int doanhThu)
     {
         setStd(std);
         setDiaChi(diaChi);
@@ -36,10 +36,10 @@ public class CoSo {
     public void setMaCoSo(String maCoSo) {
         this.maCoSo = maCoSo;
     }
-    public void setDoanhThu(String doanhThu) {
+    public void setDoanhThu(int doanhThu) {
         this.doanhThu = doanhThu;
     }
-    public String getDoanhThu() {
+    public int getDoanhThu() {
         return doanhThu;
     }
     public void setTenCoSo(String tenCoSo) {

@@ -61,12 +61,6 @@ public class GUIAdmin implements ActionListener{
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
-    //loading
-    private JPanel loadingPanel = new JPanel();
-    private JProgressBar pBar = new JProgressBar();
-    private JLabel pBarLabel = new JLabel("Đang tải");
-    private JLabel loadingLogo = new JLabel();
-
     //main
     private JPanel mainPanel = new JPanel();
     private JPanel leftPanel = new JPanel();
@@ -90,25 +84,6 @@ public class GUIAdmin implements ActionListener{
         adminFrame.setLayout(null);
         adminFrame.setIconImage(logo.getImage());
 
-        //loading
-        loadingPanel.setSize(new Dimension(width,height));
-        loadingPanel.setLayout(null);
-        loadingPanel.setBackground(Color.WHITE);
-        
-        loadingLogo.setIcon(logo);
-        loadingLogo.setBounds(675,100,(int)(width * 0.3),250);
-
-        pBarLabel.setBounds(width/2 - 50,350,300,50);
-        pBarLabel.setFont(new java.awt.Font("Arial", 1, 25));
-        
-        pBar.setValue(0);
-        pBar.setBounds(width/2 - 210,height/2 -25,420,50);
-        pBar.setStringPainted(true);//thêm % cho thanh tiến trình
-
-        loadingPanel.add(loadingLogo);
-        loadingPanel.add(pBarLabel);
-        loadingPanel.add(pBar);
-        
         //main
         mainPanel.setSize(new Dimension(width,height));
         mainPanel.setLayout(null);
@@ -136,7 +111,6 @@ public class GUIAdmin implements ActionListener{
         JPanel listPanel = new JPanel();
         JPanel nhapThietBiPanel = new JPanel();
         JPanel duyetDonHangPanel = new JPanel();
-        JPanel nhapHangHoaPanel = new JPanel();
         JPanel thongKeDoanhThuPanel = new JPanel();
         //chức năng thống kê        
         JLabel statisticLabel = new JLabel("Thống kê đơn hàng");
@@ -154,10 +128,6 @@ public class GUIAdmin implements ActionListener{
         JLabel duyetDonHangLabel = new JLabel("Duyệt đơn hàng");
         duyetDonHangLabel.setIcon(new ImageIcon(scaleBillIcon));
         
-        //chức năng nhập hàng hóa
-        JLabel nhapHangHoaLabel = new JLabel("Nhập hàng hóa");
-        nhapHangHoaLabel.setIcon(new ImageIcon(scaleGoodsIcon));
-        
         //Chức năng thống kê doanh thu
         JLabel thongKeDoanhThuLabel = new JLabel("Thống kê doanh thu");
         thongKeDoanhThuLabel.setIcon(new ImageIcon(scaleChartIcon));
@@ -166,7 +136,6 @@ public class GUIAdmin implements ActionListener{
         statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         listLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         nhapThietBiLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
-        nhapHangHoaLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         duyetDonHangLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         thongKeDoanhThuLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
 
@@ -185,10 +154,6 @@ public class GUIAdmin implements ActionListener{
         duyetDonHangPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         duyetDonHangPanel.setBackground(Color.RED);
         duyetDonHangPanel.setBorder(border);
-
-        nhapHangHoaPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
-        nhapHangHoaPanel.setBackground(Color.CYAN);
-        nhapHangHoaPanel.setBorder(border);
 
         thongKeDoanhThuPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
         thongKeDoanhThuPanel.setBackground(Color.MAGENTA);
@@ -299,29 +264,6 @@ public class GUIAdmin implements ActionListener{
             }
         });
         
-        nhapHangHoaPanel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                xuLyNhapHangHoa();
-                
-            }
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-        
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        
         thongKeDoanhThuPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -351,7 +293,6 @@ public class GUIAdmin implements ActionListener{
         statisticsPanel.add(statisticLabel);        
         listPanel.add(listLabel);
         nhapThietBiPanel.add(nhapThietBiLabel);
-        nhapHangHoaPanel.add(nhapHangHoaLabel);
         duyetDonHangPanel.add(duyetDonHangLabel);
         thongKeDoanhThuPanel.add(thongKeDoanhThuLabel);
         //bảng chọn chức năng
@@ -361,7 +302,6 @@ public class GUIAdmin implements ActionListener{
         managementPanel.add(listPanel);
         managementPanel.add(statisticsPanel);
         managementPanel.add(nhapThietBiPanel);
-        managementPanel.add(nhapHangHoaPanel);
         managementPanel.add(duyetDonHangPanel);
         managementPanel.add(thongKeDoanhThuPanel);
 
@@ -374,46 +314,14 @@ public class GUIAdmin implements ActionListener{
         rightPanel.setBackground(Color.WHITE);
         rightPanel.setBorder(border);
 
-        //Xử lý danh sách
-        xuLyDanhSach();
-
         //thêm đối tượng
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
-        adminFrame.add(loadingPanel);
+        adminFrame.add(mainPanel);
+
         adminFrame.setVisible(true);
-        
-        //hàm chạy load
-        fill();
     }
     
-    private void fill(){
-        int count = 0;
-        while(count<=100){
-            pBar.setValue(count);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if(count % 3 == 0){
-                pBarLabel.setText("Đang tải.");
-            }
-            else if(count % 3 == 1){
-                pBarLabel.setText("Đang tải..");
-            }
-            else{
-                pBarLabel.setText("Đang tải...");
-            }
-            count+=2;
-        }
-        pBar.setString("Done!");
-        loadingPanel.setVisible(false);
-        pBarLabel.setVisible(false);
-        adminFrame.add(mainPanel);
-        // adminFrame.setJMenuBar(mbar);
-    }
     public void xuLyNhapHang(DSLoaiThietBi dsLoaiThietBi, int soLuongLoaiThietBi)
     {
             rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
@@ -622,76 +530,30 @@ public class GUIAdmin implements ActionListener{
         rightTitlePanel.setLocation((int)(width * 0.3),0);
         rightTitlePanel.setBackground(Color.YELLOW);
 
-        
-
         //chọn danh sách
         JPanel chooseListPanel = new JPanel();
         chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
 
         String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng Hóa Cơ Sở"};
+        @SuppressWarnings("rawtypes")
         JComboBox chooseList = new JComboBox<String>(list);
         chooseList.setFont(new java.awt.Font("Arial", 1, 16));
         
         rightTitlePanel.add(rightTitle);
         rightPanel.add(rightTitlePanel);  
-        //Xử lý sự kiện         
-        chooseList.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    switch ((String) e.getItem()) {
-                        case "Hội viên":
-                            hienThiThongTinHoiVien();
-                            break;
-                    
-                        default:
-                            break;
-                    }
-                }
-            }
-            private void hienThiThongTinHoiVien(){
-                //Bảng dữ liệu
-                JPanel disDataPanel = new JPanel();
-                disDataPanel.setPreferredSize(new Dimension((int)(width * 0.7),height - 400));
-                DefaultTableModel hvList = new DefaultTableModel();
-                JTable dataTable = new JTable(hvList);
-                dataTable.setSize(new Dimension(disDataPanel.getWidth(),disDataPanel.getHeight()));
 
-                ArrayList<String> tenCotHV = bllAdmin.layTenCotHoiVien();
+        //Bảng dữ liệu
+        JPanel disDataPanel = new JPanel();
+        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.7),height - 400));
 
-                ArrayList<HoiVien> dsHV = bllAdmin.layDsHV();
-
-                
-                for(int i=0;i<tenCotHV.size();i++){
-                    hvList.addColumn(tenCotHV.get(i));
-                }
-
-                for(int i=0;i<dsHV.size();i++){
-                    hvList.addRow(new Object[]{ dsHV.get(i).getMaHoiVien(),
-                                                 dsHV.get(i).getHoten(),
-                                                 dsHV.get(i).getGioitinh(),
-                                                 dsHV.get(i).getNgaysinh(),
-                                                 dsHV.get(i).getSdt(),
-                                                 dsHV.get(i).getMail(),
-                                                 dsHV.get(i).getTaiKhoanHoiVien(),
-                                                 dsHV.get(i).getMatKhauHoiVien()});
-                }
-                JScrollPane scrollPane = new JScrollPane(dataTable);
-                scrollPane.setSize(new Dimension(disDataPanel.getWidth(),disDataPanel.getHeight()));
-                disDataPanel.add(scrollPane);
-                rightPanel.add(disDataPanel);
-            }
-        });
-        
-
+        //chọn danh sách 
         JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
         chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
         chooseListLabel.setIcon(new ImageIcon(scaleCheckListIcon));
         chooseListPanel.add(chooseListLabel);
         chooseListPanel.add(chooseList);
 
-        rightPanel.add(chooseListPanel);
-
-        //chỉnh sử thông tin
+        //chỉnh sửa thông tin
         JPanel infoDisplay = new JPanel();
         infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),200));
         
@@ -699,7 +561,6 @@ public class GUIAdmin implements ActionListener{
         infoLabel.setFont(new java.awt.Font("Arial", 1, 20));
 
         infoDisplay.add(infoLabel);
-        rightPanel.add(infoDisplay);
 
         //nút chức năng
         JPanel btnPanel = new JPanel();
@@ -715,8 +576,69 @@ public class GUIAdmin implements ActionListener{
             temp.setActionCommand(btnCommand[i]);
             btnPanel.add(temp);
         }
+
+        //Xử lý sự kiện         
+        chooseList.addItemListener(new ItemListener(){
+            ArrayList<String> tenCotHV = bllAdmin.layTenCotHoiVien();
+            ArrayList<HoiVien> dsHV = bllAdmin.layDsHV();
+            JTable dataTable = new JTable();
+            
+
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (((String) e.getItem()).equals("Hội viên")) {
+                        disDataPanel.revalidate();
+                        disDataPanel.repaint();
+                        hienThiThongTinHoiVien();
+                        disDataPanel.remove(dataTable);
+                    }
+                    else if (((String) e.getItem()).equals("Cơ Sở")) {
+                            disDataPanel.removeAll();
+                            disDataPanel.repaint();
+                            disDataPanel.revalidate();
+                            hienThiThongTinCoSo();
+                    }
+                }
+            }
+
+            private void hienThiThongTinCoSo(){
+                // Xóa tất cả các dòng hiện có từ model
+            }
+
+            private void hienThiThongTinHoiVien() {
+                DefaultTableModel hvList = new DefaultTableModel();
+                // Thiết lập kích thước cho từng cột của bảng
+                for (int i = 0; i < tenCotHV.size(); i++) {
+                    hvList.addColumn(tenCotHV.get(i));
+                }
+                
+                // Thêm dữ liệu vào bảng
+                for (int i = 0; i < dsHV.size(); i++) {
+                    hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
+                        dsHV.get(i).getHoten(),
+                        dsHV.get(i).getGioitinh(),
+                        dsHV.get(i).getMail(),
+                        dsHV.get(i).getTaiKhoanHoiVien(),
+                        dsHV.get(i).getMatKhauHoiVien(),
+                        dsHV.get(i).getMaDV(),
+                        dsHV.get(i).getNgaysinh(),
+                        dsHV.get(i).getSdt()});
+                    }
+                    
+                dataTable.setModel(hvList);
+                // Thêm JScrollPane mới chứa bảng vào disDataPanel
+                JScrollPane scrollPane = new JScrollPane(dataTable);
+                scrollPane.setPreferredSize(new Dimension(disDataPanel.getWidth()-3,disDataPanel.getHeight()));
+                disDataPanel.add(scrollPane);
+            }
+        });
+
         
+
+        rightPanel.add(chooseListPanel);
+        rightPanel.add(infoDisplay);
         rightPanel.add(btnPanel);
+        rightPanel.add(disDataPanel);
         
         
     }

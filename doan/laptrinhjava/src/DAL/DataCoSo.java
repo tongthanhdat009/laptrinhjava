@@ -31,5 +31,21 @@ public class DataCoSo {
         }
         return ds;
     }
+    public DSCoSo timKiemCoSo(String tenCoSo)
+    {
+        String truyVan = "SELECT * FROM CoSo WHERE TenCoSo = ? ";
+        DSCoSo ds = new DSCoSo();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setString(1,tenCoSo);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            ds.them(new CoSo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
 
 }

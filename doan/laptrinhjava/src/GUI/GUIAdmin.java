@@ -7,14 +7,11 @@ import BLL.BLLAdmin;
 import BLL.BLLNhapThietBi;
 import BLL.BLLThongKeDT;
 import DAL.DataCoSo;
-import DAL.DataHoiVien;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
-import DTO.dsHangHoaCoSo;
-import DTO.dsHoiVien;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -267,9 +264,6 @@ public class GUIAdmin implements ActionListener{
         thongKeDoanhThuPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-                rightPanel.repaint(); // Vẽ lại JPanel
                 BLLThongKeDT bllThongKeDT = new BLLThongKeDT();
                 thongKeDoanhThu(bllThongKeDT.layDSCoSo());
             }
@@ -644,6 +638,9 @@ public class GUIAdmin implements ActionListener{
     }
     public void thongKeDoanhThu(DSCoSo CoSods)
     {
+        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        rightPanel.repaint(); // Vẽ lại JPanel
         rightPanel.setLayout(null);
 
         JPanel canGiua = new JPanel(new FlowLayout());
@@ -663,13 +660,21 @@ public class GUIAdmin implements ActionListener{
         nhapTen.setBounds(145, 15, 175, 30);
         JButton timkiem = new JButton(">");
         timkiem.setBounds(320, 15, 45, 29);
+        timkiem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                String tenCoSo = nhapTen.getText();
+                BLLThongKeDT bllThongKeDT = new BLLThongKeDT();
+                thongKeDoanhThu(bllThongKeDT.timKiemCoSo(tenCoSo));
+            }
+        });
         filter.add(timTheoTen);
         filter.add(nhapTen);
         filter.add(timkiem);
         rightPanel.add(filter);
 
-        int chieuDocPanel = CoSods.dsCoSo.size()*200;
-        int chieuNgangPanel = rightPanel.getWidth() - 200;
+        int chieuDocPanel = CoSods.dsCoSo.size()*100;
+        int chieuNgangPanel = rightPanel.getWidth() - 250;
         int max = 0;
         for(int i=0;i<CoSods.dsCoSo.size();i++)
         {
@@ -681,7 +686,7 @@ public class GUIAdmin implements ActionListener{
         int y = 0;
         System.out.println(tiLe);
         JPanel thongKe = new JPanel(null);
-        thongKe.setBounds(2, 150, rightPanel.getWidth() - 10, chieuDocPanel);
+        thongKe.setPreferredSize(new Dimension(rightPanel.getWidth() - 10, chieuDocPanel));
         for(CoSo a : CoSods.dsCoSo)
         {
             JPanel JPanelThongke1CoSo = new JPanel(null);
@@ -692,17 +697,18 @@ public class GUIAdmin implements ActionListener{
             doanhThuCot.setBounds(100,0,(int)(tiLe*a.getDoanhThu()),50);
             doanhThuCot.setBackground(Color.BLUE);
             doanhThuCot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu
-
-            JLabel doanhThu = new JLabel(String.valueOf(a.getDoanhThu()));
+            JLabel doanhThu = new JLabel(String.valueOf(a.getDoanhThu())+" đ");
             doanhThu.setBounds(doanhThuCot.getWidth()+labelTenCoSo.getWidth()+10, 0, 100, 50);
-            
             JPanelThongke1CoSo.add(labelTenCoSo);
             JPanelThongke1CoSo.add(doanhThuCot);
             JPanelThongke1CoSo.add(doanhThu);
             thongKe.add(JPanelThongke1CoSo);
             y=y+100;
         }   
-        rightPanel.add(thongKe);
+        JScrollPane cuon = new JScrollPane(thongKe);
+        cuon.setBounds(2,150,rightPanel.getWidth() - 10,700);
+        cuon.setPreferredSize(new Dimension(rightPanel.getWidth() - 10,700));
+        rightPanel.add(cuon);
     }
     public static void main(String[] args){
         new GUIAdmin();

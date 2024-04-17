@@ -22,6 +22,10 @@ UPDATE [dbo].[DichVu]
 UPDATE [dbo].[DichVu]
     SET HinhAnh = 'doan/src/laptrinhjava/src/asset/img/dichvu/DV005.png'
     WHERE MaDV = 'DV005'
+UPDATE DichVu
+SET HinhAnh = REPLACE(HinhAnh, 'laptrinhjava/src/asset/img/dichvu/', 'src/asset/img/dichvu/')
+WHERE HinhAnh LIKE 'laptrinhjava/src/asset/img/dichvu/%';
+
 --thêm thông tin hội viên
 INSERT INTO HoiVien(MaHV, HoTenHV, GioiTinh, Gmail, SoCCCD, TaiKhoan, MatKhau, MaDV, NgaySinh, SoDienThoai)
 VALUES 
@@ -235,6 +239,11 @@ VALUES
     ('HH098', N'Thực phẩm chức năng', N'Bổ sung Acid serine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH098.jpg', 260000),
     ('HH099', N'Thực phẩm chức năng', N'Bổ sung Acid tyrosine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH099.jpg', 270000),
     ('HH100', N'Thực phẩm chức năng', N'Bổ sung Acid valine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH100.jpg', 280000);
+
+--chỉnh sửa link ảnh loại hàng hóa
+UPDATE HangHoa
+SET HinhAnh = REPLACE(HinhAnh, 'laptrinhjava/src/asset/img/hanghoa/', 'src/asset/img/hanghoa/')
+WHERE HinhAnh LIKE 'laptrinhjava/src/asset/img/hanghoa/%';
 
 --thêm thông tin hàng hóa cơ sở tiền lời 100000
 INSERT INTO HangHoaOCoSo (MaCoSo, SoLuong, MaHangHoa, GiaBan)
@@ -471,6 +480,11 @@ VALUES
     ('TB089', N'Tạ 15kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB065.jpg', 1500000, 90),
     ('TB090', N'Tạ 20kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB066.jpg', 2000000, 90),
     ('TB091', N'Tạ 25kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB067.jpg', 2500000, 90),
+
+--chỉnh sửa link ảnh loại thiết bị
+UPDATE LoaiThietBi
+SET HinhAnh = REPLACE(HinhAnh, 'laptrinhjava/src/asset/img/thietbi/', 'src/asset/img/thietbi/')
+WHERE HinhAnh LIKE 'laptrinhjava/src/asset/img/thietbi/%';
 
 --thêm thông tin thiết bị cơ sở
 INSERT INTO ThietBiOMotCoSo(MaThietBiOCoSo, MaCoSo, MaThietBi, NgayNhap, HanBaoHanh)    

@@ -26,35 +26,35 @@ public class GUIAdmin implements ActionListener{
     private final int width = 1600;
     private final int height = 900;
     //logo
-    ImageIcon logo = new ImageIcon("laptrinhjava/src/asset/img/label/logo.png");
-    ImageIcon logo1 = new ImageIcon("laptrinhjava/src/asset/img/label/logo1.png");
+    ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
+    ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
     
     //icon chức năng thống kê
-    ImageIcon analyticsIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/analytics-icon.png");
+    ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     
     //icon chức năng danh sách
-    ImageIcon checkListIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/checklist-icon.png");
+    ImageIcon checkListIcon = new ImageIcon("src/asset/img/icon/checklist-icon.png");
     Image scaleCheckListIcon = checkListIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     
     //icon tiêu đề phụ chức năng
-    ImageIcon managementIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/project-management-icon.png");
+    ImageIcon managementIcon = new ImageIcon("src/asset/img/icon/project-management-icon.png");
     Image scaleManagementIcon = managementIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     
     //icon chức năng nhập thiết bị
-    ImageIcon dumbbellIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/dumbbell-icon.png");
+    ImageIcon dumbbellIcon = new ImageIcon("src/asset/img/icon/dumbbell-icon.png");
     Image scaleDumbbellIcon = dumbbellIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     
     //icon chức năng nhập hàng hóa
-    ImageIcon goodsIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/goods-icon.png");
+    ImageIcon goodsIcon = new ImageIcon("src/asset/img/icon/goods-icon.png");
     Image scaleGoodsIcon = goodsIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
 
     //icon chức năng nhập hàng hóa
-    ImageIcon billIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/bill-icon.png");
+    ImageIcon billIcon = new ImageIcon("src/asset/img/icon/bill-icon.png");
     Image scaleBillIcon = billIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     
     //icon chức năng thống kê doanh thu
-    ImageIcon chartIcon = new ImageIcon("laptrinhjava/src/asset/img/icon/stonk-icon.jpg");
+    ImageIcon chartIcon = new ImageIcon("src/asset/img/icon/stonk-icon.jpg");
     Image scaleChartIcon = chartIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);

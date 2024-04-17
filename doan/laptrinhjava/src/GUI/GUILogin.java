@@ -22,7 +22,7 @@ public class GUILogin extends JFrame implements ActionListener{
             dangNhap.setBounds(0, 0, 400, 900);
             dangNhap.setBackground(Color.WHITE);
     
-            ImageIcon logo = new ImageIcon("laptrinhjava/src/asset/img/label/logo.png");
+            ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
             JLabel labelLogo = new JLabel(logo);
             labelLogo.setBounds(200 - logo.getIconWidth()/2 ,0,logo.getIconWidth(),logo.getIconHeight());
             dangNhap.add(labelLogo);
@@ -46,10 +46,10 @@ public class GUILogin extends JFrame implements ActionListener{
             JPanel dangNhapKieuKhac = new JPanel(new GridLayout(1,4,10,0));
             dangNhapKieuKhac.setBounds(40,450,320,30);
             dangNhapKieuKhac.setBackground(Color.WHITE);
-            ImageIcon imgFb = new ImageIcon("laptrinhjava/src/asset/img/icon/fb-icon.png");
-            ImageIcon imgGg = new ImageIcon("laptrinhjava/src/asset/img/icon/gg-icon.png");
-            ImageIcon imgIc = new ImageIcon("laptrinhjava/src/asset/img/icon/apple-icon.png");
-            ImageIcon imgXb = new ImageIcon("laptrinhjava/src/asset/img/icon/xb-icon.png");
+            ImageIcon imgFb = new ImageIcon("src/asset/img/icon/fb-icon.png");
+            ImageIcon imgGg = new ImageIcon("src/asset/img/icon/gg-icon.png");
+            ImageIcon imgIc = new ImageIcon("src/asset/img/icon/apple-icon.png");
+            ImageIcon imgXb = new ImageIcon("src/asset/img/icon/xb-icon.png");
             JButton fb = new JButton(imgFb);
             fb.setBackground(Color.BLUE);
             JButton gg = new JButton(imgGg);
@@ -77,11 +77,11 @@ public class GUILogin extends JFrame implements ActionListener{
             dangKy.addActionListener(this);
             dangNhap.add(dangKy);
     
-            ImageIcon backGround = new ImageIcon("laptrinhjava/src/asset/img/label/gym.jpg");
+            ImageIcon backGround = new ImageIcon("src/asset/img/label/gym.jpg");
             JLabel imageBackground = new JLabel(backGround);
             imageBackground.setBounds(0, 0, backGround.getIconWidth(), backGround.getIconHeight());
     
-            ImageIcon muiTenDi = new ImageIcon("laptrinhjava/src/asset/img/icon/muiten-icon.png");
+            ImageIcon muiTenDi = new ImageIcon("src/asset/img/icon/muiten-icon.png");
             go = new JButton(muiTenDi);
             go.setBounds(200 - 75/2, 650, 80, 80);
             go.setBackground(Color.white);

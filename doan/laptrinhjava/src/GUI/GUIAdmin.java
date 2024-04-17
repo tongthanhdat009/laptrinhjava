@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLAdmin;
 import BLL.BLLNhapThietBi;
+import BLL.BLLThongKeDT;
 import DAL.DataCoSo;
 import DAL.DataHoiVien;
 import DTO.CoSo;
@@ -326,7 +327,8 @@ public class GUIAdmin implements ActionListener{
                 rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
-                
+                BLLThongKeDT bllThongKeDT = new BLLThongKeDT();
+                thongKeDoanhThu(bllThongKeDT.layDSCoSo());
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -716,6 +718,27 @@ public class GUIAdmin implements ActionListener{
         rightPanel.add(btnPanel);
         
         
+    }
+    public void thongKeDoanhThu(DSCoSo dsCoSo)
+    {
+        rightPanel.setLayout(null);
+
+        JPanel canGiua = new JPanel(new FlowLayout());
+        canGiua.setBounds(5,5,rightPanel.getWidth(),55);
+        canGiua.setBackground(Color.yellow);
+        JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
+        titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
+
+        canGiua.add(titleNhapThietBi);
+        rightPanel.add(canGiua);
+
+        JPanel filter = new JPanel(null);
+        filter.setBounds(5,70,rightPanel.getWidth(),55);
+        JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên");
+        timTheoTen.setBounds(10, 15, 130, 30);
+        JTextField nhapTen = new JTextField();
+        nhapTen.setBounds(145, 15, 175, 30);
+        JButton timkiem = new JButton(">");
     }
     public static void main(String[] args){
         new GUIAdmin();

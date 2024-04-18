@@ -7,6 +7,7 @@ import BLL.BLLAdmin;
 import BLL.BLLNhapThietBi;
 import BLL.BLLThongKeDT;
 import DAL.DataCoSo;
+import DAL.DataHoiVien;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
@@ -515,126 +516,140 @@ public class GUIAdmin implements ActionListener{
         rightPanel.add(filter);
     }
     private void xuLyDanhSach(){
-        //tiêu đề bên phải
+        rightPanel.setLayout(null);
+        //tiêu đề bên phải 
         JLabel rightTitle = new JLabel("Quản lý danh sách");
-        rightTitle.setFont(new java.awt.Font("Times New Roman", 1, 40));
-
-        JPanel rightTitlePanel = new JPanel();
-        rightTitlePanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
-        rightTitlePanel.setLocation((int)(width * 0.3),0);
-        rightTitlePanel.setBackground(Color.YELLOW);
-
-        //chọn danh sách
-        JPanel chooseListPanel = new JPanel();
-        chooseListPanel.setPreferredSize(new Dimension((int)((width * 0.697)),50));
-
-        String[] list = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng Hóa Cơ Sở"};
+        rightTitle.setFont(new Font("Times New Roman", 1, 50));
+        rightTitle.setBounds(400, 0, 1000,60);        
+        
+        //Chọn bảng cần quản lý
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
-        JComboBox chooseList = new JComboBox<String>(list);
-        chooseList.setFont(new java.awt.Font("Arial", 1, 16));
-        
-        rightTitlePanel.add(rightTitle);
-        rightPanel.add(rightTitlePanel);  
+        JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
+        danhSachBox.setBounds(600,70,100,50);
+        JLabel chonDanhSachLabel = new JLabel("Chọn danh sách: ");
+        chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
+        chonDanhSachLabel.setBounds(350, 70, 300,35);
+        danhSachBox.addActionListener(new ActionListener() {
 
-        //Bảng dữ liệu
-        JPanel disDataPanel = new JPanel();
-        disDataPanel.setPreferredSize(new Dimension((int)(width * 0.7),height - 400));
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> comboBox = (JComboBox<String>) e.getSource(); // Lấy ra JComboBox đã được kích hoạt
+                String selectedOption = (String) comboBox.getSelectedItem(); // Lấy ra mục đã chọn trong JComboBox
+                JTable dataTable;
+                JScrollPane scrollPane;
+                JPanel bangChinhSua;
 
-        //chọn danh sách 
-        JLabel chooseListLabel = new JLabel("Chọn danh sách: ");
-        chooseListLabel.setFont(new java.awt.Font("Arial", 1, 30));
-        chooseListLabel.setIcon(new ImageIcon(scaleCheckListIcon));
-        chooseListPanel.add(chooseListLabel);
-        chooseListPanel.add(chooseList);
+                DataHoiVien dataHV = new DataHoiVien();
+                ArrayList<String> tenCotHV =   dataHV.getTenCot();
+                ArrayList<HoiVien> dsHV = dataHV.layDanhSachHoiVien();
 
-        //chỉnh sửa thông tin
-        JPanel infoDisplay = new JPanel();
-        infoDisplay.setPreferredSize(new Dimension((int)(width * 0.697),200));
-        
-        JLabel infoLabel = new JLabel("Chỉnh sửa thông tin");
-        infoLabel.setFont(new java.awt.Font("Arial", 1, 20));
+                if (selectedOption.equals("Cơ sở")) {
+                    Container container = rightPanel; // Thay thế ... bằng container mà bạn muốn kiểm tra
+                    int x = 6; // Thay thế ... bằng tọa độ x của điểm bạn muốn kiểm tra
+                    int y = 460; // Thay thế ... bằng tọa độ y của điểm bạn muốn kiểm tra
 
-        infoDisplay.add(infoLabel);
+                    Component component = container.getComponentAt(x, y);
 
+                    if (component != null && component.isShowing()) {
+                        // Component tại điểm đã cho tồn tại và đang được hiển thị
+                        System.out.println("Component tồn tại tại điểm đã cho và đang được hiển thị.");
+                        rightPanel.remove(component);
+                        rightPanel.revalidate();
+                        rightPanel.repaint();
+                    } else {
+                        // Không có component nào tại điểm đã cho hoặc component đó không được hiển thị
+                        System.out.println("Da chon danh sach co so");
+                    }
+                }
+                else if(selectedOption.equals("Dịch vụ")){
+                    System.out.println("Da chon danh sach Dich vu");
+                }
+                else if (selectedOption.equals("Hội viên")) {
+                    System.out.println("Da chon danh sach hoi vien");
+                    //bảng hiện dòng thông tin được chọn
+                    bangChinhSua = new JPanel();
+                    for(int i=0;i<tenCotHV.size();i++){
+                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                        
+                        JPanel tempPanel = new JPanel();
+
+                        JTextField tempTF = new JTextField();
+                        tempTF.setPreferredSize(new Dimension(100,20));
+                        tempTF.setBounds(0,20,100,20);
+
+                        JLabel tempLabel = new JLabel(tenCotHV.get(i));
+                        tempLabel.setFont(new Font("Times New Roman", 1,15));
+                        tempLabel.setPreferredSize(new Dimension(100,20));
+                        
+                        tempPanel.add(tempLabel);
+                        tempPanel.add(tempTF);
+                        bangChinhSua.add(tempPanel);
+                        rightPanel.add(bangChinhSua);
+                        rightPanel.revalidate();
+                        rightPanel.repaint();
+                    }
+
+
+                    DefaultTableModel hvList = new DefaultTableModel();
+                    for (int i = 0; i < tenCotHV.size(); i++) {
+                        hvList.addColumn(tenCotHV.get(i));
+                    }
+                    // Thêm dữ liệu vào bảng
+                    for (int i = 0; i < dsHV.size(); i++) {
+                        hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
+                            dsHV.get(i).getHoten(),
+                            dsHV.get(i).getGioitinh(),
+                            dsHV.get(i).getMail(),
+                            dsHV.get(i).getTaiKhoanHoiVien(),
+                            dsHV.get(i).getMatKhauHoiVien(),
+                            dsHV.get(i).getMaDV(),
+                            dsHV.get(i).getNgaysinh(),
+                            dsHV.get(i).getSdt()});
+                    }
+                    dataTable = new JTable(hvList);
+                    scrollPane = new JScrollPane(dataTable);
+                    scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
+                    rightPanel.add(scrollPane);     
+                }
+                else if (selectedOption.equals("Nhân viên")){
+                    System.out.println("Da chon danh sach nhan vien");
+                }
+                else if(selectedOption.equals("Thiết bị")){
+                    System.out.println("Da chon danh sach thiet bi");
+                }
+                else if(selectedOption.equals("Thiết bị cơ sở")){
+                    System.out.println("Da chon danh sach thiet bi co so");
+                }
+                else if(selectedOption.equals("Hóa đơn")){
+                    System.out.println("Da chon danh sach hoa don");
+                }
+                else if(selectedOption.equals("Hàng hóa cơ sở")){
+                    System.out.println("Da chon danh sach hang hoa co so");
+                }
+                // Thêm các xử lý khác nếu cần
+            }
+            
+        });
         //nút chức năng
-        JPanel btnPanel = new JPanel();
-        btnPanel.setPreferredSize(new Dimension((int)(width * 0.697),40));
-
-        String[] btnName = {"Thêm", "Xóa", "Sửa", "Cập nhật"};
-        String[] btnCommand = {"add", "delete", "edit", "update"};
-        
-        for(int i=0;i<btnName.length;i++){
-            JButton temp = new JButton(btnName[i]);
-            temp.setPreferredSize(new Dimension(100,25));
-            temp.addActionListener(this);
-            temp.setActionCommand(btnCommand[i]);
-            btnPanel.add(temp);
+        String[] tenNut = {"Thêm", "Xóa", "Sửa", "Cập nhật"};
+        String[] cmtNut = {"add", "remove", "edit", "update"};
+        int a=320;
+        for(int i=0;i<tenNut.length;i++){
+            JButton tempBtn = new JButton(tenNut[i]);
+            tempBtn.addActionListener(this);
+            tempBtn.setActionCommand(cmtNut[i]);
+            tempBtn.setBounds(a,145,100,20);
+            a+=140;
+            rightPanel.add(tempBtn);
         }
 
-        //Xử lý sự kiện         
-        chooseList.addItemListener(new ItemListener(){
-            ArrayList<String> tenCotHV = bllAdmin.layTenCotHoiVien();
-            ArrayList<HoiVien> dsHV = bllAdmin.layDsHV();
-            JTable dataTable = new JTable();
-            
 
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    if (((String) e.getItem()).equals("Hội viên")) {
-                        disDataPanel.revalidate();
-                        disDataPanel.repaint();
-                        hienThiThongTinHoiVien();
-                        disDataPanel.remove(dataTable);
-                    }
-                    else if (((String) e.getItem()).equals("Cơ Sở")) {
-                            disDataPanel.removeAll();
-                            disDataPanel.repaint();
-                            disDataPanel.revalidate();
-                            hienThiThongTinCoSo();
-                    }
-                }
-            }
-
-            private void hienThiThongTinCoSo(){
-                // Xóa tất cả các dòng hiện có từ model
-            }
-
-            private void hienThiThongTinHoiVien() {
-                DefaultTableModel hvList = new DefaultTableModel();
-                // Thiết lập kích thước cho từng cột của bảng
-                for (int i = 0; i < tenCotHV.size(); i++) {
-                    hvList.addColumn(tenCotHV.get(i));
-                }
-                
-                // Thêm dữ liệu vào bảng
-                for (int i = 0; i < dsHV.size(); i++) {
-                    hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
-                        dsHV.get(i).getHoten(),
-                        dsHV.get(i).getGioitinh(),
-                        dsHV.get(i).getMail(),
-                        dsHV.get(i).getTaiKhoanHoiVien(),
-                        dsHV.get(i).getMatKhauHoiVien(),
-                        dsHV.get(i).getMaDV(),
-                        dsHV.get(i).getNgaysinh(),
-                        dsHV.get(i).getSdt()});
-                    }
-                    
-                dataTable.setModel(hvList);
-                // Thêm JScrollPane mới chứa bảng vào disDataPanel
-                JScrollPane scrollPane = new JScrollPane(dataTable);
-                scrollPane.setPreferredSize(new Dimension(disDataPanel.getWidth()-3,disDataPanel.getHeight()));
-                disDataPanel.add(scrollPane);
-            }
-        });
-
-        
-
-        rightPanel.add(chooseListPanel);
-        rightPanel.add(infoDisplay);
-        rightPanel.add(btnPanel);
-        rightPanel.add(disDataPanel);
-        
-        
+        rightPanel.add(rightTitle);
+        rightPanel.add(chonDanhSachLabel);
+        rightPanel.add(danhSachBox);
     }
     public void thongKeDoanhThu(DSCoSo CoSods)
     {

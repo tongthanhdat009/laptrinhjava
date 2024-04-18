@@ -531,7 +531,6 @@ public class GUIAdmin implements ActionListener{
         chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
         chonDanhSachLabel.setBounds(350, 70, 300,35);
         danhSachBox.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 @SuppressWarnings("unchecked")

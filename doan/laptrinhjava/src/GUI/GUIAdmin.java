@@ -21,7 +21,7 @@ import java.util.Vector;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GUIAdmin implements ActionListener{
+public class GUIAdmin{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
     private final int width = 1600;
     private final int height = 900;
@@ -530,6 +530,7 @@ public class GUIAdmin implements ActionListener{
         JLabel chonDanhSachLabel = new JLabel("Chọn danh sách: ");
         chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
         chonDanhSachLabel.setBounds(350, 70, 300,35);
+        
         danhSachBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -541,7 +542,7 @@ public class GUIAdmin implements ActionListener{
                 JPanel bangChinhSua;
 
                 DataHoiVien dataHV = new DataHoiVien();
-                ArrayList<String> tenCotHV =   dataHV.getTenCot();
+                ArrayList<String> tenCotHV = dataHV.getTenCot();
                 ArrayList<HoiVien> dsHV = dataHV.layDanhSachHoiVien();
 
                 if (selectedOption.equals("Cơ sở")) {
@@ -566,32 +567,8 @@ public class GUIAdmin implements ActionListener{
                     System.out.println("Da chon danh sach Dich vu");
                 }
                 else if (selectedOption.equals("Hội viên")) {
-                    System.out.println("Da chon danh sach hoi vien");
-                    //bảng hiện dòng thông tin được chọn
-                    bangChinhSua = new JPanel();
-                    for(int i=0;i<tenCotHV.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
-                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
-                        
-                        JPanel tempPanel = new JPanel();
-
-                        JTextField tempTF = new JTextField();
-                        tempTF.setPreferredSize(new Dimension(100,20));
-                        tempTF.setBounds(0,20,100,20);
-
-                        JLabel tempLabel = new JLabel(tenCotHV.get(i));
-                        tempLabel.setFont(new Font("Times New Roman", 1,15));
-                        tempLabel.setPreferredSize(new Dimension(100,20));
-                        
-                        tempPanel.add(tempLabel);
-                        tempPanel.add(tempTF);
-                        bangChinhSua.add(tempPanel);
-                        rightPanel.add(bangChinhSua);
-                        rightPanel.revalidate();
-                        rightPanel.repaint();
-                    }
-
-
+                    
+                    // tạo model bảng
                     DefaultTableModel hvList = new DefaultTableModel();
                     for (int i = 0; i < tenCotHV.size(); i++) {
                         hvList.addColumn(tenCotHV.get(i));
@@ -608,10 +585,167 @@ public class GUIAdmin implements ActionListener{
                             dsHV.get(i).getNgaysinh(),
                             dsHV.get(i).getSdt()});
                     }
+                    
+                    //bảng hiện dòng thông tin được chọn
+                    bangChinhSua = new JPanel();
+                    for(int i=0;i<tenCotHV.size();i++){
+                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                        
+                        JPanel tempPanel = new JPanel();
+                        
+                        JTextField tempTF = new JTextField();
+                        tempTF.setPreferredSize(new Dimension(100,20));
+                        tempTF.setBounds(0,20,100,20);
+                        if(i==0 || i==6){
+                            tempTF.setEditable(false);
+                        }
+                        tempTF.setName(tenCotHV.get(i));
+
+                        JLabel tempLabel = new JLabel(tenCotHV.get(i));
+                        tempLabel.setFont(new Font("Times New Roman", 1,15));
+                        tempLabel.setPreferredSize(new Dimension(100,20));
+                        
+                        tempPanel.add(tempLabel);
+                        tempPanel.add(tempTF);
+                        bangChinhSua.add(tempPanel);
+                    }
+
+                    rightPanel.add(bangChinhSua);
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
+
                     dataTable = new JTable(hvList);
+                    dataTable.getTableHeader().setReorderingAllowed(false);
+                    
                     scrollPane = new JScrollPane(dataTable);
                     scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
-                    rightPanel.add(scrollPane);     
+
+                    //nút chức năng
+                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Cập nhật"};
+                    String[] cmtNut = {"add", "remove", "edit", "update"};
+                    int a=320;
+                    for(int i=0;i<tenNut.length;i++){
+                        JButton tempBtn = new JButton(tenNut[i]);
+                        tempBtn.setActionCommand(cmtNut[i]);
+                        tempBtn.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if (e.getActionCommand().equals(cmtNut[0])) {
+
+                                }
+                                else if (e.getActionCommand().equals(cmtNut[1])) {
+                                    int i=dataTable.getSelectedRow();
+                                    if(i>=0){
+                                        Component[] components = bangChinhSua.getComponents();
+                                        hvList.removeRow(i);
+                                        for (Component component : components) {
+                                            if (component instanceof JPanel) {
+                                                JPanel temPanel = (JPanel) component;
+                                                Component[] smallComponents = temPanel.getComponents();
+                                                for (Component smallComponent : smallComponents) {
+                                                    if(smallComponent instanceof JTextField){
+                                                        JTextField textField = (JTextField) smallComponent;
+                                                        if(dataHV.xoa(textField.getText())){
+                                                            break;
+                                                        }
+                                                        else{
+                                                            System.out.println(textField.getText());
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                } 
+                                else if (e.getActionCommand().equals(cmtNut[2])) {
+                                    int i= dataTable.getSelectedRow();
+                                    int j= 0;
+                                    if (i>=0){
+                                        Component[] components = bangChinhSua.getComponents();
+                                        for (Component component : components) {
+                                            if (component instanceof JPanel) {
+                                                JPanel temPanel = (JPanel) component;
+                                                Component[] smallComponents = temPanel.getComponents();
+                                                for (Component smallComponent : smallComponents) {
+                                                    if (smallComponent instanceof JTextField) {
+                                                        JTextField textField = (JTextField) smallComponent;
+                                                        String text = textField.getText();
+                                                        hvList.setValueAt(text,i,j);
+                                                        j++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } 
+                                    
+                                }
+                                else if (e.getActionCommand().equals(cmtNut[3])) {
+                                    
+                                }
+                        }
+                    });
+                    tempBtn.setBounds(a,145,100,20);
+                    a+=140;
+                    rightPanel.add(tempBtn);
+                }
+
+                    rightPanel.add(scrollPane);
+                    
+                    //xử lý sự kiện cho bảng
+                    dataTable.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            int i = dataTable.getSelectedRow();
+                            System.out.println(i);
+                            if(i>=0){
+                                Component[] components = bangChinhSua.getComponents();
+                                int j=0;
+                                for(Component a : components){
+                                    if(a instanceof JPanel){
+                                        bangChinhSua.remove(a);
+                                        JPanel tempPanel = new JPanel();
+                            
+                                        JTextField tempTF = new JTextField();
+                                        tempTF.setPreferredSize(new Dimension(100,20));
+                                        tempTF.setBounds(0,20,100,20);
+                                        tempTF.setText(hvList.getValueAt(i, j).toString().trim());
+                                        if(j==0 || j==6){
+                                            tempTF.setEditable(false);
+                                        }
+
+                                        JLabel tempLabel = new JLabel(tenCotHV.get(j));
+                                        j++;
+                                        tempLabel.setFont(new Font("Times New Roman", 1,15));
+                                        tempLabel.setPreferredSize(new Dimension(100,20));
+                                        
+                                        tempPanel.add(tempLabel);
+                                        tempPanel.add(tempTF);
+                                        bangChinhSua.add(tempPanel);
+                                    }
+                                }
+                                bangChinhSua.revalidate();
+                                bangChinhSua.repaint();
+                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        
+                    });
+
                 }
                 else if (selectedOption.equals("Nhân viên")){
                     System.out.println("Da chon danh sach nhan vien");
@@ -632,20 +766,6 @@ public class GUIAdmin implements ActionListener{
             }
             
         });
-        //nút chức năng
-        String[] tenNut = {"Thêm", "Xóa", "Sửa", "Cập nhật"};
-        String[] cmtNut = {"add", "remove", "edit", "update"};
-        int a=320;
-        for(int i=0;i<tenNut.length;i++){
-            JButton tempBtn = new JButton(tenNut[i]);
-            tempBtn.addActionListener(this);
-            tempBtn.setActionCommand(cmtNut[i]);
-            tempBtn.setBounds(a,145,100,20);
-            a+=140;
-            rightPanel.add(tempBtn);
-        }
-
-
         rightPanel.add(rightTitle);
         rightPanel.add(chonDanhSachLabel);
         rightPanel.add(danhSachBox);
@@ -726,11 +846,5 @@ public class GUIAdmin implements ActionListener{
     }
     public static void main(String[] args){
         new GUIAdmin();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }

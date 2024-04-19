@@ -165,20 +165,24 @@ public class DataHoiVien {
         }
         return dsHoiVien;
     }
-    public int xoa(String maHoiVien) //Chưa test
+    public boolean xoa(String maHoiVien) //test thành công
     {
         //trả về 1 xóa thành công, 0 xóa thất bại do dữ liệu nhập không có trong database
         String truyVan = "DELETE FROM HoiVien Where MaHV = ? ";
+        String truyVan2 = "DELETE FROM HoaDon Where MaHV = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(0, maHoiVien);
+            PreparedStatement statement2 = con.prepareStatement(truyVan2);
+            statement.setString(1, maHoiVien);
+            statement2.setString(1, maHoiVien);
+            int rowsAffected2 = statement2.executeUpdate();
             int rowsAffected = statement.executeUpdate();
-            if(rowsAffected>0) return 1;
+            if(rowsAffected>0 && rowsAffected2>0) return true;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return 0;
+        return false;
     }
     public int sua(HoiVien a) //Chưa test
     {

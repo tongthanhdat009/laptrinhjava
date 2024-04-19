@@ -3,16 +3,21 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import com.microsoft.sqlserver.jdbc.osgi.Activator;
+
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDT;
+import BLL.BLLThongKeDonHang;
 import DAL.DataCoSo;
 import DAL.DataHoiVien;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
+import DTO.DTOThongKeDonHang;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
+import DTO.dichVu;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -20,6 +25,7 @@ import java.util.Vector;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
 
 public class GUIAdmin{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
@@ -184,10 +190,11 @@ public class GUIAdmin{
         statisticsPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-                rightPanel.repaint(); // Vẽ lại JPanel
-                
+                BLLThongKeDonHang bllThongKeDonHang = new BLLThongKeDonHang();
+                ArrayList<DTOThongKeDonHang> ds = bllThongKeDonHang.layDSDLoc("NULL", "NULL", "2024-01-01", "2025-01-01");
+                Vector<String> dsTenCoSo = new Vector<>();
+                dsTenCoSo = bllThongKeDonHang.DSMaCoSo();
+                thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu");
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -833,7 +840,6 @@ public class GUIAdmin{
         if(max != 0) tiLe = (double)chieuNgangPanel / max;
         else tiLe = 0;
         int y = 0;
-        System.out.println(tiLe);
         JPanel thongKe = new JPanel(null);
         thongKe.setPreferredSize(new Dimension(rightPanel.getWidth() - 10, chieuDocPanel));
         for(CoSo a : CoSods.dsCoSo)
@@ -858,6 +864,199 @@ public class GUIAdmin{
         cuon.setBounds(2,150,rightPanel.getWidth() - 10,700);
         cuon.setPreferredSize(new Dimension(rightPanel.getWidth() - 10,700));
         rightPanel.add(cuon);
+    }
+    public void thongKeTheoSoLuong(ArrayList<DTOThongKeDonHang> ds, Vector<String> dsTenCoSo, String luaChon)
+    {
+        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        rightPanel.repaint(); // Vẽ lại JPanel
+        rightPanel.setLayout(null);
+
+        JPanel canGiua = new JPanel(new FlowLayout());
+        canGiua.setBounds(5,5,rightPanel.getWidth(),55);
+        canGiua.setBackground(Color.yellow);
+        JLabel titleNhapThietBi = new JLabel("Thống kê Đơn hàng");
+        titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
+
+        canGiua.add(titleNhapThietBi);
+        rightPanel.add(canGiua);
+
+        JPanel filter = new JPanel(null);
+        filter.setBounds(5,70,rightPanel.getWidth(),55);
+        JLabel timTheoTen = new JLabel("Tên sản phẩm");
+        timTheoTen.setBounds(10, 15, 100, 30);
+        JTextField tenSanPham = new JTextField();
+        tenSanPham.setBounds(105, 15, 125, 30);
+
+        JLabel labelDSCoSo = new JLabel("Chọn cơ sở");
+        labelDSCoSo.setBounds(250, 15, 75, 30);
+        JComboBox comboBoxTenCoSo = new JComboBox<>(dsTenCoSo);
+        comboBoxTenCoSo.setBounds(330, 15, 150, 30);
+        JLabel labelLoai = new JLabel("Loại");
+        labelLoai.setBounds(500, 15, 25, 30);
+        String[] loai = {"Theo doanh thu","Theo số lượng"};
+        JComboBox comboBoxLoai = new JComboBox<>(loai);
+        comboBoxLoai.setBounds(535, 15, 150, 30);
+
+        Vector<String> year = new Vector<>();
+        Vector<String> month = new Vector<>();
+        Vector<String> day = new Vector<>();
+        for(int i = 1990 ; i <= 2100;i++)
+        year.add(String.valueOf(i));
+        year.add(0,"YY");
+        for(int i = 1 ; i <= 12;i++)
+        month.add(String.valueOf(i));
+        month.add(0,"MM");
+        for(int i = 1 ; i <= 31;i++)
+        day.add(String.valueOf(i));
+        day.add(0,"DD");
+
+        JComboBox dayStart = new JComboBox<>(day);
+        JComboBox monthStart = new JComboBox<>(month);
+        JComboBox yearStart = new JComboBox<>(year);
+        dayStart.setBounds(695, 15, 45, 30);
+        monthStart.setBounds(740, 15, 45, 30);
+        yearStart.setBounds(785, 15, 45, 30);
+        filter.add(dayStart);
+        filter.add(monthStart);
+        filter.add(yearStart);
+
+        JLabel to = new JLabel("đến");
+        to.setBounds(835, 15, 25, 30);
+        filter.add(to);
+
+        JComboBox dayEnd = new JComboBox<>(day);
+        JComboBox monthEnd = new JComboBox<>(month);
+        JComboBox yearEnd = new JComboBox<>(year);
+        dayEnd.setBounds(865, 15, 45, 30);
+        monthEnd.setBounds(910, 15, 45, 30);
+        yearEnd.setBounds(945, 15, 45, 30);
+        filter.add(dayEnd);
+        filter.add(monthEnd);
+        filter.add(yearEnd);
+
+        JButton timkiem = new JButton("Tìm kiếm");
+        timkiem.setBounds(1000, 15, 100, 29);
+        System.out.println(rightPanel.getWidth());
+        filter.add(timTheoTen);
+        filter.add(tenSanPham);
+        filter.add(timkiem);
+        filter.add(labelDSCoSo);
+        filter.add(comboBoxTenCoSo);
+        filter.add(labelLoai);
+        filter.add(comboBoxLoai);
+        rightPanel.add(filter);
+
+        int chieuNgang = rightPanel.getWidth() - 550;
+        int chieuDoc = ds.size() * 75;
+        JPanel thongKe = new JPanel(null);
+        timkiem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                String tenHang = tenSanPham.getText();
+                String tenCoSo = comboBoxTenCoSo.getSelectedItem().toString();
+                String d1 = dayStart.getSelectedItem().toString();
+                String m1 = monthStart.getSelectedItem().toString();
+                String y1 = yearStart.getSelectedItem().toString();
+                String d2 = dayEnd.getSelectedItem().toString();
+                String m2 = monthEnd.getSelectedItem().toString();
+                String y2 = yearEnd.getSelectedItem().toString();
+
+                boolean flag = true;
+                if(tenHang.equals("")) tenHang = "NULL";
+                if(tenCoSo.equals("Tất cả cơ sở")) tenCoSo = "NULL";
+                String date1 = new String();
+                if(d1.equals("DD")&&m1.equals("MM")&&y1.equals("YY")) date1 ="1990-01-01";
+                else if(!d1.equals("DD")&&!m1.equals("MM")&&!y1.equals("YY")) date1 = y1+"-"+m1+"-"+d1;
+                else 
+                {
+                    JOptionPane.showMessageDialog(rightPanel,"Sai ngày bắt đầu");
+                    flag = false;
+                }
+                String date2 = new String();
+                if(d2.equals("DD")&&m2.equals("MM")&&y2.equals("YY")) date2 = "2025-01-01";
+                else if(!d2.equals("DD")&&!m2.equals("MM")&&!y2.equals("YY")) date2 = y2+"-"+m2+"-"+d2;
+                else 
+                {
+                    JOptionPane.showMessageDialog(rightPanel,"Sai ngày kết thúc");
+                    flag = false;
+                }
+
+                if(flag == true)
+                {
+                    BLLThongKeDonHang bllThongKeDonHang = new BLLThongKeDonHang();
+                    ArrayList<DTOThongKeDonHang> dtoThongKeDonHang = bllThongKeDonHang.layDSDLoc(tenHang, tenCoSo, date1, date2);
+                    thongKeTheoSoLuong(dtoThongKeDonHang,dsTenCoSo,comboBoxLoai.getSelectedItem().toString());                    
+                }
+            }
+        });
+        if(luaChon.equals("Theo doanh thu"))
+        {
+            int max = 0;
+            for(DTOThongKeDonHang dtoThongKeDonHang : ds)
+            if(max<dtoThongKeDonHang.getDoanhThu()) max = dtoThongKeDonHang.getDoanhThu();
+            double tiLe ;
+            if(max != 0) tiLe = chieuNgang * 1.0 / max;
+            else tiLe = 0;
+            int y = 0;
+            thongKe.setPreferredSize(new Dimension((int) (max * tiLe) + 450, chieuDoc));
+            for(int i=0;i<ds.size();i++)
+            {
+                JPanel thongKe1MonHang = new JPanel(null);
+                thongKe1MonHang.setBounds(0, y, 1000, 75);
+                JLabel tenHang = new JLabel(ds.get(i).getTenHangHoa());
+                tenHang.setBounds(0, 0, 250, 30);
+                JLabel cot = new JLabel();
+                cot.setBounds(255, 0, (int) (ds.get(i).getDoanhThu()*tiLe) , 30);
+                cot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu
+                cot.setBackground(Color.BLUE);
+                JLabel doanhThu = new JLabel(String.valueOf(ds.get(i).getDoanhThu()) + " đ");
+                doanhThu.setBounds(cot.getWidth()+tenHang.getWidth()+10,0,200,30);
+
+                thongKe1MonHang.add(tenHang);
+                thongKe1MonHang.add(cot);
+                thongKe1MonHang.add(doanhThu);
+                thongKe.add(thongKe1MonHang);
+                y+=75;
+            }
+            JScrollPane jScrollPane = new JScrollPane(thongKe);
+            jScrollPane.setBounds(2, 150, rightPanel.getWidth() - 20, 700);
+            rightPanel.add(jScrollPane);
+        }
+        else
+        {
+            int max = 0;
+            for(DTOThongKeDonHang dtoThongKeDonHang : ds)
+            if(max<dtoThongKeDonHang.getSoLuong()) max = dtoThongKeDonHang.getSoLuong();
+            double tiLe ;
+            if(max != 0) tiLe = chieuNgang * 1.0 / max;
+            else tiLe = 0;
+            int y = 0;
+            thongKe.setPreferredSize(new Dimension((int) (max * tiLe) + 450, chieuDoc));
+            for(int i=0;i<ds.size();i++)
+            {
+                JPanel thongKe1MonHang = new JPanel(null);
+                thongKe1MonHang.setBounds(0, y, 1000, 75);
+                JLabel tenHang = new JLabel(ds.get(i).getTenHangHoa());
+                tenHang.setBounds(0, 0, 250, 30);
+                JLabel cot = new JLabel();
+                cot.setBounds(255, 0, (int) (ds.get(i).getSoLuong()*tiLe) , 30);
+                cot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu
+                cot.setBackground(Color.BLUE);
+                JLabel doanhThu = new JLabel(String.valueOf(ds.get(i).getSoLuong()));
+                doanhThu.setBounds(cot.getWidth()+tenHang.getWidth()+10,0,200,30);
+
+                thongKe1MonHang.add(tenHang);
+                thongKe1MonHang.add(cot);
+                thongKe1MonHang.add(doanhThu);
+                thongKe.add(thongKe1MonHang);
+                y+=75;
+            }
+            JScrollPane jScrollPane = new JScrollPane(thongKe);
+            jScrollPane.setBounds(2, 150, rightPanel.getWidth() - 20, 700);
+            rightPanel.add(jScrollPane);
+        }
+        
     }
     public static void main(String[] args){
         new GUIAdmin();

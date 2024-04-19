@@ -15,23 +15,23 @@ public class DataLamThongKe{
             System.out.println(e);   
         }
     }
-    public ArrayList<DTOThongKeDonHang> locLayDanhSach(String tenHangHoa, String tenCoSO, Date tuNgay, Date denNgay)
+    public ArrayList<DTOThongKeDonHang> locLayDanhSach(String tenHangHoa, String tenCoSO, String tuNgay, String denNgay)
     {
         ArrayList<DTOThongKeDonHang> ds = new ArrayList<>();
         String truyVan;
-        truyVan =   "SELECT TenLoaiHangHoa, COUNT(SoLuongHang), GiaNhap, GiaNhap * COUNT(SoLuongHang) AS DoanhThu "+
+        truyVan =   "SELECT TenLoaiHangHoa, COUNT(SoLuongHang) AS SL, GiaNhap, GiaNhap * COUNT(SoLuongHang) AS DoanhThu "+
                     "FROM HangHoa, ChiTietHoaDon, HoaDon "+
                     "WHERE HangHoa.MaHangHoa = ChiTietHoaDon.MaHangHoa AND ChiTietHoaDon.MaHD = HoaDon.MaHD AND";
         truyVan += " NgayXuatHD > ? AND NgayXuatHD < ? AND";
-        if(!tenHangHoa.equals("NULL")) truyVan += " TenLoaiHangHoa = ?";
-        if(!tenCoSO.equals("NULL")) truyVan += " TenCoSo = ?";
-        if (truyVan.endsWith(" AND"))  truyVan = truyVan.substring(0, truyVan.length() - 4);
-        truyVan += " GROUP BY TenLoaiHangHoa, GiaNhap";
+        if(!tenHangHoa.equals("NULL")) truyVan += " TenLoaiHangHoa = ? AND";
+        if(!tenCoSO.equals("NULL")) truyVan += " MaCoSo = ?";
+        if (truyVan.endsWith(" AND"))  truyVan = truyVan.substring(0, truyVan.length() - 3);
+        truyVan += "GROUP BY TenLoaiHangHoa, GiaNhap";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
-            stmt.setDate(1, tuNgay);
-            stmt.setDate(2, denNgay);
+            stmt.setString(1, tuNgay);
+            stmt.setString(2, denNgay);
             int i = 3;
             if(!tenHangHoa.equals("NULL")) 
             {
@@ -39,9 +39,9 @@ public class DataLamThongKe{
                 i++;
             }
             if(!tenCoSO.equals("NULL")) stmt.setString(i, tenCoSO);
-            ResultSet rs =stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
             while(rs.next())
-            ds.add(new DTOThongKeDonHang(rs.getString("TenLoaiHangHoa"), rs.getInt("DoanhThu"), rs.getInt("COUNT(SoLuongHang)")));
+            ds.add(new DTOThongKeDonHang(rs.getString("TenLoaiHangHoa"), rs.getInt("DoanhThu"), rs.getInt("SL")));
         } catch (Exception e) {
             System.out.println(e);   
         }

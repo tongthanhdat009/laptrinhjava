@@ -1,6 +1,7 @@
 package DAL;
 
 import java.sql.*;
+import java.util.Vector;
 
 import DTO.CoSo;
 import DTO.DSCoSo;
@@ -47,5 +48,19 @@ public class DataCoSo {
         }
         return ds;
     }
-
+    public Vector<String> DSMaCoSo()
+    {
+        Vector<String> s = new Vector<>();
+        String truyVan = "SELECT MaCoSo FROM CoSo";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            s.add(rs.getString(1));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return s;
+    }
 }

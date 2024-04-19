@@ -1,20 +1,20 @@
 package DTO;
-import java.time.LocalDate;
-
+import java.sql.*;
 public class HoaDon {
     private String maHoaDon;
     private String maHoiVien;
     private String maCoSo;
-    private LocalDate ngayXuatHoaDon;
+    private Date ngayXuatHoaDon;
     private int tongTien;
-    private static int soLuongHoaDon=0;
-    public HoaDon(String maHoiVien,String maCoSo,int tongTien,LocalDate ngayXuatHoaDon)
+    private String trangThai;
+    public HoaDon(String maHoaDon, Date ngayXuatHoaDon, int tongTien, String maHoiVien, String maCoSo, String trangThai)
     {
         setMaHoiVien(maHoiVien);
         setMaCoSo(maCoSo);
         setNgayXuatHoaDon(ngayXuatHoaDon);
         setTongTien(tongTien);
-        maHoiVien = maHoiVien+"x"+maCoSo+"x"+String.valueOf(++soLuongHoaDon);
+        setMaHoaDon(maHoaDon);
+        setTrangThai(trangThai);
     }
     public String getMaCoSo() {
         return maCoSo;
@@ -25,11 +25,8 @@ public class HoaDon {
     public String getMaHoiVien() {
         return maHoiVien;
     }
-    public LocalDate getNgayXuatHoaDon() {
+    public Date getNgayXuatHoaDon() {
         return ngayXuatHoaDon;
-    }
-    public static int getSoLuongHoaDon() {
-        return soLuongHoaDon;
     }
     public int getTongTien() {
         return tongTien;
@@ -40,10 +37,19 @@ public class HoaDon {
     public void setMaHoiVien(String maHoiVien) {
         this.maHoiVien = maHoiVien;
     }
-    public void setNgayXuatHoaDon(LocalDate ngayXuatHoaDon) {
+    public void setNgayXuatHoaDon(Date ngayXuatHoaDon) {
         this.ngayXuatHoaDon = ngayXuatHoaDon;
     }
     public void setTongTien(int tongTien) {
         this.tongTien = tongTien;
+    }
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+    public String getTrangThai() {
+        return trangThai;
+    }
+    public void setMaHoaDon(String maHoaDon) {
+        this.maHoaDon = maHoaDon;
     }
 }

@@ -100,7 +100,7 @@ public class DataHangHoa {
         return ds;
     }
     //tìm kiếm hàng hóa
-    public  timKiemHangHoa(hangHoa hh){
+    public timKiemHangHoa(hangHoa hh){
         Connection con = DriverManager.getConnection(dbUrl, userName, password);
         Statement stmt= con.createStatement();
         String sql = "SELECT * FROM HangHoa WHERE ";

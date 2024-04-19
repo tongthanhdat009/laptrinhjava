@@ -17,6 +17,7 @@ public class DataHoiVien {
             System.out.println(e);   
         }
     }
+    
     public ArrayList<String> getTenCot(){
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -56,7 +57,7 @@ public class DataHoiVien {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
             String maHoiVienMoi = "HV"+layMaHoiVienChuaTonTai();
-            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, TaiKhoan, MatKhau, MADV, NgaySinh) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, TaiKhoan, MatKhau, NgaySinh) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, maHoiVienMoi);
             preparedStatement.setString(2, hoiVien.getHoten());
@@ -127,11 +128,6 @@ public class DataHoiVien {
             truyVan+="MatKhau = ? AND ";
             ds.add(a.getMatKhauHoiVien());
         } 
-        if(!a.getMaDV().equals("NULL"))
-        {
-            truyVan+="MaDV = ? AND ";
-            ds.add(a.getMaDV());
-        } 
         if(!a.getNgaysinh().equals("2000-01-01"))
         {
             truyVan+="NgaySinh = ? AND";
@@ -157,7 +153,7 @@ public class DataHoiVien {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9)));
+                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDate(7),rs.getString(8)));
             }
         }catch(Exception e)
         {
@@ -170,15 +166,21 @@ public class DataHoiVien {
         //trả về 1 xóa thành công, 0 xóa thất bại do dữ liệu nhập không có trong database
         String truyVan = "DELETE FROM HoiVien Where MaHV = ? ";
         String truyVan2 = "DELETE FROM HoaDon Where MaHV = ? ";
+        // String truyVan3 = "DELETE FROM HoiVien,HoaDon,ChiTietHoaDon WHERE MaHV= ? AND HoiVien.MaHV = HoaDon.MaHV AND HoaDon.MaHD = ChiTietHoaDon.MHD";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
             PreparedStatement statement2 = con.prepareStatement(truyVan2);
+            // PreparedStatement statement3 = con.prepareStatement(truyVan3);
             statement.setString(1, maHoiVien);
             statement2.setString(1, maHoiVien);
+            // statement3.setString(1, maHoiVien);
+
             int rowsAffected2 = statement2.executeUpdate();
             int rowsAffected = statement.executeUpdate();
-            if(rowsAffected>0 && rowsAffected2>0) return true;
+            // int rowsAffected3 = statement2.executeUpdate();
+
+            if(rowsAffected>0 && rowsAffected2>0 ) return true;
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -191,15 +193,13 @@ public class DataHoiVien {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(0, a.getHoten());
-            statement.setString(1, a.getGioitinh());
-            statement.setString(2, a.getMail());
-            statement.setString(3, a.getTaiKhoanHoiVien());
-            statement.setString(4, a.getMatKhauHoiVien());
-            statement.setString(5, a.getMaDV());
-            statement.setString(6, a.getNgaysinh());
-            statement.setString(7, a.getSdt());
-            statement.setString(8, a.getMaDV());
+            statement.setString(1, a.getHoten());
+            statement.setString(2, a.getGioitinh());
+            statement.setString(3, a.getMail());
+            statement.setString(4, a.getTaiKhoanHoiVien());
+            statement.setString(6, a.getMatKhauHoiVien());
+            statement.setString(7, a.getNgaysinh());
+            statement.setString(8, a.getSdt());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return 1;
         } catch (Exception e) {
@@ -216,7 +216,7 @@ public class DataHoiVien {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(truyVan);
             while(rs.next())
-            dsHoiVien.add(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9)));
+            dsHoiVien.add(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDate(7),rs.getString(8)));
         } catch (Exception e) {
             System.out.println(e);
         }

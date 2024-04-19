@@ -3,24 +3,37 @@ package DTO;
 public class dichVu {
     private String maDichVu;
     private String tenDichVu;
-    private String loaiDichVu;
-    private long giaDichVu;
-    
+    private String moTa;
+    private int giaDichVu;
+    private int thoiGian;
     //hàm khởi tạo
     public dichVu(){
         maDichVu = "none";
-        loaiDichVu = "none";
         tenDichVu = "none";
+        moTa = "";
         giaDichVu = 0;
+        thoiGian = 0;
     }
-    public dichVu(String maDichVu, String tenDichVu, String loaiDichVu, long giaDichVu){
-        setLoaiDichVu(maDichVu);
+    public dichVu(String maDichVu, String tenDichVu, int giaDichVu, int thoiGian, String moTa){
+        setMaDichVu(maDichVu);
         setTenDichVu(tenDichVu);
-        setMaDichVu(loaiDichVu);
+        setMoTa(moTa);
         setGiaDichVu(giaDichVu);
+        setThoiGian(thoiGian);
     }
     
     //hàm set&get
+    public void setThoiGian(int thoiGian){
+        if(!(thoiGian < 0))
+            this.thoiGian = thoiGian;
+        else
+            throw new IllegalArgumentException("Thoi Gian Dich Vu Khong Hop Le!");
+    }
+
+    public void setMoTa(String moTa){
+        this.moTa = moTa;
+    }
+    
     public void setMaDichVu(String maDichVu){
         if(!(maDichVu.equals("")))
             this.maDichVu = maDichVu;
@@ -35,27 +48,11 @@ public class dichVu {
             throw new IllegalArgumentException("Ten Dich Vu Khong Hop Le!");    
     }
 
-    public void setLoaiDichVu(String loaiDichVu){
-        String text = loaiDichVu.toLowerCase();
-        switch (text) {
-            case "vip":
-                this.loaiDichVu = "VIP";
-                break;
-            case "normal":
-                this.loaiDichVu = "Normal";
-            break;
-            case "svip":
-                this.loaiDichVu = "SVIP";
-            break;
-        
-            default:
-                throw new IllegalArgumentException("Loai Dich Vu Khong Hop Le!");
-        }
-        
-    }
-
-    public void setGiaDichVu(long giaDichVu){
-        this.giaDichVu = giaDichVu;
+    public void setGiaDichVu(int giaDichVu){
+        if(!(giaDichVu < 0))
+            this.giaDichVu = giaDichVu;
+        else
+            throw new IllegalArgumentException("Gia Dich Vu Khong Hop Le!");
     }
 
     public String getMaDichVu(){
@@ -64,15 +61,10 @@ public class dichVu {
     public String getTenDichVu(){
         return this.tenDichVu;
     }
-    public String getLoaiDichVu(){
-        return this.loaiDichVu;
-    }
     public long getGiaDichVu(){
         return this.giaDichVu;
     }
-    public String toString(){
-        return this.maDichVu + " " + this.tenDichVu + " " + this.loaiDichVu + " " + this.giaDichVu;  
-    }
+
     // public void nhap(){ //test
     //     Scanner in = new Scanner(System.in);
     //     String newMaDichVu= new String();

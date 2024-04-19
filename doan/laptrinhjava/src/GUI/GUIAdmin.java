@@ -579,7 +579,6 @@ public class GUIAdmin{
                             dsHV.get(i).getMail(),
                             dsHV.get(i).getTaiKhoanHoiVien(),
                             dsHV.get(i).getMatKhauHoiVien(),
-                            dsHV.get(i).getMaDV(),
                             dsHV.get(i).getNgaysinh(),
                             dsHV.get(i).getSdt()});
                     }
@@ -595,15 +594,14 @@ public class GUIAdmin{
                         JTextField tempTF = new JTextField();
                         tempTF.setPreferredSize(new Dimension(100,20));
                         tempTF.setBounds(0,20,100,20);
-                        if(i==0 || i==6){
-                            tempTF.setEditable(false);
-                        }
-                        tempTF.setName(tenCotHV.get(i));
 
                         JLabel tempLabel = new JLabel(tenCotHV.get(i));
                         tempLabel.setFont(new Font("Times New Roman", 1,15));
                         tempLabel.setPreferredSize(new Dimension(100,20));
-                        
+
+                        if(i==0 || i == 6){
+                            tempTF.setEditable(false);
+                        }
                         tempPanel.add(tempLabel);
                         tempPanel.add(tempTF);
                         bangChinhSua.add(tempPanel);
@@ -629,7 +627,28 @@ public class GUIAdmin{
                         tempBtn.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 if (e.getActionCommand().equals(cmtNut[0])) {
-
+                                    Component[] components = bangChinhSua.getComponents();
+                                    for (int i=0; i<components.length;i++) {
+                                        if (components[i] instanceof JPanel) {
+                                            JPanel tempPanel = (JPanel) components[i];
+                                            Component[] smallComponents = tempPanel.getComponents();
+                                            if(i==6){
+                                                // for (Component smallComponent : smallComponents) {
+                                                //     if(smallComponent instanceof JTextField){
+                                                //         JTextField textField = (JTextField) smallComponent;
+                                                //         tempPanel.remove(textField);
+                                                //         String[] maDV= {"DV001","DV002","DV003","DV004","DV005"};
+                                                //         @SuppressWarnings("rawtypes")
+                                                //         JComboBox maDVBox = new JComboBox<String>(maDV);
+                                                //         maDVBox.setBounds(0,20,120,20);
+                                                //         tempPanel.add(maDVBox);
+                                                //         tempPanel.revalidate();
+                                                //         tempPanel.repaint();
+                                                //     }
+                                                // }
+                                            }
+                                        }
+                                    }
                                 }
                                 else if (e.getActionCommand().equals(cmtNut[1])) {
                                     int i=dataTable.getSelectedRow();
@@ -644,7 +663,6 @@ public class GUIAdmin{
                                                     if(smallComponent instanceof JTextField){
                                                         JTextField textField = (JTextField) smallComponent;
                                                         if(bllHoiVien.xoaHV(textField.getText())){
-                                                            System.out.println("Xoa Thanh Cong");
                                                             break;
                                                         }
                                                         else{
@@ -695,7 +713,6 @@ public class GUIAdmin{
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             int i = dataTable.getSelectedRow();
-                            System.out.println(i);
                             if(i>=0){
                                 Component[] components = bangChinhSua.getComponents();
                                 int j=0;
@@ -711,7 +728,7 @@ public class GUIAdmin{
                                         if(j==0 || j==6){
                                             tempTF.setEditable(false);
                                         }
-
+                                        
                                         JLabel tempLabel = new JLabel(tenCotHV.get(j));
                                         j++;
                                         tempLabel.setFont(new Font("Times New Roman", 1,15));

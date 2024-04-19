@@ -1,27 +1,26 @@
 package BLL;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import DAL.DataHoiVien;
 import DTO.HoiVien;
-import DTO.dsHoiVien;
-import GUI.GUIAdmin;
 
-public class BLLAdmin {
+public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
-    public BLLAdmin(){
+    public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
     }
     public ArrayList<HoiVien> getDataHoiVien(){
         return dataHoiVien.layDanhSachHoiVien();
-    }
-    public void xuLyBangHoiVien(){
-        DataHoiVien data = new DataHoiVien();
-        dsHoiVien ds = new dsHoiVien();
-        ds.dshv = data.layDanhSachHoiVien();
-        for(int i=0;i<ds.dshv.size();i++){
-            System.out.println(ds.dshv.get(i).getMaHoiVien());
-        }
     }
     public ArrayList<String> layTenCotHoiVien(){
         return dataHoiVien.getTenCot();
@@ -29,7 +28,7 @@ public class BLLAdmin {
     public ArrayList<HoiVien> layDsHV(){
         return dataHoiVien.layDanhSachHoiVien();
     }
-    public static void main(String[] args){
-        new GUIAdmin();
+    public boolean xoaHV(String maHoiVien){
+        return dataHoiVien.xoa(maHoiVien);
     }
 }

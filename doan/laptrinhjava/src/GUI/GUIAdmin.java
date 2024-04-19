@@ -3,8 +3,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-import BLL.BLLAdmin;
 import BLL.BLLNhapThietBi;
+import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDT;
 import DAL.DataCoSo;
 import DAL.DataHoiVien;
@@ -70,8 +70,6 @@ public class GUIAdmin{
     //tiêu đề phụ
     JLabel subTitle = new JLabel("Chức năng");
     
-    //BLLAdmin
-    BLLAdmin bllAdmin = new BLLAdmin();
 
     public GUIAdmin(){    
         //main frame
@@ -540,10 +538,11 @@ public class GUIAdmin{
                 JTable dataTable;
                 JScrollPane scrollPane;
                 JPanel bangChinhSua;
+                
+                BLLQuanLyDanhSach bllHoiVien = new BLLQuanLyDanhSach();
 
-                DataHoiVien dataHV = new DataHoiVien();
-                ArrayList<String> tenCotHV = dataHV.getTenCot();
-                ArrayList<HoiVien> dsHV = dataHV.layDanhSachHoiVien();
+                ArrayList<String> tenCotHV = bllHoiVien.layTenCotHoiVien();
+                ArrayList<HoiVien> dsHV = bllHoiVien.getDataHoiVien();
 
                 if (selectedOption.equals("Cơ sở")) {
                     Container container = rightPanel; // Thay thế ... bằng container mà bạn muốn kiểm tra
@@ -567,7 +566,6 @@ public class GUIAdmin{
                     System.out.println("Da chon danh sach Dich vu");
                 }
                 else if (selectedOption.equals("Hội viên")) {
-                    
                     // tạo model bảng
                     DefaultTableModel hvList = new DefaultTableModel();
                     for (int i = 0; i < tenCotHV.size(); i++) {
@@ -645,7 +643,8 @@ public class GUIAdmin{
                                                 for (Component smallComponent : smallComponents) {
                                                     if(smallComponent instanceof JTextField){
                                                         JTextField textField = (JTextField) smallComponent;
-                                                        if(dataHV.xoa(textField.getText())){
+                                                        if(bllHoiVien.xoaHV(textField.getText())){
+                                                            System.out.println("Xoa Thanh Cong");
                                                             break;
                                                         }
                                                         else{
@@ -745,7 +744,6 @@ public class GUIAdmin{
                         }
                         
                     });
-
                 }
                 else if (selectedOption.equals("Nhân viên")){
                     System.out.println("Da chon danh sach nhan vien");

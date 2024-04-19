@@ -79,7 +79,8 @@ VALUES
     ('HV048', N'Lê Văn Đạt', N'Nam', 'HV048@gmail.com', '0852369147', 'tkhv048', 'mkhv001', 'DV003', '1982-02-08','0852369147'),
     ('HV049', N'Phạm Thị Thùy', N'Nữ', 'HV049@gmail.com', '0741258963', 'tkhv049', 'mkhv001', 'DV001', '1981-10-03','0741258963'),
     ('HV050', N'Mai Văn Tuấn', N'Nam', 'HV050@gmail.com', '0369852147', 'tkhv050', 'mkhv001', 'DV002', '1980-07-20','0369852147');
-    
+--update mật khẩu hội viên
+
 --thêm thông tin cơ sở
 INSERT INTO CoSo(MaCoSo, TenCoSo, DiaChi, ThoiGianHoatDong, SoDienThoai, DoanhThu)
 VALUES 

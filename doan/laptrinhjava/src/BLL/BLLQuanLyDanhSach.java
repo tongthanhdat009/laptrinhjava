@@ -26,4 +26,7 @@ public class BLLQuanLyDanhSach{
     public boolean themHV(HoiVien a){
         return dataHoiVien.them(a);
     }
+    public boolean suaThongTinHV(HoiVien a){
+        return dataHoiVien.sua(a);
+    }
 }

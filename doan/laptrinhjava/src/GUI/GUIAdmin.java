@@ -605,6 +605,7 @@ public class GUIAdmin{
                         JTextField tempTF = new JTextField();
                         tempTF.setPreferredSize(new Dimension(100,20));
                         tempTF.setBounds(0,20,100,20);
+                        tempTF.setName(tenCotHV.get(i));
 
                         JLabel tempLabel = new JLabel(tenCotHV.get(i));
                         tempLabel.setFont(new Font("Times New Roman", 1,15));
@@ -629,15 +630,15 @@ public class GUIAdmin{
                     scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
 
                     //nút chức năng
-                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Cập nhật"};
-                    String[] cmtNut = {"add", "remove", "edit", "update"};
+                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
+                    String[] cmtNut = {"add", "remove", "edit", "Search"};
                     int a=320;
                     for(int i=0;i<tenNut.length;i++){
                         JButton tempBtn = new JButton(tenNut[i]);
                         tempBtn.setActionCommand(cmtNut[i]);
                         tempBtn.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                                if (e.getActionCommand().equals(cmtNut[0])) {
+                                if (e.getActionCommand().equals(cmtNut[0])) { //THÊM HỘI VIÊN
                                     boolean flag = true; // cờ hiệu gán giá trị cho mã hội viên
                                     ArrayList<String> thongTinMoi = new ArrayList<String>(); 
                                     Component[] components = bangChinhSua.getComponents();
@@ -654,10 +655,12 @@ public class GUIAdmin{
                                                         textField.setText(String.format("HV%03d", maxSTT));
                                                         thongTinMoi.add(textField.getText());
                                                         flag = false;
-                                                    } else if (text.equals("")) {
+                                                    } 
+                                                    else if (text.equals("")) {
                                                         JOptionPane.showMessageDialog(bangChinhSua, "Không được để trống thông tin!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
                                                         return; // Kết thúc sự kiện nếu có thông tin bị thiếu
-                                                    } else {
+                                                    } 
+                                                    else {
                                                         thongTinMoi.add(text);
                                                     }
                                                 }
@@ -687,12 +690,12 @@ public class GUIAdmin{
                                                                     thongTinMoi.get(7));
                                         if(bllHoiVien.themHV(tempHV)){
                                             JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
-                                        };
-                                    } else {
-                                        JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                                    }
+                                        }
+                                        } else {
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                        }
                                 }
-                                else if (e.getActionCommand().equals(cmtNut[1])) {
+                                else if (e.getActionCommand().equals(cmtNut[1])) {//XÓA HỘI VIÊN
                                     int i=dataTable.getSelectedRow();
                                     if(i>=0){
                                         Component[] components = bangChinhSua.getComponents();
@@ -717,7 +720,7 @@ public class GUIAdmin{
                                         }
                                     }
                                 } 
-                                else if (e.getActionCommand().equals(cmtNut[2])) {
+                                else if (e.getActionCommand().equals(cmtNut[2])) {//SỬA THÔNG TIN HỘI VIÊN
                                     int i= dataTable.getSelectedRow();
                                     int j= 0;
                                     if (i>=0){
@@ -734,6 +737,33 @@ public class GUIAdmin{
                                                         j++;
                                                     }
                                                 }
+                                            }
+                                        }
+                                        String dateString = (String) hvList.getValueAt(i, 6);
+                                        String[] parts = dateString.split("-");
+                                        int year = Integer.parseInt(parts[0]);
+                                        int month = Integer.parseInt(parts[1]);
+                                        int day = Integer.parseInt(parts[2]);
+                                        String matKhauHV = (String) hvList.getValueAt(i, 5);
+                                        if(matKhauHV.length()<6){
+                                            JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                        else{
+                                            @SuppressWarnings("deprecation")
+                                            Date date = new Date(year - 1900, month - 1, day); // Tạo đối tượng Date từ năm, tháng và ngày
+                                            HoiVien tempHV = new HoiVien((String)hvList.getValueAt(i, 0),
+                                                                        (String) hvList.getValueAt(i, 1),
+                                                                        (String) hvList.getValueAt(i, 2),
+                                                                        (String) hvList.getValueAt(i, 3),
+                                                                        (String) hvList.getValueAt(i, 4),
+                                                                        (String) hvList.getValueAt(i, 5),
+                                                                        date,
+                                                                        (String) hvList.getValueAt(i, 7));
+                                            if(bllHoiVien.suaThongTinHV(tempHV)){
+                                                JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin",JOptionPane.DEFAULT_OPTION);
+                                            }
+                                            else{
+                                                JOptionPane.showMessageDialog(null, "Sửa thông tin không thành công", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
                                             }
                                         }
                                     } 
@@ -770,6 +800,10 @@ public class GUIAdmin{
                                         tempTF.setText(hvList.getValueAt(i, j).toString().trim());
                                         if(j==0){
                                             tempTF.setEditable(false);
+                                            tempTF.setName(tenCotHV.get(j));
+                                        }
+                                        else{
+                                            tempTF.setName(tenCotHV.get(j));
                                         }
                                         
                                         JLabel tempLabel = new JLabel(tenCotHV.get(j));

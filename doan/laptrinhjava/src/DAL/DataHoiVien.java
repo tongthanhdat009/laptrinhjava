@@ -52,7 +52,7 @@ public class DataHoiVien {
         }
         return -1;
     }
-    public boolean them(HoiVien hoiVien) // CHƯA TEST
+    public boolean them(HoiVien hoiVien) // test rồi
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -180,10 +180,10 @@ public class DataHoiVien {
         }
         return false;
     }
-    public int sua(HoiVien a) //Chưa test
+    public boolean sua(HoiVien a) //test rồi
     {
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, TaiKhoan = ?, MatKhau = ?, MaDV = ?, NgaySinh = ?, SDT = ? FROM HoiVien Where MaHV = ? ";
+        String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, TaiKhoan = ?, MatKhau = ?, NgaySinh = ?, SoDienThoai = ? FROM HoiVien Where MaHV = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
@@ -191,15 +191,16 @@ public class DataHoiVien {
             statement.setString(2, a.getGioitinh());
             statement.setString(3, a.getMail());
             statement.setString(4, a.getTaiKhoanHoiVien());
-            statement.setString(6, a.getMatKhauHoiVien());
-            statement.setString(7, a.getNgaysinh());
-            statement.setString(8, a.getSdt());
+            statement.setString(5, a.getMatKhauHoiVien());
+            statement.setString(6, a.getNgaysinh());
+            statement.setString(7, a.getSdt());
+            statement.setString(8, a.getMaHoiVien());
             int rowsAffected = statement.executeUpdate();
-            if(rowsAffected>0) return 1;
+            if(rowsAffected>0) return true;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return 0;
+        return false;
     }
     public ArrayList<HoiVien> layDanhSachHoiVien()
     {

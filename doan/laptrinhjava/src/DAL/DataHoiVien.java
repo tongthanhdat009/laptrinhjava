@@ -56,17 +56,16 @@ public class DataHoiVien {
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String maHoiVienMoi = "HV"+layMaHoiVienChuaTonTai();
-            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, TaiKhoan, MatKhau, NgaySinh) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, TaiKhoan, MatKhau, NgaySinh, SoDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, maHoiVienMoi);
+            preparedStatement.setString(1, hoiVien.getMaHoiVien());
             preparedStatement.setString(2, hoiVien.getHoten());
-            preparedStatement.setString(3, hoiVien.getMail());
-            preparedStatement.setString(4, hoiVien.getGioitinh());
-            preparedStatement.setString(5, hoiVien.getMail());
-            preparedStatement.setString(6, hoiVien.getTaiKhoanHoiVien());
-            preparedStatement.setString(7, hoiVien.getMatKhauHoiVien());
-            preparedStatement.setString(4, hoiVien.getNgaysinh());
+            preparedStatement.setString(3, hoiVien.getGioitinh());
+            preparedStatement.setString(4, hoiVien.getMail());
+            preparedStatement.setString(5, hoiVien.getTaiKhoanHoiVien());
+            preparedStatement.setString(6, hoiVien.getMatKhauHoiVien());
+            preparedStatement.setString(7, hoiVien.getNgaysinh());
+            preparedStatement.setString(8, hoiVien.getSdt());
             if (preparedStatement.executeUpdate() > 0)  return true;
         } catch(Exception e){
             System.out.println(e);
@@ -165,22 +164,17 @@ public class DataHoiVien {
     {
         //trả về 1 xóa thành công, 0 xóa thất bại do dữ liệu nhập không có trong database
         String truyVan = "DELETE FROM HoiVien Where MaHV = ? ";
-        String truyVan2 = "DELETE FROM HoaDon Where MaHV = ? ";
-        // String truyVan3 = "DELETE FROM HoiVien,HoaDon,ChiTietHoaDon WHERE MaHV= ? AND HoiVien.MaHV = HoaDon.MaHV AND HoaDon.MaHD = ChiTietHoaDon.MHD";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            PreparedStatement statement2 = con.prepareStatement(truyVan2);
             // PreparedStatement statement3 = con.prepareStatement(truyVan3);
             statement.setString(1, maHoiVien);
-            statement2.setString(1, maHoiVien);
             // statement3.setString(1, maHoiVien);
 
-            int rowsAffected2 = statement2.executeUpdate();
             int rowsAffected = statement.executeUpdate();
             // int rowsAffected3 = statement2.executeUpdate();
 
-            if(rowsAffected>0 && rowsAffected2>0 ) return true;
+            if(rowsAffected>0) return true;
         } catch (Exception e) {
             System.out.println(e);
         }

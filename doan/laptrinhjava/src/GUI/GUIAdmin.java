@@ -27,6 +27,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+
 public class GUIAdmin{
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
     private final int width = 1600;
@@ -606,7 +610,7 @@ public class GUIAdmin{
                         tempLabel.setFont(new Font("Times New Roman", 1,15));
                         tempLabel.setPreferredSize(new Dimension(100,20));
 
-                        if(i==0 || i == 6){
+                        if(i==0){
                             tempTF.setEditable(false);
                         }
                         tempPanel.add(tempLabel);
@@ -634,27 +638,58 @@ public class GUIAdmin{
                         tempBtn.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 if (e.getActionCommand().equals(cmtNut[0])) {
+                                    boolean flag = true; // cờ hiệu gán giá trị cho mã hội viên
+                                    ArrayList<String> thongTinMoi = new ArrayList<String>(); 
                                     Component[] components = bangChinhSua.getComponents();
                                     for (int i=0; i<components.length;i++) {
                                         if (components[i] instanceof JPanel) {
                                             JPanel tempPanel = (JPanel) components[i];
                                             Component[] smallComponents = tempPanel.getComponents();
-                                            if(i==6){
-                                                // for (Component smallComponent : smallComponents) {
-                                                //     if(smallComponent instanceof JTextField){
-                                                //         JTextField textField = (JTextField) smallComponent;
-                                                //         tempPanel.remove(textField);
-                                                //         String[] maDV= {"DV001","DV002","DV003","DV004","DV005"};
-                                                //         @SuppressWarnings("rawtypes")
-                                                //         JComboBox maDVBox = new JComboBox<String>(maDV);
-                                                //         maDVBox.setBounds(0,20,120,20);
-                                                //         tempPanel.add(maDVBox);
-                                                //         tempPanel.revalidate();
-                                                //         tempPanel.repaint();
-                                                //     }
-                                                // }
+                                            for (int j=0;j<smallComponents.length;j++) {
+                                                if(smallComponents[j] instanceof JTextField){
+                                                    JTextField textField = (JTextField) smallComponents[j];
+                                                    String text = textField.getText().trim(); // Lấy text từ textField và loại bỏ khoảng trắng đầu cuối
+                                                    if (flag && j == 1) {
+                                                        int maxSTT = bllHoiVien.kiemTraMaHoiVien();
+                                                        textField.setText(String.format("HV%03d", maxSTT));
+                                                        thongTinMoi.add(textField.getText());
+                                                        flag = false;
+                                                    } else if (text.equals("")) {
+                                                        JOptionPane.showMessageDialog(bangChinhSua, "Không được để trống thông tin!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
+                                                        return; // Kết thúc sự kiện nếu có thông tin bị thiếu
+                                                    } else {
+                                                        thongTinMoi.add(text);
+                                                    }
+                                                }
                                             }
                                         }
+                                    }
+                                     // Kiểm tra xem thongTinMoi có đủ 8 phần tử không trước khi thêm vào hvList
+                                    if (thongTinMoi.size() >= 8) {
+                                        hvList.addRow(thongTinMoi.toArray());
+                                        String dateString = thongTinMoi.get(6);
+                                        String[] parts = dateString.split("-");
+                                        int year = Integer.parseInt(parts[0]);
+                                        int month = Integer.parseInt(parts[1]);
+                                        int day = Integer.parseInt(parts[2]);
+
+                                        @SuppressWarnings("deprecation")
+                                        Date date = new Date(year - 1900, month - 1, day); // Tạo đối tượng Date từ năm, tháng và ngày
+                                        System.out.println(date);
+
+                                        HoiVien tempHV = new HoiVien(thongTinMoi.get(0),
+                                                                    thongTinMoi.get(1),
+                                                                    thongTinMoi.get(2),
+                                                                    thongTinMoi.get(3),
+                                                                    thongTinMoi.get(4),
+                                                                    thongTinMoi.get(5),
+                                                                    date,
+                                                                    thongTinMoi.get(7));
+                                        if(bllHoiVien.themHV(tempHV)){
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
+                                        };
+                                    } else {
+                                        JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                                     }
                                 }
                                 else if (e.getActionCommand().equals(cmtNut[1])) {
@@ -670,6 +705,7 @@ public class GUIAdmin{
                                                     if(smallComponent instanceof JTextField){
                                                         JTextField textField = (JTextField) smallComponent;
                                                         if(bllHoiVien.xoaHV(textField.getText())){
+                                                            textField.setText("");
                                                             break;
                                                         }
                                                         else{
@@ -732,7 +768,7 @@ public class GUIAdmin{
                                         tempTF.setPreferredSize(new Dimension(100,20));
                                         tempTF.setBounds(0,20,100,20);
                                         tempTF.setText(hvList.getValueAt(i, j).toString().trim());
-                                        if(j==0 || j==6){
+                                        if(j==0){
                                             tempTF.setEditable(false);
                                         }
                                         

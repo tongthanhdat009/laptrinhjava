@@ -20,4 +20,10 @@ public class BLLQuanLyDanhSach{
     public boolean xoaHV(String maHoiVien){
         return dataHoiVien.xoa(maHoiVien);
     }
+    public int kiemTraMaHoiVien(){
+        return dataHoiVien.layMaHoiVienChuaTonTai()+1;
+    }
+    public boolean themHV(HoiVien a){
+        return dataHoiVien.them(a);
+    }
 }

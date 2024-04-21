@@ -148,7 +148,7 @@ public class DataHoiVien {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
             for(int i=0;i<ds.size();i++)
-            statement.setString(i+1, ds.get(i));
+                statement.setString(i+1, ds.get(i));
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {

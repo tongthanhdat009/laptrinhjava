@@ -769,8 +769,23 @@ public class GUIAdmin{
                                     } 
                                     
                                 }
+                                //tỉm kiếm hội viên
                                 else if (e.getActionCommand().equals(cmtNut[3])) {
-                                    
+                                    Component[] components = bangChinhSua.getComponents();
+                                    for (int i=0;i<components.length;i++) {
+                                        if (components[i] instanceof JPanel) {
+                                            JPanel temPanel = (JPanel) components[i];
+                                            Component[] smallComponents = temPanel.getComponents();
+                                            for (int j=0;j<smallComponents.length;j++) {
+                                                if (smallComponents[j] instanceof JTextField) {
+                                                    JTextField textField = (JTextField) smallComponents[j];
+                                                    if(i==0 && j==1){
+                                                        textField.setEditable(true);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                         }
                     });

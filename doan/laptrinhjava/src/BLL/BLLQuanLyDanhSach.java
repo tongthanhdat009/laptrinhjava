@@ -2,12 +2,14 @@ package BLL;
 import java.util.ArrayList;
 import DAL.DataHoiVien;
 import DTO.HoiVien;
+import DTO.dsHoiVien;
 
 public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
     }
+    //danh sách hội viên
     public ArrayList<HoiVien> getDataHoiVien(){
         return dataHoiVien.layDanhSachHoiVien();
     }
@@ -28,5 +30,8 @@ public class BLLQuanLyDanhSach{
     }
     public boolean suaThongTinHV(HoiVien a){
         return dataHoiVien.sua(a);
+   }
+    public dsHoiVien timKiemHV(HoiVien a){
+        return dataHoiVien.timKiem(a);
     }
 }

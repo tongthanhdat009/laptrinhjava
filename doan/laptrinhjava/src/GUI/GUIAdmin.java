@@ -8,7 +8,7 @@ import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDT;
 import BLL.BLLThongKeDonHang;
-import DAL.DataCoSo;
+import DAL.dataCoSo;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
@@ -413,7 +413,7 @@ public class GUIAdmin{
                         thongTinChiTiet.add(chonSoLuong);
                         boolean flag = false;
 
-                        DataCoSo dataCoSo = new DataCoSo();
+                        dataCoSo dataCoSo = new dataCoSo();
                         DSCoSo dsCS = new DSCoSo();
                         dsCS = dataCoSo.layDSCoSo();
                         Vector<String> s = new Vector<>();
@@ -546,31 +546,85 @@ public class GUIAdmin{
                 JScrollPane scrollPane;
                 JPanel bangChinhSua;
                 
-                BLLQuanLyDanhSach bllHoiVien = new BLLQuanLyDanhSach();
+                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
 
-                ArrayList<String> tenCotHV = bllHoiVien.layTenCotHoiVien();
-                ArrayList<HoiVien> dsHV = bllHoiVien.getDataHoiVien();
+                ArrayList<String> tenCotHV = bllQuanLyDanhSach.layTenCotHoiVien();
+                ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
+
+                ArrayList<String> tenCotCS = bllQuanLyDanhSach.layTenCotCoSo();
+                DSCoSo dsCS =  bllQuanLyDanhSach.layDsCoSo();
 
                 if (selectedOption.equals("Cơ sở")) {
-                    Container container = rightPanel; // Thay thế ... bằng container mà bạn muốn kiểm tra
-                    int x = 6; // Thay thế ... bằng tọa độ x của điểm bạn muốn kiểm tra
-                    int y = 460; // Thay thế ... bằng tọa độ y của điểm bạn muốn kiểm tra
-
-                    Component component = container.getComponentAt(x, y);
-
-                    if (component != null && component.isShowing()) {
-                        // Component tại điểm đã cho tồn tại và đang được hiển thị
-                        System.out.println("Component tồn tại tại điểm đã cho và đang được hiển thị.");
-                        rightPanel.remove(component);
-                        rightPanel.revalidate();
-                        rightPanel.repaint();
-                    } else {
-                        // Không có component nào tại điểm đã cho hoặc component đó không được hiển thị
-                        System.out.println("Da chon danh sach co so");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    // tạo model bảng
+                    DefaultTableModel csList = new DefaultTableModel();
+                    for (int i = 0; i < tenCotCS.size(); i++) {
+                        csList.addColumn(tenCotCS.get(i));
                     }
+                    // Thêm dữ liệu vào bảng
+                    for (int i = 0; i < dsCS.dsCoSo.size(); i++) {
+                        csList.addRow(new Object[]{
+                            dsCS.dsCoSo.get(i).getMaCoSo(),
+                            dsCS.dsCoSo.get(i).getTenCoSo(),
+                            dsCS.dsCoSo.get(i).getDiaChi(),
+                            dsCS.dsCoSo.get(i).getThoiGianHoatDong(),
+                            dsCS.dsCoSo.get(i).getStd(),
+                            dsCS.dsCoSo.get(i).getDoanhThu()
+                        });
+                    }
+                    
+                    //bảng hiện dòng thông tin được chọn
+                    bangChinhSua = new JPanel();
+                    for(int i=0;i<tenCotCS.size();i++){
+                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                        
+                        JPanel tempPanel = new JPanel();
+                        
+                        JTextField tempTF = new JTextField();
+                        tempTF.setPreferredSize(new Dimension(100,20));
+                        tempTF.setBounds(0,20,100,20);
+                        tempTF.setName(tenCotCS.get(i));
+
+                        JLabel tempLabel = new JLabel(tenCotCS.get(i));
+                        tempLabel.setFont(new Font("Times New Roman", 1,15));
+                        tempLabel.setPreferredSize(new Dimension(100,20));
+
+                        if(i==0){
+                            tempTF.setEditable(false);
+                        }
+                        tempPanel.add(tempLabel);
+                        tempPanel.add(tempTF);
+                        bangChinhSua.add(tempPanel);
+                    }
+
+                    rightPanel.add(bangChinhSua);
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
+
+                    dataTable = new JTable(csList);
+                    dataTable.getTableHeader().setReorderingAllowed(false);
+                    
+                    scrollPane = new JScrollPane(dataTable);
+                    scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
+                    
+                    //thêm nút chức năng
+                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
+                    String[] cmtNut = {"add", "remove", "edit", "Search"};
+                    int a=320;
+                    for(int i=0;i<tenNut.length;i++){
+                        JButton tempBtn = new JButton(tenNut[i]);
+                        tempBtn.setActionCommand(cmtNut[i]);
+                        tempBtn.setBounds(a,145,100,20);
+                        a+=140;
+                        rightPanel.add(tempBtn);
+                    }
+
+                    rightPanel.add(scrollPane);
                 }
                 else if(selectedOption.equals("Dịch vụ")){
-                    System.out.println("Da chon danh sach Dich vu");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+
                 }
                 else if (selectedOption.equals("Hội viên")) {
                     // tạo model bảng
@@ -648,7 +702,7 @@ public class GUIAdmin{
                                                     JTextField textField = (JTextField) smallComponents[j];
                                                     String text = textField.getText().trim(); // Lấy text từ textField và loại bỏ khoảng trắng đầu cuối
                                                     if (flag && j == 1) {
-                                                        int maxSTT = bllHoiVien.kiemTraMaHoiVien();
+                                                        int maxSTT = bllQuanLyDanhSach.kiemTraMaHoiVien();
                                                         textField.setText(String.format("HV%03d", maxSTT));
                                                         thongTinMoi.add(textField.getText());
                                                         flag = false;
@@ -685,7 +739,7 @@ public class GUIAdmin{
                                                                     thongTinMoi.get(5),
                                                                     date,
                                                                     thongTinMoi.get(7));
-                                        if(bllHoiVien.themHV(tempHV)){
+                                        if(bllQuanLyDanhSach.themHV(tempHV)){
                                             JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
                                         }
                                         } else {
@@ -704,7 +758,7 @@ public class GUIAdmin{
                                                 for (Component smallComponent : smallComponents) {
                                                     if(smallComponent instanceof JTextField){
                                                         JTextField textField = (JTextField) smallComponent;
-                                                        if(bllHoiVien.xoaHV(textField.getText())){
+                                                        if(bllQuanLyDanhSach.xoaHV(textField.getText())){
                                                             textField.setText("");
                                                             break;
                                                         }
@@ -756,7 +810,7 @@ public class GUIAdmin{
                                                                         (String) hvList.getValueAt(i, 5),
                                                                         date,
                                                                         (String) hvList.getValueAt(i, 7));
-                                            if(bllHoiVien.suaThongTinHV(tempHV)){
+                                            if(bllQuanLyDanhSach.suaThongTinHV(tempHV)){
                                                 JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin",JOptionPane.DEFAULT_OPTION);
                                             }
                                             else{
@@ -793,7 +847,7 @@ public class GUIAdmin{
                                         JPanel temPanel = (JPanel) components[0];
                                         Component[] smallComponents = temPanel.getComponents();
                                         textField = (JTextField) smallComponents[1];
-                                        if(bllHoiVien.timKiemHV(textField.getText().toUpperCase())){
+                                        if(bllQuanLyDanhSach.timKiemHV(textField.getText().toUpperCase())){
                                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm hội viên", JOptionPane.INFORMATION_MESSAGE);
                                             for(int i=0; i<dsHV.size();i++){
                                                 if(textField.getText().toUpperCase().equals(dsHV.get(i).getMaHoiVien())){
@@ -829,10 +883,10 @@ public class GUIAdmin{
                                 }
                             }
                         });
-                    tempBtn.setBounds(a,145,100,20);
-                    a+=140;
-                    rightPanel.add(tempBtn);
-                }
+                        tempBtn.setBounds(a,145,100,20);
+                        a+=140;
+                        rightPanel.add(tempBtn);
+                    }
 
                     rightPanel.add(scrollPane);
                     
@@ -895,19 +949,19 @@ public class GUIAdmin{
                     });
                 }
                 else if (selectedOption.equals("Nhân viên")){
-                    System.out.println("Da chon danh sach nhan vien");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Thiết bị")){
-                    System.out.println("Da chon danh sach thiet bi");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Thiết bị cơ sở")){
-                    System.out.println("Da chon danh sach thiet bi co so");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Hóa đơn")){
-                    System.out.println("Da chon danh sach hoa don");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Hàng hóa cơ sở")){
-                    System.out.println("Da chon danh sach hang hoa co so");
+                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
                 }
                 // Thêm các xử lý khác nếu cần
             }

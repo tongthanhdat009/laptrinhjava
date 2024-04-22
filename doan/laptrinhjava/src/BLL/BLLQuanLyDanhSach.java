@@ -31,7 +31,7 @@ public class BLLQuanLyDanhSach{
     public boolean suaThongTinHV(HoiVien a){
         return dataHoiVien.sua(a);
    }
-    public dsHoiVien timKiemHV(HoiVien a){
-        return dataHoiVien.timKiem(a);
+    public boolean timKiemHV(String a){
+        return dataHoiVien.timKiemHV(a);
     }
 }

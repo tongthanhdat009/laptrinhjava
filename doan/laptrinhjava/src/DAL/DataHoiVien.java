@@ -92,73 +92,92 @@ public class DataHoiVien {
         }
         return -2;
     }
-    public dsHoiVien timKiem(HoiVien a) //Chưa test
-    {
-        ArrayList<String> ds = new ArrayList<String>();
-        dsHoiVien dsHoiVien = new dsHoiVien();
-        String truyVan = "SELECT * FROM HoiVien Where ";
-        if(!a.getMaHoiVien().equals("NULL"))
-        {
-            truyVan+= "MaHV = ? AND ";
-            ds.add(a.getMaHoiVien());
-        } 
-        if(!a.getHoten().equals("NULL"))
-        {
-            truyVan+="HoTenHV = ? AND ";
-            ds.add(a.getHoten());
-        } 
-        if(!a.getGioitinh().equals("NULL"))
-        {
-            truyVan+="GioiTinh = ? AND ";
-            ds.add(a.getGioitinh());
-        } 
-        if(!a.getMail().equals("NULL"))
-        {
-            truyVan+="Gmail = ? AND ";
-            ds.add(a.getMail());
-        } 
-        if(!a.getTaiKhoanHoiVien().equals("NULL"))
-        {
-            truyVan+="TaiKhoan = ? AND ";
-            ds.add(a.getTaiKhoanHoiVien());
-        } 
-        if(!a.getMatKhauHoiVien().equals("NULL"))
-        {
-            truyVan+="MatKhau = ? AND ";
-            ds.add(a.getMatKhauHoiVien());
-        } 
-        if(!a.getNgaysinh().equals("2000-01-01"))
-        {
-            truyVan+="NgaySinh = ? AND";
-            ds.add(a.getNgaysinh());
-        } 
-        if(!a.getSdt().equals("NULL"))
-        {
-            truyVan+="SDT = ? ";
-            ds.add(a.getSdt());
-        }
-        truyVan = truyVan.trim();
-        if (truyVan.endsWith("AND")) {
-            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
-            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
-        }
+    // public dsHoiVien timKiem(HoiVien a) //Chưa test
+    // {
+    //     ArrayList<String> ds = new ArrayList<String>();
+    //     dsHoiVien dsHoiVien = new dsHoiVien();
+    //     String truyVan = "SELECT * FROM HoiVien Where ";
+    //     if(!a.getMaHoiVien().equals(""))
+    //     {
+    //         truyVan+= "MaHV = ? AND ";
+    //         ds.add(a.getMaHoiVien());
+    //     } 
+    //     if(!a.getHoten().equals(""))
+    //     {
+    //         truyVan+="HoTenHV = ? AND ";
+    //         ds.add(a.getHoten());
+    //     } 
+    //     if(!a.getGioitinh().equals(""))
+    //     {
+    //         truyVan+="GioiTinh = ? AND ";
+    //         ds.add(a.getGioitinh());
+    //     } 
+    //     if(!a.getMail().equals(""))
+    //     {
+    //         truyVan+="Gmail = ? AND ";
+    //         ds.add(a.getMail());
+    //     } 
+    //     if(!a.getTaiKhoanHoiVien().equals(""))
+    //     {
+    //         truyVan+="TaiKhoan = ? AND ";
+    //         ds.add(a.getTaiKhoanHoiVien());
+    //     } 
+    //     if(!a.getMatKhauHoiVien().equals(""))
+    //     {
+    //         truyVan+="MatKhau = ? AND ";
+    //         ds.add(a.getMatKhauHoiVien());
+    //     } 
+    //     if(!a.getNgaysinh().equals("2000-1-1"))
+    //     {
+    //         truyVan+="NgaySinh = ? AND";
+    //         ds.add(a.getNgaysinh());
+    //     } 
+    //     if(!a.getSdt().equals(""))
+    //     {
+    //         truyVan+="SDT = ? ";
+    //         ds.add(a.getSdt());
+    //     }
+    //     truyVan = truyVan.trim();
+    //     if (truyVan.endsWith("AND")) {
+    //         // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+    //         truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+    //     }
 
-        try
-        {
+    //     try
+    //     {
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         PreparedStatement statement = con.prepareStatement(truyVan);
+    //         for(int i=0;i<ds.size();i++)
+    //             statement.setString(i+1, ds.get(i));
+    //         ResultSet rs = statement.executeQuery();
+    //         while(rs.next())
+    //         {
+    //             dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDate(7),rs.getString(8)));
+    //         }
+    //     }catch(Exception e)
+    //     {
+    //         System.out.println(e);
+    //     }
+    //     return dsHoiVien;
+    // }
+    public boolean timKiemHV(String maHV) //test rồi
+    {
+        String truyVan = "SELECT * FROM HoiVien Where MaHV = ?";
+        if(maHV.equals("")){
+            return false;
+        }
+        try{
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            for(int i=0;i<ds.size();i++)
-                statement.setString(i+1, ds.get(i));
+            statement.setString(1, maHV);
             ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
-                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDate(7),rs.getString(8)));
+            if(rs.next()){
+                return true;
             }
-        }catch(Exception e)
-        {
+        }catch(Exception e){
             System.out.println(e);
         }
-        return dsHoiVien;
+        return false;
     }
     public boolean xoa(String maHoiVien) //test thành công
     {

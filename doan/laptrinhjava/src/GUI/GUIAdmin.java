@@ -3,21 +3,18 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-import com.microsoft.sqlserver.jdbc.osgi.Activator;
 
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDT;
 import BLL.BLLThongKeDonHang;
 import DAL.DataCoSo;
-import DAL.DataHoiVien;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DTOThongKeDonHang;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
-import DTO.dichVu;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -27,8 +24,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 public class GUIAdmin{
@@ -426,6 +421,7 @@ public class GUIAdmin{
                         {
                             s.add(a.getMaCoSo());
                         }
+                        @SuppressWarnings("rawtypes")
                         JComboBox chonCoSo = new JComboBox<>(s);
                         JLabel labelCoSo = new JLabel("Chọn cơ sở: ");
 
@@ -637,6 +633,7 @@ public class GUIAdmin{
                         JButton tempBtn = new JButton(tenNut[i]);
                         tempBtn.setActionCommand(cmtNut[i]);
                         tempBtn.addActionListener(new ActionListener() {
+                            int demLanNutTimKiem=0;
                             public void actionPerformed(ActionEvent e) {
                                 if (e.getActionCommand().equals(cmtNut[0])) { //THÊM HỘI VIÊN
                                     boolean flag = true; // cờ hiệu gán giá trị cho mã hội viên
@@ -771,24 +768,67 @@ public class GUIAdmin{
                                 }
                                 //tỉm kiếm hội viên
                                 else if (e.getActionCommand().equals(cmtNut[3])) {
+                                    demLanNutTimKiem++;
+                                    System.out.println(demLanNutTimKiem);
                                     Component[] components = bangChinhSua.getComponents();
-                                    for (int i=0;i<components.length;i++) {
-                                        if (components[i] instanceof JPanel) {
-                                            JPanel temPanel = (JPanel) components[i];
-                                            Component[] smallComponents = temPanel.getComponents();
-                                            for (int j=0;j<smallComponents.length;j++) {
-                                                if (smallComponents[j] instanceof JTextField) {
-                                                    JTextField textField = (JTextField) smallComponents[j];
-                                                    if(i==0 && j==1){
-                                                        textField.setEditable(true);
+                                    JTextField textField;
+                                    if(demLanNutTimKiem == 1){
+                                        for (int i=0;i<components.length;i++) {
+                                            if (components[i] instanceof JPanel) {
+                                                JPanel temPanel = (JPanel) components[i];
+                                                Component[] smallComponents = temPanel.getComponents();
+                                                for (int j=0;j<smallComponents.length;j++) {
+                                                    if (smallComponents[j] instanceof JTextField) {
+                                                        textField = (JTextField) smallComponents[j];
+                                                        if(i==0 && j==1 && !textField.isEditable()){
+                                                            textField.setEditable(true);
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
+                                    else if(demLanNutTimKiem == 2){
+                                        JPanel temPanel = (JPanel) components[0];
+                                        Component[] smallComponents = temPanel.getComponents();
+                                        textField = (JTextField) smallComponents[1];
+                                        if(bllHoiVien.timKiemHV(textField.getText().toUpperCase())){
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm hội viên", JOptionPane.INFORMATION_MESSAGE);
+                                            for(int i=0; i<dsHV.size();i++){
+                                                if(textField.getText().toUpperCase().equals(dsHV.get(i).getMaHoiVien())){
+                                                    dataTable.changeSelection(i,0,false,false);
+                                                    break;
+                                                }
+                                            }
+                                            textField.setText("");
+                                        }
+                                        else{
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm không thành công","Tìm kiếm hội viên", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                    }
+                                    else if(demLanNutTimKiem == 3){
+                                        for (int i=0;i<components.length;i++) {
+                                            if (components[i] instanceof JPanel) {
+                                                JPanel temPanel = (JPanel) components[i];
+                                                Component[] smallComponents = temPanel.getComponents();
+                                                for (int j=0;j<smallComponents.length;j++) {
+                                                    if (smallComponents[j] instanceof JTextField) {
+                                                        textField = (JTextField) smallComponents[j];
+                                                        if(i==0 && j==1 && textField.isEditable()){
+                                                            textField.setEditable(false);
+                                                            textField.setText("");
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        demLanNutTimKiem=0;
+                                    }
                                 }
-                        }
-                    });
+                            }
+                        });
                     tempBtn.setBounds(a,145,100,20);
                     a+=140;
                     rightPanel.add(tempBtn);
@@ -975,11 +1015,13 @@ public class GUIAdmin{
 
         JLabel labelDSCoSo = new JLabel("Chọn cơ sở");
         labelDSCoSo.setBounds(250, 15, 75, 30);
+        @SuppressWarnings("rawtypes")
         JComboBox comboBoxTenCoSo = new JComboBox<>(dsTenCoSo);
         comboBoxTenCoSo.setBounds(330, 15, 150, 30);
         JLabel labelLoai = new JLabel("Loại");
         labelLoai.setBounds(500, 15, 25, 30);
         String[] loai = {"Theo doanh thu","Theo số lượng"};
+        @SuppressWarnings("rawtypes")
         JComboBox comboBoxLoai = new JComboBox<>(loai);
         comboBoxLoai.setBounds(535, 15, 150, 30);
 
@@ -996,8 +1038,11 @@ public class GUIAdmin{
         day.add(String.valueOf(i));
         day.add(0,"DD");
 
+        @SuppressWarnings("rawtypes")
         JComboBox dayStart = new JComboBox<>(day);
+        @SuppressWarnings("rawtypes")
         JComboBox monthStart = new JComboBox<>(month);
+        @SuppressWarnings("rawtypes")
         JComboBox yearStart = new JComboBox<>(year);
         dayStart.setBounds(695, 15, 45, 30);
         monthStart.setBounds(740, 15, 45, 30);
@@ -1010,8 +1055,11 @@ public class GUIAdmin{
         to.setBounds(835, 15, 25, 30);
         filter.add(to);
 
+        @SuppressWarnings("rawtypes")
         JComboBox dayEnd = new JComboBox<>(day);
+        @SuppressWarnings("rawtypes")
         JComboBox monthEnd = new JComboBox<>(month);
+        @SuppressWarnings("rawtypes")
         JComboBox yearEnd = new JComboBox<>(year);
         dayEnd.setBounds(865, 15, 45, 30);
         monthEnd.setBounds(910, 15, 45, 30);

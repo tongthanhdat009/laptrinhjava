@@ -119,7 +119,6 @@ public class DataCoSo {
             e.printStackTrace();
         }
         return false;
-        
     }
 
     public boolean xoaCS(String maCS){
@@ -151,6 +150,26 @@ public class DataCoSo {
                 return true;
             }
         }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean suaThongTinCS(CoSo cs){
+        //trả về 1 sửa thành công, 0 thất bại
+        String truyVan = "UPDATE CoSo SET MaCoSo = ?, TenCoSo = ?, DiaChi = ?, ThoiGianHoatDong = ?, SoDienThoai = ?, DoanhThu = ? FROM CoSo Where MaCoSo = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, cs.getMaCoSo());
+            statement.setString(2, cs.getTenCoSo());
+            statement.setString(3, cs.getDiaChi());
+            statement.setString(4, cs.getThoiGianHoatDong());
+            statement.setString(5, cs.getSDT());
+            statement.setInt(6, cs.getDoanhThu());
+            statement.setString(7, cs.getMaCoSo());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return true;
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;

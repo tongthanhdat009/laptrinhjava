@@ -10,6 +10,7 @@ import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DSThietBiCoSo;
 import DTO.HoiVien;
+import DTO.LoaiThietBi;
 import DTO.dsHoiVien;
 
 public class BLLQuanLyDanhSach{
@@ -73,6 +74,10 @@ public class BLLQuanLyDanhSach{
     public boolean timKiemCS(String maCoSo){
         return dataCoSo.timKiemCS(maCoSo);
     }
+    public boolean suaThongTinCS(CoSo cs){
+        return dataCoSo.suaThongTinCS(cs);
+    }
+
     //danh sách thiết bị
     public DSLoaiThietBi layDSLoaiThietBi(){
         return dataThietBi.layDanhSach();
@@ -80,5 +85,25 @@ public class BLLQuanLyDanhSach{
     public ArrayList<String> layTenCotThietBi(){
         return dataThietBi.layTenCotThietBi();
     }
-
+    public boolean timKiemTheoMaTB(String maTB){
+        return dataThietBi.timKiemTheoMaTB(maTB);
+    }
+    public boolean xoaTB(String maTB){
+        return dataThietBi.xoaTB(maTB);
+    }
+    public boolean themTB(LoaiThietBi tb){
+        return dataThietBi.themTB(tb);
+    }
+    public int kiemTraMaThietBi(){
+        return dataThietBi.layMaThietBiMoi()+1;
+    }
+    public int kiemTraGiaThietBi(String doanhThu){
+        if(!(doanhThu!=null && doanhThu.matches("\\d{1,18}$")))
+            return -1;
+        else
+            return 1;
+    }
+    public boolean suaThongTinTB(LoaiThietBi tb){
+        return dataThietBi.suaThongTinTB(tb);
+    }
 }

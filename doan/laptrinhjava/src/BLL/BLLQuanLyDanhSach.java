@@ -3,17 +3,23 @@ import java.util.ArrayList;
 
 
 import DAL.DataHoiVien;
+import DAL.DataThietBi;
 import DAL.DataCoSo;
+import DTO.CoSo;
 import DTO.DSCoSo;
+import DTO.DSLoaiThietBi;
+import DTO.DSThietBiCoSo;
 import DTO.HoiVien;
 import DTO.dsHoiVien;
 
 public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
     private DataCoSo dataCoSo;
+    private DataThietBi dataThietBi;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
+        dataThietBi = new DataThietBi(); 
     }
     
     //danh sách hội viên
@@ -48,6 +54,31 @@ public class BLLQuanLyDanhSach{
     }
     public ArrayList<String> layTenCotCoSo(){
         return dataCoSo.layTenCotCoSo();
+    }
+    public int kiemTraMaCoSo(){
+        return dataCoSo.layMaCoSoMoi()+1;
+    }
+    public boolean themCS(CoSo coSo){
+        return dataCoSo.themCoSo(coSo);
+    }
+    public int kiemTraDoanhThu(String doanhThu){
+        if(!(doanhThu!=null && doanhThu.matches("\\d{1,18}$")))
+            return -1;
+        else
+            return 1;
+    }
+    public boolean xoaCS(String maCoSo){
+        return dataCoSo.xoaCS(maCoSo);
+    }
+    public boolean timKiemCS(String maCoSo){
+        return dataCoSo.timKiemCS(maCoSo);
+    }
+    //danh sách thiết bị
+    public DSLoaiThietBi layDSLoaiThietBi(){
+        return dataThietBi.layDanhSach();
+    }
+    public ArrayList<String> layTenCotThietBi(){
+        return dataThietBi.layTenCotThietBi();
     }
 
 }

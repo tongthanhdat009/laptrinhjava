@@ -2,13 +2,13 @@ package DTO;
 public class CoSo {
     private String maCoSo;
     private String diaChi;
-    private String std;
+    private String SDT;
     private String tenCoSo;
     private int doanhThu;
     private String thoiGianHoatDong;
-    public CoSo(String maCoSo,String tenCoSo, String diaChi, String thoiGianHoatDong, String std,int doanhThu)
+    public CoSo(String maCoSo,String tenCoSo, String diaChi, String thoiGianHoatDong, String SDT,int doanhThu)
     {
-        setStd(std);
+        setSDT(SDT);
         setDiaChi(diaChi);
         setMaCoSo(maCoSo);
         setDoanhThu(doanhThu);
@@ -21,8 +21,8 @@ public class CoSo {
     public String getMaCoSo() {
         return maCoSo;
     }
-    public String getStd() {
-        return std;
+    public String getSDT() {
+        return SDT;
     }
     public String getTenCoSo() {
         return tenCoSo;
@@ -30,8 +30,8 @@ public class CoSo {
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-    public void setStd(String std) {
-        this.std = std;
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
     }
     public void setMaCoSo(String maCoSo) {
         this.maCoSo = maCoSo;

@@ -82,4 +82,77 @@ public class DataCoSo {
         }
         return this.tenCot; 
     }
+
+    public int layMaCoSoMoi(){
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MaCoSo FROM CoSo");
+            int max = 0;
+            while(rs.next()){
+                String maCS = rs.getString("MaCoSo");
+                maCS=maCS.substring(2);
+                if(Integer.parseInt(maCS) > max){
+                    max = Integer.parseInt(maCS);
+                }
+            }
+            return max;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public boolean themCoSo(CoSo coSo){
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            String sql = "INSERT INTO CoSo (MaCoSo, TenCoSo, DiaChi, ThoiGianHoatDong, SoDienThoai, DoanhThu) VALUES(?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1,coSo.getMaCoSo());            
+            preparedStatement.setString(2,coSo.getTenCoSo());            
+            preparedStatement.setString(3,coSo.getDiaChi());            
+            preparedStatement.setString(4,coSo.getThoiGianHoatDong());            
+            preparedStatement.setString(5,coSo.getSDT());            
+            preparedStatement.setInt(6,coSo.getDoanhThu());            
+            if (preparedStatement.executeUpdate() > 0)  return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+        
+    }
+
+    public boolean xoaCS(String maCS){
+        String truyVan = "DELETE FROM CoSo WHERE MaCoSo = ?";
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement preparedStatement = con.prepareStatement(truyVan);
+            preparedStatement.setString(1, maCS);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected>0)return true;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean timKiemCS(String maCS)
+    {
+        String truyVan = "SELECT * FROM CoSo Where MaCoSo = ?";
+        if(maCS.equals("")){
+            return false;
+        }
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maCS);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
 }

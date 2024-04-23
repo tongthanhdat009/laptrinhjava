@@ -577,6 +577,8 @@ public class GUIAdmin{
                 ArrayList<String> tenCotCS = bllQuanLyDanhSach.layTenCotCoSo();
                 DSCoSo dsCS =  bllQuanLyDanhSach.layDsCoSo();
 
+                DSLoaiThietBi dsTB = bllQuanLyDanhSach.layDSLoaiThietBi();
+                ArrayList<String> tenCotTB = bllQuanLyDanhSach.layTenCotThietBi();
                 
                 if (selectedOption.equals("Cơ sở")) {
                     xoaHienThi(rightPanel);
@@ -592,7 +594,7 @@ public class GUIAdmin{
                             dsCS.dsCoSo.get(i).getTenCoSo(),
                             dsCS.dsCoSo.get(i).getDiaChi(),
                             dsCS.dsCoSo.get(i).getThoiGianHoatDong(),
-                            dsCS.dsCoSo.get(i).getStd(),
+                            dsCS.dsCoSo.get(i).getSDT(),
                             dsCS.dsCoSo.get(i).getDoanhThu()
                         });
                     }
@@ -606,13 +608,13 @@ public class GUIAdmin{
                         JPanel tempPanel = new JPanel();
                         
                         JTextField tempTF = new JTextField();
-                        tempTF.setPreferredSize(new Dimension(100,20));
-                        tempTF.setBounds(0,20,100,20);
+                        tempTF.setPreferredSize(new Dimension(150,20));
+                        tempTF.setBounds(0,20,120,20);
                         tempTF.setName(tenCotCS.get(i));
 
                         JLabel tempLabel = new JLabel(tenCotCS.get(i));
-                        tempLabel.setFont(new Font("Times New Roman", 1,15));
-                        tempLabel.setPreferredSize(new Dimension(100,20));
+                        tempLabel.setFont(new Font("Times New Roman", 1,20));
+                        tempLabel.setPreferredSize(new Dimension(150,20));
 
                         if(i==0){
                             tempTF.setEditable(false);
@@ -640,11 +642,229 @@ public class GUIAdmin{
                         JButton tempBtn = new JButton(tenNut[i]);
                         tempBtn.setActionCommand(cmtNut[i]);
                         tempBtn.setBounds(a,145,100,20);
+                        tempBtn.addActionListener(new ActionListener() {
+                            private int demLanNutTimKiem=0;
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                if(tempBtn.getActionCommand().equals(cmtNut[0])){ //thêm cơ sở
+                                    boolean flag = true; // cờ hiệu gán giá trị cho mã hội viên
+                                    ArrayList<String> thongTinMoi = new ArrayList<String>(); 
+                                    Component[] components = bangChinhSua.getComponents();
+                                    for (int i=0; i<components.length;i++) {
+                                        if (components[i] instanceof JPanel) {
+                                            JPanel tempPanel = (JPanel) components[i];
+                                            Component[] smallComponents = tempPanel.getComponents();
+                                            for (int j=0;j<smallComponents.length;j++) {
+                                                if(smallComponents[j] instanceof JTextField){
+                                                    JTextField textField = (JTextField) smallComponents[j];
+                                                    String text = textField.getText().trim(); // Lấy text từ textField và loại bỏ khoảng trắng đầu cuối
+                                                    if (flag && j == 1) {
+                                                        int maxSTT = bllQuanLyDanhSach.kiemTraMaCoSo();
+                                                        textField.setText(String.format("CS%03d", maxSTT));
+                                                        thongTinMoi.add(textField.getText());
+                                                        flag = false;
+                                                    }
+                                                    else if(bllQuanLyDanhSach.kiemTraDoanhThu(textField.getText())==-1 && j==1 && i==5){
+                                                        JOptionPane.showMessageDialog(bangChinhSua, "Doanh thu phải là số và lớn hơn hoặc bằng 0", "Thông tin không hợp lệ", JOptionPane.WARNING_MESSAGE);
+                                                        textField.requestFocus();
+                                                        return; // Kết thúc sự kiện nếu có thông tin bị thiếu
+                                                    }
+                                                    else if (text.equals("")) {
+                                                        JOptionPane.showMessageDialog(bangChinhSua, "Không được để trống thông tin!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
+                                                        textField.requestFocus();
+                                                        return; // Kết thúc sự kiện nếu có thông tin bị thiếu
+                                                    } 
+                                                    else {
+                                                        thongTinMoi.add(text);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                     // Kiểm tra xem thongTinMoi có đủ 8 phần tử không trước khi thêm vào hvList
+                                    if (thongTinMoi.size() >= 6) {
+                                        csList.addRow(thongTinMoi.toArray());
+                                        CoSo tempCS = new CoSo(thongTinMoi.get(0),
+                                                                    thongTinMoi.get(1),
+                                                                    thongTinMoi.get(2),
+                                                                    thongTinMoi.get(3),
+                                                                    thongTinMoi.get(4),
+                                                                    Integer.parseInt(thongTinMoi.get(5)));
+                                        if(bllQuanLyDanhSach.themCS(tempCS)){
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
+                                        }
+                                        } else {
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                }
+                                else if(tempBtn.getActionCommand().equals(cmtNut[1])){ //xóa cơ sở
+                                    int i=dataTable.getSelectedRow();
+                                    if(i>=0){
+                                        Component[] components = bangChinhSua.getComponents();
+                                        csList.removeRow(i);
+                                        for (Component component : components) {
+                                            if (component instanceof JPanel) {
+                                                JPanel tempPanel = (JPanel) component;
+                                                Component[] smallComponents = tempPanel.getComponents();
+                                                for (Component smallComponent : smallComponents) {
+                                                    if(smallComponent instanceof JTextField){
+                                                        JTextField textField = (JTextField) smallComponent;
+                                                        if(bllQuanLyDanhSach.xoaCS(textField.getText())){
+                                                            textField.setText("");
+                                                            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Xóa cơ sở", JOptionPane.INFORMATION_MESSAGE);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        }
+                                        for (Component component : components) {
+                                            if (component instanceof JPanel) {
+                                                JPanel tempPanel = (JPanel) component;
+                                                Component[] smallComponents = tempPanel.getComponents();
+                                                for (Component smallComponent : smallComponents) {
+                                                    if(smallComponent instanceof JTextField){
+                                                        JTextField textField = (JTextField) smallComponent;
+                                                            textField.setText("");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(tempBtn.getActionCommand().equals(cmtNut[2])){
+                                    System.out.println(2);
+                                }
+                                else if(tempBtn.getActionCommand().equals(cmtNut[3])){
+                                    demLanNutTimKiem++;
+                                    System.out.println(demLanNutTimKiem);
+                                    Component[] components = bangChinhSua.getComponents();
+                                    JTextField textField;
+                                    if(demLanNutTimKiem == 1){
+                                        for (int i=0;i<components.length;i++) {
+                                            if (components[i] instanceof JPanel) {
+                                                JPanel tempPanel = (JPanel) components[i];
+                                                Component[] smallComponents = tempPanel.getComponents();
+                                                for (int j=0;j<smallComponents.length;j++) {
+                                                    if (smallComponents[j] instanceof JTextField) {
+                                                        textField = (JTextField) smallComponents[j];
+                                                        if(i==0 && j==1 && !textField.isEditable()){
+                                                            textField.setEditable(true);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else if(demLanNutTimKiem == 2){
+                                        JPanel tempPanel = (JPanel) components[0];
+                                        Component[] smallComponents = tempPanel.getComponents();
+                                        textField = (JTextField) smallComponents[1];
+                                        int row =0;
+                                        int column =0;
+                                        if(bllQuanLyDanhSach.timKiemCS(textField.getText().toUpperCase())){
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm cơ sở", JOptionPane.INFORMATION_MESSAGE);
+                                            for(int i=0; i<dsCS.dsCoSo.size();i++){
+                                                if(textField.getText().toUpperCase().equals(dsCS.dsCoSo.get(i).getMaCoSo())){
+                                                    dataTable.changeSelection(i,0,false,false);
+                                                    break;
+                                                }
+                                            }
+                                            textField.setEditable(false);
+                                            demLanNutTimKiem=0;
+                                            //hiển thị nội dung trong textField
+                                            for (int j = 0; j < components.length; j++) {
+                                                if (components[j] instanceof JPanel) {
+                                                    JPanel panel = (JPanel) components[j];
+                                                    Component[] smallComponents2 = panel.getComponents();
+                                                    for (int i = 0; i < smallComponents2.length; i++) {
+                                                        if (smallComponents2[i] instanceof JTextField) {
+                                                            JTextField tempTF = (JTextField) smallComponents2[i];
+                                                            if(column==5){
+                                                                tempTF.setText(csList.getValueAt(row, column).toString());
+                                                            }
+                                                            else
+                                                                tempTF.setText(((String) csList.getValueAt(row, column)).trim());
+                                                        }
+                                                    }
+                                                    column++;
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm không thành công","Tìm kiếm cơ sở", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        });
                         a+=140;
                         rightPanel.add(tempBtn);
                     }
 
                     rightPanel.add(scrollPane);
+
+                    //xử lý sự kiện cho bảng
+                    dataTable.addMouseListener(new MouseListener() {
+                        
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            int i = dataTable.getSelectedRow();
+                            if(i>=0){
+                                Component[] components = bangChinhSua.getComponents();
+                                int j=0;
+                                for(Component a : components){
+                                    if(a instanceof JPanel){
+                                        bangChinhSua.remove(a);
+                                        JPanel tempPanel = new JPanel();
+                            
+                                        JTextField tempTF = new JTextField();
+                                        tempTF.setPreferredSize(new Dimension(150,20));
+                                        tempTF.setBounds(0,20,150,20);
+                                        tempTF.setText(csList.getValueAt(i, j).toString().trim());
+                                        if(j==0){
+                                            tempTF.setEditable(false);
+                                            tempTF.setName(tenCotCS.get(j));
+                                        }
+                                        else{
+                                            tempTF.setName(tenCotCS.get(j));
+                                        }
+                                        
+                                        JLabel tempLabel = new JLabel(tenCotCS.get(j));
+                                        j++;
+                                        tempLabel.setFont(new Font("Times New Roman", 1,20));
+                                        tempLabel.setPreferredSize(new Dimension(150,20));
+                                        
+                                        tempPanel.add(tempLabel);
+                                        tempPanel.add(tempTF);
+                                        bangChinhSua.add(tempPanel);
+                                    }
+                                }
+                                bangChinhSua.revalidate();
+                                bangChinhSua.repaint();
+                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        
+                    });
                 }
                 else if(selectedOption.equals("Dịch vụ")){
                     xoaHienThi(rightPanel);
@@ -679,12 +899,12 @@ public class GUIAdmin{
                         
                         JTextField tempTF = new JTextField();
                         tempTF.setPreferredSize(new Dimension(100,20));
-                        tempTF.setBounds(0,20,100,20);
+                        tempTF.setBounds(0,20,120,20);
                         tempTF.setName(tenCotHV.get(i));
 
                         JLabel tempLabel = new JLabel(tenCotHV.get(i));
-                        tempLabel.setFont(new Font("Times New Roman", 1,15));
-                        tempLabel.setPreferredSize(new Dimension(100,20));
+                        tempLabel.setFont(new Font("Times New Roman", 1,20));
+                        tempLabel.setPreferredSize(new Dimension(120,20));
 
                         if(i==0){
                             tempTF.setEditable(false);
@@ -778,18 +998,31 @@ public class GUIAdmin{
                                         hvList.removeRow(i);
                                         for (Component component : components) {
                                             if (component instanceof JPanel) {
-                                                JPanel temPanel = (JPanel) component;
-                                                Component[] smallComponents = temPanel.getComponents();
+                                                JPanel tempPanel = (JPanel) component;
+                                                Component[] smallComponents = tempPanel.getComponents();
                                                 for (Component smallComponent : smallComponents) {
                                                     if(smallComponent instanceof JTextField){
                                                         JTextField textField = (JTextField) smallComponent;
                                                         if(bllQuanLyDanhSach.xoaHV(textField.getText())){
                                                             textField.setText("");
+                                                            JOptionPane.showMessageDialog(null, "Xóa hội viên thành công", "Xóa hội viên", JOptionPane.INFORMATION_MESSAGE);
                                                             break;
                                                         }
                                                         else{
                                                             System.out.println(textField.getText());
                                                         }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        for (Component component : components) {
+                                            if (component instanceof JPanel) {
+                                                JPanel tempPanel = (JPanel) component;
+                                                Component[] smallComponents = tempPanel.getComponents();
+                                                for (Component smallComponent : smallComponents) {
+                                                    if(smallComponent instanceof JTextField){
+                                                        JTextField textField = (JTextField) smallComponent;
+                                                            textField.setText("");
                                                     }
                                                 }
                                             }
@@ -803,8 +1036,8 @@ public class GUIAdmin{
                                         Component[] components = bangChinhSua.getComponents();
                                         for (Component component : components) {
                                             if (component instanceof JPanel) {
-                                                JPanel temPanel = (JPanel) component;
-                                                Component[] smallComponents = temPanel.getComponents();
+                                                JPanel tempPanel = (JPanel) component;
+                                                Component[] smallComponents = tempPanel.getComponents();
                                                 for (Component smallComponent : smallComponents) {
                                                     if (smallComponent instanceof JTextField) {
                                                         JTextField textField = (JTextField) smallComponent;
@@ -854,8 +1087,8 @@ public class GUIAdmin{
                                     if(demLanNutTimKiem == 1){
                                         for (int i=0;i<components.length;i++) {
                                             if (components[i] instanceof JPanel) {
-                                                JPanel temPanel = (JPanel) components[i];
-                                                Component[] smallComponents = temPanel.getComponents();
+                                                JPanel tempPanel = (JPanel) components[i];
+                                                Component[] smallComponents = tempPanel.getComponents();
                                                 for (int j=0;j<smallComponents.length;j++) {
                                                     if (smallComponents[j] instanceof JTextField) {
                                                         textField = (JTextField) smallComponents[j];
@@ -869,10 +1102,12 @@ public class GUIAdmin{
                                         }
                                     }
                                     else if(demLanNutTimKiem == 2){
-                                        JPanel temPanel = (JPanel) components[0];
-                                        Component[] smallComponents = temPanel.getComponents();
+                                        JPanel tempPanel = (JPanel) components[0];
+                                        Component[] smallComponents = tempPanel.getComponents();
                                         textField = (JTextField) smallComponents[1];
-                                        if(bllQuanLyDanhSach.timKiemHV(textField.getText().toUpperCase())){
+                                        int row=0;
+                                        int column=0;
+                                        if(bllQuanLyDanhSach.timKiemHV(textField.getText().toUpperCase().trim())){
                                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm hội viên", JOptionPane.INFORMATION_MESSAGE);
                                             for(int i=0; i<dsHV.size();i++){
                                                 if(textField.getText().toUpperCase().equals(dsHV.get(i).getMaHoiVien())){
@@ -880,31 +1115,29 @@ public class GUIAdmin{
                                                     break;
                                                 }
                                             }
-                                            textField.setText("");
+                                            row = dataTable.getSelectedRow();
+                                        //hiển thị nội dung trong textField
+                                        for (int j = 0; j < components.length; j++) {
+                                            if (components[j] instanceof JPanel) {
+                                                JPanel panel = (JPanel) components[j];
+                                                Component[] smallComponents2 = panel.getComponents();
+                                                for (int i = 0; i < smallComponents2.length; i++) {
+                                                    if (smallComponents2[i] instanceof JTextField) {
+                                                        JTextField tempTF = (JTextField) smallComponents2[i];
+                                                        tempTF.setText(((String) hvList.getValueAt(row, column)).trim());
+                                                    }
+                                                }
+                                                column++;
+                                            }
+                                        }
+                                            textField.setEditable(false);
+                                            demLanNutTimKiem=0;
                                         }
                                         else{
                                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm không thành công","Tìm kiếm hội viên", JOptionPane.ERROR_MESSAGE);
                                         }
                                     }
-                                    else if(demLanNutTimKiem == 3){
-                                        for (int i=0;i<components.length;i++) {
-                                            if (components[i] instanceof JPanel) {
-                                                JPanel temPanel = (JPanel) components[i];
-                                                Component[] smallComponents = temPanel.getComponents();
-                                                for (int j=0;j<smallComponents.length;j++) {
-                                                    if (smallComponents[j] instanceof JTextField) {
-                                                        textField = (JTextField) smallComponents[j];
-                                                        if(i==0 && j==1 && textField.isEditable()){
-                                                            textField.setEditable(false);
-                                                            textField.setText("");
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        demLanNutTimKiem=0;
-                                    }
+                                    
                                 }
                             }
                         });
@@ -930,7 +1163,7 @@ public class GUIAdmin{
                                         JPanel tempPanel = new JPanel();
                             
                                         JTextField tempTF = new JTextField();
-                                        tempTF.setPreferredSize(new Dimension(100,20));
+                                        tempTF.setPreferredSize(new Dimension(120,20));
                                         tempTF.setBounds(0,20,100,20);
                                         tempTF.setText(hvList.getValueAt(i, j).toString().trim());
                                         if(j==0){
@@ -943,7 +1176,7 @@ public class GUIAdmin{
                                         
                                         JLabel tempLabel = new JLabel(tenCotHV.get(j));
                                         j++;
-                                        tempLabel.setFont(new Font("Times New Roman", 1,15));
+                                        tempLabel.setFont(new Font("Times New Roman", 1,20));
                                         tempLabel.setPreferredSize(new Dimension(100,20));
                                         
                                         tempPanel.add(tempLabel);
@@ -979,6 +1212,146 @@ public class GUIAdmin{
                 }
                 else if(selectedOption.equals("Thiết bị")){
                     xoaHienThi(rightPanel);
+                    // tạo model bảng
+                    DefaultTableModel tbList = new DefaultTableModel();
+                    for (int i = 0; i < tenCotTB.size(); i++) {
+                        tbList.addColumn(tenCotTB.get(i));
+                    }
+                    // Thêm dữ liệu vào bảng
+                    for (int i = 0; i < dsTB.dsThietBi.size(); i++) {
+                        tbList.addRow(new Object[]{
+                            dsTB.dsThietBi.get(i).getMaThietBi(),
+                            dsTB.dsThietBi.get(i).getTenLoaiThietBi(),
+                            dsTB.dsThietBi.get(i).getGiaThietBi(),
+                            dsTB.dsThietBi.get(i).getHinhAnh(),
+                            dsTB.dsThietBi.get(i).getNgayBaoHanh(),
+                        });
+                    }
+                    
+                    //bảng hiện dòng thông tin được chọn
+                    bangChinhSua = new JPanel();
+                    for(int i=0;i<tenCotTB.size();i++){
+                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                        
+                        JPanel tempPanel = new JPanel();
+                        
+                        JTextField tempTF = new JTextField();
+                        tempTF.setPreferredSize(new Dimension(150,20));
+                        tempTF.setBounds(0,20,120,20);
+                        tempTF.setName(tenCotTB.get(i));
+
+                        JLabel tempLabel = new JLabel(tenCotTB.get(i));
+                        tempLabel.setFont(new Font("Times New Roman", 1,20));
+                        tempLabel.setPreferredSize(new Dimension(150,20));
+
+                        if(i==0){
+                            tempTF.setEditable(false);
+                        }
+                        tempPanel.add(tempLabel);
+                        tempPanel.add(tempTF);
+                        bangChinhSua.add(tempPanel);
+                    }
+
+                    rightPanel.add(bangChinhSua);
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
+
+                    dataTable = new JTable(tbList);
+                    dataTable.getTableHeader().setReorderingAllowed(false);
+                    
+                    scrollPane = new JScrollPane(dataTable);
+                    scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
+                    
+                    //thêm nút chức năng
+                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
+                    String[] cmtNut = {"add", "remove", "edit", "Search"};
+                    int a=320;
+                    for(int i=0;i<tenNut.length;i++){
+                        JButton tempBtn = new JButton(tenNut[i]);
+                        tempBtn.setActionCommand(cmtNut[i]);
+                        tempBtn.setBounds(a,145,100,20);
+                        tempBtn.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                if(tempBtn.getActionCommand().equals(cmtNut[0])){
+                                    System.out.println(0);
+                                }
+                                else if(tempBtn.getActionCommand().equals(cmtNut[1])){
+                                    System.out.println(1);
+                                }
+                                else if(tempBtn.getActionCommand().equals(cmtNut[2])){
+                                    System.out.println(2);
+                                }
+                                else if(tempBtn.getActionCommand().equals(cmtNut[3])){
+                                    System.out.println(3);
+                                }
+                            }
+                            
+                        });
+                        a+=140;
+                        rightPanel.add(tempBtn);
+                    }
+
+                    rightPanel.add(scrollPane);
+
+                    //xử lý sự kiện cho bảng
+                    dataTable.addMouseListener(new MouseListener() {
+                        
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            int i = dataTable.getSelectedRow();
+                            if(i>=0){
+                                Component[] components = bangChinhSua.getComponents();
+                                int j=0;
+                                for(Component a : components){
+                                    if(a instanceof JPanel){
+                                        bangChinhSua.remove(a);
+                                        JPanel tempPanel = new JPanel();
+                                        JTextField tempTF = new JTextField();
+                                        tempTF.setPreferredSize(new Dimension(150,20));
+                                        tempTF.setBounds(0,20,150,20);
+                                        tempTF.setText(tbList.getValueAt(i, j).toString().trim());
+                                        if(j==0){
+                                            tempTF.setEditable(false);
+                                            tempTF.setName(tenCotTB.get(j));
+                                        }
+                                        else{
+                                            tempTF.setName(tenCotTB.get(j));
+                                        }
+                                        
+                                        JLabel tempLabel = new JLabel(tenCotTB.get(j));
+                                        j++;
+                                        tempLabel.setFont(new Font("Times New Roman", 1,20));
+                                        tempLabel.setPreferredSize(new Dimension(150,20));
+                                        
+                                        tempPanel.add(tempLabel);
+                                        tempPanel.add(tempTF);
+                                        bangChinhSua.add(tempPanel);
+                                    }
+                                }
+                                bangChinhSua.revalidate();
+                                bangChinhSua.repaint();
+                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            // TODO Auto-generated method stub
+                        }
+                        
+                    });
                 }
                 else if(selectedOption.equals("Thiết bị cơ sở")){
                     xoaHienThi(rightPanel);

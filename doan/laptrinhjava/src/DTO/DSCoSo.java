@@ -18,4 +18,8 @@ public class DSCoSo {
     {
         dsCoSo.add(coSo);
     }
+    public int size() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'size'");
+    }
 }

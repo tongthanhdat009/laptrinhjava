@@ -3,17 +3,17 @@ package BLL;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import DAL.dataCoSo;
+import DAL.DataCoSo;
 import DAL.DataLamThongKe;
 import DTO.DTOThongKeDonHang;
 
 public class BLLThongKeDonHang {
     private DataLamThongKe dataLamThongKe;
-    private dataCoSo dataCoSo;
+    private DataCoSo dataCoSo;
     public BLLThongKeDonHang()
     {
         dataLamThongKe = new DataLamThongKe();
-        dataCoSo = new dataCoSo();
+        dataCoSo = new DataCoSo();
     }
     public ArrayList<DTOThongKeDonHang> layDSDLoc(String tenHangHoa, String tenCoSo, String tuNgay, String denNgay)
     {

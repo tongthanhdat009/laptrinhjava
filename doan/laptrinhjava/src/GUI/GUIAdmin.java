@@ -8,7 +8,7 @@ import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDT;
 import BLL.BLLThongKeDonHang;
-import DAL.dataCoSo;
+import DAL.DataCoSo;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
@@ -413,7 +413,7 @@ public class GUIAdmin{
                         thongTinChiTiet.add(chonSoLuong);
                         boolean flag = false;
 
-                        dataCoSo dataCoSo = new dataCoSo();
+                        DataCoSo dataCoSo = new DataCoSo();
                         DSCoSo dsCS = new DSCoSo();
                         dsCS = dataCoSo.layDSCoSo();
                         Vector<String> s = new Vector<>();
@@ -537,6 +537,29 @@ public class GUIAdmin{
         chonDanhSachLabel.setBounds(350, 70, 300,35);
         
         danhSachBox.addActionListener(new ActionListener() {
+            //xóa những gì đã hiển thị của một danh sách
+            public void xoaHienThi(JPanel rightPanel){
+                int x = 6; // Thay thế ... bằng tọa độ x của điểm bạn muốn kiểm tra
+                int y = 460; // Thay thế ... bằng tọa độ y của điểm bạn muốn kiểm tra
+                int x1 = 6;
+                int y1 = 176;
+
+                Component component = rightPanel.getComponentAt(x, y);
+                Component component1 = rightPanel.getComponentAt(x1, y1);
+                Component[] btn = rightPanel.getComponents();
+                if (component != null && component.isShowing()) {
+                    // Component tại điểm đã cho tồn tại và đang được hiển thị
+                    for(Component a : btn){
+                        if(a instanceof JButton){
+                            rightPanel.remove(a);
+                        }
+                    }
+                    rightPanel.remove(component);
+                    rightPanel.remove(component1);
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
+                }
+            }
             @Override
             public void actionPerformed(ActionEvent e) {
                 @SuppressWarnings("unchecked")
@@ -554,8 +577,9 @@ public class GUIAdmin{
                 ArrayList<String> tenCotCS = bllQuanLyDanhSach.layTenCotCoSo();
                 DSCoSo dsCS =  bllQuanLyDanhSach.layDsCoSo();
 
+                
                 if (selectedOption.equals("Cơ sở")) {
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
                     // tạo model bảng
                     DefaultTableModel csList = new DefaultTableModel();
                     for (int i = 0; i < tenCotCS.size(); i++) {
@@ -623,10 +647,11 @@ public class GUIAdmin{
                     rightPanel.add(scrollPane);
                 }
                 else if(selectedOption.equals("Dịch vụ")){
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
 
                 }
                 else if (selectedOption.equals("Hội viên")) {
+                    xoaHienThi(rightPanel);
                     // tạo model bảng
                     DefaultTableModel hvList = new DefaultTableModel();
                     for (int i = 0; i < tenCotHV.size(); i++) {
@@ -892,6 +917,7 @@ public class GUIAdmin{
                     
                     //xử lý sự kiện cho bảng
                     dataTable.addMouseListener(new MouseListener() {
+                        
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             int i = dataTable.getSelectedRow();
@@ -949,23 +975,22 @@ public class GUIAdmin{
                     });
                 }
                 else if (selectedOption.equals("Nhân viên")){
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Thiết bị")){
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Thiết bị cơ sở")){
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Hóa đơn")){
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
                 }
                 else if(selectedOption.equals("Hàng hóa cơ sở")){
-                    bllQuanLyDanhSach.xoaHienThi(rightPanel);
+                    xoaHienThi(rightPanel);
                 }
                 // Thêm các xử lý khác nếu cần
             }
-            
         });
         rightPanel.add(rightTitle);
         rightPanel.add(chonDanhSachLabel);
@@ -1248,4 +1273,5 @@ public class GUIAdmin{
     public static void main(String[] args){
         new GUIAdmin();
     }
+    
 }

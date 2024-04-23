@@ -1,11 +1,11 @@
 package BLL;
-import DAL.dataCoSo;
+import DAL.DataCoSo;
 import DTO.DSCoSo;
 public class BLLThongKeDT {
-    private dataCoSo dataCoSo;
+    private DataCoSo dataCoSo;
     public BLLThongKeDT()
     {
-        dataCoSo = new dataCoSo();
+        dataCoSo = new DataCoSo();
     }
     public DSCoSo layDSCoSo()
     {

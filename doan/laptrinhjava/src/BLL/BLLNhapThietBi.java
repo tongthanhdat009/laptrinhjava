@@ -1,6 +1,6 @@
 package BLL;
 
-import DAL.dataCoSo;
+import DAL.DataCoSo;
 import DAL.DataThietBi;
 import DAL.DataThietBiCoSo;
 import DTO.DSCoSo;
@@ -9,12 +9,12 @@ import DTO.DSLoaiThietBi;
 public class BLLNhapThietBi {
     private DataThietBi dataThietBi;
     private DataThietBiCoSo dataThietBiCoSo;
-    private dataCoSo dataCoSo;
+    private DataCoSo dataCoSo;
     public BLLNhapThietBi()
     {
         dataThietBi = new DataThietBi();
         dataThietBiCoSo = new DataThietBiCoSo();
-        dataCoSo = new dataCoSo();
+        dataCoSo = new DataCoSo();
     }
     public DSLoaiThietBi layDSLoaiThietBi()
     {

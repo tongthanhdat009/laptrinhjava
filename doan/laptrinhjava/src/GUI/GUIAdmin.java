@@ -25,8 +25,8 @@ import java.awt.event.*;
 import java.sql.Date;
 
 
-
 public class GUIAdmin{
+    private static final String BORDER = null;
     private JFrame adminFrame = new JFrame("Quản lý SGU Gym");
     private final int width = 1600;
     private final int height = 900;
@@ -36,31 +36,37 @@ public class GUIAdmin{
     
     //icon chức năng thống kê
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
-    Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng danh sách
     ImageIcon checkListIcon = new ImageIcon("src/asset/img/icon/checklist-icon.png");
-    Image scaleCheckListIcon = checkListIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleCheckListIcon = checkListIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon tiêu đề phụ chức năng
     ImageIcon managementIcon = new ImageIcon("src/asset/img/icon/project-management-icon.png");
-    Image scaleManagementIcon = managementIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleManagementIcon = managementIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+
+    ImageIcon upArrowIcon = new ImageIcon("src/asset/img/icon/up-Arrow-icon.png");
+    Image scaleUpArrowIcon = upArrowIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    ImageIcon downArrowIcon = new ImageIcon("src/asset/img/icon/down-Arrow-icon.png");
+    Image scaleDownArrowIcon = downArrowIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng nhập thiết bị
     ImageIcon dumbbellIcon = new ImageIcon("src/asset/img/icon/dumbbell-icon.png");
-    Image scaleDumbbellIcon = dumbbellIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleDumbbellIcon = dumbbellIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng nhập hàng hóa
     ImageIcon goodsIcon = new ImageIcon("src/asset/img/icon/goods-icon.png");
-    Image scaleGoodsIcon = goodsIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleGoodsIcon = goodsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
 
     //icon chức năng nhập hàng hóa
     ImageIcon billIcon = new ImageIcon("src/asset/img/icon/bill-icon.png");
-    Image scaleBillIcon = billIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleBillIcon = billIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng thống kê doanh thu
     ImageIcon chartIcon = new ImageIcon("src/asset/img/icon/stonk-icon.jpg");
-    Image scaleChartIcon = chartIcon.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT);
+    Image scaleChartIcon = chartIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
@@ -70,7 +76,7 @@ public class GUIAdmin{
     private JPanel rightPanel = new JPanel();
     
     //tiêu đề + logo
-    JLabel leftLabel = new JLabel("Quản lý");
+    JLabel leftLabel = new JLabel();
         
     //tiêu đề phụ
     JLabel subTitle = new JLabel("Chức năng");
@@ -90,21 +96,22 @@ public class GUIAdmin{
         mainPanel.setLayout(null);
 
         //left panel
-        leftPanel.setBounds(0,0,(int)(width * 0.3),height);
-        leftPanel.setBackground(Color.WHITE);
+        leftPanel.setBounds(0,0,(int)(width * 0.25),height);
+        leftPanel.setBackground(new Color(179, 177, 173));
+        leftPanel.setLayout(null);
         
-        subTitle.setFont(new java.awt.Font("Times New Roman", 1, 30));
-        subTitle.setIcon(new ImageIcon(scaleManagementIcon));
+        subTitle.setFont(new java.awt.Font("Times New Roman", 1, 35));
+        subTitle.setIcon(new ImageIcon(scaleDownArrowIcon));
         
-        leftLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
         leftLabel.setIcon(logo1);
 
         JPanel logoPanel = new JPanel();
-        logoPanel.setPreferredSize(new Dimension((int)(width * 0.3)-10,240));
-        logoPanel.setBackground(Color.WHITE);
-        logoPanel.add(leftLabel);
+        logoPanel.setBackground(new Color(179, 177, 173));
+        logoPanel.setLayout(new BorderLayout());
+        logoPanel.setBounds(0,0,(int)(width * 0.3)-10,240);
+        logoPanel.add(leftLabel, BorderLayout.CENTER);
+        logoPanel.add(subTitle,BorderLayout.SOUTH);
         leftPanel.add(logoPanel);
-        leftPanel.add(subTitle);
         
         //lựa chọn chức năng
         JPanel managementPanel = new JPanel();
@@ -113,6 +120,7 @@ public class GUIAdmin{
         JPanel nhapThietBiPanel = new JPanel();
         JPanel duyetDonHangPanel = new JPanel();
         JPanel thongKeDoanhThuPanel = new JPanel();
+
         //chức năng thống kê        
         JLabel statisticLabel = new JLabel("Thống kê đơn hàng");
         statisticLabel.setIcon(new ImageIcon(scaleAnalyticsIcon));
@@ -134,32 +142,56 @@ public class GUIAdmin{
         thongKeDoanhThuLabel.setIcon(new ImageIcon(scaleChartIcon));
 
         // Chỉnh font chữ cho phần chọn chức năng
-        statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
-        listLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
-        nhapThietBiLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
-        duyetDonHangLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
-        thongKeDoanhThuLabel.setFont(new java.awt.Font("Times New Roman", 1, 40));
+        statisticLabel.setFont(new java.awt.Font("Times New Roman", 1, 30));
+        listLabel.setFont(new java.awt.Font("Times New Roman", 1, 30));
+        nhapThietBiLabel.setFont(new java.awt.Font("Times New Roman", 1, 30));
+        duyetDonHangLabel.setFont(new java.awt.Font("Times New Roman", 1, 30));
+        thongKeDoanhThuLabel.setFont(new java.awt.Font("Times New Roman", 1, 30));
 
-        statisticsPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
-        statisticsPanel.setBackground(Color.BLUE);
-        statisticsPanel.setBorder(border);
+        statisticsPanel.setBounds(50,0,300,55);
+        statisticsPanel.setBackground(new Color(179, 177, 173));
 
-        listPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
-        listPanel.setBackground(Color.GREEN);
-        listPanel.setBorder(border);
+        listPanel.setBounds(50,65,300,55);
+        listPanel.setBackground(new Color(179, 177, 173));
 
-        nhapThietBiPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
-        nhapThietBiPanel.setBackground(Color.YELLOW);
-        nhapThietBiPanel.setBorder(border);
+        nhapThietBiPanel.setBounds(50,65*2,300,55);
+        nhapThietBiPanel.setBackground(new Color(179, 177, 173));
 
-        duyetDonHangPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
-        duyetDonHangPanel.setBackground(Color.RED);
-        duyetDonHangPanel.setBorder(border);
+        duyetDonHangPanel.setBounds(50,65*3,300,55);
+        duyetDonHangPanel.setBackground(new Color(179, 177, 173));
 
-        thongKeDoanhThuPanel.setPreferredSize(new Dimension((int)(width * 0.3),55));
-        thongKeDoanhThuPanel.setBackground(Color.MAGENTA);
-        thongKeDoanhThuPanel.setBorder(border);
+        thongKeDoanhThuPanel.setBounds(50,65*4,300,55);
+        thongKeDoanhThuPanel.setBackground(new Color(179, 177, 173));
+
+        // thongKeDoanhThuPanel.setBorder(border);
         //Sử lý sự kiện khi chọn chức năng
+        logoPanel.addMouseListener(new MouseListener(){
+            private int clickCount = 0;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (clickCount % 2 == 0) {
+                    subTitle.setIcon(new ImageIcon(scaleDownArrowIcon));
+                    managementPanel.setVisible(false);
+                } else {
+                    subTitle.setIcon(new ImageIcon(scaleUpArrowIcon));
+                    managementPanel.setVisible(true);
+                }
+                clickCount++; 
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
         listPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -179,10 +211,13 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
+                listPanel.setBackground(Color.WHITE);
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
+                listPanel.setBackground(new Color(179, 177, 173));
+
             }
         });
         
@@ -207,12 +242,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Không cần xử lý
+                statisticsPanel.setBackground(Color.WHITE);
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
-                // Không cần xử lý
+                statisticsPanel.setBackground(new Color(179, 177, 173));
             }
         });
 
@@ -227,7 +262,7 @@ public class GUIAdmin{
             }
             @Override
             public void mousePressed(MouseEvent e) {
-            }
+            }   
         
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -235,10 +270,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
+                nhapThietBiPanel.setBackground(Color.WHITE);
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
+                nhapThietBiPanel.setBackground(new Color(179, 177, 173));
             }
         });
 
@@ -259,10 +296,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
+                duyetDonHangPanel.setBackground(Color.WHITE);
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
+                duyetDonHangPanel.setBackground(new Color(179, 177, 173));
             }
         });
         
@@ -282,10 +321,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
+                thongKeDoanhThuPanel.setBackground(Color.WHITE);
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
+                thongKeDoanhThuPanel.setBackground(new Color(179, 177, 173));
             }
         });
         // thêm đối tượng
@@ -295,21 +336,22 @@ public class GUIAdmin{
         duyetDonHangPanel.add(duyetDonHangLabel);
         thongKeDoanhThuPanel.add(thongKeDoanhThuLabel);
         //bảng chọn chức năng
-        managementPanel.setPreferredSize(new Dimension((int)(width * 0.3),height - 250));
-        managementPanel.setBackground(Color.WHITE);
+        managementPanel.setBackground(new Color(179, 177, 173));
+        managementPanel.setLayout(null);
+        managementPanel.setBounds(0,240,(int)(width * 0.29),height - 250);
 
         managementPanel.add(listPanel);
         managementPanel.add(statisticsPanel);
         managementPanel.add(nhapThietBiPanel);
         managementPanel.add(duyetDonHangPanel);
         managementPanel.add(thongKeDoanhThuPanel);
-
+        managementPanel.setVisible(false);
         leftPanel.add(managementPanel);
 
         //chức năng:
         //quản lý danh sách:
         //right panel
-        rightPanel.setBounds((int)(width * 0.3),0,(int)(width * 0.7),height);
+        rightPanel.setBounds((int)(width * 0.25),0,(int)(width * 0.75),height);
         rightPanel.setBackground(Color.WHITE);
         rightPanel.setBorder(border);
 
@@ -602,7 +644,7 @@ public class GUIAdmin{
                     //bảng hiện dòng thông tin được chọn
                     bangChinhSua = new JPanel();
                     for(int i=0;i<tenCotCS.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setBounds(5,175,(int)(width*0.75)-30,270);
                         bangChinhSua.setLayout(new GridLayout(3,3,10,10));
                         
                         JPanel tempPanel = new JPanel();
@@ -632,12 +674,12 @@ public class GUIAdmin{
                     dataTable.getTableHeader().setReorderingAllowed(false);
                     
                     scrollPane = new JScrollPane(dataTable);
-                    scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
+                    scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
                     
                     //thêm nút chức năng
                     String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
-                    int a=320;
+                    int a=375;
                     for(int i=0;i<tenNut.length;i++){
                         JButton tempBtn = new JButton(tenNut[i]);
                         tempBtn.setActionCommand(cmtNut[i]);
@@ -838,7 +880,7 @@ public class GUIAdmin{
                             }
                             
                         });
-                        a+=140;
+                        a+=145;
                         rightPanel.add(tempBtn);
                     }
 
@@ -928,7 +970,7 @@ public class GUIAdmin{
                     //bảng hiện dòng thông tin được chọn
                     bangChinhSua = new JPanel();
                     for(int i=0;i<tenCotHV.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setBounds(5,175,(int)(width*0.75)-30,270);
                         bangChinhSua.setLayout(new GridLayout(3,3,10,10));
                         
                         JPanel tempPanel = new JPanel();
@@ -958,12 +1000,12 @@ public class GUIAdmin{
                     dataTable.getTableHeader().setReorderingAllowed(false);
                     
                     scrollPane = new JScrollPane(dataTable);
-                    scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
+                    scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
 
                     //nút chức năng
                     String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
-                    int a=320;
+                    int a=375;
                     for(int i=0;i<tenNut.length;i++){
                         JButton tempBtn = new JButton(tenNut[i]);
                         tempBtn.setActionCommand(cmtNut[i]);
@@ -1178,7 +1220,7 @@ public class GUIAdmin{
                             }
                         });
                         tempBtn.setBounds(a,145,100,20);
-                        a+=140;
+                        a+=145;
                         rightPanel.add(tempBtn);
                     }
 
@@ -1186,7 +1228,6 @@ public class GUIAdmin{
                     
                     //xử lý sự kiện cho bảng
                     dataTable.addMouseListener(new MouseListener() {
-                        
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             int i = dataTable.getSelectedRow();
@@ -1267,7 +1308,7 @@ public class GUIAdmin{
                     //bảng hiện dòng thông tin được chọn
                     bangChinhSua = new JPanel();
                     for(int i=0;i<tenCotTB.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.7)-30,270);
+                        bangChinhSua.setBounds(5,175,(int)(width*0.75)-30,270);
                         bangChinhSua.setLayout(new GridLayout(3,3,10,10));
                         
                         JPanel tempPanel = new JPanel();
@@ -1297,12 +1338,12 @@ public class GUIAdmin{
                     dataTable.getTableHeader().setReorderingAllowed(false);
                     
                     scrollPane = new JScrollPane(dataTable);
-                    scrollPane.setBounds(5,460,(int)(width*0.7)-20,400);
+                    scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
                     
                     //thêm nút chức năng
                     String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
-                    int a=320;
+                    int a=375;
                     for(int i=0;i<tenNut.length;i++){
                         JButton tempBtn = new JButton(tenNut[i]);
                         tempBtn.setActionCommand(cmtNut[i]);
@@ -1501,7 +1542,7 @@ public class GUIAdmin{
                             }
                             
                         });
-                        a+=140;
+                        a+=145;
                         rightPanel.add(tempBtn);
                     }
                     rightPanel.add(scrollPane);

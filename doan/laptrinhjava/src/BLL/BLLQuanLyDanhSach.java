@@ -48,7 +48,12 @@ public class BLLQuanLyDanhSach{
     public boolean timKiemHV(String a){
         return dataHoiVien.timKiemHV(a);
     }
-    
+    public boolean kiemTraSDT(String a){
+        if(a.matches("(0[3|5|7|8|9])+([0-9]{8})\\b")){
+            return true;
+        }
+        return false;
+    }
     //danh sách cơ sở
     public DSCoSo layDsCoSo(){
         return dataCoSo.layDSCoSo();

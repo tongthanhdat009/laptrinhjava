@@ -569,17 +569,17 @@ public class GUIAdmin{
         rightPanel.setLayout(null);
         //tiêu đề bên phải 
         JLabel rightTitle = new JLabel("Quản lý danh sách");
-        rightTitle.setFont(new Font("Times New Roman", 1, 50));
-        rightTitle.setBounds(400, 0, 1000,60);        
+        rightTitle.setFont(new Font("Times New Roman", 1, 35));
+        rightTitle.setBounds(450, 0, 1000,60);        
         
         //Chọn bảng cần quản lý
         String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
-        danhSachBox.setBounds(700,70,100,50);
+        danhSachBox.setBounds(680,50,100,30);
         JLabel chonDanhSachLabel = new JLabel("Chọn danh sách: ");
         chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
-        chonDanhSachLabel.setBounds(450, 70, 300,35);
+        chonDanhSachLabel.setBounds(430, 50, 300,35);
         
         danhSachBox.addActionListener(new ActionListener() {
             //xóa những gì đã hiển thị của một danh sách
@@ -681,13 +681,23 @@ public class GUIAdmin{
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
                     
                     //thêm nút chức năng
-                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
-                    int a=375;
-                    for(int i=0;i<tenNut.length;i++){
-                        JButton tempBtn = new JButton(tenNut[i]);
+                    String[] anhStrings = {
+                        "src/asset/img/button/them-cs.png",
+                        "src/asset/img/button/xoa-cs.png",
+                        "src/asset/img/button/sua-cs.png",
+                        "src/asset/img/button/tim-cs.png"
+                    };
+                    int a=355;
+                    for(int i=0;i<cmtNut.length;i++){
+                        JButton tempBtn = new JButton();
+                        ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
+                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(155, 57,Image.SCALE_DEFAULT);
                         tempBtn.setActionCommand(cmtNut[i]);
-                        tempBtn.setBounds(a,140,120,25);
+                        tempBtn.setBounds(a,110,155,57);
+                        tempBtn.setIcon(new ImageIcon(scaleTempBtnImg));
+                        tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
+                        tempBtn.setBorder(null);
                         tempBtn.addActionListener(new ActionListener() {
                             private int demLanNutTimKiem=0;
                             @Override
@@ -877,13 +887,15 @@ public class GUIAdmin{
                                         }
                                         else{
                                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm không thành công","Tìm kiếm cơ sở", JOptionPane.ERROR_MESSAGE);
+                                            demLanNutTimKiem=1;
+                                            return;
                                         }
                                     }
                                 }
                             }
                             
                         });
-                        a+=145;
+                        a+=175;
                         rightPanel.add(tempBtn);
                     }
 
@@ -1010,12 +1022,23 @@ public class GUIAdmin{
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
 
                     //nút chức năng
-                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
-                    int a=375;
-                    for(int i=0;i<tenNut.length;i++){
-                        JButton tempBtn = new JButton(tenNut[i]);
+                    String[] anhStrings = {
+                        "src/asset/img/button/them-hv.png",
+                        "src/asset/img/button/xoa-hv.png",
+                        "src/asset/img/button/sua-hv.png",
+                        "src/asset/img/button/tim-hv.png"
+                    };
+                    int a=345;
+                    for(int i=0;i<cmtNut.length;i++){
+                        JButton tempBtn = new JButton();
+                        ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
+                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(155, 57,Image.SCALE_DEFAULT);
                         tempBtn.setActionCommand(cmtNut[i]);
+                        tempBtn.setBounds(a,110,155,57);
+                        tempBtn.setIcon(new ImageIcon(scaleTempBtnImg));
+                        tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
+                        tempBtn.setBorder(null);
                         tempBtn.addActionListener(new ActionListener() {
                             int demLanNutTimKiem=0;
                             public void actionPerformed(ActionEvent e) {
@@ -1249,14 +1272,15 @@ public class GUIAdmin{
                                         }
                                         else{
                                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm không thành công","Tìm kiếm hội viên", JOptionPane.ERROR_MESSAGE);
+                                            demLanNutTimKiem=1;
+                                            return;
                                         }
                                     }
                                     
                                 }
                             }
                         });
-                        tempBtn.setBounds(a,140,120,25);
-                        a+=145;
+                        a+=175;
                         rightPanel.add(tempBtn);
                     }
 
@@ -1378,13 +1402,23 @@ public class GUIAdmin{
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
                     
                     //thêm nút chức năng
-                    String[] tenNut = {"Thêm", "Xóa", "Sửa", "Tìm kiếm"};
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
-                    int a=375;
-                    for(int i=0;i<tenNut.length;i++){
-                        JButton tempBtn = new JButton(tenNut[i]);
+                    String[] anhStrings = {
+                        "src/asset/img/button/them-tb.png",
+                        "src/asset/img/button/xoa-tb.png",
+                        "src/asset/img/button/sua-tb.png",
+                        "src/asset/img/button/tim-tb.png"
+                    };
+                    int a=345;
+                    for(int i=0;i<cmtNut.length;i++){
+                        JButton tempBtn = new JButton();
+                        ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
+                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(155, 57,Image.SCALE_DEFAULT);
                         tempBtn.setActionCommand(cmtNut[i]);
-                        tempBtn.setBounds(a,140,120,25);
+                        tempBtn.setBounds(a,110,155,57);
+                        tempBtn.setIcon(new ImageIcon(scaleTempBtnImg));
+                        tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
+                        tempBtn.setBorder(null);
                         tempBtn.addActionListener(new ActionListener() {
                             private int demLanNutTimKiem=0;
                             @Override
@@ -1572,13 +1606,15 @@ public class GUIAdmin{
                                         }
                                         else{
                                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm không thành công","Tìm kiếm thiết bị", JOptionPane.ERROR_MESSAGE);
+                                            demLanNutTimKiem=1;
+                                            return;
                                         }
                                     }
                                 }
                             }
                             
                         });
-                        a+=145;
+                        a+=175;
                         rightPanel.add(tempBtn);
                     }
                     rightPanel.add(scrollPane);

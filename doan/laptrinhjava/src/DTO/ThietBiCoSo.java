@@ -1,16 +1,26 @@
 package DTO;
-import java.time.LocalDate;
+import java.sql.*;
 
 public class ThietBiCoSo
 {
-    private String maThietBi;
+    private String maThietBiCoSo;
     private String maCoSo;
-    private LocalDate ngayNhap;
-    public ThietBiCoSo(String maThietBi, String maCoSo, LocalDate ngayNhap)
+    private String maThietBi;
+    private Date ngayNhap;
+    private Date hanBaoHanh;
+    public ThietBiCoSo(String maThietBiCoSo, String maCoSo, String maThietBi, Date ngayNhap, Date hanBaoHanh)
     {
+        setMaThietBiCoSo(maThietBiCoSo);
         setMaThietBi(maThietBi);
         setMaCoSo(maCoSo);
         setNgayNhap(ngayNhap);
+        setHanBaoHanh(hanBaoHanh);
+    }
+    public void setHanBaoHanh(Date hanBaoHanh) {
+        this.hanBaoHanh = hanBaoHanh;
+    }
+    public Date getHanBaoHanh() {
+        return hanBaoHanh;
     }
     public String getMaCoSo() {
         return maCoSo;
@@ -18,20 +28,22 @@ public class ThietBiCoSo
     public String getMaThietBi() {
         return maThietBi;
     }
-    public LocalDate getNgayNhap() {
-        return ngayNhap;
-    }
     public void setMaCoSo(String maCoSo) {
         this.maCoSo = maCoSo;
-    }
-    public void setNgayNhap(LocalDate ngayNhap) {
-        this.ngayNhap = ngayNhap;
     }
     public void setMaThietBi(String maThietBi) {
         this.maThietBi = maThietBi;
     }
-    public String toString()
-    {
-        return maThietBi+" "+maCoSo+" "+ngayNhap;
+    public void setMaThietBiCoSo(String maThietBiCoSo) {
+        this.maThietBiCoSo = maThietBiCoSo;
+    }
+    public String getMaThietBiCoSo() {
+        return maThietBiCoSo;
+    }
+    public void setNgayNhap(Date ngayNhap) {
+        this.ngayNhap = ngayNhap;
+    }
+    public Date getNgayNhap() {
+        return ngayNhap;
     }
 }

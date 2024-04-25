@@ -3,7 +3,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-
+import java.time.LocalDate;
 
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
@@ -16,6 +16,7 @@ import DTO.DSLoaiThietBi;
 import DTO.DTOThongKeDonHang;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
+import DTO.ThietBiCoSo;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -1628,7 +1629,9 @@ public class GUIAdmin{
                     });
                 }
                 else if(selectedOption.equals("Thiết bị cơ sở")){
-                    xoaHienThi(rightPanel);
+                    ArrayList<ThietBiCoSo> ds = new ArrayList<>();
+                    ds = bllQuanLyDanhSach.layDanhSachThietBiCoSo();
+                    QuanLyBangThietBiCoSo(ds);
                 }
                 else if(selectedOption.equals("Hóa đơn")){
                     xoaHienThi(rightPanel);
@@ -1638,11 +1641,202 @@ public class GUIAdmin{
                 }
                 // Thêm các xử lý khác nếu cần
             }
+            public void QuanLyBangThietBiCoSo(ArrayList<ThietBiCoSo> ds)
+            {
+                xoaHienThi(rightPanel);
+                JButton them = new JButton("Thêm");
+                JButton xoa = new JButton("Xóa");
+                JButton sua = new JButton("Sửa");
+                JButton timKiem = new JButton("Tìm Kiếm");
+                JPanel chucNang = new JPanel(new FlowLayout());
+                chucNang.add(them);
+                chucNang.add(xoa);
+                chucNang.add(sua);
+                chucNang.add(timKiem);
+                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                rightPanel.add(chucNang);
+
+                JLabel maThietBiCoSo = new JLabel("Mã Thiết Bị Cơ Sở: ");
+                JTextField textMaThietBiCoSo = new JTextField();
+
+                JLabel maThietBi = new JLabel("Mã Thiết Bị: ");
+                JTextField textMaThietBi = new JTextField();
+
+                JLabel maCoSo = new JLabel("Mã Cơ Sở: ");
+                JTextField textMaCoSo = new JTextField();
+
+                JLabel hanBaoHanh = new JLabel("Hạn Bảo Hành: ");
+                JTextField textHanBaoHanh = new JTextField();
+                
+                JLabel ngayNhap = new JLabel("Ngày Nhập: ");
+                JTextField textNgayNhap = new JTextField();
+
+                int x = 10;
+                maThietBiCoSo.setBounds(x, 170, 120, 30); x+=120;
+                textMaThietBiCoSo.setBounds(x+10, 170, 100, 30); x+=110;
+                maThietBi.setBounds(x+50, 170, 70, 30); x+=120;
+                textMaThietBi.setBounds(x+10, 170, 100, 30); x+=110;
+                maCoSo.setBounds(x+50, 170, 70, 30); x+=120;
+                textMaCoSo.setBounds(x+10, 170, 100, 30); x+=110;
+                ngayNhap.setBounds(x+50, 170, 70, 30); x+=120;
+                textNgayNhap.setBounds(x+10,170,100,30); x+=110;
+                hanBaoHanh.setBounds(x+50,170,90,30); x+=140;
+                textHanBaoHanh.setBounds(x+10, 170, 100, 30);
+
+                rightPanel.add(maThietBiCoSo);
+                rightPanel.add(textMaThietBiCoSo);
+                rightPanel.add(maThietBi);
+                rightPanel.add(textMaThietBi);
+                rightPanel.add(maCoSo);
+                rightPanel.add(textMaCoSo);
+                rightPanel.add(hanBaoHanh);
+                rightPanel.add(textHanBaoHanh);
+                rightPanel.add(ngayNhap);
+                rightPanel.add(textNgayNhap);
+
+                DefaultTableModel model = new DefaultTableModel();
+                JTable bang = new JTable(); 
+
+                model.addColumn("Mã Thiết Bị Cơ Sở");
+                model.addColumn("Mã Cơ Sở");
+                model.addColumn("Mã Thiết Bị");
+                model.addColumn("Ngày Nhập");
+                model.addColumn("Hạn Bảo Hành");
+
+
+                model.setRowCount(0);
+                for(int i = 0; i < ds.size(); i++) {
+                    model.addRow(new Object[] {
+                        ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
+                    });
+                }
+                bang.setModel(model);
+                bang.addMouseListener(new MouseAdapter(){
+                    public void mouseClicked(MouseEvent e)
+                    {
+                        int i = bang.getSelectedRow();
+                        if(i>0)
+                        {
+                            textMaThietBiCoSo.setText(model.getValueAt(i, 0).toString());
+                            textMaCoSo.setText(model.getValueAt(i, 1).toString());
+                            textMaThietBi.setText(model.getValueAt(i, 2).toString());
+                            textNgayNhap.setText(model.getValueAt(i, 3).toString());
+                            textHanBaoHanh.setText(model.getValueAt(i, 4).toString());
+                        }
+                    }
+                });
+                them.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(!textMaThietBiCoSo.getText().equals("") || !textHanBaoHanh.getText().equals("")) 
+                        JOptionPane.showMessageDialog(rightPanel, "Không cần nhập mã thiết bị cơ sở và hạn bảo hành");
+                        else 
+                        {
+                            if(textMaCoSo.getText().equals("")||textMaThietBi.getText().equals("")||textNgayNhap.getText().equals("")) 
+                            JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                            else 
+                            {   
+                                LocalDate lDateNgayNhap = LocalDate.parse(textNgayNhap.getText());
+                                Date ngayNhap = Date.valueOf(lDateNgayNhap);
+
+                                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                                String ma = bllQuanLyDanhSach.layMaThietBiCoSo();
+                                Date hanBaoHanh = bllQuanLyDanhSach.layHanBaoHanh(textMaThietBi.getText(), ngayNhap);
+                                String s = bllQuanLyDanhSach.themThietBiCoSo(ma,textMaCoSo.getText(),textMaThietBi.getText(),ngayNhap,hanBaoHanh);
+                                if(s.equals("ThanhCong"))
+                                {
+                                    model.addRow(new Object[]{
+                                        ma,textMaCoSo.getText(),textMaThietBi.getText(),ngayNhap,hanBaoHanh
+                                    });
+                                    textMaThietBiCoSo.setText(ma);
+                                    textHanBaoHanh.setText(String.valueOf(hanBaoHanh));
+                                }
+                                else JOptionPane.showMessageDialog(rightPanel, s);
+                            }
+                        }
+
+                    }
+                });
+                xoa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(textMaThietBiCoSo.getText().equals("")) JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã thiết bị cơ sở");
+                        else
+                        {
+                            BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                            if(bllQuanLyDanhSach.xoaThietBiCoSO(textMaThietBiCoSo.getText()))
+                            {
+                                for(int i=0;i<model.getRowCount();i++)
+                                if(model.getValueAt(i, 0).equals(textMaThietBiCoSo.getText())) model.removeRow(i);
+                            }
+                            else JOptionPane.showMessageDialog(rightPanel, "Mã thiết bị cơ sở không tồn tại");
+                        } 
+                    }
+                });
+                sua.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(textMaThietBiCoSo.getText().equals("")
+                            ||textMaCoSo.getText().equals("")
+                            ||textMaThietBi.getText().equals("")
+                            ||textNgayNhap.getText().equals("")
+                            ||textHanBaoHanh.getText().equals("")
+                            ) JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                        else
+                        {
+                            LocalDate ngayNhap = LocalDate.parse(textNgayNhap.getText());
+                            LocalDate hanBaoHanh = LocalDate.parse(textHanBaoHanh.getText());
+                            BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                            String s = bllQuanLyDanhSach.suaThietBiCoSo(textMaThietBiCoSo.getText(), textMaCoSo.getText(), textMaThietBi.getText(), Date.valueOf(ngayNhap), Date.valueOf(hanBaoHanh));
+                            if(s.equals("ThanhCong"))
+                            {
+                                for(int i=0;i<model.getRowCount();i++)
+                                if(model.getValueAt(i,0).equals(textMaThietBiCoSo.getText())) 
+                                {
+                                    model.setValueAt(textMaCoSo.getText(),i,1);
+                                    model.setValueAt(textMaThietBi.getText(),i,2);
+                                    model.setValueAt(textNgayNhap.getText(),i,3);
+                                    model.setValueAt(textHanBaoHanh.getText(),i,4);
+                                }
+                            }
+                            else JOptionPane.showMessageDialog(rightPanel, s);
+                        }
+                    }
+                });
+                timKiem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        model.setRowCount(0);
+                        if(textMaThietBiCoSo.getText().equals(""))
+                        for(int i = 0; i < ds.size(); i++) {
+                            model.addRow(new Object[] {
+                                ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
+                            });
+                        }
+                        else
+                        {
+                            BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                            ArrayList<ThietBiCoSo> ds2 = new ArrayList<>();
+                            ds2 = bllQuanLyDanhSach.timKiemThietBiCoSo(textMaThietBiCoSo.getText());
+                            for(int i = 0; i < ds2.size(); i++) {
+                                model.addRow(new Object[] {
+                                    ds2.get(i).getMaThietBiCoSo(),ds2.get(i).getMaCoSo(),ds2.get(i).getMaThietBi(),ds2.get(i).getNgayNhap(),ds2.get(i).getHanBaoHanh() 
+                                });
+                            }
+                        }
+
+                    }
+                });
+                JScrollPane scrollPane = new JScrollPane();
+                scrollPane.setViewportView(bang);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                rightPanel.add(scrollPane);
+            }
         });
         rightPanel.add(rightTitle);
         rightPanel.add(chonDanhSachLabel);
         rightPanel.add(danhSachBox);
     }
+    
     public void thongKeDoanhThu(DSCoSo CoSods)
     {
         rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel

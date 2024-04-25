@@ -12,6 +12,7 @@ public class DataThietBi {
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
     private String userName = "sa"; String password= "123456";
     ArrayList<String> tenCot = new ArrayList<String>();
+
     public DataThietBi()
     {
         try {
@@ -21,6 +22,32 @@ public class DataThietBi {
         }
     }
 
+    public int timSoNgayBaoHanh(String maThietBi)
+    {
+        String truyVan = "SELECT NgayBaoHanh FROM LoaiThietBi WHERE MaThietBi = '"+maThietBi+"'";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            if(rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    public boolean kiemTraMa(String ma)
+    {
+        String truyVan = "SELECT * FROM LoaiThietBi WHERE MaThietBi = '"+ ma +"'";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            if(rs.next()) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public ArrayList<String> layTenCotThietBi (){
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);

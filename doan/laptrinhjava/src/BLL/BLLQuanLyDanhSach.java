@@ -1,9 +1,11 @@
 package BLL;
 import java.util.ArrayList;
-
+import java.sql.*;
+import java.time.LocalDate;
 
 import DAL.DataHoiVien;
 import DAL.DataThietBi;
+import DAL.DataThietBiCoSo;
 import DAL.DataCoSo;
 import DTO.CoSo;
 import DTO.DSCoSo;
@@ -11,16 +13,19 @@ import DTO.DSLoaiThietBi;
 import DTO.DSThietBiCoSo;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
+import DTO.ThietBiCoSo;
 import DTO.dsHoiVien;
 
 public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
     private DataCoSo dataCoSo;
     private DataThietBi dataThietBi;
+    private DataThietBiCoSo dataThietBiCoSo;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
         dataThietBi = new DataThietBi(); 
+        dataThietBiCoSo = new DataThietBiCoSo();
     }
     
     //danh sách hội viên
@@ -110,5 +115,49 @@ public class BLLQuanLyDanhSach{
     }
     public boolean suaThongTinTB(LoaiThietBi tb){
         return dataThietBi.suaThongTinTB(tb);
+    }
+
+    public String themThietBiCoSo(String maThietBiCoSo,String maCoSo, String maThietBi, Date ngayNhap, Date hanBaoHanh)
+    {
+        if(dataThietBi.kiemTraMa(maThietBi))
+        {
+            ThietBiCoSo a = new ThietBiCoSo(maThietBiCoSo, maCoSo, maThietBi, ngayNhap, hanBaoHanh);
+            if(dataThietBiCoSo.them(a)) return "ThanhCong";
+            else return "Them that bai";
+        }
+        else return "Ma thiet bi khong ton tai";
+    }
+    public String layMaThietBiCoSo()
+    {
+        return "TBCS"+ dataThietBiCoSo.layMaThietBiCuoi();
+    }   
+    public Date layHanBaoHanh(String maThietBi, Date ngayNhap)
+    {
+        LocalDate hanBaoHanh = ngayNhap.toLocalDate();
+        hanBaoHanh = hanBaoHanh.plusDays(dataThietBi.timSoNgayBaoHanh(maThietBi));
+        return Date.valueOf(hanBaoHanh);
+    }
+    public boolean xoaThietBiCoSO(String maThietBiCoSO)
+    {
+        if(dataThietBiCoSo.xoa(maThietBiCoSO)) return true;
+        return false;
+    }
+    public String suaThietBiCoSo(String maThietBiCoSo,String maCoSo, String maThietBi, Date ngayNhap, Date hanBaoHanh)
+    {
+        if(dataThietBi.kiemTraMa(maThietBi))
+        {
+            ThietBiCoSo a = new ThietBiCoSo(maThietBiCoSo, maCoSo, maThietBi, ngayNhap, hanBaoHanh);
+            if(dataThietBiCoSo.sua(a)) return "ThanhCong";
+            else return "That Bai";
+        }
+        else return "Ma Thiet Bi Khong Ton Tai";
+    }
+    public ArrayList<ThietBiCoSo> layDanhSachThietBiCoSo()
+    {
+        return dataThietBiCoSo.layDSLoaiThietBiCoSo();
+    }
+    public ArrayList<ThietBiCoSo> timKiemThietBiCoSo(String maThietBiCoSo)
+    {
+        return dataThietBiCoSo.timKiem(maThietBiCoSo);
     }
 }

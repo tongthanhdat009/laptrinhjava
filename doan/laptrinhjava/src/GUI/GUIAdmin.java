@@ -1751,7 +1751,7 @@ public class GUIAdmin{
                     public void mouseClicked(MouseEvent e)
                     {
                         int i = bang.getSelectedRow();
-                        if(i>0)
+                        if(i>=0)
                         {
                             textMaThietBiCoSo.setText(model.getValueAt(i, 0).toString());
                             textMaCoSo.setText(model.getValueAt(i, 1).toString());

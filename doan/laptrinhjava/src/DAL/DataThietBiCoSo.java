@@ -75,7 +75,7 @@ public class DataThietBiCoSo {
     }
     public ArrayList<ThietBiCoSo> layDSLoaiThietBiCoSo()
     {
-        String truyVan = "SELECT * FROM ThietBiOMotCoSo, LoaiThietBi WHERE LoaiThietBi.MaThietBi = ThietBiOMotCoSo.MaThietBi";
+        String truyVan = "SELECT * FROM ThietBiOMotCoSo";
         ArrayList<ThietBiCoSo> ds = new ArrayList<>();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -83,10 +83,7 @@ public class DataThietBiCoSo {
             ResultSet rs = stmt.executeQuery(truyVan);
             while(rs.next())
             {
-                LocalDate date =rs.getDate("NgayNhap").toLocalDate();
-                date = date.plusDays(rs.getInt("NgayBaoHanh"));
-                Date ngayHetBaoHanhSQL = Date.valueOf(date);
-                ds.add(new ThietBiCoSo(rs.getString("MaThietBiOCoSo"), rs.getString("MaCoSo"),rs.getString("MaThietBi"),rs.getDate("NgayNhap"),ngayHetBaoHanhSQL));
+                ds.add(new ThietBiCoSo(rs.getString("MaThietBiOCoSo"), rs.getString("MaCoSo"),rs.getString("MaThietBi"),rs.getDate("NgayNhap"),rs.getDate("HanBaoHanh")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -165,12 +162,11 @@ public class DataThietBiCoSo {
             stmt.setString(2, a.getMaThietBi());
             stmt.setDate(3, a.getNgayNhap());
             stmt.setDate(4, a.getHanBaoHanh());
+            System.out.println(a.getHanBaoHanh());
             stmt.setString(5, a.getMaThietBiCoSo());
-            if(stmt.executeUpdate() > 0) 
-            {
-                
-                return true;
-            }
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println(rowsAffected);
+            if(rowsAffected>0) return true;
         } catch (Exception e) {
             System.out.println(e);
         }

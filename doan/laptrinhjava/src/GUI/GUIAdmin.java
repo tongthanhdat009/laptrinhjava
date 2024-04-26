@@ -1708,27 +1708,33 @@ public class GUIAdmin{
                 JTextField textNgayNhap = new JTextField();
 
                 int x = 10;
-                maThietBiCoSo.setBounds(x, 170, 120, 30); x+=120;
-                textMaThietBiCoSo.setBounds(x+10, 170, 100, 30); x+=110;
-                maThietBi.setBounds(x+50, 170, 70, 30); x+=120;
-                textMaThietBi.setBounds(x+10, 170, 100, 30); x+=110;
-                maCoSo.setBounds(x+50, 170, 70, 30); x+=120;
-                textMaCoSo.setBounds(x+10, 170, 100, 30); x+=110;
-                ngayNhap.setBounds(x+50, 170, 70, 30); x+=120;
-                textNgayNhap.setBounds(x+10,170,100,30); x+=110;
-                hanBaoHanh.setBounds(x+50,170,90,30); x+=140;
-                textHanBaoHanh.setBounds(x+10, 170, 100, 30);
+                JPanel nhapLieu = new JPanel(null);
+                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 30);
+                nhapLieu.setBackground(Color.white);
 
-                rightPanel.add(maThietBiCoSo);
-                rightPanel.add(textMaThietBiCoSo);
-                rightPanel.add(maThietBi);
-                rightPanel.add(textMaThietBi);
-                rightPanel.add(maCoSo);
-                rightPanel.add(textMaCoSo);
-                rightPanel.add(hanBaoHanh);
-                rightPanel.add(textHanBaoHanh);
-                rightPanel.add(ngayNhap);
-                rightPanel.add(textNgayNhap);
+                maThietBiCoSo.setBounds(x, 0, 120, 30); x+=120;
+                textMaThietBiCoSo.setBounds(x+10, 0, 100, 30); x+=110;
+                maThietBi.setBounds(x+50, 0, 70, 30); x+=120;
+                textMaThietBi.setBounds(x+10, 0, 100, 30); x+=110;
+                maCoSo.setBounds(x+50, 0, 70, 30); x+=120;
+                textMaCoSo.setBounds(x+10, 0, 100, 30); x+=110;
+                ngayNhap.setBounds(x+50, 0, 70, 30); x+=120;
+                textNgayNhap.setBounds(x+10,0,100,30); x+=110;
+                hanBaoHanh.setBounds(x+50,0,90,30); x+=140;
+                textHanBaoHanh.setBounds(x+10, 0, 100, 30);
+
+                nhapLieu.add(maThietBiCoSo);
+                nhapLieu.add(textMaThietBiCoSo);
+                nhapLieu.add(maThietBi);
+                nhapLieu.add(textMaThietBi);
+                nhapLieu.add(maCoSo);
+                nhapLieu.add(textMaCoSo);
+                nhapLieu.add(hanBaoHanh);
+                nhapLieu.add(textHanBaoHanh);
+                nhapLieu.add(ngayNhap);
+                nhapLieu.add(textNgayNhap);
+
+                rightPanel.add(nhapLieu);
 
                 DefaultTableModel model = new DefaultTableModel();
                 JTable bang = new JTable(); 

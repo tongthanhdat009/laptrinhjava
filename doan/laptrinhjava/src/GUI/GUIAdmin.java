@@ -584,26 +584,14 @@ public class GUIAdmin{
         danhSachBox.addActionListener(new ActionListener() {
             //xóa những gì đã hiển thị của một danh sách
             public void xoaHienThi(JPanel rightPanel){
-                int x = 6; // Thay thế ... bằng tọa độ x của điểm bạn muốn kiểm tra
-                int y = 460; // Thay thế ... bằng tọa độ y của điểm bạn muốn kiểm tra
-                int x1 = 6;
-                int y1 = 176;
-
-                Component component = rightPanel.getComponentAt(x, y);
-                Component component1 = rightPanel.getComponentAt(x1, y1);
-                Component[] btn = rightPanel.getComponents();
-                if (component != null && component.isShowing()) {
-                    // Component tại điểm đã cho tồn tại và đang được hiển thị
-                    for(Component a : btn){
-                        if(a instanceof JButton){
-                            rightPanel.remove(a);
-                        }
+                Component[] components = rightPanel.getComponents();
+                for(Component a : components){
+                    if(!(a instanceof JLabel || a instanceof JComboBox)){
+                        rightPanel.remove(a);
                     }
-                    rightPanel.remove(component);
-                    rightPanel.remove(component1);
-                    rightPanel.revalidate();
-                    rightPanel.repaint();
                 }
+                rightPanel.revalidate();
+                rightPanel.repaint();
             }
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -646,26 +634,31 @@ public class GUIAdmin{
                     
                     //bảng hiện dòng thông tin được chọn
                     bangChinhSua = new JPanel();
+                    bangChinhSua.setBounds(5,175,(int)(width*0.75)-25,270);
+                    bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                    bangChinhSua.setBackground(new Color(119, 230, 163));
+                    
+                    Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
+                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
+                    
                     for(int i=0;i<tenCotCS.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.75)-30,270);
-                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
-                        TitledBorder titledBorder = BorderFactory.createTitledBorder("Thông tin chi tiết");
                         bangChinhSua.setBorder(titledBorder);
-                        JPanel tempPanel = new JPanel();
-                        
-                        JTextField tempTF = new JTextField();
-                        tempTF.setPreferredSize(new Dimension(150,20));
-                        tempTF.setBounds(0,20,120,20);
-                        tempTF.setName(tenCotCS.get(i));
 
-                        JLabel tempLabel = new JLabel(tenCotCS.get(i));
-                        tempLabel.setFont(new Font("Times New Roman", 1,20));
-                        tempLabel.setPreferredSize(new Dimension(150,20));
+                        JPanel tempPanel = new JPanel();
+                        TitledBorder titledBorder1 = BorderFactory.createTitledBorder(blackBorder,tenCotCS.get(i));
+                        titledBorder1.setTitleFont(titledBorder.getTitleFont().deriveFont(18f));
+                        tempPanel.setBorder(titledBorder1);
+                        tempPanel.setBackground(Color.white);
+
+                        JTextField tempTF = new JTextField();
+                        tempTF.setPreferredSize(new Dimension(200,20));
+                        tempTF.setBounds(0,20,150,20);
+                        tempTF.setName(tenCotCS.get(i));
 
                         if(i==0){
                             tempTF.setEditable(false);
                         }
-                        tempPanel.add(tempLabel);
                         tempPanel.add(tempTF);
                         bangChinhSua.add(tempPanel);
                     }
@@ -688,13 +681,13 @@ public class GUIAdmin{
                         "src/asset/img/button/sua-cs.png",
                         "src/asset/img/button/tim-cs.png"
                     };
-                    int a=355;
+                    int a=335;
                     for(int i=0;i<cmtNut.length;i++){
                         JButton tempBtn = new JButton();
                         ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
-                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(155, 57,Image.SCALE_DEFAULT);
+                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                         tempBtn.setActionCommand(cmtNut[i]);
-                        tempBtn.setBounds(a,110,155,57);
+                        tempBtn.setBounds(a,110,130,35);
                         tempBtn.setIcon(new ImageIcon(scaleTempBtnImg));
                         tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
                         tempBtn.setBorder(null);
@@ -970,22 +963,26 @@ public class GUIAdmin{
                     
                     //bảng hiện dòng thông tin được chọn
                     bangChinhSua = new JPanel();
+                    bangChinhSua.setBounds(5,175,(int)(width*0.75)-25,270);
+                    bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                    bangChinhSua.setBackground(new Color(119, 230, 163));
+                    
+                    Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
+                    
+                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
+                    bangChinhSua.setBorder(titledBorder);
                     for(int i=0;i<tenCotHV.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.75)-30,270);
-                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
-                        TitledBorder titledBorder = BorderFactory.createTitledBorder("Thông tin chi tiết");
-                        bangChinhSua.setBorder(titledBorder);
-                        
                         JPanel tempPanel = new JPanel();
-                        
+                        TitledBorder titledBorder1 = BorderFactory.createTitledBorder(blackBorder,tenCotHV.get(i));
+                        titledBorder1.setTitleFont(titledBorder.getTitleFont().deriveFont(18f));
+                        tempPanel.setBorder(titledBorder1);
+                        tempPanel.setBackground(Color.white);
+
                         JTextField tempTF = new JTextField();
-                        tempTF.setPreferredSize(new Dimension(100,20));
+                        tempTF.setPreferredSize(new Dimension(200,20));
                         tempTF.setBounds(0,20,120,20);
                         tempTF.setName(tenCotHV.get(i));
-
-                        JLabel tempLabel = new JLabel(tenCotHV.get(i));
-                        tempLabel.setFont(new Font("Times New Roman", 1,20));
-                        tempLabel.setPreferredSize(new Dimension(120,20));
 
                         if(i==0){
                             tempTF.setEditable(false);
@@ -999,6 +996,8 @@ public class GUIAdmin{
                             ButtonGroup gioiTinh = new ButtonGroup();
                             nam.setFont(font);
                             nu.setFont(font);
+                            nam.setBackground(Color.white);
+                            nu.setBackground(Color.white);
                             gioiTinh.add(nam);
                             gioiTinh.add(nu);
                             tempPanel.add(nam);
@@ -1006,7 +1005,7 @@ public class GUIAdmin{
                             bangChinhSua.add(tempPanel);
                             continue;
                         }
-                        tempPanel.add(tempLabel);
+                        // tempPanel.add(tempLabel);
                         tempPanel.add(tempTF);
                         bangChinhSua.add(tempPanel);
                     }
@@ -1029,13 +1028,13 @@ public class GUIAdmin{
                         "src/asset/img/button/sua-hv.png",
                         "src/asset/img/button/tim-hv.png"
                     };
-                    int a=345;
+                    int a=335;
                     for(int i=0;i<cmtNut.length;i++){
                         JButton tempBtn = new JButton();
                         ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
-                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(155, 57,Image.SCALE_DEFAULT);
+                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                         tempBtn.setActionCommand(cmtNut[i]);
-                        tempBtn.setBounds(a,110,155,57);
+                        tempBtn.setBounds(a,110,130,35);
                         tempBtn.setIcon(new ImageIcon(scaleTempBtnImg));
                         tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
                         tempBtn.setBorder(null);
@@ -1366,27 +1365,30 @@ public class GUIAdmin{
                     
                     //bảng hiện dòng thông tin được chọn
                     bangChinhSua = new JPanel();
+                    bangChinhSua.setBounds(5,175,(int)(width*0.75)-25,270);
+                    bangChinhSua.setLayout(new GridLayout(3,3,10,10));
+                    bangChinhSua.setBackground(new Color(119, 230, 163));
+                    
+                    Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
+                    
+                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
+                    bangChinhSua.setBorder(titledBorder);
                     for(int i=0;i<tenCotTB.size();i++){
-                        bangChinhSua.setBounds(5,175,(int)(width*0.75)-30,270);
-                        bangChinhSua.setLayout(new GridLayout(3,3,10,10));
-                        TitledBorder titledBorder = BorderFactory.createTitledBorder("Thông tin chi tiết");
-                        bangChinhSua.setBorder(titledBorder);
-                        
                         JPanel tempPanel = new JPanel();
-                        
+                        TitledBorder titledBorder1 = BorderFactory.createTitledBorder(blackBorder,tenCotTB.get(i));
+                        titledBorder1.setTitleFont(titledBorder.getTitleFont().deriveFont(18f));
+                        tempPanel.setBorder(titledBorder1);
+                        tempPanel.setBackground(Color.white);
+
                         JTextField tempTF = new JTextField();
                         tempTF.setPreferredSize(new Dimension(150,20));
                         tempTF.setBounds(0,20,120,20);
                         tempTF.setName(tenCotTB.get(i));
 
-                        JLabel tempLabel = new JLabel(tenCotTB.get(i));
-                        tempLabel.setFont(new Font("Times New Roman", 1,20));
-                        tempLabel.setPreferredSize(new Dimension(150,20));
-
                         if(i==0){
                             tempTF.setEditable(false);
                         }
-                        tempPanel.add(tempLabel);
                         tempPanel.add(tempTF);
                         bangChinhSua.add(tempPanel);
                     }
@@ -1413,9 +1415,9 @@ public class GUIAdmin{
                     for(int i=0;i<cmtNut.length;i++){
                         JButton tempBtn = new JButton();
                         ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
-                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(155, 57,Image.SCALE_DEFAULT);
+                        Image scaleTempBtnImg = tempBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                         tempBtn.setActionCommand(cmtNut[i]);
-                        tempBtn.setBounds(a,110,155,57);
+                        tempBtn.setBounds(a,110,130,35);
                         tempBtn.setIcon(new ImageIcon(scaleTempBtnImg));
                         tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
                         tempBtn.setBorder(null);

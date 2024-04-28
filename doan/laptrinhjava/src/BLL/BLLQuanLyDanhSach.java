@@ -2,8 +2,10 @@ package BLL;
 import java.util.ArrayList;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Vector;
 
 import DAL.DataHoiVien;
+import DAL.DataHoiVienCoSo;
 import DAL.DataThietBi;
 import DAL.DataThietBiCoSo;
 import DAL.DataCoSo;
@@ -12,6 +14,7 @@ import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DSThietBiCoSo;
 import DTO.HoiVien;
+import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
 import DTO.ThietBiCoSo;
 import DTO.dsHoiVien;
@@ -21,11 +24,13 @@ public class BLLQuanLyDanhSach{
     private DataCoSo dataCoSo;
     private DataThietBi dataThietBi;
     private DataThietBiCoSo dataThietBiCoSo;
+    private DataHoiVienCoSo dataHoiVienCoSo;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
         dataThietBi = new DataThietBi(); 
         dataThietBiCoSo = new DataThietBiCoSo();
+        dataHoiVienCoSo = new DataHoiVienCoSo();
     }
     
     //danh sách hội viên
@@ -159,5 +164,41 @@ public class BLLQuanLyDanhSach{
     public ArrayList<ThietBiCoSo> timKiemThietBiCoSo(String maThietBiCoSo)
     {
         return dataThietBiCoSo.timKiem(maThietBiCoSo);
+    }
+
+
+    public ArrayList<HoiVienCoSo> layDSHoiVienCoSo()
+    {
+        return dataHoiVienCoSo.layDanhSach();
+    }
+    public ArrayList<HoiVienCoSo> timKiemHoiVienCoSo(String maHoiVien, String maCoSo)
+    {
+        if(maHoiVien.equals("")) maHoiVien = "NULL";
+        if(maCoSo.equals("Chọn cơ sở")) maCoSo = "NULL";
+        return dataHoiVienCoSo.timKiem(maHoiVien, maCoSo);
+    }
+    public String themHoiVienCoSo(String maHoiVien, String maCoSo, Date thoiGianKetThuc)
+    {
+        if(dataHoiVien.timKiemHV(maHoiVien) == false) return "Mã hội viên không tồn tại";
+        if(dataHoiVienCoSo.them(new HoiVienCoSo(thoiGianKetThuc, maHoiVien, maCoSo))) return "Thành công";
+        return "Lỗi";
+    }
+    public String xoaHoiVienCoSo(String maHoiVien, String maCoSo)
+    {
+        if(dataHoiVienCoSo.xoa(maHoiVien, maCoSo)) return "Thành công";
+        return "Bộ không tồn tại";
+    }
+    public String suaHoiVienCoSo(String maHoiVien, String maCoSo, Date hanTap)
+    {
+        if(dataHoiVien.timKiemHV(maHoiVien) == false) return "Mã hội viên không tồn tại";
+        if(dataHoiVienCoSo.sua(new HoiVienCoSo(hanTap, maHoiVien, maCoSo))) return "Thành công";
+        return "Bộ không tồn tại";
+    } 
+    public Vector<String> layDSMaCoSo()
+    {
+        Vector<String> a = new Vector<>();
+        a = dataCoSo.DSMaCoSo();
+        a.add(0,"Chọn cơ sở");
+        return a;
     }
 }

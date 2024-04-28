@@ -3,6 +3,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.microsoft.sqlserver.jdbc.osgi.Activator;
+
 import java.time.LocalDate;
 
 import BLL.BLLNhapThietBi;
@@ -15,6 +18,7 @@ import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DTOThongKeDonHang;
 import DTO.HoiVien;
+import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
 import DTO.ThietBiCoSo;
 
@@ -1677,7 +1681,197 @@ public class GUIAdmin{
                 else if(selectedOption.equals("Hàng hóa cơ sở")){
                     xoaHienThi(rightPanel);
                 }
+                else if(selectedOption.equals("Hội viên cơ sở")){
+                    ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+                    Vector<String> dsCoSo = new Vector<>();
+                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+                    QuanLyHoiVienCoSo(ds,dsCoSo);
+                }
                 // Thêm các xử lý khác nếu cần
+            }
+            public void QuanLyHoiVienCoSo(ArrayList<HoiVienCoSo> ds, Vector<String> dsCoSo)
+            {
+                xoaHienThi(rightPanel);
+                JButton them = new JButton("Thêm");
+                JButton xoa = new JButton("Xóa");
+                JButton sua = new JButton("Sửa");
+                JButton timKiem = new JButton("Tìm Kiếm");
+                JPanel chucNang = new JPanel(new FlowLayout());
+                chucNang.add(them);
+                chucNang.add(xoa);
+                chucNang.add(sua);
+                chucNang.add(timKiem);
+                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                rightPanel.add(chucNang);
+
+                JLabel lbmaHoiVien = new JLabel("Mã hội viên: ");
+                JTextField tfMaHoiVien = new JTextField();
+                JLabel lbMaCoSo = new JLabel("Mã Cơ Sở: ");
+                JComboBox cbMaCoSo = new JComboBox<>(dsCoSo);
+                JLabel lbHanTap = new JLabel("Hạn tập: ");
+
+                Vector<String> day = new Vector<>();
+                Vector<String> month = new Vector<>();
+                Vector<String> year = new Vector<>();
+                for(int i=1;i<=31;i++)
+                day.add(String.valueOf(i));
+                day.add(0,"DD");
+                for(int i=1;i<=12;i++)
+                month.add(String.valueOf(i));
+                month.add(0,"MM");
+                for(int i=1990;i<=2100;i++)
+                year.add(String.valueOf(i));
+                year.add(0,"YYYY");
+                JComboBox cbDay = new JComboBox<>(day);
+                JComboBox cbMonth = new JComboBox<>(month);
+                JComboBox cbYear = new JComboBox<>(year);
+
+
+                JPanel nhapLieu = new JPanel(null);
+                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 30);
+                nhapLieu.setBackground(Color.white);
+                
+                int x = 250;
+                lbmaHoiVien.setBounds(x, 0, 80, 30); x+=80;
+                tfMaHoiVien.setBounds(x+10, 0, 100, 30); x+=110;
+                lbMaCoSo.setBounds(x+50, 0, 80, 30); x+=130;
+                cbMaCoSo.setBounds(x+10, 0, 100, 30); x+=110;
+                lbHanTap.setBounds(x+50, 0, 60, 30); x+=110;
+                cbYear.setBounds(x+10, 0, 70, 30); x+=80;
+                cbMonth.setBounds(x+5, 0, 50, 30); x+=55;
+                cbDay.setBounds(x+5, 0, 50, 30);
+                nhapLieu.add(lbmaHoiVien);
+                nhapLieu.add(tfMaHoiVien);
+                nhapLieu.add(lbMaCoSo);
+                nhapLieu.add(cbMaCoSo);
+                nhapLieu.add(lbHanTap);
+                nhapLieu.add(cbYear);
+                nhapLieu.add(cbMonth);
+                nhapLieu.add(cbDay);
+                rightPanel.add(nhapLieu);
+
+                JTable bang = new JTable();
+                DefaultTableModel model = new DefaultTableModel();
+                bang.setModel(model);
+                model.addColumn("Mã hội viên");
+                model.addColumn("Mã cơ sở");
+                model.addColumn("Hạn tập");
+                for(int i=0;i<ds.size();i++)
+                model.addRow(new Object[]{
+                    ds.get(i).getMaHoiVien(), ds.get(i).getMaCoSo(), ds.get(i).getHanTap()
+                });
+                bang.addMouseListener(new MouseAdapter(){
+                    public void mouseClicked(MouseEvent e)
+                    {
+                        int i = bang.getSelectedRow();
+                        if(i>=0)
+                        {
+                            tfMaHoiVien.setText(model.getValueAt(i, 0).toString());
+                            cbMaCoSo.setSelectedItem(model.getValueAt(i, 1).toString());
+                            LocalDate date = LocalDate.parse(model.getValueAt(i, 2).toString());
+                            cbDay.setSelectedItem(Integer.toString(date.getDayOfMonth()));
+                            cbMonth.setSelectedItem(Integer.toString(date.getMonthValue()));
+                            cbYear.setSelectedItem(Integer.toString(date.getYear()));
+                        }
+                    }
+                });
+                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                them.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        String maHoiVien = tfMaHoiVien.getText();
+                        String maCoSo = cbMaCoSo.getSelectedItem().toString();
+                        String dd = cbDay.getSelectedItem().toString();
+                        String mm = cbMonth.getSelectedItem().toString();
+                        String yyyy= cbYear.getSelectedItem().toString();
+                        if(maHoiVien.equals("")||maCoSo.equals("Chọn cơ sở")||dd.equals("DD")||mm.equals("MM")||yyyy.equals("YYYY"))
+                        JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                        else 
+                        {
+                            String sHanTap = yyyy+"-"+mm+"-"+dd;
+                            Date hanTap = Date.valueOf(sHanTap);
+                            String s = bllQuanLyDanhSach.themHoiVienCoSo(maHoiVien, maCoSo, hanTap);
+                            if(s.equals("Thành công"))
+                            model.addRow(new Object[]{maHoiVien,maCoSo,hanTap});
+                            JOptionPane.showMessageDialog(rightPanel, s);
+                        }
+                    }
+                });
+                xoa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        String maHoiVien = tfMaHoiVien.getText();
+                        String maCoSo = cbMaCoSo.getSelectedItem().toString();
+                        if(maHoiVien.equals("")||maCoSo.equals("Chọn cơ sở")) JOptionPane.showMessageDialog(rightPanel, "Nhập mã hội viên và mã cơ sở");
+                        else
+                        {
+                            String s = bllQuanLyDanhSach.xoaHoiVienCoSo(maHoiVien, maCoSo);
+                            if(s.equals("Thành công"))
+                            {
+                                for(int i=0;i<model.getRowCount();i++)  
+                                if(model.getValueAt(i, 0).equals(maHoiVien) && model.getValueAt(i, 1).equals(maCoSo))
+                                {
+                                    model.removeRow(i);
+                                    break;
+                                } 
+                            }
+                            JOptionPane.showMessageDialog(rightPanel, s);
+                        }
+                    }
+                });
+                sua.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        String maHoiVien = tfMaHoiVien.getText();
+                        String maCoSo = cbMaCoSo.getSelectedItem().toString();
+                        String dd = cbDay.getSelectedItem().toString();
+                        String mm = cbMonth.getSelectedItem().toString();
+                        String yyyy= cbYear.getSelectedItem().toString();
+                        if(maHoiVien.equals("")||maCoSo.equals("Chọn cơ sở")||dd.equals("DD")||mm.equals("MM")||yyyy.equals("YYYY"))
+                        JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                        else 
+                        {
+                            String sHanTap = yyyy+"-"+mm+"-"+dd;
+                            Date hanTap = Date.valueOf(sHanTap);
+                            String s = bllQuanLyDanhSach.suaHoiVienCoSo(maHoiVien, maCoSo, hanTap);
+                            if(s.equals("Thành công"))
+                            {
+                                for(int i=0;i<model.getRowCount();i++)  
+                                if(model.getValueAt(i, 0).equals(maHoiVien) && model.getValueAt(i, 1).equals(maCoSo))
+                                {
+                                    model.setValueAt(hanTap, i, 2);
+                                    break;
+                                } 
+                            }
+                            JOptionPane.showMessageDialog(rightPanel, s);
+                        }
+                    }
+                });
+                timKiem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        String maHoiVien = tfMaHoiVien.getText();
+                        String maCoSo = cbMaCoSo.getSelectedItem().toString();
+                        model.setRowCount(0);
+                        if(maHoiVien.equals("")&&maCoSo.equals("Chọn cơ sở")) 
+                        {
+                            for(int i=0;i<ds.size();i++)
+                            model.addRow(new Object[]{ds.get(i).getMaHoiVien(),ds.get(i).getMaCoSo(),ds.get(i).getHanTap()});
+                        }
+                        else
+                        {
+                            ArrayList<HoiVienCoSo> dsHoiVienCoSo = new ArrayList<>();
+                            dsHoiVienCoSo = bllQuanLyDanhSach.timKiemHoiVienCoSo(maHoiVien, maCoSo);
+                            for(int i=0;i<dsHoiVienCoSo.size();i++)
+                            model.addRow(new Object[]{dsHoiVienCoSo.get(i).getMaHoiVien(),dsHoiVienCoSo.get(i).getMaCoSo(),dsHoiVienCoSo.get(i).getHanTap()});
+                        }
+                    }
+                });
+                JScrollPane scrollPane = new JScrollPane();
+                scrollPane.setViewportView(bang);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                rightPanel.add(scrollPane);
             }
             public void QuanLyBangThietBiCoSo(ArrayList<ThietBiCoSo> ds)
             {

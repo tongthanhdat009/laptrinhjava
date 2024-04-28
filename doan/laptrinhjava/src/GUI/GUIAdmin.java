@@ -573,7 +573,7 @@ public class GUIAdmin{
         rightTitle.setBounds(450, 0, 1000,60);        
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng hóa cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng hóa cơ sở","Hội viên cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,100,30);

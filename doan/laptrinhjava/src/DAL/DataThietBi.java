@@ -4,7 +4,6 @@ package DAL;
 import java.sql.*;
 import java.util.ArrayList;
 
-import DTO.CoSo;
 import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
 public class DataThietBi {

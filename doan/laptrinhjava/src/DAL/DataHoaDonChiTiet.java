@@ -29,4 +29,76 @@ public class DataHoaDonChiTiet {
         }
         return ds;
     }
+    public boolean them(ChiTietHoaDon chiTietHoaDon)
+    {
+        String truyVan = "INSERT INTO ChiTietHoaDon (SoLuongHang, MaHD, MaHangHoa) VALUES (?, ?, ?)";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setInt(1, chiTietHoaDon.getSoLuong());
+            stmt.setString(2,chiTietHoaDon.getMaHoaDon());
+            stmt.setString(3,chiTietHoaDon.getMaHangHoa());
+            if(stmt.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);   
+        }
+        return true;
+    }
+    public boolean xoa(String maHoaDon, String maHangHoa)
+    {
+        String truyVan = "DELETE FROM ChiTietHoaDon WHERE MaHD = ? AND MaHangHoa = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setString(1, maHoaDon);
+            stmt.setString(2, maHangHoa);
+            if(stmt.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);   
+        }
+        return false;
+    }
+    public ArrayList<ChiTietHoaDon> timKiem(String maHoaDon, String maHangHoa)
+    {
+        String truyVan = "SELECT * FROM ChiTietHoaDon WHERE ";
+        ArrayList<String> s = new ArrayList<>();
+        ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
+        if(!maHoaDon.equals("NULL"))
+        {
+            truyVan+="MaHD = ? ";
+            s.add(maHoaDon);
+        }
+        if(!maHangHoa.equals("NULL"))
+        {
+            truyVan+="MaHangHoa = ? ";
+            s.add(maHangHoa);
+        }
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            for(int i=1;i<=s.size();i++)
+            stmt.setString(i,s.get(i));
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            ds.add(new ChiTietHoaDon(rs.getInt(1), rs.getString(2), rs.getString(3)));
+        } catch (Exception e) {
+            System.out.println(e);   
+        }
+        return ds;
+    }
+    public boolean sua(String maHoaDon, String maHangHoa, int soLuong)
+    {
+        String truyVan = "UPDATE ChiTietHoaDon SET SoLuongHang = ? WHERE MaHD = ? AND MaHangHoa = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setInt(1, soLuong);
+            stmt.setString(2, maHoaDon);
+            stmt.setString(3, maHangHoa);
+            if(stmt.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);   
+        }
+        return false;
+    }
 }

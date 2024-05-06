@@ -8,16 +8,19 @@ import DAL.DataHoiVien;
 import DAL.DataHoiVienCoSo;
 import DAL.DataThietBi;
 import DAL.DataThietBiCoSo;
+import DAL.DataTinhDonGiaHoaDon;
 import DAL.DataCoSo;
+import DAL.DataHoaDon;
+import DAL.DataHoaDonChiTiet;
+import DTO.ChiTietHoaDon;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
-import DTO.DSThietBiCoSo;
+import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
 import DTO.ThietBiCoSo;
-import DTO.dsHoiVien;
 
 public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
@@ -25,12 +28,18 @@ public class BLLQuanLyDanhSach{
     private DataThietBi dataThietBi;
     private DataThietBiCoSo dataThietBiCoSo;
     private DataHoiVienCoSo dataHoiVienCoSo;
+    private DataHoaDon dataHoaDon;
+    private DataHoaDonChiTiet dataHoaDonChiTiet;
+    private DataTinhDonGiaHoaDon dataTinhDonGiaHoaDon;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
         dataThietBi = new DataThietBi(); 
         dataThietBiCoSo = new DataThietBiCoSo();
         dataHoiVienCoSo = new DataHoiVienCoSo();
+        dataHoaDon = new DataHoaDon();
+        dataHoaDonChiTiet = new DataHoaDonChiTiet();
+        dataTinhDonGiaHoaDon = new DataTinhDonGiaHoaDon();
     }
     
     //danh sách hội viên
@@ -200,5 +209,68 @@ public class BLLQuanLyDanhSach{
         a = dataCoSo.DSMaCoSo();
         a.add(0,"Chọn cơ sở");
         return a;
+    }
+    public ArrayList<HoaDon> layDSHoaDon()
+    {
+        return dataHoaDon.layDSHoaDon();
+    }
+    public ArrayList<ChiTietHoaDon> layDSChiTietHoaDon()
+    {
+        return dataHoaDonChiTiet.layDSHoaDon();
+    }
+    public String themHoaDon(Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
+    {
+        String maHoaDon = dataHoaDon.layMa();
+        if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
+        HoaDon hoaDon = new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai);
+        if(dataHoaDon.them(hoaDon) == true) return "Thành công";
+        return "Lỗi";
+    }
+    public String xoaHoaDon(String maHoaDon)
+    {
+        if(dataHoaDon.xoa(maHoaDon) == true) return "Thành công";
+        return "Mã hóa đơn không tồn tại";
+    }
+    public ArrayList<HoaDon> timKiemHoaDon(String maHoaDon)
+    {
+        return dataHoaDon.timKiem(maHoaDon);
+    }
+    public String suaHoaDon(String maHoaDon, Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
+    {
+        if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
+        if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon, 0, maHV, maCoSo, trangThai)) == true) return "Thành công";
+        return "Mã hóa đơn không tồn tại";
+    }
+    public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
+    {
+        if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
+        if(soLuong <= 0) return "Số lượng không hợp lệ";
+        // chưa kiểm tra mã hàng hóa
+        if (dataHoaDonChiTiet.them(new ChiTietHoaDon(soLuong, maHoaDon, maHangHoa)) == false) return "Thất bại";
+        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
+        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
+        return "Lỗi";
+    }
+    public String xoaChiTietHoaDon(String maHoaDon, String maHangHoa)
+    {
+        if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
+        // chưa kiểm tra mã hàng hóa
+        if(dataHoaDonChiTiet.xoa(maHoaDon, maHangHoa) == false) return "Thất bại";
+        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
+        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
+        return "Lỗi";
+    }
+    public String suaChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
+    {
+        if(dataHoaDonChiTiet.sua(maHoaDon, maHangHoa, soLuong) == false) return "Thất bại";
+        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
+        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
+        return "Lỗi";
+    }
+    public ArrayList<ChiTietHoaDon> timKiemChiTietHoaDon(String maHoaDon, String maHangHoa)
+    {
+        if(maHoaDon.equals("")) maHoaDon = "NULL";
+        if(maHangHoa.equals("NULL")) maHangHoa = "NULL";
+        return dataHoaDonChiTiet.timKiem(maHoaDon, maHangHoa);
     }
 }

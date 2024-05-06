@@ -2,7 +2,6 @@ package DAL;
 import java.sql.*;
 import java.util.ArrayList;
 import DTO.HoiVien;
-import DTO.dsHoiVien;
 public class DataHoiVien {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";

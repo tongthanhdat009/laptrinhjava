@@ -4,7 +4,8 @@ public class dichVu {
     private String maDichVu;
     private String tenDichVu;
     private String moTa;
-    private int giaDichVu;
+    private String hinhAnh;
+    private long giaDichVu;
     private int thoiGian;
     //hàm khởi tạo
     public dichVu(){
@@ -14,12 +15,13 @@ public class dichVu {
         giaDichVu = 0;
         thoiGian = 0;
     }
-    public dichVu(String maDichVu, String tenDichVu, int giaDichVu, int thoiGian, String moTa){
+    public dichVu(String maDichVu, String tenDichVu, long giaDichVu, int thoiGian, String moTa, String hinhAnh){
         setMaDichVu(maDichVu);
         setTenDichVu(tenDichVu);
         setMoTa(moTa);
         setGiaDichVu(giaDichVu);
         setThoiGian(thoiGian);
+        setHinhAnh(hinhAnh);
     }
     
     //hàm set&get
@@ -34,6 +36,10 @@ public class dichVu {
         this.moTa = moTa;
     }
     
+    public void setHinhAnh(String hinhAnh){
+        this.hinhAnh = hinhAnh;
+    }
+
     public void setMaDichVu(String maDichVu){
         if(!(maDichVu.equals("")))
             this.maDichVu = maDichVu;
@@ -48,7 +54,7 @@ public class dichVu {
             throw new IllegalArgumentException("Ten Dich Vu Khong Hop Le!");    
     }
 
-    public void setGiaDichVu(int giaDichVu){
+    public void setGiaDichVu(long giaDichVu){
         if(!(giaDichVu < 0))
             this.giaDichVu = giaDichVu;
         else
@@ -64,30 +70,13 @@ public class dichVu {
     public long getGiaDichVu(){
         return this.giaDichVu;
     }
-
-    // public void nhap(){ //test
-    //     Scanner in = new Scanner(System.in);
-    //     String newMaDichVu= new String();
-    //     String newTenDichVu= new String();
-    //     String newLoaiDichVu= new String();
-    //     long newGiaDichVu;
-    //     System.out.println("Nhap ma dich vu: ");
-    //     newMaDichVu = in.nextLine();
-    //     System.out.println("Nhap ten dich vu: ");
-    //     newTenDichVu = in.nextLine();
-    //     System.out.println("Nhap loai dich vu: ");
-    //     newLoaiDichVu = in.nextLine();
-    //     System.out.println("Nhap gia dich vu:");
-    //     newGiaDichVu = in.nextLong();
-    //     setMaDichVu(newMaDichVu);
-    //     setTenDichVu(newLoaiDichVu);
-    //     setLoaiDichVu(newLoaiDichVu);
-    //     setGiaDichVu(newGiaDichVu);
-    //     in.close();
-    // }
-    // public static void main(String[] args){
-    //     dichVu a = new dichVu();
-    //     a.nhap();
-    //     System.out.println(a.toString());
-    // }
+    public String getMoTa(){
+        return this.moTa;
+    }
+    public String getHinhAnh(){
+        return this.hinhAnh;
+    }
+    public int getThoiGian(){
+        return this.thoiGian;
+    }
 }

@@ -6,10 +6,12 @@ import java.util.Vector;
 
 import DAL.DataHoiVien;
 import DAL.DataHoiVienCoSo;
+import DAL.DataNhanVien;
 import DAL.DataThietBi;
 import DAL.DataThietBiCoSo;
 import DAL.DataTinhDonGiaHoaDon;
 import DAL.DataCoSo;
+import DAL.DataDichVu;
 import DAL.DataHoaDon;
 import DAL.DataHoaDonChiTiet;
 import DTO.ChiTietHoaDon;
@@ -21,7 +23,9 @@ import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
+import DTO.NhanVien;
 import DTO.ThietBiCoSo;
+import DTO.dichVu;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
 
@@ -35,6 +39,8 @@ public class BLLQuanLyDanhSach{
     private DataHoaDonChiTiet dataHoaDonChiTiet;
     private DataTinhDonGiaHoaDon dataTinhDonGiaHoaDon;
     private DataHangHoa dataHangHoa;
+    private DataNhanVien dataNhanVien;
+    private DataDichVu dataDichVu;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
@@ -45,6 +51,8 @@ public class BLLQuanLyDanhSach{
         dataHoaDonChiTiet = new DataHoaDonChiTiet();
         dataTinhDonGiaHoaDon = new DataTinhDonGiaHoaDon();
         dataHangHoa = new DataHangHoa();
+        dataDichVu = new DataDichVu();
+        dataNhanVien = new DataNhanVien();
     }
     
     //danh sách hội viên
@@ -135,7 +143,7 @@ public class BLLQuanLyDanhSach{
     public boolean suaThongTinTB(LoaiThietBi tb){
         return dataThietBi.suaThongTinTB(tb);
     }
-
+    //danh sách thiết bị cơ sở
     public String themThietBiCoSo(String maThietBiCoSo,String maCoSo, String maThietBi, Date ngayNhap, Date hanBaoHanh)
     {
         if(dataThietBi.kiemTraMa(maThietBi))
@@ -180,7 +188,7 @@ public class BLLQuanLyDanhSach{
         return dataThietBiCoSo.timKiem(maThietBiCoSo);
     }
 
-
+    //danh sách hội viên cơ sở
     public ArrayList<HoiVienCoSo> layDSHoiVienCoSo()
     {
         return dataHoiVienCoSo.layDanhSach();
@@ -215,6 +223,8 @@ public class BLLQuanLyDanhSach{
         a.add(0,"Chọn cơ sở");
         return a;
     }
+
+    //danh sách hóa đơn
     public ArrayList<HoaDon> layDSHoaDon()
     {
         return dataHoaDon.layDSHoaDon();
@@ -305,5 +315,65 @@ public class BLLQuanLyDanhSach{
     }
     public boolean suaThongTinHH(hangHoa hh){
         return dataHangHoa.suaHangHoa(hh);
+    }
+    
+    // Danh sách nhân viên
+    public ArrayList<NhanVien> getDataNhanVien() {
+        return dataNhanVien.layDanhSachNhanVien();
+    }
+
+    public ArrayList<String> layTenCotNhanVien() {
+        return dataNhanVien.getTenCot();
+    }
+
+    // Xóa nhân viên
+    public boolean xoaNV(String maNhanVien) {
+        return dataNhanVien.xoanv(maNhanVien);
+    }
+
+    // Kiểm tra và tạo mã nhân viên mới
+    public String kiemTraMaNhanVien() {
+        String maMoi = "NV" + dataNhanVien.layMaNhanVienChuaTonTai();
+        ArrayList<NhanVien> ds = dataNhanVien.timkiemnhanvien(maMoi);
+        if(!ds.isEmpty()) {
+        	maMoi = "NV" + dataNhanVien.layMaNhanVienChuaTonTai();
+        	ds = dataNhanVien.timkiemnhanvien(maMoi);
+        }
+        return maMoi;
+    }
+
+    // Thêm nhân viên mới
+    public boolean themNV(NhanVien nv) {
+    	return dataNhanVien.them(nv);
+    }
+
+    // Sửa thông tin nhân viên
+    public boolean suaThongTinNV(NhanVien nv) {
+        return dataNhanVien.suanv(nv);
+    }
+
+    // Tìm kiếm nhân viên
+    public ArrayList<NhanVien> timKiemNV(String manv) {
+        return dataNhanVien.timkiemnhanvien(manv);
+    }
+    
+    // Danh sách dịch vụ
+    public ArrayList<dichVu> getDataDichvu(){
+    	return dataDichVu.layDanhSachDichVu();
+    }
+    public ArrayList<String> layTenCotDichVu() {
+        return dataDichVu.getTenCot();
+    }
+    public boolean themDV(dichVu dv) {
+    	return dataDichVu.themDV(dv);
+    }
+    public boolean xoaDV(String madv) {
+    	return dataDichVu.xoaDV(madv);
+    }
+    public boolean suaDV(dichVu dv) {
+    	return dataDichVu.suaDV(dv);
+    }
+    public ArrayList<dichVu> timKiemDV (String madv){
+    	return dataDichVu.timkiemDV(madv);
     }
 }

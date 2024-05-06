@@ -1,12 +1,36 @@
 package DTO;
 import java.sql.Date;
 
-public abstract class NhanVien extends ConNguoi {
+public class NhanVien extends ConNguoi {
+	private String socccd;
 	private String maNhanVien;
+	private String macoso;
+	private String vaitro;
+	private long luong;
+	public NhanVien() {
+		super();
+		setSocccd("NULL");
+		setMaNhanVien("NULL");
+		setMacoso("NULL");
+		setVaitro("NULL");
+		setLuong(0);
+	}
 
-	public NhanVien(String hoten, String gioitinh, Date ngaysinh, String socccd, String sdt,String maNhanVien) {
+	public NhanVien(String manv,String hoten, String gioitinh, Date ngaysinh,String sdt, String socccd,String macoso,String vaitro,long luong) {
 		super(hoten, gioitinh, ngaysinh,sdt);
-		this.maNhanVien = maNhanVien;
+		this.maNhanVien = manv;
+		this.socccd = socccd;
+		this.macoso = macoso;
+		this.vaitro = vaitro;
+		this.luong = luong;
+	}
+	
+	public String getSocccd() {
+		return socccd;
+	}
+
+	public void setSocccd(String socccd) {
+		this.socccd = socccd;
 	}
 
 	public String getMaNhanVien() {
@@ -16,4 +40,29 @@ public abstract class NhanVien extends ConNguoi {
 	public void setMaNhanVien(String maNhanVien) {
 		this.maNhanVien = maNhanVien;
 	}
+
+	public String getMacoso() {
+		return macoso;
+	}
+
+	public void setMacoso(String macoso) {
+		this.macoso = macoso;
+	}
+
+	public String getVaitro() {
+		return vaitro;
+	}
+
+	public void setVaitro(String vaitro) {
+		this.vaitro = vaitro;
+	}
+
+	public double getLuong() {
+		return luong;
+	}
+
+	public void setLuong(long luong) {
+		this.luong = luong;
+	}
+		
 }

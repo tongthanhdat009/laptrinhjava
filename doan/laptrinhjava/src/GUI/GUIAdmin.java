@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import com.microsoft.sqlserver.jdbc.osgi.Activator;
 
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
@@ -20,7 +22,9 @@ import DTO.DTOThongKeDonHang;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
+import DTO.NhanVien;
 import DTO.ThietBiCoSo;
+import DTO.dichVu;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
 
@@ -590,6 +594,16 @@ public class GUIAdmin{
         chonDanhSachLabel.setBounds(430, 50, 300,35);
         
         danhSachBox.addActionListener(new ActionListener() {
+            private JTextField jtf_manv;
+			private JTextField jtf_hoten;
+			private ButtonGroup btngr;
+			private JTextField jtf_date;
+			private JTextField jtf_sdt;
+			private JTextField jtf_cccd;
+			private JTextField jtf_macoso;
+			private JTextField jtf_vaitro;
+			private JTextField jtf_luong;
+
             //xóa những gì đã hiển thị của một danh sách
             public void xoaHienThi(JPanel rightPanel){
                 Component[] components = rightPanel.getComponents();
@@ -952,8 +966,9 @@ public class GUIAdmin{
                     });
                 }
                 else if(selectedOption.equals("Dịch vụ")){
-                    xoaHienThi(rightPanel);
-
+                    ArrayList<dichVu> ds = new ArrayList<>();
+                    ds = bllQuanLyDanhSach.getDataDichvu();
+                    QuanLyBangDichVu(ds);
                 }
                 else if (selectedOption.equals("Hội viên")) {
                     xoaHienThi(rightPanel);
@@ -1362,7 +1377,9 @@ public class GUIAdmin{
                     });
                 }
                 else if (selectedOption.equals("Nhân viên")){
-                    xoaHienThi(rightPanel);
+                    ArrayList<NhanVien> ds = new ArrayList<>();
+                    ds = bllQuanLyDanhSach.getDataNhanVien();
+                    QuanLyBangNhanVien(ds);
                 }
                 else if(selectedOption.equals("Thiết bị")){
                     xoaHienThi(rightPanel);
@@ -2104,8 +2121,11 @@ public class GUIAdmin{
                 for(int i=1990;i<=2100;i++)
                 year.add(String.valueOf(i));
                 year.add(0,"YYYY");
+                @SuppressWarnings("rawtypes")
                 JComboBox cbDay = new JComboBox<>(day);
+                @SuppressWarnings("rawtypes")
                 JComboBox cbMonth = new JComboBox<>(month);
+                @SuppressWarnings("rawtypes")
                 JComboBox cbYear = new JComboBox<>(year);
 
 
@@ -2249,11 +2269,13 @@ public class GUIAdmin{
                         }
                     }
                 });
+                
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
                 scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
                 rightPanel.add(scrollPane);
             }
+            
             public void QuanLyBangThietBiCoSo(ArrayList<ThietBiCoSo> ds)
             {
                 xoaHienThi(rightPanel);
@@ -2450,7 +2472,629 @@ public class GUIAdmin{
                 scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
                 rightPanel.add(scrollPane);
             }
+            public void QuanLyBangDichVu(ArrayList<dichVu> ds) {
+            	xoaHienThi(rightPanel);
+            	
+            	Font f = new Font("Times New Roman",Font.BOLD,17);
+            	JButton them = new JButton("Thêm");
+            	JButton xoa  = new JButton("Xóa");
+            	JButton sua = new JButton("Sửa");
+            	JButton timkiem = new JButton("Tìm Kiếm");
+            	JPanel chucnang = new JPanel(new FlowLayout());
+            	chucnang.add(them);
+            	chucnang.add(xoa);
+            	chucnang.add(sua);
+            	chucnang.add(timkiem);
+            	chucnang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                rightPanel.add(chucnang);
+                
+                JLabel jlb_madv = new JLabel("Mã dịch vụ: ");
+                JTextField jtf_madv = new JTextField();
+                jlb_madv.setFont(f);
+                
+                JLabel jlb_tendv = new JLabel("Tên dịch vụ: ");
+                JTextField jtf_tendv = new JTextField();
+                jlb_tendv.setFont(f);
+                
+                JLabel jlb_giadv = new JLabel("Giá dịch vụ: ");
+                JTextField jtf_giadv = new JTextField();
+                jlb_giadv.setFont(f);
+                
+                JLabel jlb_thoigian = new JLabel("Thời gian dịch vụ: ");
+                JTextField jtf_thoigian = new JTextField();
+                jlb_thoigian.setFont(f);
+                
+                JLabel jlb_mota = new JLabel("Mô tả dịch vụ: ");
+                JTextField jtf_mota = new JTextField();
+                jlb_mota.setFont(f);
+                
+                JLabel jlb_img = new JLabel("Nguồn hình ảnh: ");
+                JTextField jtf_img = new JTextField();
+                jlb_img.setFont(f);
+                
+                JPanel nhapLieu = new JPanel(null);
+                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 100);
+                nhapLieu.setBackground(Color.white);
+                
+                jlb_madv.setBounds(10, 0, 120, 30);
+                jtf_madv.setBounds(150, 0, 150, 30);
+                jlb_tendv.setBounds(410,0,120,30);
+                jtf_tendv.setBounds(550,0,150,30);
+                jlb_giadv.setBounds(810,0,120,30);
+                jtf_giadv.setBounds(950,0,150,30);
+                
+                jlb_thoigian.setBounds(10, 60, 150, 30);
+                jtf_thoigian.setBounds(150, 60, 150, 30);
+                jlb_mota.setBounds(410,60,150,30);
+                jtf_mota.setBounds(550,60,150,30);
+                jlb_img.setBounds(810,60,150,30);
+                jtf_img.setBounds(950,60,150,30);
+                
+                nhapLieu.add(jlb_madv);
+                nhapLieu.add(jtf_madv);
+                nhapLieu.add(jlb_tendv);
+                nhapLieu.add(jtf_tendv);
+                nhapLieu.add(jlb_giadv);
+                nhapLieu.add(jtf_giadv);
+                nhapLieu.add(jlb_thoigian);
+                nhapLieu.add(jtf_thoigian);
+                nhapLieu.add(jlb_mota);
+                nhapLieu.add(jtf_mota);
+                nhapLieu.add(jlb_img);
+                nhapLieu.add(jtf_img);
+                rightPanel.add(nhapLieu);
+                
+                DefaultTableModel model = new DefaultTableModel();
+                JTable bang = new JTable();
+                model.addColumn("Mã dịch vụ");
+                model.addColumn("Tên dịch vụ");
+                model.addColumn("Giá dịch vụ");
+                model.addColumn("Thời gian dịch vụ");
+                model.addColumn("Mô tả dịch vụ");
+                model.addColumn("Hình ảnh");
+                model.setRowCount(0);
+                for(int i = 0; i < ds.size();i++) {
+                	model.addRow(new Object[] {
+                			ds.get(i).getMaDichVu(),
+                			ds.get(i).getTenDichVu(),
+                			ds.get(i).getGiaDichVu(),
+                			ds.get(i).getThoiGian(),
+                			ds.get(i).getMoTa(),
+                			ds.get(i).getHinhAnh() 
+                	});
+                }
+                bang.setModel(model);
+                bang.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						int i = bang.getSelectedRow();
+						if(i >= 0) {
+							jtf_madv.setText(model.getValueAt(i, 0).toString());
+							jtf_tendv.setText(model.getValueAt(i, 1).toString());
+							jtf_giadv.setText(model.getValueAt(i, 2).toString());
+							jtf_thoigian.setText(model.getValueAt(i, 3).toString());
+							jtf_mota.setText(model.getValueAt(i, 4).toString());
+							jtf_img.setText(model.getValueAt(i, 5).toString());
+						}
+					}
+				});
+                them.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(jtf_madv.getText().trim().equals("") || jtf_tendv.getText().trim().equals("") || jtf_giadv.getText().trim().equals("") ||
+							jtf_thoigian.getText().trim().equals("") || jtf_mota.getText().trim().equals("") || jtf_img.getText().trim().equals("")) {
+							JOptionPane.showMessageDialog(rightPanel, "Thông tin không được để trống","Error",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						else {
+							BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+							String madv = jtf_madv.getText().trim();
+							String tendv = jtf_tendv.getText().trim();
+							long giadv = Long.parseLong(jtf_giadv.getText().trim());
+							int thoigian = Integer.parseInt(jtf_thoigian.getText().trim());
+							String mota = jtf_mota.getText().trim();
+							String hinhanh = jtf_img.getText().trim();
+							dichVu dv = new dichVu(madv, tendv, giadv, thoigian, mota, hinhanh);
+							if(bllqlds.themDV(dv) == true) {
+								model.addRow(new Object[] {madv, tendv, giadv, thoigian, mota, hinhanh});
+								JOptionPane.showMessageDialog(rightPanel, "Thêm dịch vụ thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+								
+							}
+							
+							jtf_madv.setText("");jtf_tendv.setText("");jtf_giadv.setText("");
+							jtf_thoigian.setText("");jtf_mota.setText("");jtf_img.setText("");
+						}
+						
+					}
+				});
+                xoa.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(jtf_madv.getText().trim().equals("")) {
+							JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã dịch vụ cần xóa");
+							return;
+						}
+						else {
+							String madv = jtf_madv.getText().trim();
+							BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+							if(bllqlds.xoaDV(madv)==true) {
+								JOptionPane.showMessageDialog(rightPanel, "Xóa dịch vụ thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+							else {
+								JOptionPane.showMessageDialog(rightPanel, "Xóa dịch vụ không thành công","Error",JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+					}
+				});
+                sua.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(jtf_madv.getText().trim().equals("") || jtf_tendv.getText().trim().equals("") || jtf_giadv.getText().trim().equals("") ||
+								jtf_thoigian.getText().trim().equals("") || jtf_mota.getText().trim().equals("") || jtf_img.getText().trim().equals("")) {
+								JOptionPane.showMessageDialog(rightPanel, "Thông tin không được để trống","Error",JOptionPane.ERROR_MESSAGE);
+								return;
+						}
+						else {
+							BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+							String madv = jtf_madv.getText().trim();
+							String tendv = jtf_tendv.getText().trim();
+							long giadv = Long.parseLong(jtf_giadv.getText().trim());
+							int thoigian = Integer.parseInt(jtf_thoigian.getText().trim());
+							String mota = jtf_mota.getText().trim();
+							String hinhanh = jtf_img.getText().trim();
+							dichVu dv = new dichVu(madv, tendv, giadv, thoigian, mota, hinhanh);
+							if(bllqlds.suaDV(dv)==true) {
+								JOptionPane.showMessageDialog(rightPanel, "Sửa dịch vụ thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+								for(int i = 0;i < model.getRowCount();i++) {
+									if(model.getValueAt(i,0).equals(madv)) {
+										model.setValueAt(tendv, i, 1);
+										model.setValueAt(giadv, i, 2);
+										model.setValueAt(thoigian, i, 3);
+										model.setValueAt(mota, i, 4);
+										model.setValueAt(hinhanh, i, 5);
+										break;
+									}
+								}
+							}
+							else {
+								JOptionPane.showMessageDialog(rightPanel, "Sửa dịch vụ thất bại","Error",JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+					}
+				});
+                timkiem.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						model.setRowCount(0);
+						String madv = jtf_madv.getText().trim();
+						if(madv.isEmpty()) {
+							for(int i = 0; i < ds.size();i++) {
+								model.addRow(new Object[] {
+									ds.get(i).getMaDichVu(),ds.get(i).getTenDichVu(),ds.get(i).getGiaDichVu(),
+									ds.get(i).getThoiGian(),ds.get(i).getMoTa(),ds.get(i).getHinhAnh()
+								});
+							}
+						}
+						else {
+							BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+							ArrayList<dichVu> ds = bllqlds.timKiemDV(madv);
+							for(dichVu dv : ds) {
+								model.addRow(new Object[] {
+									dv.getMaDichVu(),dv.getTenDichVu(),dv.getGiaDichVu(),
+									dv.getThoiGian(),dv.getMoTa(),dv.getHinhAnh()
+								});
+							}
+						}
+					}
+				});
+                renderer rd = new renderer();
+                bang.getColumnModel().getColumn(5).setCellRenderer(rd);
+                JScrollPane scrollPane = new JScrollPane();
+                scrollPane.setViewportView(bang);
+                bang.setRowHeight(100);
+                scrollPane.setBounds(5, 350, rightPanel.getWidth()-5, rightPanel.getHeight()-420);
+                rightPanel.add(scrollPane);
+            }
+          
+            public void QuanLyBangNhanVien(ArrayList<NhanVien> ds) {
+            	xoaHienThi(rightPanel);
+            	
+            	Font f = new Font("Times New Roman",Font.BOLD,17);
+            	JButton them = new JButton("Thêm");
+            	JButton xoa  = new JButton("Xóa");
+            	JButton sua = new JButton("Sửa");
+            	JButton timkiem = new JButton("Tìm Kiếm");
+            	JPanel chucnang = new JPanel(new FlowLayout());
+            	chucnang.add(them);
+            	chucnang.add(xoa);
+            	chucnang.add(sua);
+            	chucnang.add(timkiem);
+            	chucnang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                rightPanel.add(chucnang);
+                
+                JLabel jlb_manv = new JLabel("Mã nhân viên: ");
+                jtf_manv = new JTextField();
+                jlb_manv.setFont(f);
+                
+                JLabel jlb_hoten = new JLabel("Họ và tên: ");
+                jtf_hoten = new JTextField();
+                jlb_hoten.setFont(f);
+                
+                JLabel jlb_gioitinh = new JLabel("Giới tính: ");
+                JRadioButton male = new JRadioButton("Nam");
+                JRadioButton female = new JRadioButton("Nữ");
+                jlb_gioitinh.setFont(f);
+                male.setFont(f);
+                female.setFont(f);
+                btngr = new ButtonGroup();
+                btngr.add(male);
+                btngr.add(female);
+                String gioitinh = "";
+                if(male.isSelected()) {
+					gioitinh = "Nam";
+				}else if(female.isSelected()) {
+					gioitinh = "Nữ";
+				}
+                
+                JLabel jlb_date = new JLabel("Ngày sinh: ");
+                jtf_date = new JTextField();
+                jlb_date.setFont(f);
+                
+                
+                JLabel jlb_sdt = new JLabel("Số điện thoại: ");
+                jtf_sdt = new JTextField();
+                jlb_sdt.setFont(f);
+                
+                JLabel jlb_cccd = new JLabel("Căn cước: ");
+                jtf_cccd = new JTextField();
+                jlb_cccd.setFont(f);
+                
+                JLabel jlb_macoso = new JLabel("Mã cơ sở: ");
+                jtf_macoso = new JTextField();
+                jlb_macoso.setFont(f);
+                
+                JLabel jlb_vaitro = new JLabel("Vai trò: ");
+                jtf_vaitro = new JTextField();
+                jlb_vaitro.setFont(f);
+                
+                JLabel jlb_luong = new JLabel("Lương: ");
+                jtf_luong = new JTextField();
+                jlb_luong.setFont(f);
+                
+                JPanel nhapLieu = new JPanel(null);
+                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 150);
+                nhapLieu.setBackground(Color.WHITE);
+
+                jlb_manv.setBounds(10, 0, 120, 30); 
+                jtf_manv.setBounds(130, 0, 120, 30); 
+                jlb_hoten.setBounds(280, 0, 120, 30); 
+                jtf_hoten.setBounds(380, 0, 120, 30); 
+                jlb_gioitinh.setBounds(530, 0, 90, 30);
+                male.setBounds(630, 0, 70, 30); 
+                female.setBounds(720, 0, 60, 30); 
+                jlb_date.setBounds(790, 0, 90, 30); 
+                jtf_date.setBounds(890,0,120,30); 
+                
+                jlb_sdt.setBounds(10,50,120,30); 
+                jtf_sdt.setBounds(130, 50, 120, 30);
+                jlb_cccd.setBounds(280,50,120,30);
+                jtf_cccd.setBounds(380,50,120,30);
+                jlb_macoso.setBounds(530,50,90,30);
+                jtf_macoso.setBounds(630,50,120,30);
+                jlb_vaitro.setBounds(790,50,90,30);
+                jtf_vaitro.setBounds(890,50,120,30);
+                
+                jlb_luong.setBounds(10,100,90,30);
+                jtf_luong.setBounds(130,100,120,30);
+                
+                nhapLieu.add(jlb_manv);
+                nhapLieu.add(jtf_manv);
+                nhapLieu.add(jlb_hoten);
+                nhapLieu.add(jtf_hoten);
+                nhapLieu.add(jlb_gioitinh);
+                nhapLieu.add(male);
+                nhapLieu.add(female);
+                nhapLieu.add(jlb_date);
+                nhapLieu.add(jtf_date);
+                nhapLieu.add(jlb_sdt);
+                nhapLieu.add(jtf_sdt);
+                nhapLieu.add(jlb_cccd);
+                nhapLieu.add(jtf_cccd);
+                nhapLieu.add(jlb_macoso);
+                nhapLieu.add(jtf_macoso);
+                nhapLieu.add(jlb_vaitro);
+                nhapLieu.add(jtf_vaitro);
+                nhapLieu.add(jlb_luong);
+                nhapLieu.add(jtf_luong);
+                
+                rightPanel.add(nhapLieu);
+                
+                DefaultTableModel model = new DefaultTableModel();
+                JTable bang = new JTable();
+                model.addColumn("Mã nhân viên");
+                model.addColumn("Họ và tên");
+                model.addColumn("Giới tính");
+                model.addColumn("Ngày sinh");
+                model.addColumn("Số điện thoại");
+                model.addColumn("Số căn cước");
+                model.addColumn("Mã cơ sở");
+                model.addColumn("Vai trò");
+                model.addColumn("Lương");
+                
+                model.setRowCount(0);
+                for(int i = 0; i < ds.size();i++) {
+                	model.addRow(new Object[] {
+                		ds.get(i).getMaNhanVien(),ds.get(i).getHoten(),ds.get(i).getGioitinh(),ds.get(i).getNgaysinh(),
+                		ds.get(i).getSdt(),ds.get(i).getSocccd(),ds.get(i).getMacoso(),ds.get(i).getVaitro(),
+                		ds.get(i).getLuong()
+                	});
+                }
+                bang.setModel(model);
+                bang.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						
+						int i = bang.getSelectedRow();
+						if(i >= 0) {
+							jtf_manv.setText(model.getValueAt(i, 0).toString());
+							jtf_hoten.setText(model.getValueAt(i, 1).toString());
+							String gioitinh = (model.getValueAt(i, 2).toString());
+							if(gioitinh.equals("Nam")) {
+								male.setSelected(true);
+							}else {
+								female.setSelected(true);
+							}
+							jtf_date.setText(model.getValueAt(i, 3).toString());
+							jtf_sdt.setText(model.getValueAt(i, 4).toString());
+							jtf_cccd.setText(model.getValueAt(i, 5).toString());
+							jtf_macoso.setText(model.getValueAt(i, 6).toString());
+							jtf_vaitro.setText(model.getValueAt(i, 7).toString());
+							jtf_luong.setText(model.getValueAt(i, 8).toString());
+						}
+					}
+					
+				});
+                
+                them.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                    		String dateString = isValidDate(jtf_date.getText());
+                            if (jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
+                                JOptionPane.showMessageDialog(rightPanel, "Thông tin không được để trống", "Error", JOptionPane.ERROR_MESSAGE);
+                                return;
+                               
+                            } else if(!dateString.equals("Ngày sinh hợp lệ")) {
+                            	JOptionPane.showMessageDialog(rightPanel, "Ngày sinh không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            else {
+                                // Xử lý thêm nhân viên vào cơ sở dữ liệu
+                                BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+                                Date date = Date.valueOf(jtf_date.getText());
+                                String ma = jtf_manv.getText().trim();
+                                String ten = jtf_hoten.getText().trim();
+                                String sdt = jtf_sdt.getText().trim();
+                                String cccd = jtf_cccd.getText().trim();
+                                String macoso = jtf_macoso.getText().trim();
+                                String gioitinh = male.isSelected() ? "Nam" : "Nữ";
+                                String vaitro = jtf_vaitro.getText().trim();
+                                long luong = Long.parseLong(jtf_luong.getText());
+                                NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong);
+                                if (bllqlds.themNV(nv) == true) {
+                                    model.addRow(new Object[]{ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong});
+                                    JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                                else {
+                                	JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                                jtf_manv.setText("");jtf_hoten.setText("");jtf_sdt.setText("");jtf_cccd.setText("");
+                                jtf_macoso.setText("");btngr.clearSelection();jtf_vaitro.setText("");jtf_luong.setText("");
+                                jtf_date.setText("");
+                                
+                            }
+                        
+                    }
+                });
+                xoa.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(jtf_manv.getText().equals("")) {
+							JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã nhân viên cần xóa","Error",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						else {
+							BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+							if(bllqlds.xoaNV(jtf_manv.getText())) {
+								for(int i = 0;i < model.getRowCount(); i++) {
+									if(model.getValueAt(i, 0).equals(jtf_manv.getText())) {
+										model.removeRow(i);
+										JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+										return;
+									}
+								}
+							}
+							else {
+								JOptionPane.showMessageDialog(rightPanel, "Mã nhân viên không tồn tại","Error",JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+					}
+				});
+                sua.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(jtf_manv.getText().trim().equals("") || jtf_macoso.getText().trim().equals("") || jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
+							JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin","Error",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						else {
+							BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+							String ngaysinh = jtf_date.getText();
+							Date date = Date.valueOf(ngaysinh);
+                            String ma = jtf_manv.getText().trim();
+                            String ten = jtf_hoten.getText().trim();
+                            String sdt = jtf_sdt.getText().trim();
+                            String cccd = jtf_cccd.getText().trim();
+                            String macoso = jtf_macoso.getText().trim();
+                            String gioitinh = male.isSelected() ? "Nam" : "Nữ";
+                            String vaitro = jtf_vaitro.getText().trim();
+                            long luong = Long.parseLong(jtf_luong.getText());
+							NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong);
+							if(bllqlds.suaThongTinNV(nv)== true) {
+								JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin nhân viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+								for(int i = 0;i < model.getRowCount();i++) {
+									if(model.getValueAt(i, 0).equals(ma)) {
+										model.setValueAt(ten, i, 1);
+										model.setValueAt(gioitinh, i, 2);
+										model.setValueAt(ngaysinh, i, 3);
+										model.setValueAt(sdt, i, 4);
+										model.setValueAt(cccd, i, 5);
+										model.setValueAt(macoso, i, 6);
+										model.setValueAt(vaitro, i, 7);
+										model.setValueAt(luong, i, 8);
+										break;
+									}
+								}
+							}
+							else {
+								JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin nhân viên thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+				});
+                timkiem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        model.setRowCount(0); // Xóa dữ liệu cũ trong bảng
+                        
+                        String manv = jtf_manv.getText().trim(); // Lấy mã nhân viên cần tìm kiếm từ TextField
+                        
+                        // Kiểm tra xem mã nhân viên có rỗng không
+                        if (manv.isEmpty()) {
+                            // Nếu mã nhân viên rỗng, hiển thị tất cả các nhân viên trong danh sách
+                            for (int i = 0; i < ds.size(); i++) {
+                                model.addRow(new Object[] {
+                                    ds.get(i).getMaNhanVien(), ds.get(i).getHoten(), ds.get(i).getGioitinh(),
+                                    ds.get(i).getNgaysinh(), ds.get(i).getSdt(), ds.get(i).getSocccd(),
+                                    ds.get(i).getMacoso(), ds.get(i).getVaitro(), ds.get(i).getLuong()
+                                });
+                            }
+                        } else {
+                            // Nếu mã nhân viên không rỗng, thực hiện tìm kiếm
+                            BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+                            ArrayList<NhanVien> dsNhanVien = bllqlds.timKiemNV(manv);
+                            
+                            // Hiển thị kết quả tìm kiếm trên bảng
+                            for (NhanVien nv : dsNhanVien) {
+                                model.addRow(new Object[] {
+                                    nv.getMaNhanVien(), nv.getHoten(), nv.getGioitinh(), nv.getNgaysinh(),
+                                    nv.getSdt(), nv.getSocccd(), nv.getMacoso(), nv.getVaitro(), nv.getLuong()
+                                });
+                            }
+                        }
+                    }
+                });
+
+                JScrollPane scrollPane = new JScrollPane();
+                scrollPane.setViewportView(bang);
+                scrollPane.setBounds(5, 350, rightPanel.getWidth()-20, rightPanel.getHeight()-420);
+                rightPanel.add(scrollPane);
+            }
+            
+            public String isValidDate(String inputdate) {
+            	DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            	try {
+					LocalDate date = LocalDate.parse(inputdate,df);
+					int day = date.getDayOfMonth();
+					int month = date.getMonthValue();
+					int year = date.getYear();
+					boolean isLeapYear = Year.of(year).isLeap();
+					int maxDayinMonth = 0;
+					
+						switch (month) {
+						case 2:
+							maxDayinMonth = isLeapYear ? 29 : 28;
+							break;
+						case 4,6,9,11:
+							maxDayinMonth = 30;
+							break;
+						default:
+							maxDayinMonth = 31;
+						}
+					
+					if(day >= 1 && day <= maxDayinMonth) {
+						return "Ngày sinh hợp lệ";
+					}
+					else {
+						return "Ngày sinh không hợp lệ";
+					}
+				} catch (Exception e) {
+					return "Ngày sinh không hợp lệ";
+				}
+            	
+            }
         });
+        
         rightPanel.add(rightTitle);
         rightPanel.add(chonDanhSachLabel);
         rightPanel.add(danhSachBox);

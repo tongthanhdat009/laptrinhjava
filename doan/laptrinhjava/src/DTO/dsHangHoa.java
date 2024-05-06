@@ -2,54 +2,35 @@ package DTO;
 import java.util.ArrayList;
 
 public class dsHangHoa {
-    ArrayList<hangHoa> dsHH;
+    public ArrayList<hangHoa> dsHangHoa;
     //hàm khởi tạo
     public dsHangHoa(){
-        this.dsHH = new ArrayList<>();
+        this.dsHangHoa = new ArrayList<hangHoa>();
     }
-    dsHangHoa(ArrayList<hangHoa> dsHangHoa){
-        this.dsHH = dsHangHoa;
+    public dsHangHoa(ArrayList<hangHoa> dsHangHoa){
+        this.dsHangHoa = dsHangHoa;
     }
     
     //hàm get&set
     public void setDsHangHoa(ArrayList<hangHoa> dsHangHoa){
-        this.dsHH = dsHangHoa;
+        this.dsHangHoa = dsHangHoa;
     }
     ArrayList<hangHoa> getDsHangHoa(){
-        return this.dsHH;
+        return this.dsHangHoa;
     }
 
     //hàm chức năng
     //thêm
-    void them(String maHangHoa, String loaiHangHoa, String tenHangHoa){
-        hangHoa hang = new hangHoa();
-        try{
-            hang.setMaHangHoa(maHangHoa);
-        }
-        catch(IllegalArgumentException e){
-            System.out.print("Ma hang hoa khong hop le!"); //sửa cho giao diện hiện thông báo
-        }
-        try{
-            hang.setLoaiHangHoa(loaiHangHoa);
-        }
-        catch(IllegalArgumentException e){
-            System.out.print("Loai hang hoa khong hop le!"); //sửa cho giao diện hiện thông báo
-        }
-        try{
-            hang.setTenHangHoa(tenHangHoa);
-        }
-        catch(IllegalArgumentException e){
-            System.out.print("Ten hang hoa khong hop le!"); //sửa cho giao diện hiện thông báo
-        }
-        dsHH.add(hang);
+    public void them(hangHoa hang){
+        this.dsHangHoa.add(hang);
     }
     //sửa
-    void sua(String maHangHoa, String newLoaiHangHoa, String newTenHangHoa){
-        for(hangHoa i: dsHH){
+    public void sua(String maHangHoa, String newLoaiHangHoa, String newTenHangHoa){
+        for(hangHoa i: dsHangHoa){
             if(i.getMaHangHoa().equals(maHangHoa)){
                 try{
                     i.setLoaiHangHoa(newLoaiHangHoa);
-                    i.setTenHangHoa(newTenHangHoa);
+                    i.setTenLoaiHangHoa(newTenHangHoa);
                     break;
                 }
                 catch (IllegalArgumentException e){
@@ -59,16 +40,12 @@ public class dsHangHoa {
         }
     }
     //xóa
-    void xoa(String maHangHoa){
-        for(hangHoa i : dsHH){
+    public void xoa(String maHangHoa){
+        for(hangHoa i : dsHangHoa){
             if(i.getMaHangHoa().equals(maHangHoa)){
-                dsHH.remove(i);
+                dsHangHoa.remove(i);
                 break;
             }
         }
-    }
-    public void them(hangHoa hh) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'them'");
     }
 }

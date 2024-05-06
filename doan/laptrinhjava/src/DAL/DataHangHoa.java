@@ -1,15 +1,17 @@
 package DAL;
 
 import java.sql.*;
-
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 import DTO.dsHangHoa;
 import DTO.hangHoa;
 
 public class DataHangHoa {
+    private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
     private String userName = "sa"; String password= "123456";
+    public ArrayList<String> tenCot = new ArrayList<String>();
+    public dsHangHoa ds = new dsHangHoa();
     public DataHangHoa()
     {
         try{
@@ -19,111 +21,134 @@ public class DataHangHoa {
         }
     }
 
-    //xóa hàng hóa
-    public boolean xoaHangHoa(String MaHangHoa) throws SQLException{
-        Connection con = DriverManager.getConnection(dbUrl, userName, password);
-        Statement stmt= con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT MaHangHoa FROM HangHoa");
-        while(rs.next()){
-            if(MaHangHoa.equals(rs.getString("MaHangHoa"))){
-                stmt.executeUpdate("DELETE FROM HangHoa WHERE MaHangHoa = '"+MaHangHoa+"'");
-                return true;
+    // lấy danh sách hàng hóa
+    public dsHangHoa layDanhSachHangHoa(){
+        try{
+            Connection con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt= con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM HangHoa");
+            while(rs.next()){
+                hangHoa hh = new hangHoa();
+                hh.setMaHangHoa(rs.getString("MaHangHoa"));
+                hh.setLoaiHangHoa(rs.getString("LoaiHangHoa"));
+                hh.setTenLoaiHangHoa(rs.getString("TenLoaiHangHoa"));
+                hh.setHinhAnh(rs.getString("HinhAnh"));
+                hh.setGiaNhap(rs.getLong("GiaNhap"));
+                ds.them(hh);
             }
-            else 
-                return false;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return ds;
+    }
+    
+    public ArrayList<String> getTenCot(){
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM HangHoa");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for(int i=1; i<=rsmd.getColumnCount();i++){
+                this.tenCot.add(rsmd.getColumnName(i));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return this.tenCot; 
+    }
 
+    //xóa hàng hóa
+    public boolean xoaHangHoa(String maHH) //test thành công
+    {
+        String truyVan = "DELETE FROM HangHoa Where MaHangHoa = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maHH);
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
         }
         return false;
     }
 
     //thêm hàng hóa
-    public boolean themHangHoa(String LoaiHangHoa, String TenLoaiHangHoa, String HinhAnh, int GiaNhap) throws SQLException{
-        Connection con = DriverManager.getConnection(dbUrl, userName, password);
-        Statement stmt= con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT MaHangHoa FROM HangHoa");
-        String MaHangHoa;
-        int max = 0;
-        while(rs.next()){
-            String ma = rs.getString("MaHangHoa");
-            String maMoi = ma.substring(2, 5);
-            int maMoiInt = Integer.parseInt(maMoi);
-            if(maMoiInt > max){
-                max = maMoiInt;
-            }
+    public boolean themHangHoa(hangHoa hh){
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            String sql = "INSERT INTO HangHoa (MaHangHoa,LoaiHangHoa,TenLoaiHangHoa,HinhAnh,GiaNhap) VALUES(?,?,?,?,?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1,hh.getMaHangHoa());            
+            preparedStatement.setString(2,hh.getLoaiHangHoa());            
+            preparedStatement.setString(3,hh.getTenLoaiHangHoa());            
+            preparedStatement.setString(4,hh.getHinhAnh());            
+            preparedStatement.setLong(5,hh.getGiaNhap());            
+            if (preparedStatement.executeUpdate() > 0)  return true;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-        max++;
-        MaHangHoa = "HH" + max;
-        if(LoaiHangHoa.equals("")){
-            LoaiHangHoa = null;
-        }
-        if(TenLoaiHangHoa.equals("")){
-            TenLoaiHangHoa = null;
-        }
-        if(HinhAnh.equals("")) {
-            HinhAnh = "doan/src/laptrinhjava/src/asset/img/hanghoa/default-product.jpg";
-        }
-        if(GiaNhap == 0){
-            GiaNhap = 0;
-        }
-        stmt.executeUpdate("INSERT INTO HangHoa VALUES ('"+MaHangHoa+"', N'"+LoaiHangHoa+"', N'"+TenLoaiHangHoa+"', '"+HinhAnh+"', "+GiaNhap+")");
-        return true;
+        return false;
     }
     
+    public int layMaHangHoaMoi(){
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MaHangHoa FROM HangHoa");
+            int max = 0;
+            while(rs.next()){
+                String maHH = rs.getString("MaHangHoa");
+                maHH = maHH.substring(2);
+                if(Integer.parseInt(maHH) > max){
+                    max = Integer.parseInt(maHH);
+                }
+            }
+            return max;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
     //sửa hàng hóa
-    public boolean suaHangHoa(String MaHangHoa, String LoaiHangHoa, String TenLoaiHangHoa, String HinhAnh, int GiaNhap) throws SQLException{
-        Connection con = DriverManager.getConnection(dbUrl, userName, password);
-        PreparedStatement preparedStatement = con.prepareStatement("UPDATE HangHoa SET LoaiHangHoa = ?, TenLoaiHangHoa = ?, HinhAnh = ?, GiaNhap = ? WHERE MaHangHoa = ?");
-        preparedStatement.setString(1, LoaiHangHoa);
-        preparedStatement.setString(2, TenLoaiHangHoa);
-        preparedStatement.setString(3, HinhAnh);
-        preparedStatement.setInt(4, GiaNhap);
-        preparedStatement.setString(5, MaHangHoa);
-        if(preparedStatement.executeUpdate() > 0) return true;
-        return false;
-    }   
+    public boolean suaHangHoa(hangHoa hh){
 
-    // lấy danh sách hàng hóa
-    public dsHangHoa layDanhSachHangHoa() throws SQLException{
-        Connection con = DriverManager.getConnection(dbUrl, userName, password);
-        Statement stmt= con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM HangHoa");
-        dsHangHoa ds = new dsHangHoa();
-        while(rs.next()){
-            hangHoa hh = new hangHoa();
-            hh.setMaHangHoa(rs.getString("MaHangHoa"));
-            hh.setLoaiHangHoa(rs.getString("LoaiHangHoa"));
-            hh.setTenHangHoa(rs.getString("TenLoaiHangHoa"));
-            hh.setHinhAnh(rs.getString("HinhAnh"));
-            hh.setGiaNhap(rs.getInt("GiaNhap"));
-            ds.them(hh);
-        }
-        return ds;
-    }
-    //tìm kiếm hàng hóa
-    public timKiemHangHoa(hangHoa hh){
-        Connection con = DriverManager.getConnection(dbUrl, userName, password);
-        Statement stmt= con.createStatement();
-        String sql = "SELECT * FROM HangHoa WHERE ";
-        ResultSet rs = stmt.executeQuery(sql);
-
-        if(!(hh.getMaHangHoa().equals("NULL"))){
-            sql += "MaHangHoa = ? AND ";
-        }
-        if(!(hh.getLoaiHangHoa().equals("NULL"))){
-            sql += "LoaiHangHoa = ? AND ";
-        }
-        if (!(hh.getTenHangHoa().equals("NULL"))){
-            sql += "TenLoaiHangHoa = ? AND ";{
-        }
-        if(!(hh.get))
-
-        
-    }
-    public static void main(String[] args){
-        DataHangHoa dataHangHoa = new DataHangHoa();
-        try {
+        try (Connection con = DriverManager.getConnection(dbUrl, userName, password)) {
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE HangHoa SET MaHangHoa = ?, LoaiHangHoa = ?, TenLoaiHangHoa= ?, HinhAnh = ?, GiaNhap = ? WHERE MaHangHoa = ?");
+            preparedStatement.setString(1, hh.getMaHangHoa());
+            preparedStatement.setString(2, hh.getLoaiHangHoa());
+            preparedStatement.setString(3, hh.getTenLoaiHangHoa());
+            preparedStatement.setString(4, hh.getHinhAnh());
+            preparedStatement.setLong(5, hh.getGiaNhap());
+            preparedStatement.setString(6, hh.getMaHangHoa());
+            if(preparedStatement.executeUpdate() > 0) return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+        return false;
+    }   
+    public boolean timKiemHH(String maHH) //test rồi
+    {
+        String truyVan = "SELECT * FROM HangHoa Where MaHangHoa = ?";
+        if(maHH.equals("")){
+            return false;
+        }
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maHH);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }    
+    //tìm kiếm hàng hóa
+
 }

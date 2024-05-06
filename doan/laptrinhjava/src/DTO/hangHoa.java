@@ -5,14 +5,14 @@ public class hangHoa {
     
     private String maHangHoa;
     private String loaiHangHoa;
-    private String tenHangHoa;
+    private String tenLoaiHangHoa;
     private String hinhAnh;
     private long giaNhap;
     //hàm khởi tạo
-    public hangHoa(String maHangHoa, String loaiHangHoa, String tenHangHoa, String hinhAnh, long giaNhap){
+    public hangHoa(String maHangHoa, String loaiHangHoa, String tenLoaiHangHoa, String hinhAnh, long giaNhap){
         setMaHangHoa(maHangHoa);
         setLoaiHangHoa(loaiHangHoa);
-        setTenHangHoa(tenHangHoa);
+        setTenLoaiHangHoa(tenLoaiHangHoa);
         setHinhAnh(hinhAnh);
         setGiaNhap(giaNhap);
     }
@@ -20,8 +20,8 @@ public class hangHoa {
     public hangHoa(){
         this.maHangHoa = "none";
         this.loaiHangHoa = "none";
-        this.tenHangHoa = "none";
-        this.hinhAnh = "doan/src/laptrinhjava/src/asset/img/hanghoa/default-product.jpg";
+        this.tenLoaiHangHoa = "none";
+        this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
         this.giaNhap = 0;
     }
 
@@ -30,26 +30,26 @@ public class hangHoa {
         if(!(maHangHoa.equals("")))
             this.maHangHoa = maHangHoa;
         else 
-            throw new IllegalArgumentException("Ma Hang Hoa Khong Hop Le!");
+            throw new IllegalArgumentException("Mã hàng hóa không hợp lệ!");
     }
     
     public void setLoaiHangHoa(String loaiHangHoa){
         if(!(loaiHangHoa.equals("")))
             this.loaiHangHoa = loaiHangHoa;
         else
-            throw new IllegalArgumentException("Loai Hang Hoa Khong Hop Le!");
+            throw new IllegalArgumentException("Loại hàng hóa không hợp lệ!");
     }
 
-    public void setTenHangHoa(String tenHangHoa){
-        if(!(tenHangHoa.equals("") && tenHangHoa.length()<=0))
-            this.tenHangHoa = tenHangHoa;
+    public void setTenLoaiHangHoa(String tenLoaiHangHoa){
+        if(!(tenLoaiHangHoa.equals("") && tenLoaiHangHoa.length()<=0))
+            this.tenLoaiHangHoa = tenLoaiHangHoa;
         else
-            throw new IllegalArgumentException("Ten Hang Hoa Khong Hop Le!");
+            throw new IllegalArgumentException("Tên loại hàng hóa không hợp lệ!");
     }
 
     public void setHinhAnh(String hinhAnh){
         if(hinhAnh.equals(""))
-            this.hinhAnh = "doan/src/laptrinhjava/src/asset/img/hanghoa/default-product.jpg";
+            this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
         else
             this.hinhAnh = hinhAnh;
     }
@@ -58,7 +58,7 @@ public class hangHoa {
         if(giaNhap >= 0)
             this.giaNhap = giaNhap;
         else
-            throw new IllegalArgumentException("Gia Nhap Khong Hop Le!");
+            throw new IllegalArgumentException("Giá nhập hàng hóa không hợp lệ!");
     }
 
     public String getMaHangHoa(){
@@ -67,36 +67,16 @@ public class hangHoa {
     public String getLoaiHangHoa(){
         return this.loaiHangHoa;
     }
-    public String getTenHangHoa(){
-        return this.tenHangHoa;
+    public String getTenLoaiHangHoa(){
+        return this.tenLoaiHangHoa;
     }
     public String getHinhAnh(){
         return this.hinhAnh;
     }
-    
-    public String toString(){
-        return this.maHangHoa + " " + this.loaiHangHoa +" " + this.tenHangHoa + " " + hinhAnh + " " + giaNhap;  
+    public long getGiaNhap(){
+        return this.giaNhap;
     }
-    // public void nhap(){ //test
-    //     Scanner in = new Scanner(System.in);
-    //     String newMaHangHoa = new String();
-    //     String newLoaiHangHoa = new String();
-    //     String newTenHangHoa = new String();
-    //     System.out.println("Nhap ma hang hoa: ");
-    //     newMaHangHoa = in.nextLine();
-    //     System.out.println("Nhap loai hang hoa: ");
-    //     newLoaiHangHoa = in.nextLine();
-    //     System.out.println("Nhap ten hang hoa: ");
-    //     newTenHangHoa = in.nextLine();
-    //     setLoaiHangHoa(newLoaiHangHoa);
-    //     setMaHangHoa(newMaHangHoa);
-    //     setTenHangHoa(newTenHangHoa);
-    //     System.out.print(newLoaiHangHoa + " " + newMaHangHoa + " " + newTenHangHoa);
-    //     in.close();
-    // }
-    // public static void main(String[] args){
-    //     hangHoa a = new hangHoa();
-    //     a.nhap();
-    // }
-    
+    public String toString(){
+        return this.maHangHoa + " " + this.loaiHangHoa +" " + this.tenLoaiHangHoa + " " + hinhAnh + " " + giaNhap;  
+    }
 }

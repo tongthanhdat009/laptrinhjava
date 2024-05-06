@@ -13,6 +13,7 @@ import DAL.DataCoSo;
 import DAL.DataHoaDon;
 import DAL.DataHoaDonChiTiet;
 import DTO.ChiTietHoaDon;
+import DAL.DataHangHoa;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
@@ -21,6 +22,8 @@ import DTO.HoiVien;
 import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
 import DTO.ThietBiCoSo;
+import DTO.dsHangHoa;
+import DTO.hangHoa;
 
 public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
@@ -31,6 +34,7 @@ public class BLLQuanLyDanhSach{
     private DataHoaDon dataHoaDon;
     private DataHoaDonChiTiet dataHoaDonChiTiet;
     private DataTinhDonGiaHoaDon dataTinhDonGiaHoaDon;
+    private DataHangHoa dataHangHoa;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
@@ -40,6 +44,7 @@ public class BLLQuanLyDanhSach{
         dataHoaDon = new DataHoaDon();
         dataHoaDonChiTiet = new DataHoaDonChiTiet();
         dataTinhDonGiaHoaDon = new DataTinhDonGiaHoaDon();
+        dataHangHoa = new DataHangHoa();
     }
     
     //danh sách hội viên
@@ -272,5 +277,33 @@ public class BLLQuanLyDanhSach{
         if(maHoaDon.equals("")) maHoaDon = "NULL";
         if(maHangHoa.equals("NULL")) maHangHoa = "NULL";
         return dataHoaDonChiTiet.timKiem(maHoaDon, maHangHoa);
+    }
+    //danh sách hàng hóa
+    public dsHangHoa layDsHangHoa(){
+        return dataHangHoa.layDanhSachHangHoa();
+    }
+    public ArrayList<String> layTenCotHangHoa(){
+        return dataHangHoa.getTenCot();
+    }
+    public int kiemTraMaHangHoa(){
+        return dataHangHoa.layMaHangHoaMoi()+1;
+    }
+    public int kiemTraGiaNhapHangHoa(String giaNhap){
+        if(!(giaNhap != null && giaNhap.matches("\\d{1,18}$")))
+            return -1;
+        else
+            return 1;
+    }
+    public boolean themHH(hangHoa hh){
+        return dataHangHoa.themHangHoa(hh);
+    }
+    public boolean xoaHangHoa(String maHH){
+        return dataHangHoa.xoaHangHoa(maHH);
+    }
+    public boolean timKiemTheoMaHH(String maHH){
+        return dataHangHoa.timKiemHH(maHH);
+    }
+    public boolean suaThongTinHH(hangHoa hh){
+        return dataHangHoa.suaHangHoa(hh);
     }
 }

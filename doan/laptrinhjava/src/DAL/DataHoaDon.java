@@ -28,7 +28,8 @@ public class DataHoaDon {
                 ma = ma.substring(2);
                 if(max < Integer.parseInt(ma)) max = Integer.parseInt(ma);
             }
-            return "HD"+max+1;
+            max+=1;
+            return "HD"+max;
         } catch (Exception e) {
             System.out.println(e);   
         }
@@ -64,7 +65,7 @@ public class DataHoaDon {
     }
     public boolean them(HoaDon hoaDon)
     {
-        String truyVan = "INSERT INTO HoaDon (MaHD, NgayXuatHD, TongTien, MaHoiVien, MaCoSo, TrangThai) VALUES (?, ?, ?, ?, ?, ?)";
+        String truyVan = "INSERT INTO HoaDon (MaHD, NgayXuatHD, TongTien, MaHV, MaCoSo, TrangThai) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
@@ -82,7 +83,7 @@ public class DataHoaDon {
     }
     public boolean sua(HoaDon hoaDon)
     {
-        String truyVan = "UPDATE HoaDon SET NgayXuatHoaDon = ?, MaHoiVien = ?, MaCoSo = ?, TrangThai = ? WHERE MaHD = ?";
+        String truyVan = "UPDATE HoaDon SET NgayXuatHD = ?, MaHV = ?, MaCoSo = ?, TrangThai = ? WHERE MaHD = ?";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
@@ -115,7 +116,7 @@ public class DataHoaDon {
     }
     public boolean suaTongTien(String maHoaDon, int tongTien)
     {
-        String truyVan = "UPDATE HoaDon SET TongTien = ? WHERE MaHoaDon = ?";
+        String truyVan = "UPDATE HoaDon SET TongTien = ? WHERE MaHD = ?";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
@@ -140,5 +141,20 @@ public class DataHoaDon {
             System.out.println(e);
         }
         return false;
+    }
+    public ArrayList<HoaDon> layHoaDonChuaDuyet()
+    {
+        ArrayList<HoaDon> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM HoaDon WHERE TrangThai = 0";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.add(new HoaDon(rs.getString(1),rs.getDate(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
     }
 }

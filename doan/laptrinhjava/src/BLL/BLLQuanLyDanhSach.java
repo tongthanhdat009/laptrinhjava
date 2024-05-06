@@ -233,9 +233,13 @@ public class BLLQuanLyDanhSach{
     {
         return dataHoaDonChiTiet.layDSHoaDon();
     }
+    public String layMaHoaDon()
+    {
+        return dataHoaDon.layMa();
+    }
     public String themHoaDon(Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
     {
-        String maHoaDon = dataHoaDon.layMa();
+        String maHoaDon = layMaHoaDon();
         if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
         HoaDon hoaDon = new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai);
         if(dataHoaDon.them(hoaDon) == true) return "Thành công";
@@ -253,12 +257,14 @@ public class BLLQuanLyDanhSach{
     public String suaHoaDon(String maHoaDon, Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
     {
         if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
-        if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon, 0, maHV, maCoSo, trangThai)) == true) return "Thành công";
+        if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai)) == true) return "Thành công";
         return "Mã hóa đơn không tồn tại";
     }
     public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
     {
+        System.out.println(maHoaDon);
         if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
+        if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
         if(soLuong <= 0) return "Số lượng không hợp lệ";
         // chưa kiểm tra mã hàng hóa
         if (dataHoaDonChiTiet.them(new ChiTietHoaDon(soLuong, maHoaDon, maHangHoa)) == false) return "Thất bại";
@@ -285,7 +291,7 @@ public class BLLQuanLyDanhSach{
     public ArrayList<ChiTietHoaDon> timKiemChiTietHoaDon(String maHoaDon, String maHangHoa)
     {
         if(maHoaDon.equals("")) maHoaDon = "NULL";
-        if(maHangHoa.equals("NULL")) maHangHoa = "NULL";
+        if(maHangHoa.equals("")) maHangHoa = "NULL";
         return dataHoaDonChiTiet.timKiem(maHoaDon, maHangHoa);
     }
     //danh sách hàng hóa

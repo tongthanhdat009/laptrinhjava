@@ -2,6 +2,7 @@ package GUI;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.microsoft.sqlserver.jdbc.osgi.Activator;
@@ -15,10 +16,12 @@ import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDT;
 import BLL.BLLThongKeDonHang;
 import DAL.DataCoSo;
+import DTO.ChiTietHoaDon;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DTOThongKeDonHang;
+import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
@@ -585,7 +588,7 @@ public class GUIAdmin{
         rightTitle.setBounds(450, 0, 1000,60);        
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Hàng hóa","Hàng hóa cơ sở","Hội viên cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở","Hội viên cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,100,30);
@@ -1710,7 +1713,16 @@ public class GUIAdmin{
                     QuanLyBangThietBiCoSo(ds);
                 }
                 else if(selectedOption.equals("Hóa đơn")){
-                    xoaHienThi(rightPanel);
+                    ArrayList<HoaDon> ds = new ArrayList<>();
+                    ds = bllQuanLyDanhSach.layDSHoaDon();
+                    Vector<String> dsCoSo = new Vector<>();
+                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+                    QuanLyHoaDon(ds, dsCoSo);
+                }
+                else if(selectedOption.equals("Chi tiết hóa đơn")){
+                    ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
+                    ds = bllQuanLyDanhSach.layDSChiTietHoaDon();
+                    QuanLyChiTietHoaDon(ds);
                 }
                 else if(selectedOption.equals("Hàng hóa cơ sở")){
                     xoaHienThi(rightPanel);
@@ -2087,6 +2099,349 @@ public class GUIAdmin{
                         
                     });
                 }
+            }
+            public void QuanLyHoaDon(ArrayList<HoaDon> ds, Vector<String> dsMaCoSo)
+            {
+                xoaHienThi(rightPanel);
+                JButton them = new JButton("Thêm");
+                JButton xoa = new JButton("Xóa");
+                JButton sua = new JButton("Sửa");
+                JButton timKiem = new JButton("Tìm Kiếm");
+                JPanel chucNang = new JPanel(new FlowLayout());
+                chucNang.add(them);
+                chucNang.add(xoa);
+                chucNang.add(sua);
+                chucNang.add(timKiem);
+                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                rightPanel.add(chucNang);
+
+                JPanel nhapLieu = new JPanel(null);
+                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-4, 70);
+                JLabel lbMaHoaDon = new JLabel("Mã hóa đơn: ");
+                JLabel lbNgayXuatHoaDon = new JLabel("Ngày xuất hóa đơn: ");
+                JLabel lbtongTien = new JLabel("Tổng tiền: ");
+                JLabel lbMaHV = new JLabel("Mã hội viên: ");
+                JLabel lbMaCoSO = new JLabel("Mã cơ sở: ");
+                JLabel lbTrangThai = new JLabel("Trạng thái: ");
+                JTextField tfMaHoaDon = new JTextField();
+                JTextField tfNgayXuatHoaDon = new JTextField();
+                JTextField tftongTien = new JTextField();
+                JTextField tfMaHV = new JTextField();
+                JComboBox cbMaCoSO = new JComboBox(dsMaCoSo);
+                JTextField tfTrangThai = new JTextField();
+                int x = 0;
+                lbMaHoaDon.setBounds(x,0,80,30); x+=80;
+                tfMaHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
+                lbNgayXuatHoaDon.setBounds(x+50, 0, 120, 30); x+=170;
+                tfNgayXuatHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
+                lbtongTien.setBounds(x+50,0,70,30); x+=120;
+                tftongTien.setBounds(x+10, 0, 100, 30); x+=110;
+                lbMaHV.setBounds(x+50, 0, 80, 30); x+=130;
+                tfMaHV.setBounds(x+10, 0, 100, 30); x+=110;
+                lbMaCoSO.setBounds(x+50, 0, 70, 30); x+=120;
+                cbMaCoSO.setBounds(x+10, 0, 100, 30); x+=110;
+                lbTrangThai.setBounds(450, 30, 80, 35);
+                JRadioButton daduyet = new JRadioButton("Đã duyệt");
+                daduyet.setBounds(540, 30, 100, 35);
+                JRadioButton chuaduyet = new JRadioButton("Chưa duyệt");
+                chuaduyet.setBounds(650, 30, 100, 35);
+                ButtonGroup bg = new ButtonGroup();
+                bg.add(daduyet);
+                bg.add(chuaduyet);
+
+                nhapLieu.add(lbMaHoaDon);
+                nhapLieu.add(tfMaHoaDon);
+                nhapLieu.add(lbNgayXuatHoaDon);
+                nhapLieu.add(tfNgayXuatHoaDon);
+                nhapLieu.add(lbtongTien);
+                nhapLieu.add(tftongTien);
+                nhapLieu.add(lbMaHV);
+                nhapLieu.add(tfMaHV);
+                nhapLieu.add(lbMaCoSO);
+                nhapLieu.add(cbMaCoSO);
+                nhapLieu.add(lbTrangThai);
+                nhapLieu.add(daduyet);
+                nhapLieu.add(chuaduyet);
+                rightPanel.add(nhapLieu);
+
+                JTable bang = new JTable();
+                DefaultTableModel model = new DefaultTableModel();
+                bang.setModel(model);
+                model.addColumn("Mã hóa đơn");
+                model.addColumn("Ngày xuất hóa đơn");
+                model.addColumn("Tổng tiền");
+                model.addColumn("Mã hội viên");
+                model.addColumn("Mã cơ sở");
+                model.addColumn("Trạng thái");
+                for(int i=0;i<ds.size();i++)
+                {
+                    String trangThai;
+                    if(ds.get(i).getTrangThai().trim().equals("1")) trangThai = "Đã duyệt";
+                    else trangThai = "Chưa duyệt";
+                    System.out.println(ds.get(i).getTrangThai());
+                    model.addRow(new Object[]{ds.get(i).getMaHoaDon(),ds.get(i).getNgayXuatHoaDon(),ds.get(i).getTongTien(),ds.get(i).getMaHoiVien(),ds.get(i).getMaCoSo(),trangThai});
+                }
+                bang.addMouseListener(new MouseAdapter(){
+                    public void mouseClicked(MouseEvent e)
+                    {
+                        int i = bang.getSelectedRow();
+                        if(i>=0)
+                        {
+                            tfMaHoaDon.setText(model.getValueAt(i, 0).toString());
+                            tfNgayXuatHoaDon.setText(model.getValueAt(i, 1).toString());
+                            tftongTien.setText(model.getValueAt(i, 2).toString());
+                            tfMaHV.setText(model.getValueAt(i, 3).toString());
+                            cbMaCoSO.setSelectedItem(model.getValueAt(i, 4).toString());
+                            if(model.getValueAt(i, 5) == "Đã duyệt") daduyet.setSelected(true);
+                            else chuaduyet.setSelected(true);
+                        }
+                    }
+                });
+                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                them.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(!tfMaHoaDon.getText().equals("")|| !tftongTien.getText().equals("")) JOptionPane.showMessageDialog(rightPanel, "Không cần nhập mã hóa đơn và tổng tiền");
+                        if(tfMaHV.getText().equals("")||tfNgayXuatHoaDon.getText().equals("")||cbMaCoSO.getSelectedIndex() == 0 || (!daduyet.isSelected()&&!chuaduyet.isSelected()) ) JOptionPane.showMessageDialog(rightPanel, "Thiết thông tin");
+                        String trangThai;
+                        if(daduyet.isSelected()) trangThai = "1";
+                        else trangThai = "0";
+                        LocalDate localDate = LocalDate.parse(tfNgayXuatHoaDon.getText());
+                        Date date = Date.valueOf(localDate);
+                        String s;
+                        String ma = bllQuanLyDanhSach.layMaHoaDon();
+                        s = bllQuanLyDanhSach.themHoaDon(date, tfMaHV.getText(), cbMaCoSO.getSelectedItem().toString(), trangThai);
+                        JOptionPane.showMessageDialog(rightPanel,s);
+                        if(s.equals("Thành công")) 
+                        {
+                            tfMaHoaDon.setText(ma);
+                            tftongTien.setText("0");
+                            if(trangThai.equals("1")) model.addRow(new Object[]{ma,date,0,tfMaHV.getText(),cbMaCoSO.getSelectedItem().toString(),"Đã duyệt"});
+                            else model.addRow(new Object[]{ma,date,0,tfMaHV.getText(),cbMaCoSO.getSelectedItem().toString(),"Chưa duyệt"});
+                        }
+                    }
+                });
+                xoa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(tfMaHoaDon.getText().equals("")) JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã hóa đơn");
+                        else 
+                        {
+                            String s = bllQuanLyDanhSach.xoaHoaDon(tfMaHoaDon.getText());
+                            JOptionPane.showMessageDialog(rightPanel,s);
+                            if(s.equals("Thành công"))
+                            {
+                                for(int i=0;i<model.getRowCount();i++)  
+                                if(model.getValueAt(i, 0).equals(tfMaHoaDon.getText()))
+                                {
+                                    model.removeRow(i);
+                                    break;
+                                } 
+                            }
+                        }
+                    }
+                });
+                sua.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if( tfMaHoaDon.getText().equals("") || 
+                            tfMaHV.getText().equals("") ||
+                            tfNgayXuatHoaDon.getText().equals("") ||
+                            cbMaCoSO.getSelectedIndex() == 0 || 
+                            (!daduyet.isSelected()&&!chuaduyet.isSelected())) JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                        else 
+                        {
+                            if(!tftongTien.getText().equals("")) JOptionPane.showMessageDialog(rightPanel, "Không cần nhập tổng tiền");
+                            else 
+                            {
+                                String trangThai;
+                                if(daduyet.isSelected()) trangThai = "1";
+                                else trangThai = "0";
+                                LocalDate localDate = LocalDate.parse(tfNgayXuatHoaDon.getText());
+                                Date date = Date.valueOf(localDate);
+                                String s = bllQuanLyDanhSach.suaHoaDon(tfMaHoaDon.getText(), date, tfMaHV.getText(), cbMaCoSO.getSelectedItem().toString(),trangThai);
+                                JOptionPane.showMessageDialog(rightPanel, s);
+                                if(s.equals("Thành công"))
+                                {
+                                    for(int i=0;i<model.getRowCount();i++)  
+                                    if(model.getValueAt(i, 0).equals(tfMaHoaDon.getText()))
+                                    {
+                                        model.setValueAt(tfNgayXuatHoaDon.getText(), i, 1);
+                                        model.setValueAt(tfMaHV.getText(), i, 3);
+                                        model.setValueAt(cbMaCoSO.getSelectedItem().toString(), i, 4);
+                                        if(trangThai.equals("1")) model.setValueAt("Đã duyệt", i, 5);
+                                        else model.setValueAt("Chưa duyệt", i, 5);
+                                        break;
+                                    } 
+                                }
+                            }
+                        }
+                    }
+                });
+                timKiem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        model.setRowCount(0);
+                        if(tfMaHoaDon.getText().equals("")) 
+                        {
+                            for(int i=0;i<ds.size();i++)
+                            {
+                                String trangThai;
+                                if(ds.get(i).getTrangThai().trim().equals("1")) trangThai = "Đã duyệt";
+                                else trangThai = "Chưa duyệt";
+                                System.out.println(ds.get(i).getTrangThai());
+                                model.addRow(new Object[]{ds.get(i).getMaHoaDon(),ds.get(i).getNgayXuatHoaDon(),ds.get(i).getTongTien(),ds.get(i).getMaHoiVien(),ds.get(i).getMaCoSo(),trangThai});
+                            }
+                        }
+                        else
+                        {
+                            ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+                            dsHoaDon = bllQuanLyDanhSach.timKiemHoaDon(tfMaHoaDon.getText());
+                            for(int i=0;i<dsHoaDon.size();i++)
+                            {
+                                String trangThai;
+                                if(dsHoaDon.get(i).getTrangThai().trim().equals("1")) trangThai = "Đã duyệt";
+                                else trangThai = "Chưa duyệt";
+                                System.out.println(dsHoaDon.get(i).getTrangThai());
+                                model.addRow(new Object[]{dsHoaDon.get(i).getMaHoaDon(),dsHoaDon.get(i).getNgayXuatHoaDon(),dsHoaDon.get(i).getTongTien(),dsHoaDon.get(i).getMaHoiVien(),dsHoaDon.get(i).getMaCoSo(),trangThai});
+                            }
+                        }
+                    }
+                });
+                JScrollPane scrollPane = new JScrollPane(bang);
+                scrollPane.setBounds(5, 240, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                rightPanel.add(scrollPane);
+            }
+            public void QuanLyChiTietHoaDon(ArrayList<ChiTietHoaDon> ds)
+            {
+                xoaHienThi(rightPanel);
+                JButton them = new JButton("Thêm");
+                JButton xoa = new JButton("Xóa");
+                JButton sua = new JButton("Sửa");
+                JButton timKiem = new JButton("Tìm Kiếm");
+                JPanel chucNang = new JPanel(new FlowLayout());
+                chucNang.add(them);
+                chucNang.add(xoa);
+                chucNang.add(sua);
+                chucNang.add(timKiem);
+                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                rightPanel.add(chucNang);
+
+                JPanel nhapLieu = new JPanel(null);
+                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-4, 30);
+
+                JLabel maHoaDon = new JLabel("Mã hóa đơn: ");
+                JLabel maHangHoa = new JLabel("Mã hàng hóa: ");
+                JLabel soLuong = new JLabel("Số lượng: ");
+                JTextField tfMaHoaDon = new JTextField();
+                JTextField tfMaHangHoa = new JTextField();
+                JTextField tfSoLuong = new JTextField();
+                int x=250;
+                maHoaDon.setBounds(x, 0, 80, 30); x+=80;
+                tfMaHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
+                maHangHoa.setBounds(x+50, 0, 80, 30); x+=130;
+                tfMaHangHoa.setBounds(x+10, 0, 100, 30); x+=110;
+                soLuong.setBounds(x+50, 0, 60, 30); x+=110;
+                tfSoLuong.setBounds(x+10, 0, 100, 30); 
+
+                nhapLieu.add(maHoaDon);
+                nhapLieu.add(tfMaHoaDon);
+                nhapLieu.add(maHangHoa);
+                nhapLieu.add(tfMaHangHoa);
+                nhapLieu.add(soLuong);
+                nhapLieu.add(tfSoLuong);
+                rightPanel.add(nhapLieu);
+
+                JTable bang = new JTable();
+                DefaultTableModel model = new DefaultTableModel();
+                bang.setModel(model);
+                model.addColumn("Mã hóa đơn");
+                model.addColumn("Mã hàng hóa");
+                model.addColumn("Số lượng");
+                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+                for(int i=0;i<ds.size();i++)
+                model.addRow(new Object[]{ds.get(i).getMaHoaDon(), ds.get(i).getMaHangHoa(), ds.get(i).getSoLuong()});
+                bang.addMouseListener(new MouseAdapter(){
+                    public void mouseClicked(MouseEvent e)
+                    {
+                        int i = bang.getSelectedRow();
+                        if(i>=0)
+                        {
+                            tfMaHoaDon.setText(model.getValueAt(i, 0).toString());
+                            tfMaHangHoa.setText(model.getValueAt(i, 1).toString());
+                            tfSoLuong.setText(model.getValueAt(i, 2).toString());
+                        }
+                    }
+                });
+                them.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(tfMaHangHoa.getText().equals("")||tfMaHoaDon.getText().equals("")||tfSoLuong.getText().equals(""))
+                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập đủ thông tin");
+                        String s = bllQuanLyDanhSach.themChiTietHoaDon(tfMaHoaDon.getText(),tfMaHangHoa.getText(),Integer.parseInt(tfSoLuong.getText()));
+                        if(s.equals("Thành công"))
+                        model.addRow(new Object[]{tfMaHangHoa.getText(),tfMaHoaDon.getText(),tfSoLuong.getText()});
+                        JOptionPane.showMessageDialog(rightPanel, s);
+                    }
+                });
+                xoa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(tfMaHangHoa.getText().equals("")||tfMaHoaDon.getText().equals(""))
+                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã hàng hóa và mã hóa đơn");
+                        String s = bllQuanLyDanhSach.xoaChiTietHoaDon(tfMaHoaDon.getText(),tfMaHangHoa.getText());
+                        if(s.equals("Thành công"))
+                        {
+                            for(int i=0;i<model.getRowCount();i++)
+                            {
+                                if(model.getValueAt(i, 0).equals(tfMaHoaDon.getText()) && model.getValueAt(i, 1).equals(tfMaHangHoa.getText()))
+                                model.removeRow(i);
+                                break;
+                            }
+                        }
+                        JOptionPane.showMessageDialog(rightPanel, s);
+                    }
+                });
+                sua.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        if(tfMaHangHoa.getText().equals("")||tfMaHoaDon.getText().equals("")||tfSoLuong.getText().equals(""))
+                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập đủ thông tin");
+                        String s = bllQuanLyDanhSach.suaChiTietHoaDon(tfMaHoaDon.getText(), tfMaHangHoa.getText(), Integer.parseInt(tfSoLuong.getText()));
+                        if(s.equals("Thành công"))
+                        {
+                            for(int i=0;i<model.getRowCount();i++)
+                            {
+                                if(model.getValueAt(i, 0).equals(tfMaHoaDon.getText()) && model.getValueAt(i, 1).equals(tfMaHangHoa.getText()))
+                                model.setValueAt(tfSoLuong.getText(), i, 2);
+                                break;
+                            }
+                        }
+                        JOptionPane.showMessageDialog(rightPanel, s);
+                    }
+                });
+                timKiem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        model.setRowCount(0);
+                        if(tfMaHoaDon.getText().equals("")&&tfMaHangHoa.getText().equals("")) 
+                        {
+                            for(int i=0;i<ds.size();i++)
+                            model.addRow(new Object[]{ds.get(i).getMaHoaDon(), ds.get(i).getMaHangHoa(), ds.get(i).getSoLuong()});
+                        }
+                        else
+                        {
+                            ArrayList<ChiTietHoaDon> dsChiTietHoaDon = new ArrayList<>();
+                            dsChiTietHoaDon = bllQuanLyDanhSach.timKiemChiTietHoaDon(tfMaHoaDon.getText(), tfMaHangHoa.getText());
+                            for(int i=0;i<dsChiTietHoaDon.size();i++)
+                            model.addRow(new Object[]{dsChiTietHoaDon.get(i).getMaHoaDon(), dsChiTietHoaDon.get(i).getMaHangHoa(), dsChiTietHoaDon.get(i).getSoLuong()});
+                        }
+                    }
+                });
+                JScrollPane scrollPane = new JScrollPane();
+                scrollPane.setViewportView(bang);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                rightPanel.add(scrollPane);
             }
             public void QuanLyHoiVienCoSo(ArrayList<HoiVienCoSo> ds, Vector<String> dsCoSo)
             {

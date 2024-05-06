@@ -65,7 +65,7 @@ public class DataHoaDonChiTiet {
         ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
         if(!maHoaDon.equals("NULL"))
         {
-            truyVan+="MaHD = ? ";
+            truyVan+="MaHD = ? AND ";
             s.add(maHoaDon);
         }
         if(!maHangHoa.equals("NULL"))
@@ -73,11 +73,14 @@ public class DataHoaDonChiTiet {
             truyVan+="MaHangHoa = ? ";
             s.add(maHangHoa);
         }
+        if (truyVan.endsWith("AND ")) {
+            truyVan = truyVan.substring(0, truyVan.length() - 4);
+        }
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
             for(int i=1;i<=s.size();i++)
-            stmt.setString(i,s.get(i));
+            stmt.setString(i,s.get(i-1));
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             ds.add(new ChiTietHoaDon(rs.getInt(1), rs.getString(2), rs.getString(3)));

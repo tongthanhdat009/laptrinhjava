@@ -6,7 +6,7 @@ public class NhanVien extends ConNguoi {
 	private String maNhanVien;
 	private String macoso;
 	private String vaitro;
-	private long luong;
+	private int luong;
 	public NhanVien() {
 		super();
 		setSocccd("NULL");
@@ -16,7 +16,7 @@ public class NhanVien extends ConNguoi {
 		setLuong(0);
 	}
 
-	public NhanVien(String manv,String hoten, String gioitinh, Date ngaysinh,String sdt, String socccd,String macoso,String vaitro,long luong) {
+	public NhanVien(String manv,String hoten, String gioitinh, Date ngaysinh,String sdt, String socccd,String macoso,String vaitro,int luong) {
 		super(hoten, gioitinh, ngaysinh,sdt);
 		this.maNhanVien = manv;
 		this.socccd = socccd;
@@ -57,11 +57,11 @@ public class NhanVien extends ConNguoi {
 		this.vaitro = vaitro;
 	}
 
-	public double getLuong() {
+	public int getLuong() {
 		return luong;
 	}
 
-	public void setLuong(long luong) {
+	public void setLuong(int luong) {
 		this.luong = luong;
 	}
 		

@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import BLL.BLLDangKy;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -47,7 +50,7 @@ public class GUISignup extends JFrame {
 	private ButtonGroup btn_grp;
 	private JComboBox cb_day,cb_month,cb_year;
 	private JTextField jtf_name;
-
+	private BLLDangKy bllDangKy = new BLLDangKy();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -184,7 +187,7 @@ public class GUISignup extends JFrame {
 		btn_signup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedDay = Integer.parseInt((String) cb_day.getSelectedItem());
-				int selectedMonth = cb_month.getSelectedIndex() + 1;
+		 		int selectedMonth = cb_month.getSelectedIndex() + 1;
 				int selectedYear = Integer.parseInt((String) cb_year.getSelectedItem());
 				int dk = JOptionPane.showConfirmDialog(GUISignup.this,"Bạn có muốn đăng kí","Comfirm", JOptionPane.YES_NO_OPTION);
 				if(dk != JOptionPane.YES_OPTION) {
@@ -262,53 +265,56 @@ public class GUISignup extends JFrame {
 					gioitinh = "Nu";
 				}
 				if(btn_grp.getSelection() == null) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giớ tính","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giới tính","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
-					try {
-			            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			            
-			            
-			            String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main";
-			            String username = "sa";	
-			            String password = "1234";
-			            
-			            //Kiểm tra xem tên đăng kí có bị trùng trong database hay không
-			            Connection con = DriverManager.getConnection(dbUrl, username, password);
-			            System.out.println("Kết nối thành công");
-			            
-			            String checkSql = "SELECT * FROM HoiVien WHERE MAHV = ?";
-			            PreparedStatement checkStatement = con.prepareStatement(checkSql);
-			            checkStatement.setString(1, jtf_mahv.getText());
-			            ResultSet rs = checkStatement.executeQuery();
-			            if (rs.next()) {
-			                JOptionPane.showMessageDialog(GUISignup.this, "Mã hội viên đã tồn tại, vui lòng chọn mã hội viên khác", "Error", JOptionPane.ERROR_MESSAGE);
-			                return; 
-			            }
-			            LocalDate birthDate = LocalDate.of(selectedYear, selectedMonth, selectedDay);
-			            java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
-			            String sql = "insert into HoiVien values (?,?,?,?,?,?,?,?)";
-				        PreparedStatement ps = con.prepareStatement(sql);
-				        ps.setString(1,jtf_mahv.getText());
-				        ps.setString(2,jtf_name.getText());
-				        ps.setString(3,gioitinh);
-				        ps.setString(4,jtf_email.getText());	
-				        ps.setString(5,jtf_user.getText());
-				        ps.setString(6,jtf_pass.getText());
-				        ps.setString(7,null);
-				        ps.setDate(8,sqlBirthDate);	
-				        int n = ps.executeUpdate();
-				        if(n != 0) {
-				            	JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Information",JOptionPane.INFORMATION_MESSAGE);
-				        }
-			            
-			        } catch (Exception e1) {
-			            System.out.println(e1);
-			            
-			        }
-
-				
+				// try {
+				// 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+					
+					
+				// 	String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main";
+				// 	String username = "sa";	
+				// 	String password = "1234";
+					
+				// 	//Kiểm tra xem tên đăng kí có bị trùng trong database hay không
+				// 	Connection con = DriverManager.getConnection(dbUrl, username, password);
+				// 	System.out.println("Kết nối thành công");
+					
+				// 	String checkSql = "SELECT * FROM HoiVien WHERE MAHV = ?";
+				// 	PreparedStatement checkStatement = con.prepareStatement(checkSql);
+				// 	checkStatement.setString(1, jtf_mahv.getText());
+				// 	ResultSet rs = checkStatement.executeQuery();
+				// 	if (rs.next()) {
+				// 		JOptionPane.showMessageDialog(GUISignup.this, "Mã hội viên đã tồn tại, vui lòng chọn mã hội viên khác", "Error", JOptionPane.ERROR_MESSAGE);
+				// 		return; 
+				// 	}
+				// 	LocalDate birthDate = LocalDate.of(selectedYear, selectedMonth, selectedDay);
+				// 	java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
+				// 	String sql = "insert into HoiVien values (?,?,?,?,?,?,?,?)";
+				// 	PreparedStatement ps = con.prepareStatement(sql);
+				// 	ps.setString(1,jtf_mahv.getText());
+				// 	ps.setString(2,jtf_name.getText());
+				// 	ps.setString(3,gioitinh);
+				// 	ps.setString(4,jtf_email.getText());	
+				// 	ps.setString(5,jtf_user.getText());
+				// 	ps.setString(6,jtf_pass.getText());
+				// 	ps.setString(7,null);
+				// 	ps.setDate(8,sqlBirthDate);	
+				// 	int n = ps.executeUpdate();
+				// 	if(n != 0) {
+				// 			JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Information",JOptionPane.INFORMATION_MESSAGE);
+				// 	}
+					
+				// } catch (Exception e1) {
+				// 	System.out.println(e1);
+				// }
+				if(bllDangKy.hoiVienDangKy(jtf_mahv.getText(), jtf_name.getText(), gioitinh, jtf_email.getText(), jtf_user.getText(), jtf_pass.getText(), selectedYear, selectedMonth, selectedDay)){
+					JOptionPane.showMessageDialog(null, "Đăng kí hội viên thành công");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Đăng kí hội viên không thành công");
+				}
 			}
 		});
 		btn_signup.setIcon(new ImageIcon("src/asset/img/icon/add-user-icon.png"));

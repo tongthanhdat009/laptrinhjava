@@ -1,23 +1,34 @@
 package DTO;
 
 public class hangHoaCoSo{
-    private int soLuong;
     private String maHangHoa;
+    private int soLuong;
     private String maCoSo;
-
+    private int giaBan;
+    
     //hàm khởi tạo
     hangHoaCoSo(){
         this.soLuong = 0;
+        this.giaBan = 0;
         this.maHangHoa = "";
         this.maCoSo = "";
     }
-    hangHoaCoSo(int soLuong, String maHangHoa, String maCoSo){
+    public hangHoaCoSo(String maCoSo, int soLuong, String maHangHoa, int giaBan){
         setSoLuong(soLuong);
         setMaHangHoa(maHangHoa);
         setMaCoSo(maCoSo);
+        setGiaBan(giaBan);
     }
 
     //hàm get&set
+    public void setGiaBan(int giaBan){
+        if(!(giaBan<0)){
+            this.giaBan = giaBan;
+        }
+        else{
+            throw new IllegalArgumentException("Gia Ban Phai >= 0");
+        }
+    }
     public void setSoLuong(int soLuong){
         if(!(soLuong < 0))
             this.soLuong = soLuong;
@@ -48,27 +59,7 @@ public class hangHoaCoSo{
     public String toString(){
         return this.maHangHoa + " " + this.maCoSo + " " + this.soLuong;  
     }
-    // public void nhap(){ //test
-    //     Scanner in = new Scanner(System.in);
-    //     int newSoLuong;
-    //     String newMaHangHoa = new String();
-    //     String newMaCoSo = new String();
-    //     System.out.println("Nhap ma hang hoa: ");
-    //     newMaHangHoa = in.nextLine();
-    //     System.out.println("Nhap ma co so: ");
-    //     newMaCoSo = in.nextLine();
-    //     System.out.println("Nhap so luong cua hang hoa: ");
-    //     newSoLuong = in.nextInt();
-    //     setMaCoSo(newMaCoSo);
-    //     setMaHangHoa(newMaHangHoa);
-    //     setSoLuong(newSoLuong);
-    //     System.out.print(newMaCoSo + " " + newMaHangHoa + " " + newSoLuong);
-    //     in.close();
-    // }
-
-    // public static void main(String[] args){
-    //     hangHoaCoSo a = new hangHoaCoSo();
-    //     a.nhap();
-    // }
-
+    public int getGiaBan() {
+        return this.giaBan;
+    }
 }

@@ -114,7 +114,7 @@ public class DataNhanVien {
 		                rs.getString("SoCCCD"),
 		                rs.getString("MaCoSo"),
 		                rs.getString("VaiTro"),
-		                rs.getLong("Luong")
+		                rs.getInt("Luong")
 						);
 				result.add(nv);
 			}
@@ -126,7 +126,14 @@ public class DataNhanVien {
 
 
     public boolean xoanv(String manv) {
-        String query = "DELETE FROM NhanVien WHERE MANV = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println(manv);
+        String query = "DELETE FROM NhanVien WHERE MaNV = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, manv);
@@ -168,7 +175,7 @@ public class DataNhanVien {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                ds.add(new NhanVien(rs.getString("MaNV"), rs.getString("HoTenNV"), rs.getString("GioiTinh"), rs.getDate("NgaySinh"), rs.getString("SoDienThoai"), rs.getString("SoCCCD"), rs.getString("MaCoSo"), rs.getString("VaiTro"), rs.getLong("Luong")));
+                ds.add(new NhanVien(rs.getString("MaNV"), rs.getString("HoTenNV"), rs.getString("GioiTinh"), rs.getDate("NgaySinh"), rs.getString("SoDienThoai"), rs.getString("SoCCCD"), rs.getString("MaCoSo"), rs.getString("VaiTro"), rs.getInt("Luong")));
             }
         } catch (Exception e) {
             System.out.println(e);

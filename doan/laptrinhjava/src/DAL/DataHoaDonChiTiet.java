@@ -42,7 +42,7 @@ public class DataHoaDonChiTiet {
         } catch (Exception e) {
             System.out.println(e);   
         }
-        return true;
+        return false;
     }
     public boolean xoa(String maHoaDon, String maHangHoa)
     {
@@ -55,6 +55,7 @@ public class DataHoaDonChiTiet {
             if(stmt.executeUpdate() > 0) return true;
         } catch (Exception e) {
             System.out.println(e);   
+            return false;
         }
         return false;
     }

@@ -262,11 +262,9 @@ public class BLLQuanLyDanhSach{
     }
     public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
     {
-        System.out.println(maHoaDon);
         if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
         if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
         if(soLuong <= 0) return "Số lượng không hợp lệ";
-        // chưa kiểm tra mã hàng hóa
         if (dataHoaDonChiTiet.them(new ChiTietHoaDon(soLuong, maHoaDon, maHangHoa)) == false) return "Thất bại";
         int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
         if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
@@ -274,8 +272,6 @@ public class BLLQuanLyDanhSach{
     }
     public String xoaChiTietHoaDon(String maHoaDon, String maHangHoa)
     {
-        if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
-        // chưa kiểm tra mã hàng hóa
         if(dataHoaDonChiTiet.xoa(maHoaDon, maHangHoa) == false) return "Thất bại";
         int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
         if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
@@ -283,6 +279,7 @@ public class BLLQuanLyDanhSach{
     }
     public String suaChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
     {
+        if(soLuong <= 0 ) return "Sai số lượng";
         if(dataHoaDonChiTiet.sua(maHoaDon, maHangHoa, soLuong) == false) return "Thất bại";
         int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
         if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";

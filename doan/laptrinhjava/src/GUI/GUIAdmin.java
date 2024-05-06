@@ -2394,9 +2394,12 @@ public class GUIAdmin{
                         {
                             for(int i=0;i<model.getRowCount();i++)
                             {
+                                System.out.println(i);
                                 if(model.getValueAt(i, 0).equals(tfMaHoaDon.getText()) && model.getValueAt(i, 1).equals(tfMaHangHoa.getText()))
-                                model.removeRow(i);
-                                break;
+                                {
+                                    model.removeRow(i);
+                                    break;
+                                }
                             }
                         }
                         JOptionPane.showMessageDialog(rightPanel, s);

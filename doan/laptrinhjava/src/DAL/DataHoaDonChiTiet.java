@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import DTO.ChiTietHoaDon;
+import DTO.DTODuyetDonHang;
 public class DataHoaDonChiTiet {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -104,5 +105,21 @@ public class DataHoaDonChiTiet {
             System.out.println(e);   
         }
         return false;
+    }
+    public ArrayList<DTODuyetDonHang> timDSChiTietHoaDon(String maHoaDon)
+    {
+        ArrayList<DTODuyetDonHang> ds = new ArrayList<>();
+        String truyVan = "SELECT TenLoaiHangHoa, SoLuongHang, (SoLuongHang * GiaNhap) AS Gia  FROM ChiTietHoaDon, HangHoa WHERE ChiTietHoaDon.MaHangHoa = HangHoa.MaHangHoa AND MaHD = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setString(1, maHoaDon);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            ds.add(new DTODuyetDonHang(rs.getString(1), rs.getInt(2), rs.getInt(3)));
+        } catch (Exception e) {
+            System.out.println(e);   
+        }
+        return ds;
     }
 }

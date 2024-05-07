@@ -19,6 +19,7 @@ import DAL.DataHangHoa;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
+import DTO.DTODuyetDonHang;
 import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
@@ -290,6 +291,25 @@ public class BLLQuanLyDanhSach{
         if(maHoaDon.equals("")) maHoaDon = "NULL";
         if(maHangHoa.equals("")) maHangHoa = "NULL";
         return dataHoaDonChiTiet.timKiem(maHoaDon, maHangHoa);
+    }
+    public ArrayList<HoaDon> timKiemHoaDon2(String maHoaDon, String maCoSo, String maHoiVien)
+    {
+        if(maHoaDon.equals("")) maHoaDon ="NULL";
+        if(maCoSo.equals("Chọn cơ sở")) maCoSo ="NULL";
+        if(maHoiVien.equals("")) maHoiVien ="NULL";
+        return dataHoaDon.timKiem2(maHoaDon, maCoSo, maHoiVien);
+    }
+    public ArrayList<HoaDon> layDSHoaDonChuaDuyet()
+    {
+        return dataHoaDon.layHoaDonChuaDuyet();
+    }
+    public ArrayList<DTODuyetDonHang> dsDTODuyetDonHang(String maHoaDon)
+    {
+        return dataHoaDonChiTiet.timDSChiTietHoaDon(maHoaDon);
+    }
+    public boolean duyetHoaDon(String maHoaDon)
+    {
+        return dataHoaDon.duyetHoaDon(maHoaDon);
     }
     //danh sách hàng hóa
     public dsHangHoa layDsHangHoa(){

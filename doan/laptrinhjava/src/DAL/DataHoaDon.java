@@ -157,4 +157,51 @@ public class DataHoaDon {
         }
         return ds;
     }
+    public boolean duyetHoaDon(String maHoaDon)
+    {
+        String truyVan = "UPDATE HoaDon SET TrangThai = 1 WHERE MaHD = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            stmt.setString(1, maHoaDon);
+            if(stmt.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public ArrayList<HoaDon> timKiem2(String maHoaDon, String maCoSo, String maHV)
+    {
+        String truyVan = "SELECT * FROM HoaDon WHERE TrangThai = 0 AND";
+        ArrayList<String> s = new ArrayList<>();
+        ArrayList<HoaDon> ds = new ArrayList<>();
+        if(!maHoaDon.equals("NULL"))
+        {
+            truyVan+=" MaHD = ? AND";
+            s.add(maHoaDon);
+        }
+        if(!maCoSo.equals("NULL"))
+        {
+            truyVan+=" MaCoSo = ? AND";
+            s.add(maCoSo);
+        }
+        if(!maHV.equals("NULL"))
+        {
+            truyVan+=" MaHV = ?";
+            s.add(maHV);
+        }
+        if(truyVan.endsWith(" AND")) truyVan = truyVan.substring(0, truyVan.length() - 4);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            for(int i=0;i<s.size();i++)
+            stmt.setString(i+1,s.get(i));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) 
+            ds.add(new HoaDon(rs.getString(1), rs.getDate(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
 }

@@ -1685,13 +1685,13 @@ public class GUIAdmin{
                                                 if(smallComponents[j] instanceof JTextField){
                                                     JTextField textField = (JTextField) smallComponents[j];
                                                     String text = textField.getText().trim(); // Lấy text từ textField và loại bỏ khoảng trắng đầu cuối
-                                                    if (flag && j == 1) {
+                                                    if (flag && j == 0) {
                                                         int maxSTT = bllQuanLyDanhSach.kiemTraMaThietBi();
                                                         textField.setText(String.format("TB%03d", maxSTT));
                                                         thongTinMoi.add(textField.getText());
                                                         flag = false;
                                                     }
-                                                    else if(bllQuanLyDanhSach.kiemTraGiaThietBi(textField.getText())==-1 && j==0 && i==4){
+                                                    else if(!textField.getText().equals("") && bllQuanLyDanhSach.kiemTraGiaThietBi(text)==-1 && j==0 && i==3){
                                                         JOptionPane.showMessageDialog(bangChinhSua, "Giá thiết bị phải là số và lớn hơn hoặc bằng 0", "Thông tin không hợp lệ", JOptionPane.WARNING_MESSAGE);
                                                         textField.requestFocus();
                                                         return; // Kết thúc sự kiện nếu có thông tin bị thiếu
@@ -1716,12 +1716,26 @@ public class GUIAdmin{
                                                                     thongTinMoi.get(2),
                                                                     thongTinMoi.get(3),
                                                                     Integer.parseInt(thongTinMoi.get(4)));
-                                        if(bllQuanLyDanhSach.themTB(tempTB)){
-                                            JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
+                                        if(Integer.parseInt(thongTinMoi.get(4))>0){
+                                            System.out.println("hello");
+                                            if(bllQuanLyDanhSach.themTB(tempTB)){
+                                                JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
+                                            }
+                                            else{
+                                                JOptionPane.showMessageDialog(bangChinhSua, "Thêm không thành công!");
+                                                return;
+                                            }
                                         }
-                                        } else {
-                                            JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                        else{
+                                            JOptionPane.showMessageDialog(bangChinhSua, "Ngày bảo hành phải lớn hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                            tbList.removeRow(dataTable.getRowCount()-1);
+                                            return;
                                         }
+                                    }
+                                    else {
+                                        JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                        return;
+                                    }
                                 }
                                 else if(tempBtn.getActionCommand().equals(cmtNut[1])){ //xóa thiết bị
                                     int i=dataTable.getSelectedRow();
@@ -1759,10 +1773,10 @@ public class GUIAdmin{
                                         }
                                     }
                                 }
-                                else if(tempBtn.getActionCommand().equals(cmtNut[2])){
+                                else if(tempBtn.getActionCommand().equals(cmtNut[2])){ //sửa thông tin thiết bị
                                     int i= dataTable.getSelectedRow();
                                     int j= 0;
-                                    if (i>=0){
+                                    if (i!=0){
                                         Component[] components = bangChinhSua.getComponents();
                                         for (Component component : components) {
                                             if (component instanceof JPanel) {
@@ -1779,8 +1793,14 @@ public class GUIAdmin{
                                             }
                                         }
                                         String giaThietBi = (String) tbList.getValueAt(i, 3);
+                                        int ngayBaoHanh =Integer.parseInt((String)tbList.getValueAt(i, 4));
                                         if(bllQuanLyDanhSach.kiemTraGiaThietBi(giaThietBi)==-1){
                                             JOptionPane.showMessageDialog(null, "Giá thiết bị phải lớn hơn hoặc bằng 0", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                            return;
+                                        }
+                                        else if(bllQuanLyDanhSach.kiemNgayBaoHanh(ngayBaoHanh)==-1){
+                                            JOptionPane.showMessageDialog(null, "Ngày bảo hành phải lớn hơn hoặc bằng 0", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                            return;
                                         }
                                         else{
                                             LoaiThietBi tempTB = new LoaiThietBi((String)tbList.getValueAt(i,0),
@@ -1790,9 +1810,11 @@ public class GUIAdmin{
                                                                     Integer.parseInt((String)tbList.getValueAt(i,4)));
                                             if(bllQuanLyDanhSach.suaThongTinTB(tempTB)){
                                                 JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin",JOptionPane.DEFAULT_OPTION);
+                                                return;
                                             }
                                             else{
                                                 JOptionPane.showMessageDialog(null, "Sửa thông tin không thành công", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+                                                return;
                                             }
                                         }
                                     } 
@@ -2321,7 +2343,7 @@ public class GUIAdmin{
                 xoaHienThi(rightPanel);
                 Font f = new Font("Times New Roman",Font.BOLD,17);
             	JButton them = new JButton();
-                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/hh-them.png");
                 Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                 them.setPreferredSize(new Dimension (130,35));
                 them.setIcon(new ImageIcon(scaleThemBtnImg));
@@ -2330,7 +2352,7 @@ public class GUIAdmin{
 
             	JButton xoa  = new JButton();
                 xoa.setPreferredSize(new Dimension (110,35));
-                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/hh-xoa.png");
                 Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                 xoa.setPreferredSize(new Dimension (130,35));
                 xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
@@ -2339,7 +2361,7 @@ public class GUIAdmin{
 
             	JButton sua = new JButton();
                 sua.setPreferredSize(new Dimension (110,35));
-                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/hh-sua.png");
                 Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                 sua.setPreferredSize(new Dimension (130,35));
                 sua.setIcon(new ImageIcon(scaleSuaBtnImg));
@@ -2348,7 +2370,7 @@ public class GUIAdmin{
 
             	JButton timKiem = new JButton();
                 timKiem.setPreferredSize(new Dimension (110,35));
-                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/hh-tim.png");
                 Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                 timKiem.setPreferredSize(new Dimension (130,35));
                 timKiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
@@ -2378,6 +2400,7 @@ public class GUIAdmin{
                 JTextField tfMaHangHoa = new JTextField();
                 @SuppressWarnings("rawtypes")
                 JComboBox cbMaCoSo = new JComboBox<>(dsMaCoSo);
+                cbMaCoSo.setBackground(Color.WHITE);
                 JTextField tfSoLuong = new JTextField();
                 int x = 250;
                 lbMaHangHoa.setBounds(x, 25, 80, 30); x+=80;
@@ -2397,9 +2420,13 @@ public class GUIAdmin{
                 JTable bang = new JTable();
                 DefaultTableModel model = new DefaultTableModel();
                 bang.setModel(model);
+                
                 model.addColumn("Mã hàng hóa");
                 model.addColumn("Mã cơ sở");
                 model.addColumn("Số lượng");
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
                 for(int i=0;i<ds.size();i++)
                 model.addRow(new Object[]{ds.get(i).getMaHangHoa(),ds.get(i).getMaCoSo(),ds.get(i).getSoLuong()});
@@ -2432,7 +2459,7 @@ public class GUIAdmin{
                 xoa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e)
                     {
-                        if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0) JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã cơ sở mà mã hàng hóa");
+                        if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0) JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã cơ sở và mã hàng hóa");
                         else
                         {
                             String s = bllQuanLyDanhSach.xoaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText());
@@ -2481,7 +2508,7 @@ public class GUIAdmin{
                     }
                 });
                 JScrollPane scrollPane = new JScrollPane(bang);
-                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-270);
                 rightPanel.add(scrollPane);
             }
             public void QuanLyHoaDon(ArrayList<HoaDon> ds, Vector<String> dsMaCoSo)
@@ -4318,14 +4345,14 @@ public class GUIAdmin{
         
         dayEnd.setBounds(865, 15, 45, 30);
         monthEnd.setBounds(910, 15, 45, 30);
-        yearEnd.setBounds(945, 15, 45, 30);
+        yearEnd.setBounds(955, 15, 45, 30);
         filter.add(dayEnd);
         filter.add(monthEnd);
         filter.add(yearEnd);
 
         JButton timkiem = new JButton("Tìm kiếm");
         timkiem.setBackground(Color.white);
-        timkiem.setBounds(1000, 15, 100, 29);
+        timkiem.setBounds(1050, 15, 100, 29);
         filter.add(timTheoTen);
         filter.add(tenSanPham);
         filter.add(timkiem);

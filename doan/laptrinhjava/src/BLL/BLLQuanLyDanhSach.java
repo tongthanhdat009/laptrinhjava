@@ -139,6 +139,12 @@ public class BLLQuanLyDanhSach{
     public int kiemTraMaThietBi(){
         return dataThietBi.layMaThietBiMoi()+1;
     }
+    public int kiemNgayBaoHanh(int ngayBaoHanh){
+        if(ngayBaoHanh < 0){
+            return -1;
+        }
+        return 1;
+    }
     public int kiemTraGiaThietBi(String doanhThu){
         if(!(doanhThu!=null && doanhThu.matches("\\d{1,18}$")))
             return -1;

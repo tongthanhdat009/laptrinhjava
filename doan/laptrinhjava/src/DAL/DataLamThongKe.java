@@ -19,7 +19,7 @@ public class DataLamThongKe{
     {
         ArrayList<DTOThongKeDonHang> ds = new ArrayList<>();
         String truyVan;
-        truyVan =   "SELECT TenLoaiHangHoa, COUNT(SoLuongHang) AS SL, GiaNhap, GiaNhap * COUNT(SoLuongHang) AS DoanhThu "+
+        truyVan =   "SELECT TenLoaiHangHoa, SUM(SoLuongHang) AS SL, GiaNhap, GiaNhap * SUM(SoLuongHang) AS DoanhThu "+
                     "FROM HangHoa, ChiTietHoaDon, HoaDon "+
                     "WHERE HangHoa.MaHangHoa = ChiTietHoaDon.MaHangHoa AND ChiTietHoaDon.MaHD = HoaDon.MaHD AND";
         truyVan += " NgayXuatHD > ? AND NgayXuatHD < ? AND";

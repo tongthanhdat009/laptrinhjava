@@ -1,7 +1,9 @@
 package GUI;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.time.LocalDate;
@@ -44,6 +46,7 @@ public class GUIAdmin{
     private final int height = 900;
     //logo
     ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
+    Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
     
     //icon chức năng thống kê
@@ -115,6 +118,21 @@ public class GUIAdmin{
                 component.setBackground(Color.WHITE); // Màu nền mặc định
             }
 
+            return component;
+        }
+    };
+    //màu cho bảng
+    DefaultTableCellRenderer rendererTable = new DefaultTableCellRenderer() {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            
+            // Đặt màu cho các hàng chẵn và lẻ
+            if (row % 2 == 0) {
+                component.setBackground(Color.decode("#d2a5e8"));
+            } else {
+                component.setBackground(Color.white);
+            }
+            
             return component;
         }
     };
@@ -444,6 +462,7 @@ public class GUIAdmin{
                 rightPanel.add(jScrollPane);
             }
         });
+        
         thongKeDoanhThuPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -517,7 +536,22 @@ public class GUIAdmin{
         rightPanel.setBounds((int)(width * 0.25),0,(int)(width * 0.75),height);
         rightPanel.setBackground(Color.WHITE);
         rightPanel.setBorder(border);
+        //giới thiệu app
+        JPanel introPn = new JPanel();
+        introPn.setPreferredSize(new Dimension(rightPanel.getWidth()-300,700));
+        introPn.setBackground(Color.white);
+        // introPn.setLayout(null);
+        JLabel logo = new JLabel();
+        logo.setIcon(new ImageIcon(scaleLogoIcon));
+        // logo.setBounds((int)(rightPanel.getWidth()*50/100-300/2),0,300,300);
+        JLabel introParam = new JLabel("<html>Đề tài được thực hiện bởi: SGU FITNESS CLUB <br>Thành viên:<br>- Tống Thành Đạt MSSV:3122410077 <br>- Nguyễn Minh Tuấn MSSV: 3122560086 <br>- Đào Nhị Khang MSSV: 3122410168<html>");
+        Font introFont = new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35);
+        introParam.setFont(introFont);
+        // introParam.setBounds((int)(rightPanel.getWidth()*50/100-introParam.getWidth()/2),320,(int)(width*70/100),45);
 
+        introPn.add(logo);
+        introPn.add(introParam);
+        rightPanel.add(introPn);
         //thêm đối tượng
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
@@ -728,6 +762,15 @@ public class GUIAdmin{
     @SuppressWarnings("unchecked")
     private void xuLyDanhSach(){
         rightPanel.setLayout(null);
+        //giới thiệu chức năng xử lý danh sách
+        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ<br>- Hội viên<br>- Nhân viên<br>- Thiết bị<br>- Thiết bị cơ sở <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hàng hóa cơ sở <br>- Hội viên cơ sở <br> Chọn danh sách để bắt đầu thao tác</html>"); 
+
+        param.setFont(new Font("Times New Roman",1,30));
+        JPanel textPN = new JPanel();
+        textPN.setBounds(100,150,(int)(width*70/100 - 100), height-300);
+        textPN.setBackground(new Color(119, 230, 163));
+        textPN.add(param);
+        rightPanel.add(textPN);
         //tiêu đề bên phải 
         JLabel rightTitle = new JLabel("Quản lý danh sách");
         rightTitle.setFont(new Font("Times New Roman", 1, 35));
@@ -842,7 +885,9 @@ public class GUIAdmin{
 
                     dataTable = new JTable(csList);
                     dataTable.getTableHeader().setReorderingAllowed(false);
-                    
+                    for (int i = 0; i < dataTable.getColumnCount(); i++) {
+                        dataTable.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                    }
                     scrollPane = new JScrollPane(dataTable);
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
                     
@@ -1128,13 +1173,13 @@ public class GUIAdmin{
                     // Thêm dữ liệu vào bảng
                     for (int i = 0; i < dsHV.size(); i++) {
                         hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
-                            dsHV.get(i).getHoten(),
-                            dsHV.get(i).getGioitinh(),
-                            dsHV.get(i).getMail(),
-                            dsHV.get(i).getTaiKhoanHoiVien(),
-                            dsHV.get(i).getMatKhauHoiVien(),
-                            dsHV.get(i).getNgaysinh(),
-                            dsHV.get(i).getSdt()});
+                            dsHV.get(i).getHoten().trim(),
+                            dsHV.get(i).getGioitinh().trim(),
+                            dsHV.get(i).getMail().trim(),
+                            dsHV.get(i).getTaiKhoanHoiVien().trim(),
+                            dsHV.get(i).getMatKhauHoiVien().trim(),
+                            dsHV.get(i).getNgaysinh().trim(),
+                            dsHV.get(i).getSdt().trim()});
                     }
                     
                     //bảng hiện dòng thông tin được chọn
@@ -1193,7 +1238,9 @@ public class GUIAdmin{
 
                     dataTable = new JTable(hvList);
                     dataTable.getTableHeader().setReorderingAllowed(false);
-                    
+                    for (int i = 0; i < dataTable.getColumnCount(); i++) {
+                        dataTable.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                    }
                     scrollPane = new JScrollPane(dataTable);
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
 
@@ -1540,10 +1587,10 @@ public class GUIAdmin{
                     // Thêm dữ liệu vào bảng
                     for (int i = 0; i < dsTB.dsThietBi.size(); i++) {
                         tbList.addRow(new Object[]{
-                            dsTB.dsThietBi.get(i).getMaThietBi(),
-                            dsTB.dsThietBi.get(i).getTenLoaiThietBi(),
-                            dsTB.dsThietBi.get(i).getHinhAnh(),
-                            dsTB.dsThietBi.get(i).getGiaThietBi(),
+                            dsTB.dsThietBi.get(i).getMaThietBi().trim(),
+                            dsTB.dsThietBi.get(i).getTenLoaiThietBi().trim(),
+                            dsTB.dsThietBi.get(i).getHinhAnh().trim(),
+                            dsTB.dsThietBi.get(i).getGiaThietBi().trim(),
                             dsTB.dsThietBi.get(i).getNgayBaoHanh(),
                         });
                     }
@@ -1584,7 +1631,9 @@ public class GUIAdmin{
 
                     dataTable = new JTable(tbList);
                     dataTable.getTableHeader().setReorderingAllowed(false);
-                    
+                    for (int i = 0; i < dataTable.getColumnCount(); i++) {
+                        dataTable.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                    }
                     scrollPane = new JScrollPane(dataTable);
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
                     
@@ -1890,10 +1939,10 @@ public class GUIAdmin{
                     // Thêm dữ liệu vào bảng
                     for (int i = 0; i < dsHH.dsHangHoa.size(); i++) {
                             hhList.addRow(new Object[]{
-                            dsHH.dsHangHoa.get(i).getMaHangHoa(),
-                            dsHH.dsHangHoa.get(i).getLoaiHangHoa(),
-                            dsHH.dsHangHoa.get(i).getTenLoaiHangHoa(),
-                            dsHH.dsHangHoa.get(i).getHinhAnh(),
+                            dsHH.dsHangHoa.get(i).getMaHangHoa().trim(),
+                            dsHH.dsHangHoa.get(i).getLoaiHangHoa().trim(),
+                            dsHH.dsHangHoa.get(i).getTenLoaiHangHoa().trim(),
+                            dsHH.dsHangHoa.get(i).getHinhAnh().trim(),
                             dsHH.dsHangHoa.get(i).getGiaNhap(),
                             });
                     }
@@ -1948,7 +1997,9 @@ public class GUIAdmin{
 
                     dataTable = new JTable(hhList);
                     dataTable.getTableHeader().setReorderingAllowed(false);
-                    
+                    for (int i = 0; i < dataTable.getColumnCount(); i++) {
+                        dataTable.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                    }
                     scrollPane = new JScrollPane(dataTable);
                     scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
 
@@ -2371,6 +2422,11 @@ public class GUIAdmin{
                     else trangThai = "Chưa duyệt";
                     model.addRow(new Object[]{ds.get(i).getMaHoaDon(),ds.get(i).getNgayXuatHoaDon(),ds.get(i).getTongTien(),ds.get(i).getMaHoiVien(),ds.get(i).getMaCoSo(),trangThai});
                 }
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
+
                 bang.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e)
                     {
@@ -2599,6 +2655,10 @@ public class GUIAdmin{
                         }
                     }
                 });
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 them.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e)
                     {
@@ -2794,6 +2854,10 @@ public class GUIAdmin{
                 model.addRow(new Object[]{
                     ds.get(i).getMaHoiVien(), ds.get(i).getMaCoSo(), ds.get(i).getHanTap()
                 });
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 bang.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e)
                     {
@@ -2809,6 +2873,10 @@ public class GUIAdmin{
                         }
                     }
                 });
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
                 them.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e)
@@ -3007,7 +3075,6 @@ public class GUIAdmin{
 
                 DefaultTableModel model = new DefaultTableModel();
                 JTable bang = new JTable(); 
-
                 model.addColumn("Mã Thiết Bị Cơ Sở");
                 model.addColumn("Mã Cơ Sở");
                 model.addColumn("Mã Thiết Bị");
@@ -3021,7 +3088,13 @@ public class GUIAdmin{
                         ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
                     });
                 }
+                
                 bang.setModel(model);
+
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 bang.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e)
                     {
@@ -3139,7 +3212,7 @@ public class GUIAdmin{
                 });
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
-                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-270);
+                scrollPane.setBounds(5, 260, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
                 rightPanel.add(scrollPane);
             }
             public void QuanLyBangDichVu(ArrayList<dichVu> ds) {
@@ -3271,6 +3344,10 @@ public class GUIAdmin{
                 	});
                 }
                 bang.setModel(model);
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 bang.addMouseListener(new MouseListener() {
 					
 					@Override
@@ -3524,9 +3601,9 @@ public class GUIAdmin{
                 
                 JLabel jlb_gioitinh = new JLabel("Giới tính: ");
                 JRadioButton male = new JRadioButton("Nam");
-                male.setBackground(Color.WHITE);
+                male.setBackground(new Color(119, 230, 163));
                 JRadioButton female = new JRadioButton("Nữ");
-                female.setBackground(Color.WHITE);
+                female.setBackground(new Color(119, 230, 163));
                 jlb_gioitinh.setFont(f);
                 male.setFont(f);
                 female.setFont(f);
@@ -3638,6 +3715,10 @@ public class GUIAdmin{
                 	});
                 }
                 bang.setModel(model);
+                bang.getTableHeader().setReorderingAllowed(false);
+                for (int i = 0; i < bang.getColumnCount(); i++) {
+                    bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
+                }
                 bang.addMouseListener(new MouseListener() {
 					
 					@Override

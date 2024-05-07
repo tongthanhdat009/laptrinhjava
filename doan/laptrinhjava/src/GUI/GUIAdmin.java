@@ -102,9 +102,28 @@ public class GUIAdmin{
     
     //dòng cuối leftPanel
     JLabel footerLeft = new JLabel("Designed By: SGU FITNESS CLUB");
+
     //font
     Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
+    //màu cho combobox
+    ListCellRenderer<? super String> renderer = new DefaultListCellRenderer() {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            // Đặt màu cho phần tử trong JComboBox
+            if (isSelected) {
+                component.setForeground(new Color(140, 82, 255)); // Màu chữ khi được chọn
+                component.setBackground(Color.WHITE); // Màu nền khi được chọn
+            } else {
+                component.setForeground(Color.BLACK); // Màu chữ mặc định
+                component.setBackground(Color.WHITE); // Màu nền mặc định
+            }
+
+            return component;
+        }
+    };
     public GUIAdmin(){    
         //main frame
         adminFrame.setSize(width, height);
@@ -723,28 +742,10 @@ public class GUIAdmin{
         String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở","Hội viên cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
-        danhSachBox.setBounds(680,50,100,30);
+        danhSachBox.setBounds(680,50,130,30);
         JLabel chonDanhSachLabel = new JLabel("Chọn danh sách: ");
         chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
         chonDanhSachLabel.setBounds(430, 50, 300,35);
-        //thêm màu cho combobox
-        ListCellRenderer<? super String> renderer = new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                // Đặt màu cho phần tử trong JComboBox
-                if (isSelected) {
-                    component.setForeground(new Color(140, 82, 255)); // Màu chữ khi được chọn
-                    component.setBackground(Color.WHITE); // Màu nền khi được chọn
-                } else {
-                    component.setForeground(Color.BLACK); // Màu chữ mặc định
-                    component.setBackground(Color.WHITE); // Màu nền mặc định
-                }
-
-                return component;
-            }
-        };
         danhSachBox.setRenderer(renderer);
         danhSachBox.setBackground(Color.white);
         danhSachBox.addActionListener(new ActionListener() {
@@ -1934,7 +1935,11 @@ public class GUIAdmin{
                             String[] tempStr = {"Dụng cụ", "Thực phẩm chức năng"};
                             @SuppressWarnings("rawtypes")
                             JComboBox tempCB = new JComboBox<String>(tempStr);
-                            tempCB.setPreferredSize(new Dimension(150,20));
+                            tempCB.setPreferredSize(new Dimension(150,30));
+                            tempCB.setFont(new Font("Times New Roman",1,16)); 
+                            tempCB.setRenderer(renderer);
+                            tempCB.setBackground(Color.WHITE);
+
                             tempPanel.add(tempCB);
                             bangChinhSua.add(tempPanel);
                             continue;
@@ -2254,16 +2259,49 @@ public class GUIAdmin{
             public void QuanLyHoaDon(ArrayList<HoaDon> ds, Vector<String> dsMaCoSo)
             {
                 xoaHienThi(rightPanel);
-                JButton them = new JButton("Thêm");
-                JButton xoa = new JButton("Xóa");
-                JButton sua = new JButton("Sửa");
-                JButton timKiem = new JButton("Tìm Kiếm");
+                Font f = new Font("Times New Roman",Font.BOLD,17);
+            	JButton them = new JButton();
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                them.setPreferredSize(new Dimension (130,35));
+                them.setIcon(new ImageIcon(scaleThemBtnImg));
+                them.setHorizontalAlignment(SwingConstants.CENTER);
+                them.setBorder(null);
+
+            	JButton xoa  = new JButton();
+                xoa.setPreferredSize(new Dimension (110,35));
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                xoa.setPreferredSize(new Dimension (130,35));
+                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+                xoa.setHorizontalAlignment(SwingConstants.CENTER);
+                xoa.setBorder(null);
+
+            	JButton sua = new JButton();
+                sua.setPreferredSize(new Dimension (110,35));
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                sua.setPreferredSize(new Dimension (130,35));
+                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+                sua.setHorizontalAlignment(SwingConstants.CENTER);
+                sua.setBorder(null);
+
+            	JButton timKiem = new JButton();
+                timKiem.setPreferredSize(new Dimension (110,35));
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                timKiem.setPreferredSize(new Dimension (130,35));
+                timKiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
+                timKiem.setHorizontalAlignment(SwingConstants.CENTER);
+                timKiem.setBorder(null);
+
                 JPanel chucNang = new JPanel(new FlowLayout());
                 chucNang.add(them);
                 chucNang.add(xoa);
                 chucNang.add(sua);
                 chucNang.add(timKiem);
-                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                chucNang.setBounds(5,100,rightPanel.getWidth()-5,38);
+                chucNang.setBackground(Color.WHITE);
                 rightPanel.add(chucNang);
 
                 JPanel nhapLieu = new JPanel(null);
@@ -2278,7 +2316,10 @@ public class GUIAdmin{
                 JTextField tfNgayXuatHoaDon = new JTextField();
                 JTextField tftongTien = new JTextField();
                 JTextField tfMaHV = new JTextField();
+                @SuppressWarnings("rawtypes")
                 JComboBox cbMaCoSO = new JComboBox(dsMaCoSo);
+                cbMaCoSO.setRenderer(renderer);
+                cbMaCoSO.setBackground(Color.white);
                 JTextField tfTrangThai = new JTextField();
                 int x = 0;
                 lbMaHoaDon.setBounds(x,0,80,30); x+=80;
@@ -2460,22 +2501,55 @@ public class GUIAdmin{
                     }
                 });
                 JScrollPane scrollPane = new JScrollPane(bang);
-                scrollPane.setBounds(5, 240, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                scrollPane.setBounds(5, 240, rightPanel.getWidth()-20, rightPanel.getHeight()-275);
                 rightPanel.add(scrollPane);
             }
             public void QuanLyChiTietHoaDon(ArrayList<ChiTietHoaDon> ds)
             {
                 xoaHienThi(rightPanel);
-                JButton them = new JButton("Thêm");
-                JButton xoa = new JButton("Xóa");
-                JButton sua = new JButton("Sửa");
-                JButton timKiem = new JButton("Tìm Kiếm");
+                Font f = new Font("Times New Roman",Font.BOLD,17);
+            	JButton them = new JButton();
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                them.setPreferredSize(new Dimension (130,35));
+                them.setIcon(new ImageIcon(scaleThemBtnImg));
+                them.setHorizontalAlignment(SwingConstants.CENTER);
+                them.setBorder(null);
+
+            	JButton xoa  = new JButton();
+                xoa.setPreferredSize(new Dimension (110,35));
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                xoa.setPreferredSize(new Dimension (130,35));
+                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+                xoa.setHorizontalAlignment(SwingConstants.CENTER);
+                xoa.setBorder(null);
+
+            	JButton sua = new JButton();
+                sua.setPreferredSize(new Dimension (110,35));
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                sua.setPreferredSize(new Dimension (130,35));
+                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+                sua.setHorizontalAlignment(SwingConstants.CENTER);
+                sua.setBorder(null);
+
+            	JButton timKiem = new JButton();
+                timKiem.setPreferredSize(new Dimension (110,35));
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                timKiem.setPreferredSize(new Dimension (130,35));
+                timKiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
+                timKiem.setHorizontalAlignment(SwingConstants.CENTER);
+                timKiem.setBorder(null);
+
                 JPanel chucNang = new JPanel(new FlowLayout());
                 chucNang.add(them);
                 chucNang.add(xoa);
                 chucNang.add(sua);
                 chucNang.add(timKiem);
-                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                chucNang.setBounds(5,100,rightPanel.getWidth()-5,38);
+                chucNang.setBackground(Color.WHITE);
                 rightPanel.add(chucNang);
 
                 JPanel nhapLieu = new JPanel(null);
@@ -2594,28 +2668,65 @@ public class GUIAdmin{
                 });
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
-                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-270);
                 rightPanel.add(scrollPane);
             }
             public void QuanLyHoiVienCoSo(ArrayList<HoiVienCoSo> ds, Vector<String> dsCoSo)
             {
                 xoaHienThi(rightPanel);
-                JButton them = new JButton("Thêm");
-                JButton xoa = new JButton("Xóa");
-                JButton sua = new JButton("Sửa");
-                JButton timKiem = new JButton("Tìm Kiếm");
+                Font f = new Font("Times New Roman",Font.BOLD,17);
+            	JButton them = new JButton();
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                them.setPreferredSize(new Dimension (130,35));
+                them.setIcon(new ImageIcon(scaleThemBtnImg));
+                them.setHorizontalAlignment(SwingConstants.CENTER);
+                them.setBorder(null);
+
+            	JButton xoa  = new JButton();
+                xoa.setPreferredSize(new Dimension (110,35));
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                xoa.setPreferredSize(new Dimension (130,35));
+                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+                xoa.setHorizontalAlignment(SwingConstants.CENTER);
+                xoa.setBorder(null);
+
+            	JButton sua = new JButton();
+                sua.setPreferredSize(new Dimension (110,35));
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                sua.setPreferredSize(new Dimension (130,35));
+                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+                sua.setHorizontalAlignment(SwingConstants.CENTER);
+                sua.setBorder(null);
+
+            	JButton timKiem = new JButton();
+                timKiem.setPreferredSize(new Dimension (110,35));
+                timKiem.setPreferredSize(new Dimension (110,35));
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                timKiem.setPreferredSize(new Dimension (130,35));
+                timKiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
+                timKiem.setHorizontalAlignment(SwingConstants.CENTER);
+                timKiem.setBorder(null);
+
                 JPanel chucNang = new JPanel(new FlowLayout());
                 chucNang.add(them);
                 chucNang.add(xoa);
                 chucNang.add(sua);
                 chucNang.add(timKiem);
-                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                chucNang.setBounds(5,100,rightPanel.getWidth()-5,38);
+                chucNang.setBackground(Color.WHITE);
                 rightPanel.add(chucNang);
 
                 JLabel lbmaHoiVien = new JLabel("Mã hội viên: ");
                 JTextField tfMaHoiVien = new JTextField();
                 JLabel lbMaCoSo = new JLabel("Mã Cơ Sở: ");
+                @SuppressWarnings("rawtypes")
                 JComboBox cbMaCoSo = new JComboBox<>(dsCoSo);
+                cbMaCoSo.setRenderer(renderer);
+                cbMaCoSo.setBackground(Color.WHITE);
                 JLabel lbHanTap = new JLabel("Hạn tập: ");
 
                 Vector<String> day = new Vector<>();
@@ -2630,13 +2741,21 @@ public class GUIAdmin{
                 for(int i=1990;i<=2100;i++)
                 year.add(String.valueOf(i));
                 year.add(0,"YYYY");
+                
                 @SuppressWarnings("rawtypes")
                 JComboBox cbDay = new JComboBox<>(day);
+                cbDay.setRenderer(renderer);
+                cbDay.setBackground(Color.white);
+                
                 @SuppressWarnings("rawtypes")
                 JComboBox cbMonth = new JComboBox<>(month);
+                cbMonth.setRenderer(renderer);
+                cbMonth.setBackground(Color.white);
+                
                 @SuppressWarnings("rawtypes")
                 JComboBox cbYear = new JComboBox<>(year);
-
+                cbYear.setRenderer(renderer);
+                cbYear.setBackground(Color.white);
 
                 JPanel nhapLieu = new JPanel(null);
                 nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 30);
@@ -2781,23 +2900,57 @@ public class GUIAdmin{
                 
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
-                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-270);
                 rightPanel.add(scrollPane);
             }
             
             public void QuanLyBangThietBiCoSo(ArrayList<ThietBiCoSo> ds)
             {
                 xoaHienThi(rightPanel);
-                JButton them = new JButton("Thêm");
-                JButton xoa = new JButton("Xóa");
-                JButton sua = new JButton("Sửa");
-                JButton timKiem = new JButton("Tìm Kiếm");
+                Font f = new Font("Times New Roman",Font.BOLD,17);
+            	JButton them = new JButton();
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                them.setPreferredSize(new Dimension (130,35));
+                them.setIcon(new ImageIcon(scaleThemBtnImg));
+                them.setHorizontalAlignment(SwingConstants.CENTER);
+                them.setBorder(null);
+
+            	JButton xoa  = new JButton();
+                xoa.setPreferredSize(new Dimension (110,35));
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                xoa.setPreferredSize(new Dimension (130,35));
+                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+                xoa.setHorizontalAlignment(SwingConstants.CENTER);
+                xoa.setBorder(null);
+
+            	JButton sua = new JButton();
+                sua.setPreferredSize(new Dimension (110,35));
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                sua.setPreferredSize(new Dimension (130,35));
+                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+                sua.setHorizontalAlignment(SwingConstants.CENTER);
+                sua.setBorder(null);
+
+            	JButton timKiem = new JButton();
+                timKiem.setPreferredSize(new Dimension (110,35));
+                timKiem.setPreferredSize(new Dimension (110,35));
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                timKiem.setPreferredSize(new Dimension (130,35));
+                timKiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
+                timKiem.setHorizontalAlignment(SwingConstants.CENTER);
+                timKiem.setBorder(null);
+
                 JPanel chucNang = new JPanel(new FlowLayout());
                 chucNang.add(them);
                 chucNang.add(xoa);
                 chucNang.add(sua);
                 chucNang.add(timKiem);
-                chucNang.setBounds(5,120,rightPanel.getWidth()-5,35);
+                chucNang.setBounds(5,100,rightPanel.getWidth()-5,38);
+                chucNang.setBackground(Color.WHITE);
                 rightPanel.add(chucNang);
 
                 JLabel maThietBiCoSo = new JLabel("Mã Thiết Bị Cơ Sở: ");
@@ -2978,23 +3131,56 @@ public class GUIAdmin{
                 });
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
-                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-300);
+                scrollPane.setBounds(5, 230, rightPanel.getWidth()-20, rightPanel.getHeight()-270);
                 rightPanel.add(scrollPane);
             }
             public void QuanLyBangDichVu(ArrayList<dichVu> ds) {
             	xoaHienThi(rightPanel);
             	
             	Font f = new Font("Times New Roman",Font.BOLD,17);
-            	JButton them = new JButton("Thêm");
-            	JButton xoa  = new JButton("Xóa");
-            	JButton sua = new JButton("Sửa");
-            	JButton timkiem = new JButton("Tìm Kiếm");
+            	JButton them = new JButton();
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                them.setPreferredSize(new Dimension (130,35));
+                them.setIcon(new ImageIcon(scaleThemBtnImg));
+                them.setHorizontalAlignment(SwingConstants.CENTER);
+                them.setBorder(null);
+
+            	JButton xoa  = new JButton();
+                xoa.setPreferredSize(new Dimension (110,35));
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                xoa.setPreferredSize(new Dimension (130,35));
+                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+                xoa.setHorizontalAlignment(SwingConstants.CENTER);
+                xoa.setBorder(null);
+
+            	JButton sua = new JButton();
+                sua.setPreferredSize(new Dimension (110,35));
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                sua.setPreferredSize(new Dimension (130,35));
+                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+                sua.setHorizontalAlignment(SwingConstants.CENTER);
+                sua.setBorder(null);
+
+            	JButton timkiem = new JButton();
+                timkiem.setPreferredSize(new Dimension (110,35));
+                timkiem.setPreferredSize(new Dimension (110,35));
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                timkiem.setPreferredSize(new Dimension (130,35));
+                timkiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
+                timkiem.setHorizontalAlignment(SwingConstants.CENTER);
+                timkiem.setBorder(null);
+
             	JPanel chucnang = new JPanel(new FlowLayout());
             	chucnang.add(them);
             	chucnang.add(xoa);
             	chucnang.add(sua);
             	chucnang.add(timkiem);
-            	chucnang.setBounds(5,120,rightPanel.getWidth()-5,35);
+            	chucnang.setBounds(5,100,rightPanel.getWidth()-5,38);
+                chucnang.setBackground(Color.WHITE);
                 rightPanel.add(chucnang);
                 
                 JLabel jlb_madv = new JLabel("Mã dịch vụ: ");
@@ -3236,7 +3422,7 @@ public class GUIAdmin{
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
                 bang.setRowHeight(100);
-                scrollPane.setBounds(5, 350, rightPanel.getWidth()-5, rightPanel.getHeight()-420);
+                scrollPane.setBounds(5, 350, rightPanel.getWidth()-5, rightPanel.getHeight()-390);
                 rightPanel.add(scrollPane);
             }
           
@@ -3244,16 +3430,49 @@ public class GUIAdmin{
             	xoaHienThi(rightPanel);
             	
             	Font f = new Font("Times New Roman",Font.BOLD,17);
-            	JButton them = new JButton("Thêm");
-            	JButton xoa  = new JButton("Xóa");
-            	JButton sua = new JButton("Sửa");
-            	JButton timkiem = new JButton("Tìm Kiếm");
+            	JButton them = new JButton();
+                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
+                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                them.setPreferredSize(new Dimension (130,35));
+                them.setIcon(new ImageIcon(scaleThemBtnImg));
+                them.setHorizontalAlignment(SwingConstants.CENTER);
+                them.setBorder(null);
+
+            	JButton xoa  = new JButton();
+                xoa.setPreferredSize(new Dimension (110,35));
+                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                xoa.setPreferredSize(new Dimension (130,35));
+                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+                xoa.setHorizontalAlignment(SwingConstants.CENTER);
+                xoa.setBorder(null);
+
+            	JButton sua = new JButton();
+                sua.setPreferredSize(new Dimension (110,35));
+                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
+                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                sua.setPreferredSize(new Dimension (130,35));
+                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+                sua.setHorizontalAlignment(SwingConstants.CENTER);
+                sua.setBorder(null);
+
+            	JButton timkiem = new JButton();
+                timkiem.setPreferredSize(new Dimension (110,35));
+                timkiem.setPreferredSize(new Dimension (110,35));
+                ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
+                Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+                timkiem.setPreferredSize(new Dimension (130,35));
+                timkiem.setIcon(new ImageIcon(scaletimKiemBtnImg));
+                timkiem.setHorizontalAlignment(SwingConstants.CENTER);
+                timkiem.setBorder(null);
+
             	JPanel chucnang = new JPanel(new FlowLayout());
             	chucnang.add(them);
             	chucnang.add(xoa);
             	chucnang.add(sua);
             	chucnang.add(timkiem);
-            	chucnang.setBounds(5,120,rightPanel.getWidth()-5,35);
+            	chucnang.setBounds(5,100,rightPanel.getWidth()-5,40);
+                chucnang.setBackground(Color.white);
                 rightPanel.add(chucnang);
                 
                 JLabel jlb_manv = new JLabel("Mã nhân viên: ");
@@ -3266,7 +3485,9 @@ public class GUIAdmin{
                 
                 JLabel jlb_gioitinh = new JLabel("Giới tính: ");
                 JRadioButton male = new JRadioButton("Nam");
+                male.setBackground(Color.WHITE);
                 JRadioButton female = new JRadioButton("Nữ");
+                female.setBackground(Color.WHITE);
                 jlb_gioitinh.setFont(f);
                 male.setFont(f);
                 female.setFont(f);
@@ -3590,7 +3811,7 @@ public class GUIAdmin{
 
                 JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setViewportView(bang);
-                scrollPane.setBounds(5, 350, rightPanel.getWidth()-20, rightPanel.getHeight()-420);
+                scrollPane.setBounds(5, 350, rightPanel.getWidth()-20, rightPanel.getHeight()-390);
                 rightPanel.add(scrollPane);
             }
             

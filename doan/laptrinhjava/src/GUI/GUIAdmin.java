@@ -813,12 +813,11 @@ public class GUIAdmin{
                     bangChinhSua.setBackground(new Color(119, 230, 163));
                     
                     Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
-                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
-                    
-                    for(int i=0;i<tenCotCS.size();i++){
-                        bangChinhSua.setBorder(titledBorder);
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                    titledBorder.setTitleFont(italicBoldFont);
+                    bangChinhSua.setBorder(titledBorder);
 
+                    for(int i=0;i<tenCotCS.size();i++){
                         JPanel tempPanel = new JPanel();
                         TitledBorder titledBorder1 = BorderFactory.createTitledBorder(blackBorder,tenCotCS.get(i));
                         titledBorder1.setTitleFont(titledBorder.getTitleFont().deriveFont(18f));
@@ -1145,10 +1144,11 @@ public class GUIAdmin{
                     bangChinhSua.setBackground(new Color(119, 230, 163));
                     
                     Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
-                    
-                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                    titledBorder.setTitleFont(italicBoldFont);
                     bangChinhSua.setBorder(titledBorder);
+
+
                     for(int i=0;i<tenCotHV.size();i++){
                         JPanel tempPanel = new JPanel();
                         TitledBorder titledBorder1 = BorderFactory.createTitledBorder(blackBorder,tenCotHV.get(i));
@@ -1555,10 +1555,10 @@ public class GUIAdmin{
                     bangChinhSua.setBackground(new Color(119, 230, 163));
                     
                     Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
-                    
-                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                    titledBorder.setTitleFont(italicBoldFont);
                     bangChinhSua.setBorder(titledBorder);
+
                     for(int i=0;i<tenCotTB.size();i++){
                         JPanel tempPanel = new JPanel();
                         TitledBorder titledBorder1 = BorderFactory.createTitledBorder(blackBorder,tenCotTB.get(i));
@@ -1905,9 +1905,8 @@ public class GUIAdmin{
                     bangChinhSua.setBackground(new Color(119, 230, 163));
                     
                     Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Thông tin chi tiết");
-                    
-                    titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(25f));
+                    TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                    titledBorder.setTitleFont(italicBoldFont);
                     bangChinhSua.setBorder(titledBorder);
                    
                     for(int i=0;i<tenCotHH.size();i++){
@@ -2297,8 +2296,13 @@ public class GUIAdmin{
                 rightPanel.add(chucNang);
 
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-4, 70);
-                nhapLieu.setBackground(Color.WHITE);
+                nhapLieu.setBounds(2, 150, rightPanel.getWidth()-20, 150);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBackground(new Color(119, 230, 163));
+                nhapLieu.setBorder(titledBorder);
+
                 JLabel lbMaHoaDon = new JLabel("Mã hóa đơn: ");
                 JLabel lbNgayXuatHoaDon = new JLabel("Ngày xuất hóa đơn: ");
                 JLabel lbtongTien = new JLabel("Tổng tiền: ");
@@ -2314,24 +2318,24 @@ public class GUIAdmin{
                 cbMaCoSO.setRenderer(renderer);
                 cbMaCoSO.setBackground(Color.white);
                 JTextField tfTrangThai = new JTextField();
-                int x = 0;
-                lbMaHoaDon.setBounds(x,0,80,30); x+=80;
-                tfMaHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
-                lbNgayXuatHoaDon.setBounds(x+50, 0, 120, 30); x+=170;
-                tfNgayXuatHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
-                lbtongTien.setBounds(x+50,0,70,30); x+=120;
-                tftongTien.setBounds(x+10, 0, 100, 30); x+=110;
-                lbMaHV.setBounds(x+50, 0, 80, 30); x+=130;
-                tfMaHV.setBounds(x+10, 0, 100, 30); x+=110;
-                lbMaCoSO.setBounds(x+50, 0, 70, 30); x+=120;
-                cbMaCoSO.setBounds(x+10, 0, 100, 30); x+=110;
-                lbTrangThai.setBounds(450, 30, 80, 35);
+                int x = 10;
+                lbMaHoaDon.setBounds(x,40,80,30); x+=80;
+                tfMaHoaDon.setBounds(x+10, 40, 100, 30); x+=105;
+                lbNgayXuatHoaDon.setBounds(x+50, 40, 120, 30); x+=165;
+                tfNgayXuatHoaDon.setBounds(x+10, 40, 100, 30); x+=105;
+                lbtongTien.setBounds(x+50,40,70,30); x+=115;
+                tftongTien.setBounds(x+10, 40, 100, 30); x+=105;
+                lbMaHV.setBounds(x+50, 40, 80, 30); x+=125;
+                tfMaHV.setBounds(x+10, 40, 100, 30); x+=105;
+                lbMaCoSO.setBounds(x+50, 40, 70, 30); x+=115;
+                cbMaCoSO.setBounds(x+10, 40, 100, 30); x+=105;
+                lbTrangThai.setBounds(450, 100, 80, 35);
                 JRadioButton daduyet = new JRadioButton("Đã duyệt");
-                daduyet.setBounds(540, 30, 100, 35);
-                daduyet.setBackground(Color.white);
+                daduyet.setBounds(540, 100, 100, 35);
+                daduyet.setBackground(new Color(119, 230, 163));
                 JRadioButton chuaduyet = new JRadioButton("Chưa duyệt");
-                chuaduyet.setBounds(650, 30, 100, 35);
-                chuaduyet.setBackground(Color.white);
+                chuaduyet.setBounds(650, 100, 100, 35);
+                chuaduyet.setBackground(new Color(119, 230, 163));
                 ButtonGroup bg = new ButtonGroup();
                 bg.add(daduyet);
                 bg.add(chuaduyet);
@@ -2493,7 +2497,7 @@ public class GUIAdmin{
                     }
                 });
                 JScrollPane scrollPane = new JScrollPane(bang);
-                scrollPane.setBounds(5, 240, rightPanel.getWidth()-20, rightPanel.getHeight()-275);
+                scrollPane.setBounds(5, 300, rightPanel.getWidth()-20, rightPanel.getHeight()-340);
                 rightPanel.add(scrollPane);
             }
             public void QuanLyChiTietHoaDon(ArrayList<ChiTietHoaDon> ds)
@@ -2545,8 +2549,12 @@ public class GUIAdmin{
                 rightPanel.add(chucNang);
 
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-4, 30);
-                nhapLieu.setBackground(Color.WHITE);
+                nhapLieu.setBounds(2, 150, rightPanel.getWidth()-20, 80);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBackground(new Color(119, 230, 163));
+                nhapLieu.setBorder(titledBorder);
 
                 JLabel maHoaDon = new JLabel("Mã hóa đơn: ");
                 JLabel maHangHoa = new JLabel("Mã hàng hóa: ");
@@ -2555,12 +2563,12 @@ public class GUIAdmin{
                 JTextField tfMaHangHoa = new JTextField();
                 JTextField tfSoLuong = new JTextField();
                 int x=250;
-                maHoaDon.setBounds(x, 0, 80, 30); x+=80;
-                tfMaHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
-                maHangHoa.setBounds(x+50, 0, 80, 30); x+=130;
-                tfMaHangHoa.setBounds(x+10, 0, 100, 30); x+=110;
-                soLuong.setBounds(x+50, 0, 60, 30); x+=110;
-                tfSoLuong.setBounds(x+10, 0, 100, 30); 
+                maHoaDon.setBounds(x, 30, 80, 30); x+=80;
+                tfMaHoaDon.setBounds(x+10, 30, 100, 30); x+=110;
+                maHangHoa.setBounds(x+50, 30, 80, 30); x+=130;
+                tfMaHangHoa.setBounds(x+10, 30, 100, 30); x+=110;
+                soLuong.setBounds(x+50, 30, 60, 30); x+=110;
+                tfSoLuong.setBounds(x+10, 30, 100, 30); 
 
                 nhapLieu.add(maHoaDon);
                 nhapLieu.add(tfMaHoaDon);
@@ -2750,18 +2758,22 @@ public class GUIAdmin{
                 cbYear.setBackground(Color.white);
 
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 30);
-                nhapLieu.setBackground(Color.white);
-                
+                nhapLieu.setBounds(2, 150, rightPanel.getWidth()-20, 75);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBackground(new Color(119, 230, 163));
+                nhapLieu.setBorder(titledBorder);
+
                 int x = 250;
-                lbmaHoiVien.setBounds(x, 0, 80, 30); x+=80;
-                tfMaHoiVien.setBounds(x+10, 0, 100, 30); x+=110;
-                lbMaCoSo.setBounds(x+50, 0, 80, 30); x+=130;
-                cbMaCoSo.setBounds(x+10, 0, 100, 30); x+=110;
-                lbHanTap.setBounds(x+50, 0, 60, 30); x+=110;
-                cbYear.setBounds(x+10, 0, 70, 30); x+=80;
-                cbMonth.setBounds(x+5, 0, 50, 30); x+=55;
-                cbDay.setBounds(x+5, 0, 50, 30);
+                lbmaHoiVien.setBounds(x, 30, 80, 30); x+=80;
+                tfMaHoiVien.setBounds(x+10, 30, 100, 30); x+=110;
+                lbMaCoSo.setBounds(x+50, 30, 80, 30); x+=130;
+                cbMaCoSo.setBounds(x+10, 30, 100, 30); x+=110;
+                lbHanTap.setBounds(x+50, 30, 60, 30); x+=110;
+                cbYear.setBounds(x+10, 30, 70, 30); x+=80;
+                cbMonth.setBounds(x+5, 30, 50, 30); x+=55;
+                cbDay.setBounds(x+5, 30, 50, 30);
                 nhapLieu.add(lbmaHoiVien);
                 nhapLieu.add(tfMaHoiVien);
                 nhapLieu.add(lbMaCoSo);
@@ -2960,21 +2972,25 @@ public class GUIAdmin{
                 JLabel ngayNhap = new JLabel("Ngày Nhập: ");
                 JTextField textNgayNhap = new JTextField();
 
-                int x = 10;
+                int x = 5;
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 30);
-                nhapLieu.setBackground(Color.white);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBounds(2, 150, rightPanel.getWidth()-19, 100);
+                nhapLieu.setBackground(new Color(119, 230, 163));
+                nhapLieu.setBorder(titledBorder);
 
-                maThietBiCoSo.setBounds(x, 0, 120, 30); x+=120;
-                textMaThietBiCoSo.setBounds(x+10, 0, 100, 30); x+=110;
-                maThietBi.setBounds(x+50, 0, 70, 30); x+=120;
-                textMaThietBi.setBounds(x+10, 0, 100, 30); x+=110;
-                maCoSo.setBounds(x+50, 0, 70, 30); x+=120;
-                textMaCoSo.setBounds(x+10, 0, 100, 30); x+=110;
-                ngayNhap.setBounds(x+50, 0, 70, 30); x+=120;
-                textNgayNhap.setBounds(x+10,0,100,30); x+=110;
-                hanBaoHanh.setBounds(x+50,0,90,30); x+=140;
-                textHanBaoHanh.setBounds(x+10, 0, 100, 30);
+                maThietBiCoSo.setBounds(x, 50, 120, 30); x+=120;
+                textMaThietBiCoSo.setBounds(x+10, 50, 100, 30); x+=110;
+                maThietBi.setBounds(x+50, 50, 70, 30); x+=120;
+                textMaThietBi.setBounds(x+10, 50, 100, 30); x+=110;
+                maCoSo.setBounds(x+50, 50, 70, 30); x+=120;
+                textMaCoSo.setBounds(x+10, 50, 100, 30); x+=110;
+                ngayNhap.setBounds(x+50, 50, 70, 30); x+=120;
+                textNgayNhap.setBounds(x+10,50,100,30); x+=110;
+                hanBaoHanh.setBounds(x+50,50,90,30); x+=140;
+                textHanBaoHanh.setBounds(x+10, 50, 100, 30);
 
                 nhapLieu.add(maThietBiCoSo);
                 nhapLieu.add(textMaThietBiCoSo);
@@ -3200,22 +3216,26 @@ public class GUIAdmin{
                 jlb_img.setFont(f);
                 
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 100);
-                nhapLieu.setBackground(Color.white);
+                nhapLieu.setBounds(2, 175, rightPanel.getWidth()-20, 175);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBorder(titledBorder);
+                nhapLieu.setBackground(new Color(119, 230, 163));
+
+                jlb_madv.setBounds(10, 40, 120, 30);
+                jtf_madv.setBounds(150, 40, 150, 30);
+                jlb_tendv.setBounds(410,40,120,30);
+                jtf_tendv.setBounds(550,40,150,30);
+                jlb_giadv.setBounds(810,40,120,30);
+                jtf_giadv.setBounds(950,40,150,30);
                 
-                jlb_madv.setBounds(10, 0, 120, 30);
-                jtf_madv.setBounds(150, 0, 150, 30);
-                jlb_tendv.setBounds(410,0,120,30);
-                jtf_tendv.setBounds(550,0,150,30);
-                jlb_giadv.setBounds(810,0,120,30);
-                jtf_giadv.setBounds(950,0,150,30);
-                
-                jlb_thoigian.setBounds(10, 60, 150, 30);
-                jtf_thoigian.setBounds(150, 60, 150, 30);
-                jlb_mota.setBounds(410,60,150,30);
-                jtf_mota.setBounds(550,60,150,30);
-                jlb_img.setBounds(810,60,150,30);
-                jtf_img.setBounds(950,60,150,30);
+                jlb_thoigian.setBounds(10, 120, 150, 30);
+                jtf_thoigian.setBounds(150, 120, 150, 30);
+                jlb_mota.setBounds(410,120,150,30);
+                jtf_mota.setBounds(550,120,150,30);
+                jlb_img.setBounds(810,120,150,30);
+                jtf_img.setBounds(950,120,150,30);
                 
                 nhapLieu.add(jlb_madv);
                 nhapLieu.add(jtf_madv);
@@ -3546,30 +3566,34 @@ public class GUIAdmin{
                 jlb_luong.setFont(f);
                 
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBounds(2, 170, rightPanel.getWidth()-2, 150);
-                nhapLieu.setBackground(Color.WHITE);
+                nhapLieu.setBounds(2, 175, rightPanel.getWidth()-20, 175);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBorder(titledBorder);
+                nhapLieu.setBackground(new Color(119, 230, 163));
 
-                jlb_manv.setBounds(10, 0, 120, 30); 
-                jtf_manv.setBounds(130, 0, 120, 30); 
-                jlb_hoten.setBounds(280, 0, 120, 30); 
-                jtf_hoten.setBounds(380, 0, 120, 30); 
-                jlb_gioitinh.setBounds(530, 0, 90, 30);
-                male.setBounds(630, 0, 70, 30); 
-                female.setBounds(720, 0, 60, 30); 
-                jlb_date.setBounds(790, 0, 90, 30); 
-                jtf_date.setBounds(890,0,120,30); 
+                jlb_manv.setBounds(10, 50, 120, 30); 
+                jtf_manv.setBounds(130, 50, 120, 30); 
+                jlb_hoten.setBounds(280, 50, 120, 30); 
+                jtf_hoten.setBounds(380, 50, 120, 30); 
+                jlb_gioitinh.setBounds(530, 50, 90, 30);
+                male.setBounds(630, 50, 70, 30); 
+                female.setBounds(720, 50, 60, 30); 
+                jlb_date.setBounds(790, 50, 90, 30); 
+                jtf_date.setBounds(890,50,120,30); 
                 
-                jlb_sdt.setBounds(10,50,120,30); 
-                jtf_sdt.setBounds(130, 50, 120, 30);
-                jlb_cccd.setBounds(280,50,120,30);
-                jtf_cccd.setBounds(380,50,120,30);
-                jlb_macoso.setBounds(530,50,90,30);
-                jtf_macoso.setBounds(630,50,120,30);
-                jlb_vaitro.setBounds(790,50,90,30);
-                jtf_vaitro.setBounds(890,50,120,30);
+                jlb_sdt.setBounds(10,100,120,30); 
+                jtf_sdt.setBounds(130, 100, 120, 30);
+                jlb_cccd.setBounds(280,100,120,30);
+                jtf_cccd.setBounds(380,100,120,30);
+                jlb_macoso.setBounds(530,100,90,30);
+                jtf_macoso.setBounds(630,100,120,30);
+                jlb_vaitro.setBounds(790,100,90,30);
+                jtf_vaitro.setBounds(890,100,120,30);
                 
-                jlb_luong.setBounds(10,100,90,30);
-                jtf_luong.setBounds(130,100,120,30);
+                jlb_luong.setBounds(10,140,90,30);
+                jtf_luong.setBounds(130,140,120,30);
                 
                 nhapLieu.add(jlb_manv);
                 nhapLieu.add(jtf_manv);

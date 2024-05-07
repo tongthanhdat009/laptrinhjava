@@ -16,6 +16,7 @@ import DAL.DataHoaDon;
 import DAL.DataHoaDonChiTiet;
 import DTO.ChiTietHoaDon;
 import DAL.DataHangHoa;
+import DAL.DataHangHoaCoSo;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
@@ -29,6 +30,7 @@ import DTO.ThietBiCoSo;
 import DTO.dichVu;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
+import DTO.hangHoaCoSo;
 
 public class BLLQuanLyDanhSach{
     private DataHoiVien dataHoiVien;
@@ -42,6 +44,7 @@ public class BLLQuanLyDanhSach{
     private DataHangHoa dataHangHoa;
     private DataNhanVien dataNhanVien;
     private DataDichVu dataDichVu;
+    private DataHangHoaCoSo dataHangHoaCoSo;
     public BLLQuanLyDanhSach(){
         dataHoiVien = new DataHoiVien();
         dataCoSo = new DataCoSo();
@@ -54,6 +57,7 @@ public class BLLQuanLyDanhSach{
         dataHangHoa = new DataHangHoa();
         dataDichVu = new DataDichVu();
         dataNhanVien = new DataNhanVien();
+        dataHangHoaCoSo = new DataHangHoaCoSo();
     }
     
     //danh sách hội viên
@@ -406,5 +410,32 @@ public class BLLQuanLyDanhSach{
     }
     public ArrayList<dichVu> timKiemDV (String madv){
     	return dataDichVu.timkiemDV(madv);
+    }
+    public ArrayList<hangHoaCoSo> layDSHangHoaCoSo()
+    {
+        return dataHangHoaCoSo.layDanhSachHangHoaCoSo();
+    }
+    public ArrayList<hangHoaCoSo> timKiemHangHoaCoSo(String maCoSo, String maHangHoa)
+    {
+        if(maHangHoa.equals("")) maHangHoa ="NULL";
+        if(maCoSo.equals("Chọn cơ sở")) maCoSo ="NULL";
+        return dataHangHoaCoSo.timKiem(maCoSo, maHangHoa);
+    }
+    public String themHangHoaCoSo(String maHangHoa, String maCoSo, int soLuong)
+    {
+        if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
+        if(soLuong <= 0) return "Số lượng không hợp lệ";
+        if(dataHangHoaCoSo.them(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
+        return "Bộ đã tồn tại";
+    }
+    public String xoaHangHoaCoSo(String maCoSo, String maHangHoa)
+    {
+        if(dataHangHoaCoSo.xoa(maCoSo, maHangHoa) == true) return "Thành công";
+        return "Bộ không tồn tại";
+    }
+    public String suaHangHoaCoSo(String maCoSo, String maHangHoa, int soLuong)
+    {
+        if(dataHangHoaCoSo.sua(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
+        return "Bộ không tồn tại";
     }
 }

@@ -4,31 +4,20 @@ public class hangHoaCoSo{
     private String maHangHoa;
     private int soLuong;
     private String maCoSo;
-    private int giaBan;
     
     //hàm khởi tạo
     hangHoaCoSo(){
         this.soLuong = 0;
-        this.giaBan = 0;
         this.maHangHoa = "";
         this.maCoSo = "";
     }
-    public hangHoaCoSo(String maCoSo, int soLuong, String maHangHoa, int giaBan){
+    public hangHoaCoSo(String maCoSo, int soLuong, String maHangHoa){
         setSoLuong(soLuong);
         setMaHangHoa(maHangHoa);
         setMaCoSo(maCoSo);
-        setGiaBan(giaBan);
     }
 
     //hàm get&set
-    public void setGiaBan(int giaBan){
-        if(!(giaBan<0)){
-            this.giaBan = giaBan;
-        }
-        else{
-            throw new IllegalArgumentException("Gia Ban Phai >= 0");
-        }
-    }
     public void setSoLuong(int soLuong){
         if(!(soLuong < 0))
             this.soLuong = soLuong;
@@ -58,8 +47,5 @@ public class hangHoaCoSo{
     }
     public String toString(){
         return this.maHangHoa + " " + this.maCoSo + " " + this.soLuong;  
-    }
-    public int getGiaBan() {
-        return this.giaBan;
     }
 }

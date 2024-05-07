@@ -34,8 +34,7 @@ public class DataHangHoaCoSo{
             while(rs.next())
             dsHHCS.add(new hangHoaCoSo(rs.getString(1),
                                     rs.getInt(2),
-                                    rs.getString(3),
-                                    rs.getInt(4)));
+                                    rs.getString(3)));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -45,16 +44,15 @@ public class DataHangHoaCoSo{
     public boolean sua(hangHoaCoSo a)
     {
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE HangHoaCoSo SET MaCoSo = ?, SoLuong = ?, MaHangHoa = ?, GiaBan = ? FROM HangHoaOCoSo Where MaCoSo = ? AND MaHangHoa = ?";
+        String truyVan = "UPDATE HangHoaOCoSo SET MaCoSo = ?, SoLuong = ?, MaHangHoa = ? FROM HangHoaOCoSo Where MaCoSo = ? AND MaHangHoa = ?";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
             statement.setString(1, a.getMaCoSo());
             statement.setInt(2, a.getSoLuong());
             statement.setString(3, a.getMaHangHoa());
-            statement.setInt(4, a.getGiaBan());
-            statement.setString(5, a.getMaCoSo());
-            statement.setString(6, a.getMaHangHoa());
+            statement.setString(4, a.getMaCoSo());
+            statement.setString(5, a.getMaHangHoa());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;
         } catch (Exception e) {
@@ -82,27 +80,28 @@ public class DataHangHoaCoSo{
 
     public ArrayList<hangHoaCoSo> timKiem(String maCoSo, String maHangHoa)
     {
-        String truyVan = "SELECT * FROM HangHoaOCoSo WHERE ";
+        String truyVan = "SELECT * FROM HangHoaOCoSo WHERE";
         ArrayList<String> s = new ArrayList<>();
         ArrayList<hangHoaCoSo> ds = new ArrayList<>();
         if(!maCoSo.equals("NULL"))
         {
-            truyVan+="MaCoSo = ? ";
+            truyVan+=" MaCoSo = ? AND";
             s.add(maCoSo);
         }
         if(!maHangHoa.equals("NULL"))
         {
-            truyVan+="MaHangHoa = ? ";
+            truyVan+=" MaHangHoa = ? ";
             s.add(maHangHoa);
         }
+        if(truyVan.endsWith(" AND")) truyVan = truyVan.substring(0, truyVan.length()-4);
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
             for(int i=1;i<=s.size();i++)
-            stmt.setString(i,s.get(i));
+            stmt.setString(i,s.get(i-1));
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
-            ds.add(new hangHoaCoSo(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getInt(4)));
+            ds.add(new hangHoaCoSo(rs.getString(1), rs.getInt(2), rs.getString(3)));
         } catch (Exception e) {
             System.out.println(e);   
         }
@@ -110,19 +109,18 @@ public class DataHangHoaCoSo{
     }
     public boolean them(hangHoaCoSo hhcs)
     {
-        String truyVan = "INSERT INTO HangHoaOCoSo (MaCoSo, SoLuong, MaHangHoa, GiaBan) VALUES (?, ?, ?, ?)";
+        String truyVan = "INSERT INTO HangHoaOCoSo (MaCoSo, SoLuong, MaHangHoa) VALUES (?, ?, ?)";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
             stmt.setString(1, hhcs.getMaCoSo());
             stmt.setInt(2,hhcs.getSoLuong());
             stmt.setString(3,hhcs.getMaHangHoa());
-            stmt.setInt(4,hhcs.getGiaBan());
             if(stmt.executeUpdate() > 0) return true;
         } catch (Exception e) {
             System.out.println(e);   
         }
-        return true;
+        return false;
     }
 
 }

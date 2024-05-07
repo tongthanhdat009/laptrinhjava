@@ -97,8 +97,13 @@ public class GUIAdmin{
     JLabel leftLabel = new JLabel();
         
     //tiêu đề phụ
-    JLabel subTitle = new JLabel("Chức năng");
+    JLabel subTitle = new JLabel("Quản lý");
+    JLabel subTitle2 = new JLabel("Thống kê");
     
+    //dòng cuối leftPanel
+    JLabel footerLeft = new JLabel("Designed By: SGU FITNESS CLUB");
+    //font
+    Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
     public GUIAdmin(){    
         //main frame
@@ -115,19 +120,22 @@ public class GUIAdmin{
 
         //left panel
         leftPanel.setBounds(0,0,(int)(width * 0.25),height);
-        leftPanel.setBackground(new Color(179, 177, 173));
+        leftPanel.setBackground(new Color(0, 191, 99));
         leftPanel.setLayout(null);
         
-        subTitle.setFont(new java.awt.Font("Times New Roman", 1, 35));
-        
+        // subTitle.setFont(new java.awt.Font("Times New Roman", 1, 35));
+        // subTitle2.setFont(new java.awt.Font("Times New Roman", 1, 35));
+        footerLeft.setFont(new java.awt.Font("Times New Roman", 1, 20));
+        footerLeft.setBounds(45,height-70,(int)(width * 30/100),20);
+
         leftLabel.setIcon(logo1);
 
         JPanel logoPanel = new JPanel();
-        logoPanel.setBackground(new Color(179, 177, 173));
+        logoPanel.setBackground(new Color(0, 191, 99));
         logoPanel.setLayout(new BorderLayout());
-        logoPanel.setBounds(0,0,(int)(width * 0.3)-10,240);
+        logoPanel.setBounds(75,0,(int)(width * 0.3)-10,240);
         logoPanel.add(leftLabel, BorderLayout.CENTER);
-        logoPanel.add(subTitle,BorderLayout.SOUTH);
+        
         leftPanel.add(logoPanel);
         
         //lựa chọn chức năng
@@ -167,33 +175,6 @@ public class GUIAdmin{
 
         // thongKeDoanhThuPanel.setBorder(border);
         //Sử lý sự kiện khi chọn chức năng
-        logoPanel.addMouseListener(new MouseListener(){
-            private int clickCount = 0;
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // if (clickCount % 2 == 0) {
-                //     subTitle.setIcon(new ImageIcon(scaleDownArrowIcon));
-                //     managementPanel.setVisible(false);
-                // } else {
-                //     subTitle.setIcon(new ImageIcon(scaleUpArrowIcon));
-                //     managementPanel.setVisible(true);
-                // }
-                // clickCount++; 
-            }
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-
         listPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -213,12 +194,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                listPanel.setBackground(Color.WHITE);
+                listPanel.setBackground(new Color(140, 82, 255));
             }
         
             @Override
             public void mouseExited(MouseEvent e) {
-                listPanel.setBackground(new Color(179, 177, 173));
+                listPanel.setBackground(new Color(10, 151, 178));
 
             }
         });
@@ -244,12 +225,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                statisticsPanel.setBackground(Color.WHITE);
+                statisticsPanel.setBackground(new Color(140, 82, 255));
             }
-        
+            
             @Override
             public void mouseExited(MouseEvent e) {
-                statisticsPanel.setBackground(new Color(179, 177, 173));
+                statisticsPanel.setBackground(new Color(10, 151, 178));
             }
         });
 
@@ -272,12 +253,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                nhapThietBiPanel.setBackground(Color.WHITE);
+                nhapThietBiPanel.setBackground(new Color(140, 82, 255));
             }
-        
+            
             @Override
             public void mouseExited(MouseEvent e) {
-                nhapThietBiPanel.setBackground(new Color(179, 177, 173));
+                nhapThietBiPanel.setBackground(new Color(10, 151, 178));
             }
         });
 
@@ -300,12 +281,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                duyetDonHangPanel.setBackground(Color.WHITE);
+                duyetDonHangPanel.setBackground(new Color(140, 82, 255));
             }
-        
+            
             @Override
             public void mouseExited(MouseEvent e) {
-                duyetDonHangPanel.setBackground(new Color(179, 177, 173));
+                duyetDonHangPanel.setBackground(new Color(10, 151, 178));
             }
         public void XuLyDuyetDonHang(ArrayList<HoaDon> ds, BLLQuanLyDanhSach bllQuanLyDanhSach)
             {
@@ -465,12 +446,12 @@ public class GUIAdmin{
         
             @Override
             public void mouseEntered(MouseEvent e) {
-                thongKeDoanhThuPanel.setBackground(Color.WHITE);
+                thongKeDoanhThuPanel.setBackground(new Color(140, 82, 255));
             }
-        
+            
             @Override
             public void mouseExited(MouseEvent e) {
-                thongKeDoanhThuPanel.setBackground(new Color(179, 177, 173));
+                thongKeDoanhThuPanel.setBackground(new Color(10, 151, 178));
             }
         });
        
@@ -482,34 +463,40 @@ public class GUIAdmin{
         thongKeDoanhThuPanel.add(thongKeDoanhThuLabel);
         
         //bảng chọn chức năng
-        managementPanel.setBackground(new Color(179, 177, 173));
+        managementPanel.setBackground(new Color(10, 151, 178));
         managementPanel.setLayout(null);
-        managementPanel.setBounds(30,245,(int)(width * 0.22),height -  475);
-        // managementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        managementPanel.setBounds(25,245,(int)(width * 0.22),height-450);
+        
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Chức năng");
+        titledBorder.setTitleFont(italicBoldFont);
+        managementPanel.setBorder(titledBorder);
+        managementPanel.setBackground(new Color(0, 191, 99));
 
-        statisticsPanel.setBounds(0,5,320,55);
-        statisticsPanel.setBackground(new Color(179, 177, 173));
+        listPanel.setBounds(15,40,320,60);
+        listPanel.setBackground(new Color(10, 151, 178));
+        
+        duyetDonHangPanel.setBounds(15,120,320,60);
+        duyetDonHangPanel.setBackground(new Color(10, 151, 178));
+        
+        nhapThietBiPanel.setBounds(15,200,320,60);
+        nhapThietBiPanel.setBackground(new Color(10, 151, 178));
+        
+        statisticsPanel.setBounds(15,280,320,60);
+        statisticsPanel.setBackground(new Color(10, 151, 178));
 
-        listPanel.setBounds(0,70,320,55);
-        listPanel.setBackground(new Color(179, 177, 173));
-
-        nhapThietBiPanel.setBounds(0,70*2,320,55);
-        nhapThietBiPanel.setBackground(new Color(179, 177, 173));
-
-        duyetDonHangPanel.setBounds(0,70*3,320,55);
-        duyetDonHangPanel.setBackground(new Color(179, 177, 173));
-
-        thongKeDoanhThuPanel.setBounds(0,70*4,320,55);
-        thongKeDoanhThuPanel.setBackground(new Color(179, 177, 173));
+        thongKeDoanhThuPanel.setBounds(15,360,320,60);
+        thongKeDoanhThuPanel.setBackground(new Color(10, 151, 178));
         
         managementPanel.add(listPanel);
         managementPanel.add(statisticsPanel);
         managementPanel.add(nhapThietBiPanel);
         managementPanel.add(duyetDonHangPanel);
         managementPanel.add(thongKeDoanhThuPanel);
-        managementPanel.setVisible(true);
+        managementPanel.add(subTitle);
+        managementPanel.add(subTitle2);
         leftPanel.add(managementPanel);
-
+        leftPanel.add(footerLeft);
         //chức năng:
         //quản lý danh sách:
         //right panel
@@ -724,6 +711,7 @@ public class GUIAdmin{
 
         rightPanel.add(filter);
     }
+    @SuppressWarnings("unchecked")
     private void xuLyDanhSach(){
         rightPanel.setLayout(null);
         //tiêu đề bên phải 
@@ -739,7 +727,26 @@ public class GUIAdmin{
         JLabel chonDanhSachLabel = new JLabel("Chọn danh sách: ");
         chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
         chonDanhSachLabel.setBounds(430, 50, 300,35);
-        
+        //thêm màu cho combobox
+        ListCellRenderer<? super String> renderer = new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Đặt màu cho phần tử trong JComboBox
+                if (isSelected) {
+                    component.setForeground(new Color(140, 82, 255)); // Màu chữ khi được chọn
+                    component.setBackground(Color.WHITE); // Màu nền khi được chọn
+                } else {
+                    component.setForeground(Color.BLACK); // Màu chữ mặc định
+                    component.setBackground(Color.WHITE); // Màu nền mặc định
+                }
+
+                return component;
+            }
+        };
+        danhSachBox.setRenderer(renderer);
+        danhSachBox.setBackground(Color.white);
         danhSachBox.addActionListener(new ActionListener() {
             private JTextField jtf_manv;
 			private JTextField jtf_hoten;
@@ -1594,7 +1601,7 @@ public class GUIAdmin{
                         "src/asset/img/button/sua-tb.png",
                         "src/asset/img/button/tim-tb.png"
                     };
-                    int a=345;
+                    int a=335;
                     for(int i=0;i<cmtNut.length;i++){
                         JButton tempBtn = new JButton();
                         ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
@@ -1950,10 +1957,10 @@ public class GUIAdmin{
                     //nút chức năng
                     String[] cmtNut = {"add", "remove", "edit", "Search"};
                     String[] anhStrings = {
-                        "src/asset/img/button/them-hv.png",
-                        "src/asset/img/button/xoa-hv.png",
-                        "src/asset/img/button/sua-hv.png",
-                        "src/asset/img/button/tim-hv.png"
+                        "src/asset/img/button/hh-them.png",
+                        "src/asset/img/button/hh-xoa.png",
+                        "src/asset/img/button/hh-sua.png",
+                        "src/asset/img/button/hh-tim.png"
                     };
                     int a=335;
                     for(int i=0;i<cmtNut.length;i++){

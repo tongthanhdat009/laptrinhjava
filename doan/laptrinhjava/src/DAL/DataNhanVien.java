@@ -183,5 +183,51 @@ public class DataNhanVien {
         return ds;
     }
 
+    private boolean kiemTraTonTaiMaNV(String maNV) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM NhanVien WHERE MaNV = ?");
+            ps.setString(1, maNV);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public String taoMaNhanVienMoi() {
+        try {
+            // Tìm mã hội viên lớn nhất
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MAX(MaNV) AS MaxMaNV FROM NhanVien");
+
+            // Lấy mã lớn nhất
+            String maxMaNV = "NV001";
+            if (rs.next()) {
+                String maxMaNVFromDB = rs.getString("MaxMaNV");
+                if (maxMaNVFromDB != null) {
+                    int nextMaHV = Integer.parseInt(maxMaNVFromDB.substring(2)) + 1;
+                    String newMaNV;
+                    boolean flag = false;
+                    while (!flag) {
+                    	newMaNV = String.format("NV%03d", nextMaHV);
+                        // Kiểm tra xem mã mới có duy nhất không
+                        if (!kiemTraTonTaiMaNV(newMaNV)) {
+                        	maxMaNV = newMaNV;
+                        	flag = true;
+                        }
+                        nextMaHV++;
+                    }
+                }
+            }
+            return maxMaNV; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
+    }
 	
 }

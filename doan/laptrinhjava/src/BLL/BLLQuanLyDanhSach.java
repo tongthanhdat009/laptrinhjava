@@ -261,6 +261,7 @@ public class BLLQuanLyDanhSach{
         if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai)) == true) return "Thành công";
         return "Mã hóa đơn không tồn tại";
     }
+    //danh sách chi tiết hóa đơn
     public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
     {
         if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
@@ -354,6 +355,10 @@ public class BLLQuanLyDanhSach{
         return dataNhanVien.xoanv(maNhanVien);
     }
 
+    public String layMaNVchuaTonTai() {
+    	return dataNhanVien.taoMaNhanVienMoi();
+    }
+
     // Kiểm tra và tạo mã nhân viên mới
     public String kiemTraMaNhanVien() {
         String maMoi = "NV" + dataNhanVien.layMaNhanVienChuaTonTai();
@@ -386,6 +391,9 @@ public class BLLQuanLyDanhSach{
     }
     public ArrayList<String> layTenCotDichVu() {
         return dataDichVu.getTenCot();
+    }
+    public String layMaDichVuchuaTonTai() {
+    	return dataDichVu.taoMaDichvuMoi();
     }
     public boolean themDV(dichVu dv) {
     	return dataDichVu.themDV(dv);

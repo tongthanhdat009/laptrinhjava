@@ -12,6 +12,7 @@ public class DataHoiVien {
     public DataHoiVien()
     {
         try{
+        	con = DriverManager.getConnection(dbUrl, userName, password);
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         }catch(Exception e){
             System.out.println(e);   
@@ -73,26 +74,7 @@ public class DataHoiVien {
         }
         return false;
     }
-    public int KiemTraDangNhap(String taiKhoan, String matKhau) //ĐÃ TEST
-    {
-        // trả về -2 lỗi mở database, -1 TK 0 tồn tại, 0 sai pass, 1 đăng nhập user thành công, 2 đăng nhập admin thành công
-        if(taiKhoan.equals("admin")&&matKhau.equals("admin")) return 2;
-        try{
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien Where TaiKhoan ='"+ taiKhoan +"'");
-            if(rs.next())
-            {
-                if(rs.getString("MatKhau").trim().equals(matKhau)) return 1;
-                else return 0;
-            }
-            else return -1; 
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return -2;
-    }
+    
     // public dsHoiVien timKiem(HoiVien a) //Chưa test
     // {
     //     ArrayList<String> ds = new ArrayList<String>();
@@ -244,5 +226,93 @@ public class DataHoiVien {
             System.out.println(e);
         }
         return dsHoiVien;
+    }
+    public int KiemTraDangNhap(String taiKhoan, String matKhau) //ĐÃ TEST
+    {
+        // trả về -2 lỗi mở database, -1 TK 0 tồn tại, 0 sai pass, 1 đăng nhập user thành công, 2 đăng nhập admin thành công
+        if(taiKhoan.equals("admin")&&matKhau.equals("admin")) return 2;
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien Where TaiKhoan ='"+ taiKhoan +"'");
+            if(rs.next())
+            {
+                if(rs.getString("MatKhau").trim().equals(matKhau)) return 1;
+                else return 0;
+            }
+            else return -1; 
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return -2;
+    }
+    public String taoMaHoiVienMoi() {
+        try {
+            // Tìm mã hội viên lớn nhất
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MAX(MaHV) AS MaxMaHV FROM HoiVien");
+
+            // Lấy mã lớn nhất
+            String maxMaHV = "HV001";
+            if (rs.next()) {
+                String maxMaHVFromDB = rs.getString("MaxMaHV");
+                if (maxMaHVFromDB != null) {
+                    int nextMaHV = Integer.parseInt(maxMaHVFromDB.substring(2)) + 1;
+                    String newMaHV;
+                    boolean unique = false;
+                    while (!unique) {
+                        newMaHV = String.format("HV%03d", nextMaHV);
+                        // Kiểm tra xem mã mới có duy nhất không
+                        if (!kiemTraTonTaiMaHV(newMaHV)) {
+                            maxMaHV = newMaHV;
+                            unique = true;
+                        }
+                        nextMaHV++;
+                    }
+                }
+            }
+            return maxMaHV; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
+    }
+    private boolean kiemTraTonTaiMaHV(String maHV) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM HoiVien WHERE MaHV = ?");
+            ps.setString(1, maHV);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean dangkiHoiVien(HoiVien hv) {
+    	String query = "INSERT INTO HoiVien (MaHV,HoTenHV,GioiTinh,Gmail,TaiKhoan,MatKhau,NgaySinh,SoDienThoai) VALUES(?,?,?,?,?,?,?,?)";
+    	try {
+    		String mahv = taoMaHoiVienMoi();
+    		PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, mahv);
+            ps.setString(2, hv.getHoten());
+            ps.setString(3, hv.getGioitinh());
+            ps.setString(4, hv.getMail());
+            ps.setString(5, hv.getTaiKhoanHoiVien());
+            ps.setString(6, hv.getMatKhauHoiVien());
+            ps.setString(7, hv.getNgaysinh());
+            ps.setString(8, hv.getSdt());
+            int check = ps.executeUpdate();
+            if(check > 0) {
+            	return true;
+            }
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+    	return false;
     }
 }

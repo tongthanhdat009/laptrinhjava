@@ -138,4 +138,49 @@ public class DataDichVu {
 		}
     	return result;
     }
+	private boolean kiemTraTonTaiMaDV(String maDV) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM DichVu WHERE MaDV = ?");
+            ps.setString(1, maDV);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+	public String taoMaDichvuMoi() {
+        try {
+            // Tìm mã dịch viên lớn nhất
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MAX(MaDV) AS MaxMaDV FROM DichVu");
+
+            // Lấy mã lớn nhất
+            String maxMaDV = "DV001";
+            if (rs.next()) {
+                String maxMaDVFromDB = rs.getString("MaxMaDV");
+                if (maxMaDVFromDB != null) {
+                    int nextMaDV = Integer.parseInt(maxMaDVFromDB.substring(2)) + 1;
+                    String newMaDV;
+                    boolean unique = false;
+                    while (!unique) {
+                    	newMaDV = String.format("DV%03d", nextMaDV);
+                        // Kiểm tra xem mã mới có duy nhất không
+                        if (!kiemTraTonTaiMaDV(newMaDV)) {
+                        	maxMaDV = newMaDV;
+                            unique = true;
+                        }
+                        nextMaDV++;
+                    }
+                }
+            }
+            return maxMaDV; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
+    }
 }

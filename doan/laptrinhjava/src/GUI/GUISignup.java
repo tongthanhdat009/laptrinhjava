@@ -8,6 +8,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import BLL.BLLDangKy;
+import DTO.HoiVien;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,9 +19,11 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -42,15 +45,15 @@ public class GUISignup extends JFrame {
 	private JTextField jtf_user;
 	private JTextField jtf_email;
 	private JTextField jtf_phone;
-	private JTextField jtf_mahv;
 	private JPasswordField jtf_pass;
 	private JPasswordField jtf_comfirm;
 	private JRadioButton rdbtnNam;
 	private JRadioButton rdbtnNu;
 	private ButtonGroup btn_grp;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cb_day,cb_month,cb_year;
 	private JTextField jtf_name;
-	private BLLDangKy bllDangKy = new BLLDangKy();
+	Connection con;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,8 +88,35 @@ public class GUISignup extends JFrame {
 		}
 		return day >= 1 && day <= maxDayinMonth;
 	}
-
+//	public int layMaHoiVienChuaTonTai()
+//    {
+//        try {
+//        	String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main";
+//            String username = "sa";	
+//            String password = "1234";
+//            con = DriverManager.getConnection(dbUrl, username, password);
+//            Statement stmt = con.createStatement();
+//            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien");
+//            int max = 0;
+//            while(rs.next())
+//            {
+//                String ma = rs.getString("MaHV");
+//                ma = ma.substring(2);
+//                if(max < Integer.parseInt(ma)) max = Integer.parseInt(ma);
+//            }
+//            return max;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return -1;
+//    }
 	public GUISignup() {
+		this.setLocationRelativeTo(null);
+		ImageIcon img = new ImageIcon("gym.jpg");
+		JLabel jlb_bg = new JLabel(img);
+		jlb_bg.setBounds(0, 0, getWidth(), getHeight());
+
+		setContentPane(jlb_bg);
 		setTitle("Đăng ký");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/asset/img/icon/Mayor-Gym-icon.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,14 +147,8 @@ public class GUISignup extends JFrame {
 		JLabel lblNewLabel_1_2 = new JLabel("Số điện thoại");
 		lblNewLabel_1_2.setIcon(new ImageIcon("src/asset/img/icon/phone-icon.png"));
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_2.setBounds(292, 354, 180, 42);
+		lblNewLabel_1_2.setBounds(80, 254, 180, 42);
 		getContentPane().add(lblNewLabel_1_2);
-		
-		JLabel lblNewLabel_1_3 = new JLabel("Mã hội viên");
-		lblNewLabel_1_3.setIcon(new ImageIcon("src/asset/img/icon/id-card-icon.png"));
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_3.setBounds(80, 259, 163, 42);
-		getContentPane().add(lblNewLabel_1_3);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Mật khẩu");
 		lblNewLabel_1_4.setIcon(new ImageIcon("src/asset/img/icon/Dialog-Password-Lock-icon.png"));
@@ -150,13 +174,8 @@ public class GUISignup extends JFrame {
 		
 		jtf_phone = new JTextField();
 		jtf_phone.setColumns(10);
-		jtf_phone.setBounds(485, 353, 346, 30);
+		jtf_phone.setBounds(292, 259, 208, 30);
 		getContentPane().add(jtf_phone);
-		
-		jtf_mahv = new JTextField();
-		jtf_mahv.setColumns(10);
-		jtf_mahv.setBounds(292, 259, 208, 30);
-		getContentPane().add(jtf_mahv);
 		
 		jtf_pass = new JPasswordField();
 		jtf_pass.setColumns(10);
@@ -187,134 +206,141 @@ public class GUISignup extends JFrame {
 		btn_signup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedDay = Integer.parseInt((String) cb_day.getSelectedItem());
-		 		int selectedMonth = cb_month.getSelectedIndex() + 1;
+				int selectedMonth = cb_month.getSelectedIndex() + 1;
 				int selectedYear = Integer.parseInt((String) cb_year.getSelectedItem());
+				//regex email
+				String regex_email = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+				Pattern p_email = Pattern.compile(regex_email);
+				Matcher m_email = p_email.matcher(jtf_email.getText());
+				//regex họ tên
+				String regex_name = "^[a-zA-Z\\s]+$";
+				Pattern p_name = Pattern.compile(regex_name);
+				Matcher m_name = p_name.matcher(jtf_name.getText());
+				//regex số điện thoại
+				String regex_phone = "(0[3|5|7|8|9])+([0-9]{8})\\b";
+				Pattern p_phone = Pattern.compile(regex_phone);
+				Matcher m_phone = p_phone.matcher(jtf_phone.getText());
+				//regex password
+				String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+				Pattern p_pass = Pattern.compile(regex_pass);
+				Matcher m_pass = p_pass.matcher(jtf_pass.getText());
+				
 				int dk = JOptionPane.showConfirmDialog(GUISignup.this,"Bạn có muốn đăng kí","Comfirm", JOptionPane.YES_NO_OPTION);
 				if(dk != JOptionPane.YES_OPTION) {
 					return;
 				}
 				
 				//Kiểm tra thông tin bị trống hay không
-				if(jtf_user.getText().trim().equals("") ||jtf_email.getText().trim().equals("") || jtf_phone.getText().trim().equals("") || jtf_mahv.getText().trim().equals("") ||
+				if(jtf_user.getText().trim().equals("") ||jtf_email.getText().trim().equals("") || jtf_phone.getText().trim().equals("") ||
 	            	jtf_name.getText().trim().equals("") || jtf_pass.getText().trim().equals("") || jtf_comfirm.getText().trim().equals("")) {
 	            	JOptionPane.showMessageDialog(GUISignup.this, "Thông tin không được để trống","Error",JOptionPane.ERROR_MESSAGE);
 	            	return;
 	            }
-				//regex email
-				String regex_email = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-				Pattern p_email = Pattern.compile(regex_email);
-				Matcher m_email = p_email.matcher(jtf_email.getText());
-				if(!m_email.matches()) {
+				else if(!m_email.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Email không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
 				//regex username
-				String regex_username = "^(?=.*[a-zA-Z])(?=.*[0-9]).{5,}$";
-				Pattern p_username = Pattern.compile(regex_username);
-				Matcher m_username = p_email.matcher(jtf_user.getText());
-				if(!m_username.matches()) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Tên đăng nhập không hợp lệ(phải trên 5 kí tự", "Error",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				//regex họ tên
-				String regex_name = "^[a-zA-Z\\s]+$";
-				Pattern p_name = Pattern.compile(regex_name);
-				Matcher m_name = p_name.matcher(jtf_name.getText());
-				if(!m_name.matches()) {
+//				String regex_username = "^(?=.*[a-zA-Z])(?=.*[0-9]).{5,}$";
+//				Pattern p_username = Pattern.compile(regex_username);
+//				Matcher m_username = p_email.matcher(jtf_user.getText());
+//				if(!m_username.matches()) {
+//					JOptionPane.showMessageDialog(GUISignup.this, "Tên đăng nhập không hợp lệ(phải trên 5 kí tự)", "Error",JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+				else if(!m_name.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Họ tên không đựa chứa kí tự đặc biệt","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				 
-					
-				//regex số điện thoại
-				String regex_phone = "(0[3|5|7|8|9])+([0-9]{8})\\b";
-				Pattern p_phone = Pattern.compile(regex_phone);
-				Matcher m_phone = p_phone.matcher(jtf_phone.getText());
-				if(!m_phone.matches()) {
+				else if(!m_phone.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Số điện thoại không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				//regex password
-				String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
-				Pattern p_pass = Pattern.compile(regex_pass);
-				Matcher m_pass = p_pass.matcher(jtf_pass.getText());
-				if(!m_pass.matches()) {
+				else if(!m_pass.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Mật khẩu phải từ 6 kí tự trở lên(có kí "
 							+ "tự số và chữ)","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				//xác thực mật khẩu
-				if(!jtf_pass.getText().trim().equals(jtf_comfirm.getText())) {
+				else if(!jtf_pass.getText().trim().equals(jtf_comfirm.getText())) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Xác thực mật khẩu không chính xác","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				//Kiểm tra ngày sinh hợp lệ
-				if(!isValidDate(selectedDay, selectedMonth, selectedYear)) {
+				else if(!isValidDate(selectedDay, selectedMonth, selectedYear)) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Ngày sinh của bạn không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				//Kiểm tra đã chọn giới tính hay chưa
-				String gioitinh = "";
-				if(rdbtnNam.isSelected()) {
-					gioitinh = "Nam";
-				}
-				else if(rdbtnNu.isSelected()) {
-					gioitinh = "Nu";
-				}
-				if(btn_grp.getSelection() == null) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giới tính","Error",JOptionPane.ERROR_MESSAGE);
+				else if(btn_grp.getSelection() == null) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giớ tính","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				else {
+					try {
+						BLLDangKy blldk = new BLLDangKy();
+						LocalDate birthDate = LocalDate.of(selectedYear, selectedMonth, selectedDay);
+			            java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
+			            String mahv = blldk.taoMaHoiVienMoi();
+			            String hoten = jtf_name.getText().trim();
+			            String gioitinh = rdbtnNam.isSelected() ? "Nam" : "Nữ";
+			            String email = jtf_email.getText().trim();
+			            String tk = jtf_user.getText().trim();;
+			            String matkhau = jtf_pass.getText().trim();
+			            String sdt = jtf_phone.getText().trim();
+			            HoiVien hv = new HoiVien(mahv, hoten, gioitinh, email, tk, matkhau, sqlBirthDate, sdt);
+			            if(blldk.KiemTraDangKy(hv)==true) {
+			            	JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+			            }
+			            jtf_name.setText("");jtf_email.setText("");jtf_phone.setText("");jtf_user.setText("");
+			            btn_grp.clearSelection();jtf_pass.setText("");;jtf_comfirm.setText("");
+					} catch (Exception e2) {
+						System.out.println(e2);
+					}
+					
+				}
+//					try {
+//			            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//			            
+//			            
+//			            String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main";
+//			            String username = "sa";	
+//			            String password = "1234";
+//			            
+//			            //Kiểm tra xem tên đăng kí có bị trùng trong database hay không
+//			            con = DriverManager.getConnection(dbUrl, username, password);
+//			            System.out.println("Kết nối thành công");
+//			            
+//			            String checkSql = "SELECT * FROM HoiVien WHERE TaiKhoan = ?";
+//			            PreparedStatement checkStatement = con.prepareStatement(checkSql);
+//			            checkStatement.setString(1, jtf_user.getText());
+//			            ResultSet rs = checkStatement.executeQuery();
+//			            if (rs.next()) {
+//			                JOptionPane.showMessageDialog(GUISignup.this, "Tên đăng kí đã tồn tại đã tồn tại, vui lòng chọn mã hội viên khác", "Error", JOptionPane.ERROR_MESSAGE);
+//			                return; 
+//			            }
+//			            LocalDate birthDate = LocalDate.of(selectedYear, selectedMonth, selectedDay);
+//			            java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
+//			            String sql = "insert into HoiVien values (?,?,?,?,?,?,?,?)";
+//				        PreparedStatement ps = con.prepareStatement(sql);
+////				        ps.setString(1,this.);
+//				        ps.setString(2,jtf_name.getText());
+//				        ps.setString(3,gioitinh);
+//				        ps.setString(4,jtf_email.getText());	
+//				        ps.setString(5,jtf_user.getText());
+//				        ps.setString(6,jtf_pass.getText());
+//				        ps.setString(7,null);
+//				        ps.setDate(8,sqlBirthDate);	
+//				        int n = ps.executeUpdate();
+//				        if(n != 0) {
+//				            	JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Information",JOptionPane.INFORMATION_MESSAGE);
+//				        }
+//			            
+//			        } catch (Exception e1) {
+//			            System.out.println(e1);
+//			            
+//			        }
+
 				
-				// try {
-				// 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-					
-					
-				// 	String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main";
-				// 	String username = "sa";	
-				// 	String password = "1234";
-					
-				// 	//Kiểm tra xem tên đăng kí có bị trùng trong database hay không
-				// 	Connection con = DriverManager.getConnection(dbUrl, username, password);
-				// 	System.out.println("Kết nối thành công");
-					
-				// 	String checkSql = "SELECT * FROM HoiVien WHERE MAHV = ?";
-				// 	PreparedStatement checkStatement = con.prepareStatement(checkSql);
-				// 	checkStatement.setString(1, jtf_mahv.getText());
-				// 	ResultSet rs = checkStatement.executeQuery();
-				// 	if (rs.next()) {
-				// 		JOptionPane.showMessageDialog(GUISignup.this, "Mã hội viên đã tồn tại, vui lòng chọn mã hội viên khác", "Error", JOptionPane.ERROR_MESSAGE);
-				// 		return; 
-				// 	}
-				// 	LocalDate birthDate = LocalDate.of(selectedYear, selectedMonth, selectedDay);
-				// 	java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
-				// 	String sql = "insert into HoiVien values (?,?,?,?,?,?,?,?)";
-				// 	PreparedStatement ps = con.prepareStatement(sql);
-				// 	ps.setString(1,jtf_mahv.getText());
-				// 	ps.setString(2,jtf_name.getText());
-				// 	ps.setString(3,gioitinh);
-				// 	ps.setString(4,jtf_email.getText());	
-				// 	ps.setString(5,jtf_user.getText());
-				// 	ps.setString(6,jtf_pass.getText());
-				// 	ps.setString(7,null);
-				// 	ps.setDate(8,sqlBirthDate);	
-				// 	int n = ps.executeUpdate();
-				// 	if(n != 0) {
-				// 			JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Information",JOptionPane.INFORMATION_MESSAGE);
-				// 	}
-					
-				// } catch (Exception e1) {
-				// 	System.out.println(e1);
-				// }
-				if(bllDangKy.hoiVienDangKy(jtf_mahv.getText(), jtf_name.getText(), gioitinh, jtf_email.getText(), jtf_user.getText(), jtf_pass.getText(), selectedYear, selectedMonth, selectedDay)){
-					JOptionPane.showMessageDialog(null, "Đăng kí hội viên thành công");
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Đăng kí hội viên không thành công");
-				}
 			}
 		});
 		btn_signup.setIcon(new ImageIcon("src/asset/img/icon/add-user-icon.png"));
@@ -325,13 +351,13 @@ public class GUISignup extends JFrame {
 		JLabel lblNewLabel_1_3_1 = new JLabel("Giới tính");
 		lblNewLabel_1_3_1.setIcon(new ImageIcon("src/asset/img/icon/sex-icon.png"));
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_3_1.setBounds(292, 513, 122, 48);
+		lblNewLabel_1_3_1.setBounds(80, 492, 122, 48);
 		getContentPane().add(lblNewLabel_1_3_1);
 		
 		JLabel lblNewLabel_1_3_1_1 = new JLabel("Ngày sinh");
 		lblNewLabel_1_3_1_1.setIcon(new ImageIcon("src/asset/img/icon/Calendar-icon.png"));
 		lblNewLabel_1_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_3_1_1.setBounds(292, 430, 163, 48);
+		lblNewLabel_1_3_1_1.setBounds(80, 381, 163, 48);
 		getContentPane().add(lblNewLabel_1_3_1_1);
 		
 		String[] dayOptions = new String[31];
@@ -340,7 +366,7 @@ public class GUISignup extends JFrame {
 		}
 		cb_day = new JComboBox<>(dayOptions);
 		cb_day.setFont(new Font("Arial", Font.PLAIN, 20));
-		cb_day.setBounds(474, 430, 89, 39);
+		cb_day.setBounds(292, 376, 89, 39);
 		cb_day.setMaximumRowCount(5);
 		getContentPane().add(cb_day);
 		
@@ -349,7 +375,7 @@ public class GUISignup extends JFrame {
 		cb_month = new JComboBox<String>(monthOptions);
 		cb_month.setFont(new Font("Arial", Font.PLAIN, 20));
 		cb_month.setMaximumRowCount(5);
-		cb_month.setBounds(625, 430, 104, 39);
+		cb_month.setBounds(453, 376, 104, 39);
 		getContentPane().add(cb_month);
 		
 		String[] yearOptions = new String[1000];
@@ -360,17 +386,17 @@ public class GUISignup extends JFrame {
 		cb_year = new JComboBox<>(yearOptions);
 		cb_year.setFont(new Font("Arial", Font.PLAIN, 20));
 		cb_year.setMaximumRowCount(5);
-		cb_year.setBounds(778, 430, 89, 39);
+		cb_year.setBounds(630, 376, 89, 39);
 		getContentPane().add(cb_year);
 		
 		rdbtnNam = new JRadioButton("Nam");
 		rdbtnNam.setFont(new Font("Arial", Font.PLAIN, 20));
-		rdbtnNam.setBounds(504, 531, 115, 21);
+		rdbtnNam.setBounds(292, 507, 115, 21);
 		getContentPane().add(rdbtnNam);
 		
 		rdbtnNu = new JRadioButton("Nữ");
 		rdbtnNu.setFont(new Font("Arial", Font.PLAIN, 20));
-		rdbtnNu.setBounds(684, 531, 115, 21);
+		rdbtnNu.setBounds(630, 507, 115, 21);
 		getContentPane().add(rdbtnNu);
 		
 		btn_grp = new ButtonGroup();

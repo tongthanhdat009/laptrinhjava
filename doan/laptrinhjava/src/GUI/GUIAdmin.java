@@ -336,8 +336,13 @@ public class GUIAdmin{
                 rightPanel.add(canGiua);
 
                 JPanel nhapLieu = new JPanel(null);
-                nhapLieu.setBackground(Color.WHITE);
-                nhapLieu.setBounds(2, 90, rightPanel.getWidth()-4, 40);
+                nhapLieu.setBounds(2, 60, rightPanel.getWidth()-20, 80);
+                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+                TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
+                titledBorder.setTitleFont(italicBoldFont);
+                nhapLieu.setBorder(titledBorder);
+                nhapLieu.setBackground(new Color(119, 230, 163));
+
                 JLabel lbMaHV = new JLabel("Mã hội viên: ");
                 JLabel lbMaCoSo = new JLabel("Mã cơ sở: ");
                 JLabel lbMaHoaDon = new JLabel("Mã hóa đơn: ");
@@ -349,16 +354,20 @@ public class GUIAdmin{
                 JComboBox cbMaCoSo = new JComboBox<>(dsMaCoSo);
 
                 int x=150;
-                lbMaHoaDon.setBounds(x,0,80,30); x+=80;
-                tfMaHoaDon.setBounds(x+10, 0, 100, 30); x+=110;
-                lbMaHV.setBounds(x+50, 0, 80, 30); x+=130;
-                tfMaHV.setBounds(x+10, 0, 100, 30); x+=110;
-                lbMaCoSo.setBounds(x+50,0,80,30); x+=130;
-                cbMaCoSo.setBounds(x+10, 0, 100, 30);
+                lbMaHoaDon.setBounds(x,25,110,30); x+=100;
+                lbMaHoaDon.setFont(new Font("Times New Roman",1,18));
+                tfMaHoaDon.setBounds(x+10, 25, 100, 30); x+=130;
+                lbMaHV.setBounds(x+50, 25, 110, 30); x+=150;
+                lbMaHV.setFont(new Font("Times New Roman",1,18));
+                tfMaHV.setBounds(x+10, 25, 100, 30); x+=130;
+                lbMaCoSo.setBounds(x+50,25,110,30); x+=150;
+                lbMaCoSo.setFont(new Font("Times New Roman",1,18));
+                cbMaCoSo.setBounds(x+10, 25, 100, 30);
+                cbMaCoSo.setBackground(Color.white);
 
                 JButton timKiem = new JButton("Tìm kiếm");
                 timKiem.setBackground(Color.WHITE);
-                timKiem.setBounds(rightPanel.getWidth()-200, 0, 100, 30);
+                timKiem.setBounds(rightPanel.getWidth()-200, 25, 100, 30);
                 timKiem.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e)
                     {
@@ -763,7 +772,7 @@ public class GUIAdmin{
     private void xuLyDanhSach(){
         rightPanel.setLayout(null);
         //giới thiệu chức năng xử lý danh sách
-        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ<br>- Hội viên<br>- Nhân viên<br>- Thiết bị<br>- Thiết bị cơ sở <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hàng hóa cơ sở <br>- Hội viên cơ sở <br> Chọn danh sách để bắt đầu thao tác</html>"); 
+        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ<br>- Hội viên<br>- Nhân viên<br>- Thiết bị<br>- Thiết bị cơ sở <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hội viên cơ sở <br> Chọn danh sách để bắt đầu thao tác</html>"); 
 
         param.setFont(new Font("Times New Roman",1,30));
         JPanel textPN = new JPanel();

@@ -1717,7 +1717,6 @@ public class GUIAdmin{
                                                                     thongTinMoi.get(3),
                                                                     Integer.parseInt(thongTinMoi.get(4)));
                                         if(Integer.parseInt(thongTinMoi.get(4))>0){
-                                            System.out.println("hello");
                                             if(bllQuanLyDanhSach.themTB(tempTB)){
                                                 JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
                                             }
@@ -2116,6 +2115,8 @@ public class GUIAdmin{
                                         }
                                         catch(IllegalArgumentException ex){
                                             JOptionPane.showMessageDialog(bangChinhSua, ex.getMessage(), "Thông tin không hợp lệ", JOptionPane.ERROR_MESSAGE);
+                                            hhList.removeRow(dataTable.getRowCount()-1);
+                                            return;
                                         }
                                     } 
                                     else {

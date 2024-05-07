@@ -176,7 +176,7 @@ public class GUIAdmin{
         JPanel listPanel = new JPanel();
         JPanel nhapThietBiPanel = new JPanel();
         JPanel duyetDonHangPanel = new JPanel();
-        JPanel thongKeDoanhThuPanel = new JPanel();
+        // JPanel thongKeDoanhThuPanel = new JPanel();
 
         //chức năng thống kê        
         JLabel statisticLabel = new JLabel("Thống kê đơn hàng");
@@ -4263,10 +4263,10 @@ public class GUIAdmin{
         labelDSCoSo.setBounds(250, 15, 75, 30);
         @SuppressWarnings("rawtypes")
         JComboBox comboBoxTenCoSo = new JComboBox<>(dsTenCoSo);
-        comboBoxTenCoSo.setBounds(330, 15, 150, 30);
+        comboBoxTenCoSo.setBounds(330, 15, 120, 30);
         comboBoxTenCoSo.setBackground(Color.white);
         JLabel labelLoai = new JLabel("Loại:");
-        labelLoai.setBounds(500, 15, 25, 30);
+        labelLoai.setBounds(480, 15, 60, 30);
         String[] loai = {"Theo doanh thu","Theo số lượng"};
         @SuppressWarnings("rawtypes")
         JComboBox comboBoxLoai = new JComboBox<>(loai);
@@ -4339,6 +4339,7 @@ public class GUIAdmin{
         int chieuNgang = rightPanel.getWidth() - 550;
         int chieuDoc = ds.size() * 75;
         JPanel thongKe = new JPanel(null);
+        thongKe.setBackground(Color.WHITE);
         timkiem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -4392,9 +4393,11 @@ public class GUIAdmin{
             for(int i=0;i<ds.size();i++)
             {
                 JPanel thongKe1MonHang = new JPanel(null);
-                thongKe1MonHang.setBounds(0, y, 1000, 75);
+                thongKe1MonHang.setBackground(Color.WHITE);
+                thongKe1MonHang.setBounds(20, y, 1000, 75);
                 JLabel tenHang = new JLabel(ds.get(i).getTenHangHoa());
                 tenHang.setBounds(0, 0, 250, 30);
+                tenHang.setFont(new Font("Times New Roman",1,13));
                 JLabel cot = new JLabel();
                 cot.setBounds(255, 0, (int) (ds.get(i).getDoanhThu()*tiLe) , 30);
                 cot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu
@@ -4425,9 +4428,11 @@ public class GUIAdmin{
             for(int i=0;i<ds.size();i++)
             {
                 JPanel thongKe1MonHang = new JPanel(null);
-                thongKe1MonHang.setBounds(0, y, 1000, 75);
+                thongKe1MonHang.setBackground(Color.WHITE);
+                thongKe1MonHang.setBounds(20, y, 1000, 75);
                 JLabel tenHang = new JLabel(ds.get(i).getTenHangHoa());
                 tenHang.setBounds(0, 0, 250, 30);
+                tenHang.setFont(new Font("Times New Roman",1,13));
                 JLabel cot = new JLabel();
                 cot.setBounds(255, 0, (int) (ds.get(i).getSoLuong()*tiLe) , 30);
                 cot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu

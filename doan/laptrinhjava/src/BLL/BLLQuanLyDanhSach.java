@@ -29,6 +29,7 @@ import DTO.NhanVien;
 import DTO.ThietBiCoSo;
 import DTO.dichVu;
 import DTO.dsHangHoa;
+import DTO.dsHoiVien;
 import DTO.hangHoa;
 import DTO.hangHoaCoSo;
 
@@ -81,10 +82,15 @@ public class BLLQuanLyDanhSach{
     }
     public boolean suaThongTinHV(HoiVien a){
         return dataHoiVien.sua(a);
-   }
+    }
+    public dsHoiVien timKiemHoiVien(HoiVien a) {
+        return dataHoiVien.timKiem(a);
+    }
+    
     public boolean timKiemHV(String a){
         return dataHoiVien.timKiemHV(a);
     }
+
     public boolean kiemTraSDT(String a){
         if(a.matches("(0[3|5|7|8|9])+([0-9]{8})\\b")){
             return true;
@@ -119,7 +125,6 @@ public class BLLQuanLyDanhSach{
     public boolean suaThongTinCS(CoSo cs){
         return dataCoSo.suaThongTinCS(cs);
     }
-
     //danh sách thiết bị
     public DSLoaiThietBi layDSLoaiThietBi(){
         return dataThietBi.layDanhSach();
@@ -271,6 +276,7 @@ public class BLLQuanLyDanhSach{
         if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai)) == true) return "Thành công";
         return "Mã hóa đơn không tồn tại";
     }
+
     //danh sách chi tiết hóa đơn
     public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
     {

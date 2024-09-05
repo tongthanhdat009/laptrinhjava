@@ -113,6 +113,7 @@ public class DataThietBi {
         }
         return ds;
     }
+
     public boolean timKiemTheoMaTB(String maTB)
     {
         String truyVan = "SELECT MaThietBi FROM LoaiThietBi Where MaThietBi = ?";

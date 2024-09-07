@@ -1360,7 +1360,6 @@ public class GUIAdmin{
                                                     
                                                     else if (i==7){
                                                         String hvSDT = textField.getText().trim();
-                                                        System.out.println(hvSDT);
                                                         if(!bllQuanLyDanhSach.kiemTraSDT(hvSDT)){
                                                             JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
                                                             return;
@@ -1410,11 +1409,9 @@ public class GUIAdmin{
 
                                         }
                                     }
-                                    System.out.println(thongTinMoi);
                                     //  Kiểm tra xem thongTinMoi có đủ 8 phần tử không trước khi thêm vào hvList
                                     if (thongTinMoi.size() >= 8) {
                                         
-                                        System.out.println(year);
                                         Date date = new Date(year-1900, month-1, day); // Tạo đối tượng Date từ năm, tháng và ngày
                                         
                                         HoiVien tempHV = new HoiVien(thongTinMoi.get(0),
@@ -1536,7 +1533,6 @@ public class GUIAdmin{
                                                 }
                                             }
                                         }
-                                        System.out.println(thongTinMoi);
                                         if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(7))){
                                             JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                         }
@@ -1629,7 +1625,6 @@ public class GUIAdmin{
                                             }
                                         }
                                     }
-                                    System.out.println(thongTin);
                                     
                                     if(thongTin.size()>=8){
                                         HoiVien tempHV = new HoiVien(thongTin.get(0),

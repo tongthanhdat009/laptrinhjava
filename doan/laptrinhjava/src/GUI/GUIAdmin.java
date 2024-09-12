@@ -308,13 +308,33 @@ public class GUIAdmin{
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
         		rightPanel.setLayout(null);
-        		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-        		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
-                Vector<String> dsCoSo = new Vector<>();
-                dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
-                QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
-                qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+//        		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+//        		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+//                Vector<String> dsCoSo = new Vector<>();
+//                dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+//                ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+//                QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
+//                qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+//                
+                JTable dataTable = new JTable();
+                JScrollPane scrollPane = new JScrollPane();
+                JPanel bangChinhSua = new JPanel();
+                
+                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+
+                ArrayList<String> tenCotHV = new ArrayList<String>();
+                ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
+                tenCotHV.add("Mã hội viên");
+                tenCotHV.add("Họ tên hội viên");
+                tenCotHV.add("Giới tính");
+                tenCotHV.add("Gmail");
+                tenCotHV.add("Mã Tài khoản");
+                tenCotHV.add("Số điện thoại");
+                tenCotHV.add("Ngày sinh");
+                tenCotHV.add("Tài khoản");
+                tenCotHV.add("Mật khẩu");
+                hoiVienCTR hvCTR = new hoiVienCTR(rightPanel,tenCotHV,dsHV,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
+                hvCTR.update();
         	}
         });
         memberMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
@@ -739,7 +759,7 @@ public class GUIAdmin{
         rightTitle.setBounds(450, 0, 1000,60);        
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên cơ sở", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,130,30);
@@ -817,9 +837,15 @@ public class GUIAdmin{
                     QuanLyBangDichVuCTR qlbdvCTR = new QuanLyBangDichVuCTR();
                     qlbdvCTR.QuanLyBangDichVu(ds, rightPanel);
                 }
-                else if (selectedOption.equals("Hội viên")) {
-                    hoiVienCTR hvCTR = new hoiVienCTR(rightPanel,tenCotHV,dsHV,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
-                    hvCTR.update();
+                else if (selectedOption.equals("Hội viên cơ sở")) {
+            		bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+            		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+                    Vector<String> dsCoSo = new Vector<>();
+                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
+                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+              
                 }
 //                else if (selectedOption.equals("Nhân viên")){
 //                    ArrayList<NhanVien> ds = new ArrayList<>();

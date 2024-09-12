@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import DTO.DTOQuyen;
-import DTO.DTOTaiKhoan;
 
 public class DataQuyen {
 	private Connection con;
@@ -22,6 +21,21 @@ public class DataQuyen {
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
             	ds.add(new DTOQuyen(rs.getString(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
+	public ArrayList<String> layDSTenQuyenNV() {
+		ArrayList<String> ds = new ArrayList<String>();
+        String query = "  SELECT DISTINCT TenQuyen From TaiKhoan tk, Quyen Q, NhanVien nv WHERE nv.IDTaiKhoan = tk.IDTaiKhoan and tk.IDQuyen = Q.IDQuyen ";
+        try {
+        	con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+            	ds.add(rs.getString(1));
             }
         } catch (Exception e) {
             System.out.println(e);

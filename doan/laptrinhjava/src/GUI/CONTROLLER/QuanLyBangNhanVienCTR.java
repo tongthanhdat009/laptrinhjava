@@ -32,6 +32,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLQuanLyDanhSach;
+import DTO.CoSo;
+import DTO.DSCoSo;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.NhanVien;
@@ -43,13 +45,15 @@ public class QuanLyBangNhanVienCTR {
 	private JTextField jtf_date;
 	private JTextField jtf_sdt;
 	private JTextField jtf_cccd;
-	private JTextField jtf_macoso;
-	private JTextField jtf_vaitro;
 	private JTextField jtf_luong;
 	private JTextField jtf_account;
 	private JTextField jtf_password;
 	private JTextField jtf_idAccount;
-    private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
+
+	private JComboBox<String> cbb_vaiTro;
+	private JComboBox<String> cbb_CoSo; 
+	
+	private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
 	public void xoaHienThi(JPanel rightPanel){
         Component[] components = rightPanel.getComponents();
@@ -62,6 +66,7 @@ public class QuanLyBangNhanVienCTR {
         rightPanel.repaint();
     }
 	public void QuanLyBangNhanVien(ArrayList<NhanVien> dsNV, ArrayList<DTOTaiKhoan> dsTKNV,ArrayList<DTOQuyen> dsQuyen, JPanel rightPanel) {
+		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
     	xoaHienThi(rightPanel);
     	JLabel title = new JLabel("Quản lý nhân viên");
     	title.setFont(new Font("Times New Roman", Font.ITALIC | Font.BOLD, 35));
@@ -166,11 +171,19 @@ public class QuanLyBangNhanVienCTR {
         jlb_cccd.setFont(f);
         
         JLabel jlb_macoso = new JLabel("Mã cơ sở: ");
-        jtf_macoso = new JTextField();
+        cbb_CoSo = new JComboBox<String>();
+        DSCoSo dsCS = bllQuanLyDanhSach.layDsCoSo();
+        for(CoSo cs: dsCS.dsCoSo) {
+        	cbb_CoSo.addItem(cs.getMaCoSo());
+        }
         jlb_macoso.setFont(f);
         
         JLabel jlb_vaitro = new JLabel("Vai trò: ");
-        jtf_vaitro = new JTextField();
+        ArrayList<String> dsTenQuyen = bllQuanLyDanhSach.layDSTenQuyenNV();
+        cbb_vaiTro = new JComboBox<>();
+        for(String a : dsTenQuyen) {
+        	cbb_vaiTro.addItem(a.trim());
+        }
         jlb_vaitro.setFont(f);
         
         JLabel jlb_luong = new JLabel("Lương: ");
@@ -200,9 +213,9 @@ public class QuanLyBangNhanVienCTR {
         jlb_cccd.setBounds(280,100,120,30);
         jtf_cccd.setBounds(380,100,120,30);
         jlb_macoso.setBounds(530,100,90,30);
-        jtf_macoso.setBounds(630,100,120,30);
+        cbb_CoSo.setBounds(630,100,120,30);
         jlb_vaitro.setBounds(790,100,90,30);
-        jtf_vaitro.setBounds(890,100,120,30);
+        cbb_vaiTro.setBounds(890,100,120,30);
         
         jlb_luong.setBounds(10,140,90,30);
         jtf_luong.setBounds(130,140,120,30);
@@ -227,9 +240,9 @@ public class QuanLyBangNhanVienCTR {
         nhapLieu.add(jlb_cccd);
         nhapLieu.add(jtf_cccd);
         nhapLieu.add(jlb_macoso);
-        nhapLieu.add(jtf_macoso);
+        nhapLieu.add(cbb_CoSo);
         nhapLieu.add(jlb_vaitro);
-        nhapLieu.add(jtf_vaitro);
+        nhapLieu.add(cbb_vaiTro);
         nhapLieu.add(jlb_luong);
         nhapLieu.add(jtf_luong);
         nhapLieu.add(jlb_account);
@@ -243,6 +256,7 @@ public class QuanLyBangNhanVienCTR {
         
         DefaultTableModel model = new DefaultTableModel();
         JTable bang = new JTable();
+        bang.setRowHeight(30);
         model.addColumn("Mã nhân viên");
         model.addColumn("Họ và tên");
         model.addColumn("Giới tính");
@@ -303,8 +317,8 @@ public class QuanLyBangNhanVienCTR {
 					jtf_date.setText(model.getValueAt(i, 3).toString().trim());
 					jtf_sdt.setText(model.getValueAt(i, 4).toString().trim());
 					jtf_cccd.setText(model.getValueAt(i, 5).toString().trim());
-					jtf_macoso.setText(model.getValueAt(i, 6).toString().trim());
-					jtf_vaitro.setText(model.getValueAt(i, 7).toString().trim());
+					cbb_CoSo.setSelectedItem(model.getValueAt(i, 6).toString().trim());
+					cbb_vaiTro.setSelectedItem(model.getValueAt(i, 7).toString().trim());
 					jtf_luong.setText(model.getValueAt(i, 8).toString().trim());
 					jtf_account.setText(model.getValueAt(i, 9).toString().trim());
 					jtf_password.setText(model.getValueAt(i, 10).toString().trim());

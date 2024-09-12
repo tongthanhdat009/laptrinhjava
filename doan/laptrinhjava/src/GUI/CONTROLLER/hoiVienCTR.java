@@ -72,6 +72,10 @@ public class hoiVienCTR {
 	
 	public void update() {
 		xoaHienThi(rightPanel);
+		JLabel title = new JLabel("Quản lý hội viên");
+    	title.setFont(new Font("Times New Roman", Font.ITALIC | Font.BOLD, 35));
+    	title.setBounds(450, 0, 1000,60);   
+    	rightPanel.add(title);
 		// lấy danh sách mã tài khoản
 		ArrayList<DTOTaiKhoan> dsTK = bllQuanLyDanhSach.layDSTKHV(); 
 		

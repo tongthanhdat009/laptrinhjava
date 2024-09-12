@@ -502,4 +502,9 @@ public class BLLQuanLyDanhSach{
         if(dataHangHoaCoSo.sua(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
         return "Bộ không tồn tại";
     }
+    
+    //quyền
+    public ArrayList<String> layDSTenQuyenNV(){
+    	return dataQuyen.layDSTenQuyenNV();
+    }
 }

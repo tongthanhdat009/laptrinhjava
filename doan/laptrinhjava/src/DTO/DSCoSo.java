@@ -1,10 +1,10 @@
 package DTO;
 import java.util.ArrayList;
 public class DSCoSo {
-    public ArrayList<CoSo> dsCoSo;
+    public ArrayList<CoSo> dsCoSo = new ArrayList<CoSo>();
     public DSCoSo()
     {
-        dsCoSo = new ArrayList<>();
+        dsCoSo = new ArrayList<CoSo>();
     }
     public DSCoSo(ArrayList<CoSo> dsCoSo)
     {

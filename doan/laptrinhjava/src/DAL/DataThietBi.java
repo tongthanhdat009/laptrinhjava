@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
+import DTO.dsHangHoa;
+import DTO.hangHoa;
 public class DataThietBi {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -114,6 +116,48 @@ public class DataThietBi {
         return ds;
     }
 
+    public DSLoaiThietBi timKiemTB(LoaiThietBi a) //Chưa test
+    {
+        ArrayList<String> ds = new ArrayList<String>();
+        DSLoaiThietBi dsTB = new DSLoaiThietBi();
+        String truyVan = "SELECT * FROM LoaiThietBi Where ";
+        if(!a.getMaThietBi().equals(""))
+        {
+            truyVan+= "MaThietBi = ? AND ";
+            ds.add(a.getMaThietBi());
+        } 
+        if(!a.getTenLoaiThietBi().equals(""))
+        {
+            truyVan+="TenLoaiThietBi = ? AND ";
+            ds.add(a.getTenLoaiThietBi());
+        } 
+        truyVan = truyVan.trim();
+        if (truyVan.endsWith("AND")) {
+            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+        }
+        if (truyVan.endsWith("Where")) {
+            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+            truyVan = truyVan.substring(0, truyVan.lastIndexOf("Where")).trim();
+        }
+        try
+        {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            for(int i=0;i<ds.size();i++)
+                statement.setString(i+1, ds.get(i));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+            	dsTB.them(new LoaiThietBi(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5)));
+            }
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return dsTB;
+    }
+    
     public boolean timKiemTheoMaTB(String maTB)
     {
         String truyVan = "SELECT MaThietBi FROM LoaiThietBi Where MaThietBi = ?";

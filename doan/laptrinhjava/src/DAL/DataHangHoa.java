@@ -3,7 +3,9 @@ package DAL;
 import java.sql.*;
 import java.util.ArrayList;
 
+import DTO.HoiVien;
 import DTO.dsHangHoa;
+import DTO.dsHoiVien;
 import DTO.hangHoa;
 
 public class DataHangHoa {
@@ -118,7 +120,7 @@ public class DataHangHoa {
 
         try (Connection con = DriverManager.getConnection(dbUrl, userName, password)) {
             PreparedStatement preparedStatement = con.prepareStatement("UPDATE HangHoa SET MaHangHoa = ?, LoaiHangHoa = ?, TenLoaiHangHoa= ?, HinhAnh = ?, GiaNhap = ? WHERE MaHangHoa = ?");
-            preparedStatement.setString(1, hh.getMaHangHoa());
+            preparedStatement.setString(1, hh.getMaHangHoa().toUpperCase());
             preparedStatement.setString(2, hh.getLoaiHangHoa());
             preparedStatement.setString(3, hh.getTenLoaiHangHoa());
             preparedStatement.setString(4, hh.getHinhAnh());
@@ -149,6 +151,49 @@ public class DataHangHoa {
         }
         return false;
     }    
-    //tìm kiếm hàng hóa
+    
+    public dsHangHoa timKiem(hangHoa a) //Chưa test
+    {
+        ArrayList<String> ds = new ArrayList<String>();
+        dsHangHoa dsHH = new dsHangHoa();
+        String truyVan = "SELECT * FROM HangHoa Where ";
+        if(!a.getMaHangHoa().equals(""))
+        {
+            truyVan+= "MaHangHoa = ? AND ";
+            ds.add(a.getMaHangHoa());
+        } 
+        if(!a.getLoaiHangHoa().equals(""))
+        {
+            truyVan+="LoaiHangHoa = ? AND ";
+            ds.add(a.getLoaiHangHoa());
+        } 
+        if(!a.getTenLoaiHangHoa().equals(""))
+        {
+            truyVan+="TenLoaiHangHoa = ? AND ";
+            ds.add(a.getTenLoaiHangHoa());
+        } 
+        truyVan = truyVan.trim();
+        if (truyVan.endsWith("AND")) {
+            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+        }
 
+        try
+        {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            for(int i=0;i<ds.size();i++)
+                statement.setString(i+1, ds.get(i));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                dsHH.them(new hangHoa(rs.getString(1),rs.getString(2),rs.getString(3),"",0));
+            }
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return dsHH;
+    }
+ 
 }

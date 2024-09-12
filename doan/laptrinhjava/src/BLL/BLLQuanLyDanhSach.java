@@ -97,6 +97,12 @@ public class BLLQuanLyDanhSach{
         }
         return false;
     }
+    public boolean kiemTraMK(String a){
+        if(a.length()>=6){
+            return true;
+        }
+        return false;
+    }
     //danh sách cơ sở
     public DSCoSo layDsCoSo(){
         return dataCoSo.layDSCoSo();
@@ -119,8 +125,8 @@ public class BLLQuanLyDanhSach{
     public boolean xoaCS(String maCoSo){
         return dataCoSo.xoaCS(maCoSo);
     }
-    public boolean timKiemCS(String maCoSo){
-        return dataCoSo.timKiemCS(maCoSo);
+    public DSCoSo timKiemCS(CoSo cs){
+        return dataCoSo.timKiem(cs);
     }
     public boolean suaThongTinCS(CoSo cs){
         return dataCoSo.suaThongTinCS(cs);
@@ -134,6 +140,9 @@ public class BLLQuanLyDanhSach{
     }
     public boolean timKiemTheoMaTB(String maTB){
         return dataThietBi.timKiemTheoMaTB(maTB);
+    }
+    public DSLoaiThietBi timKiem(LoaiThietBi tb) {
+    	return dataThietBi.timKiemTB(tb);
     }
     public boolean xoaTB(String maTB){
         return dataThietBi.xoaTB(maTB);
@@ -352,6 +361,9 @@ public class BLLQuanLyDanhSach{
     }
     public boolean timKiemTheoMaHH(String maHH){
         return dataHangHoa.timKiemHH(maHH);
+    }
+    public dsHangHoa timKiemHH(hangHoa HH){
+        return dataHangHoa.timKiem(HH);
     }
     public boolean suaThongTinHH(hangHoa hh){
         return dataHangHoa.suaHangHoa(hh);

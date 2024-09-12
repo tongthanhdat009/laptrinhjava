@@ -208,4 +208,25 @@ public class DataTaiKhoan {
         }
         return dsTK;
     }
+    public String KiemTraDangNhap(String taiKhoan, String matKhau) 
+    {
+        try{
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM TaiKhoan Where TaiKhoan ='"+ taiKhoan +"'");
+            if(rs.next())
+            {
+                if(rs.getString("MatKhau").trim().equals(matKhau)) 
+                {
+                    return rs.getString(1)+":"+rs.getString(2)+":"+rs.getString(3)+":"+rs.getString(4);
+                }
+                else return "Sai mật khẩu";
+            }
+            else return "Tài khoản không tồn tại"; 
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return "Lỗi mở database";
+    }
 }

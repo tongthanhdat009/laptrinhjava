@@ -203,26 +203,25 @@ public class DataHoiVien {
         return dsHoiVien;
     }
     
-    public int KiemTraDangNhap(String taiKhoan, String matKhau) //ĐÃ TEST
-    {
-        // trả về -2 lỗi mở database, -1 TK 0 tồn tại, 0 sai pass, 1 đăng nhập user thành công, 2 đăng nhập admin thành công
-        if(taiKhoan.equals("admin")&&matKhau.equals("admin")) return 2;
-        try{
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien Where TaiKhoan ='"+ taiKhoan +"'");
-            if(rs.next())
-            {
-                if(rs.getString("MatKhau").trim().equals(matKhau)) return 1;
-                else return 0;
-            }
-            else return -1; 
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return -2;
-    }
+    // public String KiemTraDangNhap(String taiKhoan, String matKhau) //ĐÃ TEST
+    // {
+    //     // trả về -2 lỗi mở database, -1 TK 0 tồn tại, 0 sai pass, 1 đăng nhập user thành công
+    //     try{
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         Statement stmt = con.createStatement();
+    //         ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien Where TaiKhoan ='"+ taiKhoan +"'");
+    //         if(rs.next())
+    //         {
+    //             if(rs.getString("MatKhau").trim().equals(matKhau)) return rs.getString("IDQuyen");
+    //             else return "Sai mật khẩu";
+    //         }
+    //         else return "Tài khoản không tồn tại"; 
+    //     }
+    //     catch(Exception e){
+    //         System.out.println(e);
+    //     }
+    //     return "Lỗi mở database";
+    // }
     
     public String taoMaHoiVienMoi() {
         try {

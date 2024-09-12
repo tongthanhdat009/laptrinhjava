@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 
 import BLL.BLLDangNhap;
+import DTO.DTOTaiKhoan;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -113,20 +114,16 @@ public class GUILogin extends JFrame implements ActionListener{
             else 
             {
                 BLLDangNhap dangNhap = new BLLDangNhap();
-                if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == -2){
-                    JOptionPane.showMessageDialog(this,"HỆ THỐNG ĐANG LỖI VUI LÒNG THỬ LẠI SAU");
-                }
-                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == -1){
-                    JOptionPane.showMessageDialog(this,"TÀI KHOẢN KHÔNG TỒN TẠI");
-                }
-                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 0){
-                    JOptionPane.showMessageDialog(this,"Sai MẬT KHẨU");
-                }
-                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 1){
-                    JOptionPane.showMessageDialog(this,"ĐĂNG NHẬP THÀNH CÔNG");
-                }
-                else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 2){
-                    new GUIAdmin(username.getText());
+                String trangThaiDangNhap;
+                trangThaiDangNhap = dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword()));
+                if( trangThaiDangNhap.equals("Sai mật khẩu") ||
+                    trangThaiDangNhap.equals("Tài khoản không tồn tại") ||
+                    trangThaiDangNhap.equals("Lỗi mở database"))
+                JOptionPane.showMessageDialog(this,trangThaiDangNhap);
+                else {
+                    String[] parts = trangThaiDangNhap.split(":");
+                    DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim());
+                    new GUIAdmin(tk);
                     dispose();
                 }
             }

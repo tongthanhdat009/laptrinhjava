@@ -54,20 +54,21 @@ public class DataHoiVien {
         }
         return -1;
     }
+    
     public boolean them(HoiVien hoiVien) // test rồi
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, TaiKhoan, MatKhau, NgaySinh, SoDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, NgaySinh, SoDienThoai, IDTaiKhoan) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, hoiVien.getMaHoiVien());
             preparedStatement.setString(2, hoiVien.getHoten());
             preparedStatement.setString(3, hoiVien.getGioitinh());
             preparedStatement.setString(4, hoiVien.getMail());
-            preparedStatement.setString(5, hoiVien.getTaiKhoanHoiVien());
-            preparedStatement.setString(6, hoiVien.getMatKhauHoiVien());
-            preparedStatement.setString(7, hoiVien.getNgaysinh());
-            preparedStatement.setString(8, hoiVien.getSdt());
+            preparedStatement.setString(5, hoiVien.getNgaysinh());
+            preparedStatement.setString(6, hoiVien.getSdt());
+            preparedStatement.setString(7, hoiVien.getIDTaiKhoan());
+            
             if (preparedStatement.executeUpdate() > 0)  return true;
         } catch(Exception e){
             System.out.println(e);
@@ -79,41 +80,16 @@ public class DataHoiVien {
     {
         ArrayList<String> ds = new ArrayList<String>();
         dsHoiVien dsHoiVien = new dsHoiVien();
-        String truyVan = "SELECT * FROM HoiVien Where ";
+        String truyVan = "SELECT *, TK.IDTaiKhoan FROM HoiVien, TaiKhoan TK Where HoiVien.IDTaiKhoan = TK.IDTaiKhoan AND ";
         if(!a.getMaHoiVien().equals(""))
         {
             truyVan+= "MaHV = ? AND ";
             ds.add(a.getMaHoiVien());
         } 
-        if(!a.getHoten().equals(""))
-        {
-            truyVan+="HoTenHV = ? AND ";
-            ds.add(a.getHoten());
-        } 
         if(!a.getGioitinh().equals(""))
         {
             truyVan+="GioiTinh = ? AND ";
             ds.add(a.getGioitinh());
-        } 
-        if(!a.getMail().equals(""))
-        {
-            truyVan+="Gmail = ? AND ";
-            ds.add(a.getMail());
-        } 
-        if(!a.getTaiKhoanHoiVien().equals(""))
-        {
-            truyVan+="TaiKhoan = ? AND ";
-            ds.add(a.getTaiKhoanHoiVien());
-        } 
-        if(!a.getMatKhauHoiVien().equals(""))
-        {
-            truyVan+="MatKhau = ? AND ";
-            ds.add(a.getMatKhauHoiVien());
-        } 
-        if(!a.getNgaysinh().equals("2000-1-1"))
-        {
-            truyVan+="NgaySinh = ? AND ";
-            ds.add(a.getNgaysinh());
         } 
         if(!a.getSdt().equals(""))
         {
@@ -135,7 +111,7 @@ public class DataHoiVien {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDate(7),rs.getString(8)));
+                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6),rs.getString(7)));
             }
         }catch(Exception e)
         {
@@ -188,18 +164,16 @@ public class DataHoiVien {
     public boolean sua(HoiVien a) //test rồi
     {
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, TaiKhoan = ?, MatKhau = ?, NgaySinh = ?, SoDienThoai = ? FROM HoiVien Where MaHV = ? ";
+        String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, NgaySinh = ?, SoDienThoai = ? FROM HoiVien Where MaHV = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
             statement.setString(1, a.getHoten());
             statement.setString(2, a.getGioitinh());
             statement.setString(3, a.getMail());
-            statement.setString(4, a.getTaiKhoanHoiVien());
-            statement.setString(5, a.getMatKhauHoiVien());
-            statement.setString(6, a.getNgaysinh());
-            statement.setString(7, a.getSdt());
-            statement.setString(8, a.getMaHoiVien());
+            statement.setString(4, a.getNgaysinh());
+            statement.setString(5, a.getSdt());
+            statement.setString(6, a.getMaHoiVien());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;
         } catch (Exception e) {
@@ -220,15 +194,15 @@ public class DataHoiVien {
                                     rs.getString(2),
                                     rs.getString(3),
                                     rs.getString(4),
-                                    rs.getString(5),
+                                    rs.getDate(5),
                                     rs.getString(6),
-                                    rs.getDate(7),
-                                    rs.getString(8)));
+                                    rs.getString(7)));
         } catch (Exception e) {
             System.out.println(e);
         }
         return dsHoiVien;
     }
+    
     public int KiemTraDangNhap(String taiKhoan, String matKhau) //ĐÃ TEST
     {
         // trả về -2 lỗi mở database, -1 TK 0 tồn tại, 0 sai pass, 1 đăng nhập user thành công, 2 đăng nhập admin thành công
@@ -249,6 +223,7 @@ public class DataHoiVien {
         }
         return -2;
     }
+    
     public String taoMaHoiVienMoi() {
         try {
             // Tìm mã hội viên lớn nhất
@@ -304,10 +279,9 @@ public class DataHoiVien {
             ps.setString(2, hv.getHoten());
             ps.setString(3, hv.getGioitinh());
             ps.setString(4, hv.getMail());
-            ps.setString(5, hv.getTaiKhoanHoiVien());
-            ps.setString(6, hv.getMatKhauHoiVien());
-            ps.setString(7, hv.getNgaysinh());
-            ps.setString(8, hv.getSdt());
+            ps.setString(5, hv.getNgaysinh());
+            ps.setString(6, hv.getSdt());
+            ps.setString(7, hv.getIDTaiKhoan());
             int check = ps.executeUpdate();
             if(check > 0) {
             	return true;
@@ -317,4 +291,6 @@ public class DataHoiVien {
 		}
     	return false;
     }
+    
+   
 }

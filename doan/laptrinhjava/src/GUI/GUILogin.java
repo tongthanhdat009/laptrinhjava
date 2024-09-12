@@ -126,7 +126,7 @@ public class GUILogin extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(this,"ĐĂNG NHẬP THÀNH CÔNG");
                 }
                 else if(dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword())) == 2){
-                    new GUIAdmin();
+                    new GUIAdmin(username.getText());
                     dispose();
                 }
             }
@@ -135,7 +135,7 @@ public class GUILogin extends JFrame implements ActionListener{
             new GUISignup();
             dispose();
         }
-        else JOptionPane.showMessageDialog(this,"Chưa năng hiện đang phát triển");
+        else JOptionPane.showMessageDialog(this,"Chức năng hiện đang phát triển");
     }
     
     public static void main(String[] args) {

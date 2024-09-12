@@ -64,7 +64,7 @@ public class DataNhanVien {
 
     public boolean them(NhanVien nhanvien) {
     	String check_manv = "SELECT * FROM NhanVien WHERE MaNV = ?";
-        String query = "INSERT INTO NhanVien (MaNV, HoTenNV, GioiTinh, NgaySinh, SoDienThoai,SoCCCD, MaCoSo, VaiTro, Luong ) VALUES(?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO NhanVien (MaNV, HoTenNV, GioiTinh, NgaySinh, SoDienThoai,SoCCCD, MaCoSo, VaiTro, Luong, TaiKhoan, MatKhau ) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         try {
         	PreparedStatement ps_check = con.prepareStatement(check_manv);
         	ps_check.setString(1, nhanvien.getMaNhanVien());
@@ -84,6 +84,7 @@ public class DataNhanVien {
             ps.setString(7, nhanvien.getMacoso());
             ps.setString(8, nhanvien.getVaitro());
             ps.setDouble(9, nhanvien.getLuong());
+            ps.setString(10, nhanvien.getIDTaiKhoan());
             int n = ps.executeUpdate();
             if (n != 0) {
                 return true;
@@ -114,6 +115,7 @@ public class DataNhanVien {
 		                rs.getString("SoCCCD"),
 		                rs.getString("MaCoSo"),
 		                rs.getString("VaiTro"),
+		                rs.getString("IDTaiKhoan"),
 		                rs.getInt("Luong")
 						);
 				result.add(nv);
@@ -175,7 +177,7 @@ public class DataNhanVien {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                ds.add(new NhanVien(rs.getString("MaNV"), rs.getString("HoTenNV"), rs.getString("GioiTinh"), rs.getDate("NgaySinh"), rs.getString("SoDienThoai"), rs.getString("SoCCCD"), rs.getString("MaCoSo"), rs.getString("VaiTro"), rs.getInt("Luong")));
+                ds.add(new NhanVien(rs.getString("MaNV"), rs.getString("HoTenNV"), rs.getString("GioiTinh"), rs.getDate("NgaySinh"), rs.getString("SoDienThoai"), rs.getString("SoCCCD"), rs.getString("MaCoSo"), rs.getString("VaiTro"), rs.getString("IDTaiKhoan"), rs.getInt("Luong")));
             }
         } catch (Exception e) {
             System.out.println(e);

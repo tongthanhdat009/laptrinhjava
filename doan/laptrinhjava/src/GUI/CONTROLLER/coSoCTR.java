@@ -67,9 +67,12 @@ public class coSoCTR {
 		xoaHienThi(rightPanel);
         // tạo model bảng
         DefaultTableModel csList = new DefaultTableModel();
-        for (int i = 0; i < tenCotCS.size(); i++) {
-            csList.addColumn(tenCotCS.get(i));
-        }
+        csList.addColumn("Mã cơ sở");
+        csList.addColumn("Tên cơ sở");
+        csList.addColumn("Địa chỉ");
+        csList.addColumn("Thời gian hoạt động");
+        csList.addColumn("Số điện thoại");
+        csList.addColumn("Doanh thu");
         // Thêm dữ liệu vào bảng
         for (int i = 0; i < dsCS.dsCoSo.size(); i++) {
             csList.addRow(new Object[]{
@@ -124,10 +127,10 @@ public class coSoCTR {
         scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
         
         //thêm nút chức năng
-        String[] cmtNut = {"add", "remove", "edit", "Search"};
+        String[] cmtNut = {"add", "edit", "Search"};
         String[] anhStrings = {
             "src/asset/img/button/them-cs.png",
-            "src/asset/img/button/xoa-cs.png",
+//            "src/asset/img/button/xoa-cs.png",
             "src/asset/img/button/sua-cs.png",
             "src/asset/img/button/tim-cs.png"
         };
@@ -167,7 +170,7 @@ public class coSoCTR {
                                             textField.requestFocus();
                                             return; // Kết thúc sự kiện nếu có thông tin bị thiếu
                                         } 
-                                        else if (text.equals("") && !textField.isEditable()) {
+                                        else if (!text.equals("") && !textField.isEditable()) {
                                         	thongTinMoi.add("0");
                                         } 
                                         else {

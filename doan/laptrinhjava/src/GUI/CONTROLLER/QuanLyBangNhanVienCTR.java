@@ -32,6 +32,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLQuanLyDanhSach;
+import DTO.DTOQuyen;
+import DTO.DTOTaiKhoan;
 import DTO.NhanVien;
 
 public class QuanLyBangNhanVienCTR {
@@ -44,6 +46,9 @@ public class QuanLyBangNhanVienCTR {
 	private JTextField jtf_macoso;
 	private JTextField jtf_vaitro;
 	private JTextField jtf_luong;
+	private JTextField jtf_account;
+	private JTextField jtf_password;
+	private JTextField jtf_idAccount;
     private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
 	public void xoaHienThi(JPanel rightPanel){
@@ -56,9 +61,12 @@ public class QuanLyBangNhanVienCTR {
         rightPanel.revalidate();
         rightPanel.repaint();
     }
-	public void QuanLyBangNhanVien(ArrayList<NhanVien> ds, JPanel rightPanel, JLabel chonDanhSachLabel) {
+	public void QuanLyBangNhanVien(ArrayList<NhanVien> dsNV, ArrayList<DTOTaiKhoan> dsTKNV,ArrayList<DTOQuyen> dsQuyen, JPanel rightPanel) {
     	xoaHienThi(rightPanel);
-    	
+    	JLabel title = new JLabel("Quản lý nhân viên");
+    	title.setFont(new Font("Times New Roman", Font.ITALIC | Font.BOLD, 35));
+    	title.setBounds(450, 0, 1000,60);      
+    	rightPanel.add(title);
     	Font f = new Font("Times New Roman",Font.BOLD,17);
     	JButton them = new JButton();
         ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
@@ -131,6 +139,19 @@ public class QuanLyBangNhanVienCTR {
 			gioitinh = "Nữ";
 		}
         
+        JLabel jlb_account = new JLabel("Tài khoản:");
+        jtf_account = new JTextField();
+        jlb_account.setFont(f);
+        
+        JLabel jlb_password = new JLabel("Mật khẩu:");
+        jtf_password = new JTextField();
+        jlb_password.setFont(f);
+        
+        JLabel jlb_idAccount = new JLabel("ID Tài Khoản:");
+        jtf_idAccount = new JTextField();
+        jtf_idAccount.setEditable(false);
+        jlb_idAccount.setFont(f);
+        
         JLabel jlb_date = new JLabel("Ngày sinh: ");
         jtf_date = new JTextField();
         jlb_date.setFont(f);
@@ -185,6 +206,12 @@ public class QuanLyBangNhanVienCTR {
         
         jlb_luong.setBounds(10,140,90,30);
         jtf_luong.setBounds(130,140,120,30);
+        jlb_account.setBounds(280,140,90,30);
+        jtf_account.setBounds(380,140,120,30);
+        jlb_password.setBounds(530,140,90,30);
+        jtf_password.setBounds(630,140,120,30);
+        jlb_idAccount.setBounds(790,140,120,30);
+        jtf_idAccount.setBounds(890,140,120,30);
         
         nhapLieu.add(jlb_manv);
         nhapLieu.add(jtf_manv);
@@ -205,6 +232,12 @@ public class QuanLyBangNhanVienCTR {
         nhapLieu.add(jtf_vaitro);
         nhapLieu.add(jlb_luong);
         nhapLieu.add(jtf_luong);
+        nhapLieu.add(jlb_account);
+        nhapLieu.add(jtf_account);
+        nhapLieu.add(jlb_password);
+        nhapLieu.add(jtf_password);
+        nhapLieu.add(jlb_idAccount);
+        nhapLieu.add(jtf_idAccount);
         
         rightPanel.add(nhapLieu);
         
@@ -219,44 +252,39 @@ public class QuanLyBangNhanVienCTR {
         model.addColumn("Mã cơ sở");
         model.addColumn("Vai trò");
         model.addColumn("Lương");
+        model.addColumn("Tài khoản");
+        model.addColumn("Mật khẩu");
+        model.addColumn("ID Tài Khoản");
         
         model.setRowCount(0);
-        for(int i = 0; i < ds.size();i++) {
+        System.out.println(dsNV.size() +" "+ dsQuyen.size());
+        
+        for(int i = 0; i < dsNV.size();i++) {
         	model.addRow(new Object[] {
-        		ds.get(i).getMaNhanVien(),ds.get(i).getHoten().trim(),ds.get(i).getGioitinh(),ds.get(i).getNgaysinh(),
-        		ds.get(i).getSdt(),ds.get(i).getSocccd(),ds.get(i).getMacoso(),ds.get(i).getVaitro(),
-        		ds.get(i).getLuong()
+    			dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+    			dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+    			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan(), dsTKNV.get(i).getMatKhau(),dsNV.get(i).getIDTaiKhoan()
         	});
         }
         bang.setModel(model);
         bang.getTableHeader().setReorderingAllowed(false);
-        // for (int i = 0; i < bang.getColumnCount(); i++) {
-        //     bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
-        // }
         bang.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
-			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
-			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
-			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -278,6 +306,9 @@ public class QuanLyBangNhanVienCTR {
 					jtf_macoso.setText(model.getValueAt(i, 6).toString().trim());
 					jtf_vaitro.setText(model.getValueAt(i, 7).toString().trim());
 					jtf_luong.setText(model.getValueAt(i, 8).toString().trim());
+					jtf_account.setText(model.getValueAt(i, 9).toString().trim());
+					jtf_password.setText(model.getValueAt(i, 10).toString().trim());
+					jtf_idAccount.setText(model.getValueAt(i, 11).toString().trim());
 				}
 			}
 			
@@ -287,13 +318,15 @@ public class QuanLyBangNhanVienCTR {
             @Override
             public void actionPerformed(ActionEvent e) {
             		String dateString = isValidDate(jtf_date.getText());
-                    if (jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
+                    if (jtf_password.getText().trim().isEmpty()||jtf_account.getText().trim().isEmpty()||jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(rightPanel, "Thông tin không được để trống", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                        
                     } else if(!dateString.equals("Ngày sinh hợp lệ")) {
                     	JOptionPane.showMessageDialog(rightPanel, "Ngày sinh không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
                     	return;
+                    } else if(jtf_password.getText().length() < 6) {
+                    	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự","Error",JOptionPane.ERROR_MESSAGE);
                     }
                     else {
                     	try {
@@ -312,10 +345,13 @@ public class QuanLyBangNhanVienCTR {
                             String macoso = jtf_macoso.getText().trim();
                             String gioitinh = male.isSelected() ? "Nam" : "Nữ";
                             String vaitro = jtf_vaitro.getText().trim();
+                            String matKhau = jtf_password.getText().trim();
+                            String taiKhoan = jtf_account.getText().trim();
+                            String IDTaiKhoan = bllqlds.kiemTraMaTK();
                             int luong = Integer.parseInt(jtf_luong.getText());
-                            NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong);
+                            NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, taiKhoan, luong);
                             if (bllqlds.themNV(nv) == true) {
-                                model.addRow(new Object[]{ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong});
+                                model.addRow(new Object[]{ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong, taiKhoan, matKhau});
                                 JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else {
@@ -362,10 +398,13 @@ public class QuanLyBangNhanVienCTR {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(jtf_manv.getText().trim().equals("") || jtf_macoso.getText().trim().equals("") || jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
+				if(jtf_password.getText().trim().isEmpty()||jtf_account.getText().trim().isEmpty()||jtf_manv.getText().trim().equals("") || jtf_macoso.getText().trim().equals("") || jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
 					JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				else if(jtf_password.getText().length() < 6) {
+                	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự","Error",JOptionPane.ERROR_MESSAGE);
+                }
 				else {
 					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
                     String ngaysinh;
@@ -384,8 +423,10 @@ public class QuanLyBangNhanVienCTR {
                         String macoso = jtf_macoso.getText().trim();
                         String gioitinh = male.isSelected() ? "Nam" : "Nữ";
                         String vaitro = jtf_vaitro.getText().trim();
+                        String matKhau = jtf_password.getText().trim();
+                        String taiKhoan = jtf_account.getText().trim();
                         int luong = Integer.parseInt((String)jtf_luong.getText());
-                        NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong);
+                        NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, taiKhoan, matKhau, luong);
                         if(bllqlds.suaThongTinNV(nv)== true) {
                             JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin nhân viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
                             for(int i = 0;i < model.getRowCount();i++) {
@@ -398,6 +439,8 @@ public class QuanLyBangNhanVienCTR {
                                     model.setValueAt(macoso, i, 6);
                                     model.setValueAt(vaitro, i, 7);
                                     model.setValueAt(luong, i, 8);
+                                    model.setValueAt(taiKhoan, i, 9);
+                                    model.setValueAt(matKhau, i, 10);
                                     break;
                                 }
                             }
@@ -407,7 +450,7 @@ public class QuanLyBangNhanVienCTR {
                         }
                     }
                     catch(Exception ex){
-                        JOptionPane.showMessageDialog(chonDanhSachLabel, ex.getMessage(),"Lỗi",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, ex.getMessage(),"Lỗi",JOptionPane.ERROR_MESSAGE);
                     }
                     
 				}
@@ -427,7 +470,7 @@ public class QuanLyBangNhanVienCTR {
                         model.addRow(new Object[] {
                             ds.get(i).getMaNhanVien(), ds.get(i).getHoten(), ds.get(i).getGioitinh(),
                             ds.get(i).getNgaysinh(), ds.get(i).getSdt(), ds.get(i).getSocccd(),
-                            ds.get(i).getMacoso(), ds.get(i).getVaitro(), ds.get(i).getLuong()
+                            ds.get(i).getMacoso(), ds.get(i).getVaitro(), ds.get(i).getLuong(), ds.get(i).getTaiKhoan(), ds.get(i).getMatKhau()
                         });
                     }
                 } else {
@@ -439,7 +482,7 @@ public class QuanLyBangNhanVienCTR {
                     for (NhanVien nv : dsNhanVien) {
                         model.addRow(new Object[] {
                             nv.getMaNhanVien(), nv.getHoten(), nv.getGioitinh(), nv.getNgaysinh(),
-                            nv.getSdt(), nv.getSocccd(), nv.getMacoso(), nv.getVaitro(), nv.getLuong()
+                            nv.getSdt(), nv.getSocccd(), nv.getMacoso(), nv.getVaitro(), nv.getLuong(), nv.getTaiKhoan(), nv.getMatKhau()
                         });
                     }
                 }

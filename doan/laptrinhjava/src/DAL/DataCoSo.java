@@ -115,7 +115,7 @@ public class DataCoSo {
             preparedStatement.setString(3,coSo.getDiaChi());            
             preparedStatement.setString(4,coSo.getThoiGianHoatDong());            
             preparedStatement.setString(5,coSo.getSDT());            
-            preparedStatement.setInt(6,coSo.getDoanhThu());            
+            preparedStatement.setInt(6,0);            
             if (preparedStatement.executeUpdate() > 0)  return true;
         }catch (SQLException e){
             e.printStackTrace();

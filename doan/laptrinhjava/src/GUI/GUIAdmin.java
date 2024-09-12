@@ -1,4 +1,5 @@
 package GUI;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +20,7 @@ import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DTODuyetDonHang;
+import DTO.DTOQuyen;
 import DTO.DTOThongKeDonHang;
 import DTO.HoaDon;
 import DTO.HoiVien;
@@ -31,6 +33,7 @@ import DTO.dsHangHoa;
 import DTO.dsHoiVien;
 import DTO.hangHoa;
 import DTO.hangHoaCoSo;
+import DTO.DTOTaiKhoan;
 import GUI.CONTROLLER.QuanLyBangDichVuCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyBangThietBiCoSoCTR;
@@ -51,6 +54,8 @@ import java.util.Vector;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
 
 
 public class GUIAdmin{
@@ -106,10 +111,6 @@ public class GUIAdmin{
     
     //tiêu đề + logo
     JLabel leftLabel = new JLabel();
-        
-    //tiêu đề phụ
-    JLabel subTitle = new JLabel("Quản lý");
-    JLabel subTitle2 = new JLabel("Thống kê");
     
     //dòng cuối leftPanel
     JLabel footerLeft = new JLabel("Designed By: SGU FITNESS CLUB");
@@ -152,7 +153,11 @@ public class GUIAdmin{
     //     }
     // };
     
-    public GUIAdmin(){    
+    public String curr_user = new String();
+    
+    public GUIAdmin(String curr_user){    
+//    	người dùng hiện tại
+    	this.curr_user = curr_user;
         //main frame
         adminFrame.setSize(width, height);
         adminFrame.setLocationRelativeTo(null);
@@ -184,21 +189,23 @@ public class GUIAdmin{
         logoPanel.add(leftLabel, BorderLayout.CENTER);
         
         leftPanel.add(logoPanel);
+        
+        JLabel currUserLB = new JLabel("New label");
+        currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        currUserLB.setText("Người dùng hiện tại: " + this.curr_user);
+        logoPanel.add(currUserLB, BorderLayout.SOUTH);
                 
         //bảng chọn chức năng
         JPanel managementPanel = new JPanel();
-        managementPanel.setBackground(new Color(10, 151, 178));
         managementPanel.setLayout(null);
-        managementPanel.setBounds(25,245,352,371);
+        managementPanel.setBounds(25,245,352,526);
         
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
         TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Chức năng");
         titledBorder.setTitleFont(italicBoldFont);
-        managementPanel.setBorder(titledBorder);
-        managementPanel.setBackground(new Color(0, 191, 99));
-        
-        managementPanel.add(subTitle);
-        managementPanel.add(subTitle2);
+        managementPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+        		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(240, 255, 255)));
+        managementPanel.setBackground(new Color(135, 206, 250));
         
         leftPanel.add(managementPanel);
         
@@ -213,7 +220,7 @@ public class GUIAdmin{
                 xuLyDanhSach();
         	}
         });
-        listBTN.setBounds(23, 38, 300, 50);
+        listBTN.setBounds(23, 42, 300, 50);
         listBTN.setFocusPainted(false);
         listBTN.setIcon(new ImageIcon(scaleCheckListIcon));
 
@@ -229,7 +236,7 @@ public class GUIAdmin{
                 XuLyDuyetDonHang(ds,bllQuanLyDanhSach);
         	}
         });
-        billBTN.setBounds(23, 99, 300, 50);
+        billBTN.setBounds(23, 103, 300, 50);
         billBTN.setIcon(new ImageIcon(scaleBillIcon));
         billBTN.setFocusPainted(false);
 
@@ -246,7 +253,7 @@ public class GUIAdmin{
                 xuLyNhapHang(dsLoaiThietBi,soLuongLoaiThietBi);
         	}
         });
-        goodsBTN.setBounds(23, 160, 300, 50);
+        goodsBTN.setBounds(23, 164, 300, 50);
         goodsBTN.setFocusPainted(false);
         goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
 
@@ -264,15 +271,55 @@ public class GUIAdmin{
                 TK.thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu",rightPanel );
         	}
         });
-        statBTN.setBounds(23, 221, 300, 50);
+        statBTN.setBounds(23, 225, 300, 50);
         statBTN.setFocusPainted(false);
         statBTN.setIcon(new ImageIcon(scaleChartIcon));
         managementPanel.add(statBTN);
         
         JButton delegationBTN = new JButton("Phân quyền");
         delegationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        delegationBTN.setBounds(23, 282, 300, 50);
+        delegationBTN.setBounds(23, 408, 300, 50);
         managementPanel.add(delegationBTN);
+        
+        JButton employeeMNG = new JButton("Quản lý nhân viên");
+        employeeMNG.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+        		ArrayList<NhanVien> dsNV = new ArrayList<>();
+        		ArrayList<DTOQuyen> dsQuyen = bllQuanLyDanhSach.layDSQuyenNV();
+                dsNV = bllQuanLyDanhSach.getDataNhanVien();
+                ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
+                QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
+                qlbnvCTR.QuanLyBangNhanVien(dsNV,dsTKNV,dsQuyen, rightPanel);
+        	}
+        });
+        employeeMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        employeeMNG.setBounds(23, 286, 300, 50);
+        managementPanel.add(employeeMNG);
+        
+        JButton memberMNG = new JButton("Quản lý hội viên");
+        memberMNG.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+        		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+                Vector<String> dsCoSo = new Vector<>();
+                dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+                ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+                QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
+                qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+        	}
+        });
+        memberMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        memberMNG.setBounds(23, 347, 300, 50);
+        managementPanel.add(memberMNG);
         
         leftPanel.add(footerLeft);
         //chức năng:
@@ -295,6 +342,24 @@ public class GUIAdmin{
         rightPanel.add(introPn);
         //thêm đối tượng
         mainPanel.add(leftPanel);
+        
+        JButton logOutBTN = new JButton("Đăng xuất");
+        logOutBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		int result = JOptionPane.showConfirmDialog(mainPanel, "Bạn muốn đăng xuất chứ?");
+        		if(result == 0) {
+        			System.out.println("Bạn đã đăng xuất");
+        			adminFrame.dispose();
+        			new GUILogin();
+        		}
+        		else {
+        			return;
+        		}
+        	}
+        });
+        logOutBTN.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+        logOutBTN.setBounds(25, 782, 146, 37);
+        leftPanel.add(logOutBTN);
         mainPanel.add(rightPanel);
         adminFrame.getContentPane().add(mainPanel);
 
@@ -674,7 +739,7 @@ public class GUIAdmin{
         rightTitle.setBounds(450, 0, 1000,60);        
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Nhân viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở","Hội viên cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,130,30);
@@ -705,17 +770,42 @@ public class GUIAdmin{
                 
                 BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
 
-                ArrayList<String> tenCotHV = bllQuanLyDanhSach.layTenCotHoiVien();
+                ArrayList<String> tenCotHV = new ArrayList<String>();
                 ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
+                tenCotHV.add("Mã hội viên");
+                tenCotHV.add("Họ tên hội viên");
+                tenCotHV.add("Giới tính");
+                tenCotHV.add("Gmail");
+                tenCotHV.add("Mã Tài khoản");
+                tenCotHV.add("Số điện thoại");
+                tenCotHV.add("Ngày sinh");
+                tenCotHV.add("Tài khoản");
+                tenCotHV.add("Mật khẩu");
 
-                ArrayList<String> tenCotCS = bllQuanLyDanhSach.layTenCotCoSo();
+                ArrayList<String> tenCotCS = new ArrayList<String>();
+                tenCotCS.add("Mã cơ sở");
+                tenCotCS.add("Tên cơ sở");
+                tenCotCS.add("Địa chỉ");
+                tenCotCS.add("Thời gian hoạt động");
+                tenCotCS.add("Số điện thoại");
+                tenCotCS.add("Doanh thu");
                 DSCoSo dsCS =  bllQuanLyDanhSach.layDsCoSo();
 
                 DSLoaiThietBi dsTB = bllQuanLyDanhSach.layDSLoaiThietBi();
-                ArrayList<String> tenCotTB = bllQuanLyDanhSach.layTenCotThietBi();
+                ArrayList<String> tenCotTB = new ArrayList<String>();
+                tenCotTB.add("Mã thiết bị");
+                tenCotTB.add("Tên loại thiết bị");
+                tenCotTB.add("Hình ảnh");
+                tenCotTB.add("Giá thiết bị");
+                tenCotTB.add("Ngày bảo hành");
                 
                 dsHangHoa dsHH = bllQuanLyDanhSach.layDsHangHoa();
-                ArrayList<String> tenCotHH = bllQuanLyDanhSach.layTenCotHangHoa();
+                ArrayList<String> tenCotHH = new ArrayList<String>();
+                tenCotHH.add("Mã hàng hóa");
+                tenCotHH.add("Loại hàng hóa");
+                tenCotHH.add("Tên loại hàng hóa");
+                tenCotHH.add("Hình ảnh");
+                tenCotHH.add("Giá nhập");
 
                 if (selectedOption.equals("Cơ sở")) {
                 	coSoCTR csCTR = new coSoCTR(rightPanel,tenCotCS,dsCS,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
@@ -731,12 +821,12 @@ public class GUIAdmin{
                     hoiVienCTR hvCTR = new hoiVienCTR(rightPanel,tenCotHV,dsHV,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
                     hvCTR.update();
                 }
-                else if (selectedOption.equals("Nhân viên")){
-                    ArrayList<NhanVien> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.getDataNhanVien();
-                    QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
-                    qlbnvCTR.QuanLyBangNhanVien(ds, rightPanel, chonDanhSachLabel);
-                }
+//                else if (selectedOption.equals("Nhân viên")){
+//                    ArrayList<NhanVien> ds = new ArrayList<>();
+//                    ds = bllQuanLyDanhSach.getDataNhanVien();
+//                    QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
+//                    qlbnvCTR.QuanLyBangNhanVien(ds, rightPanel, chonDanhSachLabel);
+//                }
                 else if(selectedOption.equals("Thiết bị")){
                     thietBiCTR tbCTR = new thietBiCTR(rightPanel, tenCotTB, dsTB, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
                     tbCTR.update();
@@ -769,14 +859,14 @@ public class GUIAdmin{
                     hangHoaCSCTR hhcsCTR = new hangHoaCSCTR();
                     hhcsCTR.QuanLyHangHoaCoSo(ds,dsMaCoSo,rightPanel);
                 }
-                else if(selectedOption.equals("Hội viên cơ sở")){
-                    ArrayList<HoiVienCoSo> ds = new ArrayList<>();
-                    Vector<String> dsCoSo = new Vector<>();
-                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
-                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
-                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
-                }
+//                else if(selectedOption.equals("Hội viên cơ sở")){
+//                    ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+//                    Vector<String> dsCoSo = new Vector<>();
+//                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+//                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+//                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
+//                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+//                }
                 else if(selectedOption.equals("Hàng hóa")){
                 	hangHoaCTR hhCTR = new hangHoaCTR(rightPanel, tenCotHH, dsHH, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
                 	hhCTR.update();
@@ -790,6 +880,6 @@ public class GUIAdmin{
         rightPanel.add(danhSachBox);
     }
     public static void main(String[] args){
-        new GUIAdmin();
+        new GUIAdmin("Admin");
     }
 }

@@ -38,9 +38,13 @@ public class QuanLyThietBiCTR extends JPanel {
         noiDung.setBounds(0,100,1200,800);
         add(noiDung);
 
-        JPanel ta = new JPanel();
+        JPanel ta = new JPanel(null);
         ta.setBounds(50,0,525,300);
         ta.setBackground(Color.BLUE);
+        JLabel talb = new JLabel("Tạ");
+        talb.setFont(new Font("Times New Roman",1,50));
+        talb.setBounds(220,100,100,100);
+        ta.add(talb);
         noiDung.add(ta);
 
         JPanel mayChay = new JPanel();

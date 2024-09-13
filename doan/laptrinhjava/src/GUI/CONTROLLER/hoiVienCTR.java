@@ -407,8 +407,9 @@ public class hoiVienCTR {
                         Date date;
                         ArrayList<String> thongTinMoi = new ArrayList<String>(); 
                         int day=1, year=2000, month=1;
+                        String maGoc = new String();
                         if (i>=0){
-                        	String maGoc = hvList.getValueAt(i, 0).toString();
+                        	maGoc = hvList.getValueAt(i, 0).toString();
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
                             for (Component component : components) {

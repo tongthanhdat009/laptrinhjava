@@ -42,7 +42,6 @@ public class QuanLyBangNhanVienCTR {
 	private JTextField jtf_manv;
 	private JTextField jtf_hoten;
 	private ButtonGroup btngr;
-	private JTextField jtf_date;
 	private JTextField jtf_sdt;
 	private JTextField jtf_cccd;
 	private JTextField jtf_luong;
@@ -52,6 +51,10 @@ public class QuanLyBangNhanVienCTR {
 
 	private JComboBox<String> cbb_vaiTro;
 	private JComboBox<String> cbb_CoSo; 
+	private JComboBox<Integer> dayCBB;
+	private JComboBox<Integer> monthCBB;
+	private JComboBox<Integer> yearCBB;
+	
 	
 	private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
@@ -137,12 +140,6 @@ public class QuanLyBangNhanVienCTR {
         btngr = new ButtonGroup();
         btngr.add(male);
         btngr.add(female);
-        String gioitinh = "";
-        if(male.isSelected()) {
-			gioitinh = "Nam";
-		}else if(female.isSelected()) {
-			gioitinh = "Nữ";
-		}
         
         JLabel jlb_account = new JLabel("Tài khoản:");
         jtf_account = new JTextField();
@@ -158,9 +155,41 @@ public class QuanLyBangNhanVienCTR {
         jlb_idAccount.setFont(f);
         
         JLabel jlb_date = new JLabel("Ngày sinh: ");
-        jtf_date = new JTextField();
         jlb_date.setFont(f);
+        dayCBB = new JComboBox<Integer>();
+        for(int day=1; day<=31 ;day++){
+            dayCBB.addItem(day);
+        }
+
+        dayCBB.setFont(f);
+        dayCBB.setBackground(Color.white);
+        dayCBB.setName("Day");
         
+        monthCBB = new JComboBox<Integer>();
+        for(int month=1; month<=12 ;month++){
+            monthCBB.addItem(month);
+        }
+        monthCBB.setFont(f);
+        monthCBB.setBackground(Color.white);
+        monthCBB.setName("Month");
+        
+        yearCBB = new JComboBox<Integer>();
+        for(int year=2024;year>=1900;year--){
+            yearCBB.addItem(year);
+        }
+        yearCBB.setFont(f);
+        yearCBB.setBackground(Color.white);
+        yearCBB.setName("Year");
+        
+     // Listener thay đổi tháng và năm để cập nhật ngày
+        ActionListener updateDaysListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateDays(dayCBB, monthCBB, yearCBB);
+            }
+        };
+        monthCBB.addActionListener(updateDaysListener);
+        yearCBB.addActionListener(updateDaysListener);
         
         JLabel jlb_sdt = new JLabel("Số điện thoại: ");
         jtf_sdt = new JTextField();
@@ -173,6 +202,7 @@ public class QuanLyBangNhanVienCTR {
         JLabel jlb_macoso = new JLabel("Mã cơ sở: ");
         cbb_CoSo = new JComboBox<String>();
         DSCoSo dsCS = bllQuanLyDanhSach.layDsCoSo();
+        cbb_CoSo.addItem("Cơ sở");
         for(CoSo cs: dsCS.dsCoSo) {
         	cbb_CoSo.addItem(cs.getMaCoSo());
         }
@@ -181,6 +211,7 @@ public class QuanLyBangNhanVienCTR {
         JLabel jlb_vaitro = new JLabel("Vai trò: ");
         ArrayList<String> dsTenQuyen = bllQuanLyDanhSach.layDSTenQuyenNV();
         cbb_vaiTro = new JComboBox<>();
+        cbb_vaiTro.addItem("Vai trò");
         for(String a : dsTenQuyen) {
         	cbb_vaiTro.addItem(a.trim());
         }
@@ -189,6 +220,8 @@ public class QuanLyBangNhanVienCTR {
         JLabel jlb_luong = new JLabel("Lương: ");
         jtf_luong = new JTextField();
         jlb_luong.setFont(f);
+        
+        
         
         JPanel nhapLieu = new JPanel(null);
         nhapLieu.setBounds(2, 175, rightPanel.getWidth()-20, 175);
@@ -206,7 +239,9 @@ public class QuanLyBangNhanVienCTR {
         male.setBounds(630, 50, 70, 30); 
         female.setBounds(720, 50, 60, 30); 
         jlb_date.setBounds(790, 50, 90, 30); 
-        jtf_date.setBounds(890,50,120,30); 
+        dayCBB.setBounds(890,50,60,30);
+        monthCBB.setBounds(990,50,75,30);
+        yearCBB.setBounds(1090,50,75,30);
         
         jlb_sdt.setBounds(10,100,120,30); 
         jtf_sdt.setBounds(130, 100, 120, 30);
@@ -234,7 +269,9 @@ public class QuanLyBangNhanVienCTR {
         nhapLieu.add(male);
         nhapLieu.add(female);
         nhapLieu.add(jlb_date);
-        nhapLieu.add(jtf_date);
+        nhapLieu.add(dayCBB);
+        nhapLieu.add(monthCBB);
+        nhapLieu.add(yearCBB);
         nhapLieu.add(jlb_sdt);
         nhapLieu.add(jtf_sdt);
         nhapLieu.add(jlb_cccd);
@@ -314,7 +351,23 @@ public class QuanLyBangNhanVienCTR {
 					}else {
 						female.setSelected(true);
 					}
-					jtf_date.setText(model.getValueAt(i, 3).toString().trim());
+					 @SuppressWarnings("rawtypes")
+                     String dateString = model.getValueAt(i,3).toString();
+                     String[] parts = dateString.split("-");
+                     int year = Integer.parseInt(parts[0]);
+                     int month = Integer.parseInt(parts[1]);
+                     int day = Integer.parseInt(parts[2]);
+                     if("Day".equals(dayCBB.getName())){
+                         dayCBB.setSelectedItem(day);
+                     }
+
+                     if ("Month".equals(monthCBB.getName())){
+                         monthCBB.setSelectedItem(month);
+                     }
+
+                     if ("Year".equals(yearCBB.getName())){
+                         yearCBB.setSelectedItem(year);
+                     }
 					jtf_sdt.setText(model.getValueAt(i, 4).toString().trim());
 					jtf_cccd.setText(model.getValueAt(i, 5).toString().trim());
 					cbb_CoSo.setSelectedItem(model.getValueAt(i, 6).toString().trim());
@@ -331,49 +384,70 @@ public class QuanLyBangNhanVienCTR {
         them.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            		String dateString = isValidDate(jtf_date.getText());
-                    if (jtf_password.getText().trim().isEmpty()||jtf_account.getText().trim().isEmpty()||jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
+                    if (jtf_password.getText().trim().isEmpty()
+                    		||jtf_account.getText().trim().isEmpty()
+                    		||jtf_hoten.getText().trim().isEmpty() 
+                    		|| btngr.getSelection() == null 
+                    		|| jtf_sdt.getText().trim().isEmpty() 
+                    		|| jtf_cccd.getText().trim().isEmpty()
+                    		|| jtf_luong.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(rightPanel, "Thông tin không được để trống", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                        
-                    } else if(!dateString.equals("Ngày sinh hợp lệ")) {
-                    	JOptionPane.showMessageDialog(rightPanel, "Ngày sinh không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
-                    	return;
-                    } else if(jtf_password.getText().length() < 6) {
+                    } 
+                    else if(jtf_password.getText().length() < 6) {
                     	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự","Error",JOptionPane.ERROR_MESSAGE);
                     }
                     else {
                     	try {
                     		// Xử lý thêm nhân viên vào cơ sở dữ liệu
-                            String[] parts = ((String) jtf_date.getText()).split("-");
-                            int year = Integer.parseInt(parts[0]);
-                            int month = Integer.parseInt(parts[1]);
-                            int day = Integer.parseInt(parts[2]);
-                            BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+                            
                             @SuppressWarnings("deprecation")
-                            Date date = new Date(year-1900,month,day-1);
+                            BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+                            Date date = new Date(2000,1,1);
                             String ma = bllqlds.layMaNVchuaTonTai();
                             String ten = jtf_hoten.getText().trim();
                             String sdt = jtf_sdt.getText().trim();
                             String cccd = jtf_cccd.getText().trim();
-                            String macoso = jtf_macoso.getText().trim();
                             String gioitinh = male.isSelected() ? "Nam" : "Nữ";
-                            String vaitro = jtf_vaitro.getText().trim();
                             String matKhau = jtf_password.getText().trim();
                             String taiKhoan = jtf_account.getText().trim();
-                            String IDTaiKhoan = bllqlds.kiemTraMaTK();
+                            String IDTaiKhoan = bllqlds.kiemTraMaTK().trim();
+                            String vaitro = cbb_vaiTro.getSelectedItem().toString().trim();
+                            if(vaitro.equals("Vai trò")) {
+                                JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn vai trò của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            String macoso = cbb_CoSo.getSelectedItem().toString().trim();
+                            if(macoso.equals("Cơ sở")) {
+                                JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn cơ sở làm việc của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        	int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
+                            int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
+                            int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
+                            date = new Date(year-1900,month-1,day);
                             int luong = Integer.parseInt(jtf_luong.getText());
-                            NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, taiKhoan, luong);
-                            if (bllqlds.themNV(nv) == true) {
-                                model.addRow(new Object[]{ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong, taiKhoan, matKhau});
-                                JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, luong);
+                            String IDQuyen = new String();
+                            if(vaitro.equals("Nhân viên")) {
+                            	IDQuyen = "Q0002";
                             }
                             else {
-                            	JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+                            	IDQuyen = "Q0003";
+                            }
+                            DTOTaiKhoan tknv = new DTOTaiKhoan(bllqlds.kiemTraMaTK(),taiKhoan,matKhau,IDQuyen);
+                            if (bllqlds.themTK(tknv) && bllqlds.themNV(nv) == true) {
+                            	JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                model.addRow(new Object[]{ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong, taiKhoan, matKhau, IDTaiKhoan});
+                            }
+                            else {
+                            	JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên không thành công!", "Error", JOptionPane.ERROR_MESSAGE);
+                            	return;
                             }
                             jtf_manv.setText("");jtf_hoten.setText("");jtf_sdt.setText("");jtf_cccd.setText("");
-                            jtf_macoso.setText("");btngr.clearSelection();jtf_vaitro.setText("");jtf_luong.setText("");
-                            jtf_date.setText("");
+                            cbb_CoSo.setSelectedItem("Cơ sở");;btngr.clearSelection();cbb_vaiTro.setSelectedItem("Nhân viên");jtf_luong.setText("");
+                            jtf_account.setText("");jtf_password.setText("");jtf_idAccount.setText("");
 						} catch (Exception e2) {
 							System.out.println(e2);
 						}
@@ -385,119 +459,171 @@ public class QuanLyBangNhanVienCTR {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(jtf_manv.getText().equals("")) {
-					JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã nhân viên cần xóa","Error",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				else {
-					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-					if(bllqlds.xoaNV(jtf_manv.getText())) {
-						for(int i = 0;i < model.getRowCount(); i++) {
-							if(model.getValueAt(i, 0).equals(jtf_manv.getText())) {
-								model.removeRow(i);
-								JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên thành công","Success",JOptionPane.INFORMATION_MESSAGE);
-								return;
-							}
-						}
+				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+				int i = bang.getSelectedRow();
+				if(i>=0) {
+					if(bllqlds.xoaNV(jtf_manv.getText()) && bllqlds.xoaTK(jtf_idAccount.getText())) {
+						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+						jtf_manv.setText("");jtf_hoten.setText("");jtf_sdt.setText("");jtf_cccd.setText("");
+                        cbb_CoSo.setSelectedItem("Cơ sở");;btngr.clearSelection();cbb_vaiTro.setSelectedItem("Nhân viên");jtf_luong.setText("");
+                        jtf_account.setText("");jtf_password.setText("");jtf_idAccount.setText("");dayCBB.setSelectedItem(1);monthCBB.setSelectedItem(1);yearCBB.setSelectedItem(2000);
+                        model.removeRow(i);
+						return;
 					}
 					else {
-						JOptionPane.showMessageDialog(rightPanel, "Mã nhân viên không tồn tại","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên không thành công","Error",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
-			}
-		});
-        sua.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				if(jtf_password.getText().trim().isEmpty()||jtf_account.getText().trim().isEmpty()||jtf_manv.getText().trim().equals("") || jtf_macoso.getText().trim().equals("") || jtf_hoten.getText().trim().isEmpty() || btngr.getSelection() == null || jtf_date.getText().trim().isEmpty() || jtf_sdt.getText().trim().isEmpty() || jtf_cccd.getText().trim().isEmpty() || jtf_vaitro.getText().trim().isEmpty() || jtf_luong.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin","Error",JOptionPane.ERROR_MESSAGE);
+				else {
+					JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn 1 dòng dữ liệu muốn xóa","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				else if(jtf_password.getText().length() < 6) {
-                	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự","Error",JOptionPane.ERROR_MESSAGE);
-                }
-				else {
-					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-                    String ngaysinh;
-                    try{
-                        ngaysinh = isValidDate(jtf_date.getText());
-                        String[] parts = ((String) jtf_date.getText()).split("-");
-                        int year = Integer.parseInt(parts[0]);
-                        int month = Integer.parseInt(parts[1]);
-                        int day = Integer.parseInt(parts[2]);
-                        @SuppressWarnings("deprecation")
-                        Date date = new Date(year - 1900, month, day - 1);
-                        String ma = jtf_manv.getText().trim();
-                        String ten = jtf_hoten.getText().trim();
-                        String sdt = jtf_sdt.getText().trim();
-                        String cccd = jtf_cccd.getText().trim();
-                        String macoso = jtf_macoso.getText().trim();
-                        String gioitinh = male.isSelected() ? "Nam" : "Nữ";
-                        String vaitro = jtf_vaitro.getText().trim();
-                        String matKhau = jtf_password.getText().trim();
-                        String taiKhoan = jtf_account.getText().trim();
-                        int luong = Integer.parseInt((String)jtf_luong.getText());
-                        NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, taiKhoan, matKhau, luong);
-                        if(bllqlds.suaThongTinNV(nv)== true) {
-                            JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin nhân viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
-                            for(int i = 0;i < model.getRowCount();i++) {
-                                if(model.getValueAt(i, 0).equals(ma)) {
-                                    model.setValueAt(ten, i, 1);
-                                    model.setValueAt(gioitinh, i, 2);
-                                    model.setValueAt(date, i, 3);
-                                    model.setValueAt(sdt, i, 4);
-                                    model.setValueAt(cccd, i, 5);
-                                    model.setValueAt(macoso, i, 6);
-                                    model.setValueAt(vaitro, i, 7);
-                                    model.setValueAt(luong, i, 8);
-                                    model.setValueAt(taiKhoan, i, 9);
-                                    model.setValueAt(matKhau, i, 10);
-                                    break;
-                                }
-                            }
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin nhân viên thất bại", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    catch(Exception ex){
-                        JOptionPane.showMessageDialog(null, ex.getMessage(),"Lỗi",JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-				}
 			}
+		});
+        
+        sua.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i = bang.getSelectedRow();
+				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+                Date date;
+                String maGoc = new String();
+				if(i>=0) {
+					maGoc = bang.getValueAt(i, 0).toString().trim();
+					int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
+					int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
+					int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
+					date = new Date(year - 1900, month - 1, day);
+					String ma = jtf_manv.getText().trim();
+					String ten = jtf_hoten.getText().trim();
+					String sdt = jtf_sdt.getText().trim();
+					String cccd = jtf_cccd.getText().trim();
+					String macoso = cbb_CoSo.getSelectedItem().toString();
+					String gioitinh = male.isSelected() ? "Nam" : "Nữ";
+					String vaitro = cbb_vaiTro.getSelectedItem().toString();
+					String matKhau = jtf_password.getText().trim();
+					System.out.println(matKhau);
+					String taiKhoan = jtf_account.getText().trim();
+					String IDTaiKhoan = jtf_idAccount.getText().trim();
+                    String luong = (String)jtf_luong.getText();
+                    int newLuong = 0;
+                    String IDQuyen = new String();
+                    if(vaitro.equals("Nhân viên")) {
+                    	IDQuyen = "Q0002";
+                    }
+                    else {
+                    	IDQuyen = "Q0003";
+                    }
+					if(!maGoc.equals(jtf_manv.getText())) {
+						JOptionPane.showMessageDialog(rightPanel, "Không được sửa mã nhân viên","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(!bllqlds.kiemTraSDT(sdt)) {
+						JOptionPane.showMessageDialog(rightPanel, "Số điện thoại không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(matKhau.length() < 6) {
+						JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự trở lên","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(bllqlds.kiemTraLuong(luong)==-1) {
+						JOptionPane.showMessageDialog(rightPanel, "Lương không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					else {
+						newLuong = Integer.parseInt(luong); 
+					}
+                    DTOTaiKhoan tknv = new DTOTaiKhoan(IDTaiKhoan,taiKhoan,matKhau,IDQuyen);
+                    NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
+                    if(bllqlds.suaThongTinTK(tknv) && bllqlds.suaThongTinNV(nv) && bllqlds.ganLaiQuyenTK(IDTaiKhoan, IDQuyen) ) {
+						JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin thành công!","Sửa thông tin",JOptionPane.INFORMATION_MESSAGE);
+						bang.setValueAt(ma, i, 0);
+						bang.setValueAt(ten, i, 1);
+						bang.setValueAt(gioitinh, i, 2);
+						bang.setValueAt(date, i, 3);
+						bang.setValueAt(sdt, i, 4);
+						bang.setValueAt(cccd, i, 5);
+						bang.setValueAt(macoso, i, 6);
+						bang.setValueAt(vaitro, i, 7);
+						bang.setValueAt(luong, i, 8);
+						bang.setValueAt(taiKhoan, i, 9);
+						bang.setValueAt(matKhau, i, 10);
+						return;
+                    }
+                    else {
+						JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin không thành công!","Sửa thông tin",JOptionPane.INFORMATION_MESSAGE);
+						return;
+                    }
+				}
+				else {
+                    JOptionPane.showMessageDialog(null, "Thiếu thông tin vui lòng chọn 1 dòng để sửa", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+			}
+
 		});
         timkiem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setRowCount(0); // Xóa dữ liệu cũ trong bảng
-                
-                String manv = jtf_manv.getText().trim(); // Lấy mã nhân viên cần tìm kiếm từ TextField
-                
-                // Kiểm tra xem mã nhân viên có rỗng không
-                if (manv.isEmpty()) {
-                    // Nếu mã nhân viên rỗng, hiển thị tất cả các nhân viên trong danh sách
-                    for (int i = 0; i < ds.size(); i++) {
-                        model.addRow(new Object[] {
-                            ds.get(i).getMaNhanVien(), ds.get(i).getHoten(), ds.get(i).getGioitinh(),
-                            ds.get(i).getNgaysinh(), ds.get(i).getSdt(), ds.get(i).getSocccd(),
-                            ds.get(i).getMacoso(), ds.get(i).getVaitro(), ds.get(i).getLuong(), ds.get(i).getTaiKhoan(), ds.get(i).getMatKhau()
-                        });
+				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+				int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
+				int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
+				int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
+				Date date = new Date(year - 1900, month, day - 1);
+				String ma = jtf_manv.getText().trim();
+				String ten = jtf_hoten.getText().trim();
+				String sdt = jtf_sdt.getText().trim();
+				String cccd = jtf_cccd.getText().trim();
+				String macoso = cbb_CoSo.getSelectedItem().toString();
+				String gioitinh = new String();
+				if(male.isSelected()) {
+					gioitinh = male.getText();
+				}
+				if(female.isSelected()) {
+					gioitinh = female.getText();
+				}
+				String vaitro = cbb_vaiTro.getSelectedItem().toString();
+				String matKhau = jtf_password.getText().trim();
+				String taiKhoan = jtf_account.getText().trim();
+				String IDTaiKhoan = jtf_idAccount.getText().trim();
+                String luong = (String)jtf_luong.getText();
+                int newLuong = 0;
+				if(bllqlds.kiemTraLuong(luong)==-1) {
+					newLuong = 0; 
+				}
+                NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
+                ArrayList<NhanVien> dsNhanVien = bllqlds.timKiemNV(nv);
+                ArrayList<DTOTaiKhoan> dsTKNV2 = bllqlds.timKiemTKNV(nv);
+                if(bllqlds.timKiemNV(nv).size()!=0) {
+                	JOptionPane.showMessageDialog(rightPanel, "Tìm kiếm thành công","Tìm kiếm thông tin",JOptionPane.INFORMATION_MESSAGE);
+                	for (int i = 0; i < dsNhanVien.size(); i++) {
+                		model.addRow(new Object[] {
+                    			dsNhanVien.get(i).getMaNhanVien(),
+                    			dsNhanVien.get(i).getHoten().trim(),
+                    			dsNhanVien.get(i).getGioitinh(),
+                    			dsNhanVien.get(i).getNgaysinh(),
+                    			dsNhanVien.get(i).getSdt(),
+                    			dsNhanVien.get(i).getSocccd(),
+                    			dsNhanVien.get(i).getMacoso(),
+                    			dsNhanVien.get(i).getVaitro().trim(),
+                    			dsNhanVien.get(i).getLuong(),
+                    			dsTKNV2.get(i).getTaiKhoan(),
+                    			dsTKNV2.get(i).getMatKhau(),
+                    			dsNhanVien.get(i).getIDTaiKhoan()
+                        	});
                     }
-                } else {
-                    // Nếu mã nhân viên không rỗng, thực hiện tìm kiếm
-                    BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-                    ArrayList<NhanVien> dsNhanVien = bllqlds.timKiemNV(manv);
-                    
-                    // Hiển thị kết quả tìm kiếm trên bảng
-                    for (NhanVien nv : dsNhanVien) {
-                        model.addRow(new Object[] {
-                            nv.getMaNhanVien(), nv.getHoten(), nv.getGioitinh(), nv.getNgaysinh(),
-                            nv.getSdt(), nv.getSocccd(), nv.getMacoso(), nv.getVaitro(), nv.getLuong(), nv.getTaiKhoan(), nv.getMatKhau()
-                        });
+                	return;
+                }
+                else {
+                	JOptionPane.showMessageDialog(rightPanel, "Tìm kiếm không thành công vui lòng chọn thêm đầy đủ thông tin như giới tính, vai trò, cơ sở","Tìm kiếm thông tin",JOptionPane.ERROR_MESSAGE);
+                	for(int i = 0; i < dsNV.size();i++) {
+                    	model.addRow(new Object[] {
+                			dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+                			dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+                			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan(), dsTKNV.get(i).getMatKhau(),dsNV.get(i).getIDTaiKhoan()
+                    	});
                     }
                 }
             }
@@ -509,37 +635,46 @@ public class QuanLyBangNhanVienCTR {
         scrollPane.setBounds(5, 350, rightPanel.getWidth()-20, rightPanel.getHeight()-390);
         rightPanel.add(scrollPane);
     }
-	public String isValidDate(String inputdate) {
-    	try {
-            String dateString = inputdate;
-            String[] parts = dateString.split("-");
-            int year = Integer.parseInt(parts[0]);
-            int month = Integer.parseInt(parts[1]);
-            int day = Integer.parseInt(parts[2]);
-            // @SuppressWarnings("deprecation")
-            // Date date = new Date(year - 1900, month - 1, day); // Tạo đối tượng Date từ năm, tháng và ngày
-			boolean isLeapYear = Year.of(year).isLeap();
-			int maxDayinMonth = 0;
-				switch (month) {
-				case 2:
-					maxDayinMonth = isLeapYear ? 29 : 28;
-					break;
-				case 4,6,9,11:
-					maxDayinMonth = 30;
-					break;
-				default:
-					maxDayinMonth = 31;
-				}
-			
-			if(day >= 1 && day <= maxDayinMonth) {
-				return "Ngày sinh hợp lệ";
-			}
-			else {
-				return "Ngày sinh không hợp lệ";
-			}
-		} catch (Exception e) {
-			return "Ngày sinh không hợp lệ";
-		}
-    	
+	private static void updateDays(JComboBox<Integer> dayCBB, JComboBox<Integer> monthCBB, JComboBox<Integer> yearCBB) {
+        int selectedMonth = (int) monthCBB.getSelectedItem();
+        int selectedYear = (int) yearCBB.getSelectedItem();
+
+        // Lấy số ngày tối đa của tháng và năm đã chọn
+        int maxDays = getDaysInMonth(selectedMonth, selectedYear);
+
+        // Lưu lại ngày được chọn trước đó
+        Integer selectedDay = (Integer) dayCBB.getSelectedItem();
+
+        // Xóa tất cả các mục trong JComboBox của ngày
+        dayCBB.removeAllItems();
+
+        // Thêm lại các ngày dựa trên tháng và năm đã chọn
+        for (int day = 1; day <= maxDays; day++) {
+            dayCBB.addItem(day);
+        }
+
+        // Đặt lại ngày đã chọn trước đó nếu có thể
+        if (selectedDay != null && selectedDay <= maxDays) {
+            dayCBB.setSelectedItem(selectedDay);
+        }
+    }
+
+    private static int getDaysInMonth(int month, int year) {
+        switch (month) {
+            case 4: case 6: case 9: case 11:
+                return 30; // Các tháng 4, 6, 9, 11 có 30 ngày
+            case 2:
+                if (isLeapYear(year)) {
+                    return 29; // Tháng 2 năm nhuận có 29 ngày
+                } else {
+                    return 28; // Tháng 2 năm thường có 28 ngày
+                }
+            default:
+                return 31; // Các tháng còn lại có 31 ngày
+        }
+    }
+
+    private static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 }

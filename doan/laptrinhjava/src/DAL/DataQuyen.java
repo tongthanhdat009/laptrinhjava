@@ -2,6 +2,7 @@ package DAL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -42,5 +43,20 @@ public class DataQuyen {
         }
         return ds;
     }
+	public boolean ganLaiQuyenTK(String maTK, String IDQuyen) {
+		String query = "UPDATE TaiKhoan SET IDQuyen = ? WHERE IDTaiKhoan = ?";
+        try {
+        	con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, IDQuyen);
+            ps.setString(2, maTK);
+            int check = ps.executeUpdate();
+            if (check > 0)
+                return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+	}
 }
 	

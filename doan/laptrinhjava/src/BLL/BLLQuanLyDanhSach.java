@@ -418,6 +418,15 @@ public class BLLQuanLyDanhSach{
     public ArrayList<DTOQuyen> layDSQuyenNV(){
     	return dataQuyen.layQuyenNV();
     }
+    public int kiemTraLuong(String luong){
+        if(!(luong!=null && luong.matches("\\d{1,18}$")))
+            return -1;
+        else
+            return 1;
+    }
+    public ArrayList<DTOTaiKhoan> timKiemTKNV(NhanVien nv){
+    	return dataTaiKhoan.timKiemTKNV(nv);
+    }
     // Xóa nhân viên
     public boolean xoaNV(String maNhanVien) {
         return dataNhanVien.xoanv(maNhanVien);
@@ -425,17 +434,6 @@ public class BLLQuanLyDanhSach{
 
     public String layMaNVchuaTonTai() {
     	return dataNhanVien.taoMaNhanVienMoi();
-    }
-
-    // Kiểm tra và tạo mã nhân viên mới
-    public String kiemTraMaNhanVien() {
-        String maMoi = "NV" + dataNhanVien.layMaNhanVienChuaTonTai();
-        ArrayList<NhanVien> ds = dataNhanVien.timkiemnhanvien(maMoi);
-        if(!ds.isEmpty()) {
-        	maMoi = "NV" + dataNhanVien.layMaNhanVienChuaTonTai();
-        	ds = dataNhanVien.timkiemnhanvien(maMoi);
-        }
-        return maMoi;
     }
 
     // Thêm nhân viên mới
@@ -449,8 +447,8 @@ public class BLLQuanLyDanhSach{
     }
 
     // Tìm kiếm nhân viên
-    public ArrayList<NhanVien> timKiemNV(String manv) {
-        return dataNhanVien.timkiemnhanvien(manv);
+    public ArrayList<NhanVien> timKiemNV(NhanVien nv) {
+        return dataNhanVien.timkiemnhanvien(nv);
     }
     
     // Danh sách dịch vụ
@@ -506,5 +504,8 @@ public class BLLQuanLyDanhSach{
     //quyền
     public ArrayList<String> layDSTenQuyenNV(){
     	return dataQuyen.layDSTenQuyenNV();
+    }
+    public boolean ganLaiQuyenTK(String maTK, String maQuyen) {
+    	return dataQuyen.ganLaiQuyenTK(maTK, maQuyen);
     }
 }

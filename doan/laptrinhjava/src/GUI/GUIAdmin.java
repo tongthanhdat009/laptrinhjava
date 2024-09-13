@@ -153,11 +153,11 @@ public class GUIAdmin{
     //     }
     // };
     
-    public String curr_user = new String();
+//    public DTOTaiKhoan curr_user = new DTOTaiKhoan();
     
-    public GUIAdmin(String curr_user){    
+    public GUIAdmin(){    
 //    	người dùng hiện tại
-    	this.curr_user = curr_user;
+//    	this.curr_user = tk;
         //main frame
         adminFrame.setSize(width, height);
         adminFrame.setLocationRelativeTo(null);
@@ -190,10 +190,10 @@ public class GUIAdmin{
         
         leftPanel.add(logoPanel);
         
-        JLabel currUserLB = new JLabel("New label");
-        currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-        currUserLB.setText("Người dùng hiện tại: " + this.curr_user);
-        logoPanel.add(currUserLB, BorderLayout.SOUTH);
+//        JLabel currUserLB = new JLabel("New label");
+//        currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+//        currUserLB.setText("Người dùng hiện tại: " + this.curr_user);
+//        logoPanel.add(currUserLB, BorderLayout.SOUTH);
                 
         //bảng chọn chức năng
         JPanel managementPanel = new JPanel();
@@ -906,6 +906,6 @@ public class GUIAdmin{
         rightPanel.add(danhSachBox);
     }
     public static void main(String[] args){
-        new GUIAdmin("Admin");
+        new GUIAdmin();
     }
 }

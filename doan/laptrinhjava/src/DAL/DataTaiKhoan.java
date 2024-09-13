@@ -165,7 +165,7 @@ public class DataTaiKhoan {
         }
         return false;
     }
-	//tìm kiếm tài khoản
+	//tìm kiếm tài khoản tài khoản hội viên
 	public ArrayList<DTOTaiKhoan> timKiemTKHV(HoiVien a)
     {
         ArrayList<String> ds = new ArrayList<String>();
@@ -208,6 +208,59 @@ public class DataTaiKhoan {
         }
         return dsTK;
     }
+	public ArrayList<DTOTaiKhoan> timKiemTKNV(NhanVien a)
+    {
+        ArrayList<String> ds = new ArrayList<String>();
+        ArrayList<DTOTaiKhoan> dsTK = new ArrayList<DTOTaiKhoan>();
+        String truyVan = "SELECT TK.IDTaiKhoan, TK.TaiKhoan, TK.MatKhau, TK.IDQuyen FROM TaiKhoan TK, NhanVien Where NhanVien.IDTaiKhoan = TK.IDTaiKhoan AND ";
+        if(!a.getMaNhanVien().equals(""))
+        {
+            truyVan+= "NhanVien.MaNV = ? AND ";
+            ds.add(a.getMaNhanVien());
+        } 
+        if(!a.getGioitinh().equals(""))
+        {
+            truyVan+="NhanVien.GioiTinh = ? AND ";
+            ds.add(a.getGioitinh());
+        }
+        if(!a.getVaitro().equals(""))
+        {
+            truyVan+="NhanVien.VaiTro = ? AND ";
+            ds.add(a.getVaitro());
+        }
+        if(!a.getSdt().equals(""))
+        {
+            truyVan+="NhanVien.SoDienThoai = ? AND ";
+            ds.add(a.getSdt());
+        }
+        if(!a.getMacoso().equals(""))
+        {
+            truyVan+="NhanVien.MaCoSo = ?";
+            ds.add(a.getMacoso());
+        }
+        truyVan = truyVan.trim();
+        if (truyVan.endsWith("AND")) {
+            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+        }
+        try
+        {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            for(int i=0;i<ds.size();i++)
+                statement.setString(i+1, ds.get(i));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+            	dsTK.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+            }
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return dsTK;
+    }
+	
     public String KiemTraDangNhap(String taiKhoan, String matKhau) 
     {
         try{

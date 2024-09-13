@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import DTO.DTOTaiKhoan;
 import DTO.NhanVien;
 
 public class DataNhanVien {
@@ -64,7 +65,7 @@ public class DataNhanVien {
 
     public boolean them(NhanVien nhanvien) {
     	String check_manv = "SELECT * FROM NhanVien WHERE MaNV = ?";
-        String query = "INSERT INTO NhanVien (MaNV, HoTenNV, GioiTinh, NgaySinh, SoDienThoai,SoCCCD, MaCoSo, VaiTro, Luong, TaiKhoan, MatKhau ) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO NhanVien (MaNV, HoTenNV, GioiTinh, NgaySinh, SoDienThoai,SoCCCD, MaCoSo, VaiTro, Luong, IDTaiKhoan ) VALUES(?,?,?,?,?,?,?,?,?,?)";
         try {
         	PreparedStatement ps_check = con.prepareStatement(check_manv);
         	ps_check.setString(1, nhanvien.getMaNhanVien());
@@ -95,38 +96,91 @@ public class DataNhanVien {
         return false;
     }
 
-    public ArrayList<NhanVien> timkiemnhanvien(String manv) {
-        ArrayList<NhanVien> result = new ArrayList<>();
-        String query = "SELECT * FROM NhanVien WHERE MANV = ?";
-        if(manv.equals("")) {
-        	return result;
+//    public ArrayList<NhanVien> timkiemnhanvien(String manv) {
+//        ArrayList<NhanVien> result = new ArrayList<>();
+//        String query = "SELECT * FROM NhanVien WHERE MANV = ?";
+//        if(manv.equals("")) {
+//        	return result;
+//        }
+//        try {
+//			PreparedStatement ps = con.prepareStatement(query);
+//			ps.setString(1, manv);
+//			ResultSet rs = ps.executeQuery();
+//			while(rs.next()) {
+//				NhanVien nv = new NhanVien(
+//						rs.getString("MaNV"),
+//		                rs.getString("HoTenNV"),
+//		                rs.getString("GioiTinh"),
+//		                rs.getDate("NgaySinh"),
+//		                rs.getString("SoDienThoai"),
+//		                rs.getString("SoCCCD"),
+//		                rs.getString("MaCoSo"),
+//		                rs.getString("VaiTro"),
+//		                rs.getString("IDTaiKhoan"),
+//		                rs.getInt("Luong")
+//						);
+//				result.add(nv);
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+//        return result;
+//    }
+
+    public ArrayList<NhanVien> timkiemnhanvien(NhanVien a){
+    	ArrayList<String> ds = new ArrayList<String>();
+        ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
+        String truyVan = "SELECT nv.MaNV, nv.HoTenNV, nv.GioiTinh, nv.NgaySinh, nv.SoDienThoai, nv.SoCCCD, nv.MaCoSo, q.TenQuyen, nv.Luong, nv.IDTaiKhoan\r\n"
+        		+ "FROM  NhanVien nv,\r\n"
+        		+ "	TaiKhoan tk,\r\n"
+        		+ "	Quyen q\r\n"
+        		+ "	Where nv.IDTaiKhoan = tk.IDTaiKhoan\r\n"
+        		+ "		And tk.IDQuyen = q.IDQuyen AND ";
+        if(!a.getMaNhanVien().equals(""))
+        {
+            truyVan+= "nv.MaNV = ? AND ";
+            ds.add(a.getMaNhanVien());
+        } 
+        if(!a.getGioitinh().equals(""))
+        {
+            truyVan+="nv.GioiTinh = ? AND ";
+            ds.add(a.getGioitinh());
+        } 
+        if(!a.getSdt().equals(""))
+        {
+            truyVan+="nv.SoDienThoai = ? AND ";
+            ds.add(a.getSdt());
         }
-        try {
-			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, manv);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				NhanVien nv = new NhanVien(
-						rs.getString("MANV"),
-		                rs.getString("HoTenNV"),
-		                rs.getString("GioiTinh"),
-		                rs.getDate("NgaySinh"),
-		                rs.getString("SoDienThoai"),
-		                rs.getString("SoCCCD"),
-		                rs.getString("MaCoSo"),
-		                rs.getString("VaiTro"),
-		                rs.getString("IDTaiKhoan"),
-		                rs.getInt("Luong")
-						);
-				result.add(nv);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-        return result;
+        if(!a.getVaitro().equals("Vai Trò")) {
+        	truyVan+="q.TenQuyen = ? AND ";
+        	ds.add(a.getVaitro());
+        }
+        if(!a.getMacoso().equals("Cơ Sở")) {
+        	truyVan+="nv.MaCoSo = ? AND ";
+        	ds.add(a.getMacoso());
+        }
+        truyVan = truyVan.trim();
+        if (truyVan.endsWith("AND")) {
+            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+        }
+        try
+        {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            for(int i=0;i<ds.size();i++)
+                statement.setString(i+1, ds.get(i));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                dsNV.add(new NhanVien(rs.getString("MaNV"), rs.getString("HoTenNV"), rs.getString("GioiTinh"), rs.getDate("NgaySinh"), rs.getString("SoDienThoai"), rs.getString("SoCCCD"), rs.getString("MaCoSo"), rs.getString("TenQuyen"), rs.getString("IDTaiKhoan"), rs.getInt("Luong")));
+            }
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return dsNV;
     }
-
-
     public boolean xoanv(String manv) {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -149,7 +203,7 @@ public class DataNhanVien {
     }
 
     public boolean suanv(NhanVien nhanvien) {
-        String query = "UPDATE NhanVien SET HoTenNV = ?, GioiTinh = ?,NgaySinh = ?,SoDienThoai = ?,SoCCCD = ?,MaCoSo = ?,VaiTro = ?,Luong = ? WHERE MANV = ?";
+        String query = "UPDATE NhanVien SET HoTenNV = ?, GioiTinh = ?,NgaySinh = ?,SoDienThoai = ?,SoCCCD = ?,MaCoSo = ?,VaiTro = ?,Luong = ? WHERE MaNV = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, nhanvien.getHoten());

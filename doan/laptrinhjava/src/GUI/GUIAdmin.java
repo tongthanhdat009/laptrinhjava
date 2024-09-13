@@ -38,6 +38,7 @@ import GUI.CONTROLLER.QuanLyBangDichVuCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyBangThietBiCoSoCTR;
 import GUI.CONTROLLER.QuanLyHoiVienCoSoCTR;
+import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.chiTietHDCTR;
 import GUI.CONTROLLER.coSoCTR;
 import GUI.CONTROLLER.delegateCTR;
@@ -262,6 +263,21 @@ public class GUIAdmin{
         statBTN.setFocusPainted(false);
         statBTN.setIcon(new ImageIcon(scaleChartIcon));
         managementPanel.add(statBTN);
+
+        JButton QuanLyThietBi = new JButton("Quản lý thiết bị");
+        QuanLyThietBi.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+                QuanLyThietBiCTR newPanel = new QuanLyThietBiCTR();
+                rightPanel.add(newPanel);
+        	}
+        });
+        QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        QuanLyThietBi.setBounds(23, 408, 300, 50);
+        managementPanel.add(QuanLyThietBi);
         
         JButton delegationBTN = new JButton("Phân quyền");
         delegationBTN.addActionListener(new ActionListener() {

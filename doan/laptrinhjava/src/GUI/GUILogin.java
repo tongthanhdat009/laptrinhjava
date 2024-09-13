@@ -123,8 +123,14 @@ public class GUILogin extends JFrame implements ActionListener{
                 else {
                     String[] parts = trangThaiDangNhap.split(":");
                     DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim());
-                    new GUIAdmin(tk);
-                    dispose();
+                    if(parts[1].trim().equals("admin") && parts[2].trim().equals("admin")) {
+                    	new GUIAdmin("Admin");
+                    	dispose();
+                    }
+                    else {
+                    	new GUIUser(tk);
+                    	dispose();
+                    }
                 }
             }
         }

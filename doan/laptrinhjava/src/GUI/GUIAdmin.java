@@ -383,6 +383,7 @@ public class GUIAdmin{
         leftPanel.add(currUserLB);
         
         JLabel leftLabel = new JLabel();
+        leftLabel.setForeground(new Color(204, 252, 203));
         leftLabel.setBackground(new Color(150, 230, 179));
         leftLabel.setIcon(new ImageIcon("src/asset/img/label/logo1.png"));
         leftLabel.setBounds(65, 0, 312, 214);

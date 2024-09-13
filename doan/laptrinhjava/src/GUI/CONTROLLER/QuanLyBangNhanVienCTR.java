@@ -380,7 +380,7 @@ public class QuanLyBangNhanVienCTR {
 			}
 			
 		});
-        
+//        thêm nhân viên
         them.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -455,8 +455,8 @@ public class QuanLyBangNhanVienCTR {
                 
             }
         });
+        //xóa nhân viên
         xoa.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
@@ -481,7 +481,7 @@ public class QuanLyBangNhanVienCTR {
 				}
 			}
 		});
-        
+        //sửa thông tin nhân viên
         sua.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -563,6 +563,7 @@ public class QuanLyBangNhanVienCTR {
 			}
 
 		});
+//        tìm kiếm nhân viên
         timkiem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

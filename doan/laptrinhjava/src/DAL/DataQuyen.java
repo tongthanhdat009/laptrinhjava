@@ -13,6 +13,8 @@ public class DataQuyen {
 	private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
     private String userName = "sa"; String password= "123456";
+    
+    //LẤY DANH SÁCH QUYỀN CỦA NHÂN VIÊN
 	public ArrayList<DTOQuyen> layQuyenNV() {
 		ArrayList<DTOQuyen> ds = new ArrayList<DTOQuyen>();
         String query = "  SELECT Q.IDQuyen, TenQuyen From TaiKhoan tk, Quyen Q, NhanVien nv WHERE nv.IDTaiKhoan = tk.IDTaiKhoan and tk.IDQuyen = Q.IDQuyen ";
@@ -28,6 +30,7 @@ public class DataQuyen {
         }
         return ds;
     }
+	//LẤY DANH SÁCH TÊN QUYỀN NHÂN VIÊN
 	public ArrayList<String> layDSTenQuyenNV() {
 		ArrayList<String> ds = new ArrayList<String>();
         String query = "  SELECT DISTINCT TenQuyen From TaiKhoan tk, Quyen Q, NhanVien nv WHERE nv.IDTaiKhoan = tk.IDTaiKhoan and tk.IDQuyen = Q.IDQuyen ";
@@ -43,6 +46,8 @@ public class DataQuyen {
         }
         return ds;
     }
+	
+	//GÁN LẠI QUYỀN CHO TÀI KHOẢN
 	public boolean ganLaiQuyenTK(String maTK, String IDQuyen) {
 		String query = "UPDATE TaiKhoan SET IDQuyen = ? WHERE IDTaiKhoan = ?";
         try {

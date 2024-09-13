@@ -73,10 +73,10 @@ public class QuanLyHoiVienCoSoCTR {
 	public void QuanLyHoiVienCoSo(ArrayList<HoiVienCoSo> ds, Vector<String> dsCoSo, JPanel rightPanel)
     {
         xoaHienThi(rightPanel);
-        JLabel title = new JLabel("Quản lý hội viên cơ sở");
-    	title.setFont(new Font("Times New Roman", Font.ITALIC | Font.BOLD, 35));
-    	title.setBounds(450, 0, 1000,60);   
-    	rightPanel.add(title);
+//        JLabel title = new JLabel("Quản lý hội viên cơ sở");
+//    	title.setFont(new Font("Times New Roman", Font.ITALIC | Font.BOLD, 35));
+//    	title.setBounds(450, 0, 1000,60);   
+//    	rightPanel.add(title);
     	JButton them = new JButton();
         ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
         Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);

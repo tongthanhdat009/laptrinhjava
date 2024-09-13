@@ -40,12 +40,15 @@ import GUI.CONTROLLER.QuanLyBangThietBiCoSoCTR;
 import GUI.CONTROLLER.QuanLyHoiVienCoSoCTR;
 import GUI.CONTROLLER.chiTietHDCTR;
 import GUI.CONTROLLER.coSoCTR;
+import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hangHoaCSCTR;
 import GUI.CONTROLLER.hangHoaCTR;
 import GUI.CONTROLLER.hoaDonCTR;
 import GUI.CONTROLLER.hoiVienCTR;
 import GUI.CONTROLLER.thietBiCTR;
 import GUI.CONTROLLER.thongKe;
+import GUI.CONTROLLER.xuLyDDHCTR;
+import GUI.CONTROLLER.xuLyDSCTR;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -67,7 +70,7 @@ public class GUIAdmin{
     ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
     Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
-    
+    Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(500, 500,Image.SCALE_DEFAULT);
     //icon chức năng thống kê
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
@@ -108,9 +111,6 @@ public class GUIAdmin{
     private JPanel mainPanel = new JPanel();
     private JPanel leftPanel = new JPanel();
     private JPanel rightPanel = new JPanel();
-    
-    //tiêu đề + logo
-    JLabel leftLabel = new JLabel();
     
     //dòng cuối leftPanel
     JLabel footerLeft = new JLabel("Designed By: SGU FITNESS CLUB");
@@ -179,33 +179,18 @@ public class GUIAdmin{
         // subTitle2.setFont(new java.awt.Font("Times New Roman", 1, 35));
         footerLeft.setFont(new java.awt.Font("Times New Roman", 1, 20));
         footerLeft.setBounds(45,height-70,(int)(width * 30/100),20);
-
-        leftLabel.setIcon(logo1);
-
-        JPanel logoPanel = new JPanel();
-        logoPanel.setBackground(new Color(0, 191, 99));
-        logoPanel.setLayout(new BorderLayout());
-        logoPanel.setBounds(75,0,(int)(width * 0.3)-10,240);
-        logoPanel.add(leftLabel, BorderLayout.CENTER);
-        
-        leftPanel.add(logoPanel);
-        
-        JLabel currUserLB = new JLabel("New label");
-        currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-        currUserLB.setText("Người dùng hiện tại: " + this.curr_user);
-        logoPanel.add(currUserLB, BorderLayout.SOUTH);
                 
         //bảng chọn chức năng
         JPanel managementPanel = new JPanel();
         managementPanel.setLayout(null);
-        managementPanel.setBounds(25,245,352,526);
+        managementPanel.setBounds(25,238,352,533);
         
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
         TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Chức năng");
         titledBorder.setTitleFont(italicBoldFont);
         managementPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-        		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(240, 255, 255)));
-        managementPanel.setBackground(new Color(135, 206, 250));
+        		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(70, 78, 71)));
+        managementPanel.setBackground(new Color(204, 252, 203));
         
         leftPanel.add(managementPanel);
         
@@ -217,7 +202,8 @@ public class GUIAdmin{
         		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
-                xuLyDanhSach();
+                xuLyDSCTR XLDSCtrl = new xuLyDSCTR();
+                XLDSCtrl.xuLyDanhSach(rightPanel);
         	}
         });
         listBTN.setBounds(23, 42, 300, 50);
@@ -233,7 +219,8 @@ public class GUIAdmin{
         		ArrayList<HoaDon> ds = new ArrayList<>();
                 BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
                 ds = bllQuanLyDanhSach.layDSHoaDonChuaDuyet();
-                XuLyDuyetDonHang(ds,bllQuanLyDanhSach);
+                xuLyDDHCTR XLDDDHCtrl = new xuLyDDHCTR();
+                XLDDDHCtrl.XuLyDuyetDonHang(ds,bllQuanLyDanhSach, rightPanel);
         	}
         });
         billBTN.setBounds(23, 103, 300, 50);
@@ -277,6 +264,15 @@ public class GUIAdmin{
         managementPanel.add(statBTN);
         
         JButton delegationBTN = new JButton("Phân quyền");
+        delegationBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		new delegateCTR(rightPanel);
+        	}
+        });
         delegationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         delegationBTN.setBounds(23, 408, 300, 50);
         managementPanel.add(delegationBTN);
@@ -346,15 +342,15 @@ public class GUIAdmin{
         //quản lý danh sách:
         //right panel
         rightPanel.setBounds((int)(width * 0.25),0,(int)(width * 0.75),height);
-        rightPanel.setBackground(Color.WHITE);
+        rightPanel.setBackground(new Color(241, 255, 250));
         rightPanel.setBorder(border);
         //giới thiệu app
         JPanel introPn = new JPanel();
         introPn.setPreferredSize(new Dimension(rightPanel.getWidth()-300,700));
-        introPn.setBackground(Color.white);
+        introPn.setBackground(new Color(241, 255, 250));
         // introPn.setLayout(null);
         JLabel logo = new JLabel();
-        logo.setIcon(new ImageIcon(scaleLogoIcon));
+        logo.setIcon(new ImageIcon(scaleLogoIcon1));
         // logo.setBounds((int)(rightPanel.getWidth()*50/100-300/2),0,300,300);
         // introParam.setBounds((int)(rightPanel.getWidth()*50/100-introParam.getWidth()/2),320,(int)(width*70/100),45);
 
@@ -380,164 +376,22 @@ public class GUIAdmin{
         logOutBTN.setFont(new Font("Times New Roman", Font.PLAIN, 17));
         logOutBTN.setBounds(25, 782, 146, 37);
         leftPanel.add(logOutBTN);
+        
+        JLabel currUserLB = new JLabel("Người dùng hiện tại: ");
+        currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        currUserLB.setBounds(25, 212, 352, 26);
+        leftPanel.add(currUserLB);
+        
+        JLabel leftLabel = new JLabel();
+        leftLabel.setBackground(new Color(150, 230, 179));
+        leftLabel.setIcon(new ImageIcon("src/asset/img/label/logo1.png"));
+        leftLabel.setBounds(65, 0, 312, 214);
+        leftPanel.add(leftLabel);
         mainPanel.add(rightPanel);
         adminFrame.getContentPane().add(mainPanel);
 
         adminFrame.setVisible(true);
     }
-    
-    public void XuLyDuyetDonHang(ArrayList<HoaDon> ds, BLLQuanLyDanhSach bllQuanLyDanhSach)
-    {
-        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-        rightPanel.repaint(); // Vẽ lại JPanel
-        rightPanel.setLayout(null);
-    
-        JPanel canGiua = new JPanel(new FlowLayout());
-        canGiua.setBounds(5,5,rightPanel.getWidth(),55);
-        canGiua.setBackground(Color.WHITE);
-        JLabel titleNhapThietBi = new JLabel("Duyệt Đơn Hàng");
-        titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
-
-        canGiua.add(titleNhapThietBi);
-        rightPanel.add(canGiua);
-
-        JPanel nhapLieu = new JPanel(null);
-        nhapLieu.setBounds(2, 60, rightPanel.getWidth()-20, 80);
-        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Nhập liệu");
-        titledBorder.setTitleFont(italicBoldFont);
-        nhapLieu.setBorder(titledBorder);
-        nhapLieu.setBackground(new Color(119, 230, 163));
-
-        JLabel lbMaHV = new JLabel("Mã hội viên: ");
-        JLabel lbMaCoSo = new JLabel("Mã cơ sở: ");
-        JLabel lbMaHoaDon = new JLabel("Mã hóa đơn: ");
-        JTextField tfMaHV = new JTextField();
-        JTextField tfMaHoaDon = new JTextField();
-        Vector<String> dsMaCoSo = new Vector<>();
-        dsMaCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-        @SuppressWarnings("rawtypes")
-        JComboBox cbMaCoSo = new JComboBox<>(dsMaCoSo);
-
-        int x=150;
-        lbMaHoaDon.setBounds(x,25,110,30); x+=100;
-        lbMaHoaDon.setFont(new Font("Times New Roman",1,18));
-        tfMaHoaDon.setBounds(x+10, 25, 100, 30); x+=130;
-        lbMaHV.setBounds(x+50, 25, 110, 30); x+=150;
-        lbMaHV.setFont(new Font("Times New Roman",1,18));
-        tfMaHV.setBounds(x+10, 25, 100, 30); x+=130;
-        lbMaCoSo.setBounds(x+50,25,110,30); x+=150;
-        lbMaCoSo.setFont(new Font("Times New Roman",1,18));
-        cbMaCoSo.setBounds(x+10, 25, 100, 30);
-        cbMaCoSo.setBackground(Color.white);
-
-        JButton timKiem = new JButton("Tìm kiếm");
-        timKiem.setBackground(Color.WHITE);
-        timKiem.setBounds(rightPanel.getWidth()-200, 25, 100, 30);
-        timKiem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                ArrayList<HoaDon> dsTimKiem = new ArrayList<>();
-                if(tfMaHoaDon.getText().equals("") && cbMaCoSo.getSelectedIndex()==0&&tfMaHV.getText().equals(""))
-                dsTimKiem = bllQuanLyDanhSach.layDSHoaDonChuaDuyet();
-                else dsTimKiem = bllQuanLyDanhSach.timKiemHoaDon2(tfMaHoaDon.getText(), cbMaCoSo.getSelectedItem().toString(), tfMaHV.getText());
-                XuLyDuyetDonHang(dsTimKiem,bllQuanLyDanhSach);
-            }
-        });
-        nhapLieu.add(lbMaHoaDon);
-        nhapLieu.add(tfMaHoaDon);
-        nhapLieu.add(lbMaHV);
-        nhapLieu.add(tfMaHV);
-        nhapLieu.add(lbMaCoSo);
-        nhapLieu.add(cbMaCoSo);
-        nhapLieu.add(timKiem);
-        rightPanel.add(nhapLieu);
-
-        JPanel main = new JPanel(null);
-        main.setPreferredSize(new Dimension(rightPanel.getWidth()-45, ds.size()*60+5));
-        int y=0;
-        for(int i=0;i<ds.size();i++)
-        {
-            JPanel pnHoaDon = new JPanel(null);
-            pnHoaDon.setBounds(0, y, rightPanel.getWidth()-28, 50);
-            y+=60;
-            x=10;
-            String maHoaDon = ds.get(i).getMaHoaDon();
-            JLabel lb2MaHoaDon = new JLabel("Hóa đơn: "+ ds.get(i).getMaHoaDon());
-            lb2MaHoaDon.setFont(new Font("Times New Roman",1,20));
-            lb2MaHoaDon.setBounds(x, 10, 150, 35); x+=150;
-            JLabel lb2MaHoiVien = new JLabel("Hội viên: "+ds.get(i).getMaHoiVien());
-            lb2MaHoiVien.setFont(new Font("Times New Roman",1,20));
-            lb2MaHoiVien.setBounds(x+30, 10, 150, 35); x+=180;
-            JLabel lb2MaCoSo = new JLabel("Cơ sở: "+ds.get(i).getMaCoSo());
-            lb2MaCoSo.setFont(new Font("Times New Roman",1,20));
-            lb2MaCoSo.setBounds(x+30, 10, 130, 35); x+=160;
-            JLabel lb2Ngay = new JLabel("Ngày: "+ds.get(i).getNgayXuatHoaDon());
-            lb2Ngay.setFont(new Font("Times New Roman",1,20));
-            lb2Ngay.setBounds(x+30, 10, 150, 35); x+=180;
-            JLabel lb2Tien = new JLabel("Tổng: "+ds.get(i).getTongTien());
-            lb2Tien.setFont(new Font("Times New Roman",1,20));
-            lb2Tien.setBounds(x+30, 10, 150, 35); x+=180;
-            JButton btXemChiTiet = new JButton("Chi tiết");
-            btXemChiTiet.setFont(new Font("Times New Roman",1,20));
-            btXemChiTiet.setBounds(x+30, 10, 120, 35); x+=150;
-            JButton btDuyet = new JButton("Duyệt");
-            btDuyet.setFont(new Font("Times New Roman",1,20));
-            btDuyet.setBounds(x+15, 10, 120, 35);
-            btXemChiTiet.setBackground(Color.white);
-            btDuyet.setBackground(Color.white);
-            btXemChiTiet.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {
-                    ArrayList<DTODuyetDonHang> chiTietHoaDon = new ArrayList<>();
-                    chiTietHoaDon = bllQuanLyDanhSach.dsDTODuyetDonHang(maHoaDon);
-                    JPanel chiTiet = new JPanel(new GridLayout(chiTietHoaDon.size()+1,3));
-                    chiTiet.add(new JLabel("Tên hàng"));
-                    chiTiet.add(new JLabel("Số lượng"));
-                    chiTiet.add(new JLabel("Giá tiền"));
-                    chiTiet.setPreferredSize(new Dimension(500,20*chiTietHoaDon.size()+10));
-                    for(int i=0;i<chiTietHoaDon.size();i++)
-                    {
-                        JLabel lbTenHang = new JLabel(chiTietHoaDon.get(i).getTenHangHoa());
-                        JLabel lbSoLuong = new JLabel(String.valueOf(chiTietHoaDon.get(i).getSoLuong()));
-                        JLabel lbGia = new JLabel(String.valueOf(chiTietHoaDon.get(i).getGiaTien()));
-                        chiTiet.add(lbTenHang);
-                        chiTiet.add(lbSoLuong);
-                        chiTiet.add(lbGia);
-                    }
-                    JOptionPane.showMessageDialog(rightPanel, chiTiet);
-                }
-            });
-            btDuyet.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {
-                    if(bllQuanLyDanhSach.duyetHoaDon(maHoaDon) == true) 
-                    {
-                        JOptionPane.showMessageDialog(rightPanel, "Duyệt thành công");
-                        btDuyet.setText("Đã duyệt");
-                        btDuyet.setEnabled(false);
-                    }
-                    else JOptionPane.showMessageDialog(rightPanel, "Thất bại");
-                }
-            });
-
-            pnHoaDon.add(lb2MaHoaDon);
-            pnHoaDon.add(lb2MaHoiVien);
-            pnHoaDon.add(lb2MaCoSo);
-            pnHoaDon.add(lb2Ngay);
-            pnHoaDon.add(lb2Tien);
-            pnHoaDon.add(btXemChiTiet);
-            pnHoaDon.add(btDuyet);
-            pnHoaDon.setBackground(Color.YELLOW);
-            main.add(pnHoaDon);
-        }
-        JScrollPane jScrollPane = new JScrollPane();
-        jScrollPane.setViewportView(main);
-        jScrollPane.setBounds(5, 150, rightPanel.getWidth()-20, 700);
-        rightPanel.add(jScrollPane);
-    }
-    
     public void xuLyNhapHang(DSLoaiThietBi dsLoaiThietBi, int soLuongLoaiThietBi)
     {
             rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
@@ -740,170 +594,6 @@ public class GUIAdmin{
         filter.add(timkiem);
 
         rightPanel.add(filter);
-    }
-    @SuppressWarnings("unchecked")
-    private void xuLyDanhSach(){
-        rightPanel.setLayout(null);
-        //giới thiệu chức năng xử lý danh sách
-        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ<br>- Hội viên<br>- Nhân viên<br>- Thiết bị<br>- Thiết bị cơ sở <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hội viên cơ sở <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
-
-        param.setFont(new Font("Times New Roman",1,30));
-        JPanel textPN = new JPanel();
-        textPN.setBounds(100,150,(int)(width*70/100 - 100), height-300);
-        textPN.setBackground(new Color(119, 230, 163));
-        textPN.add(param);
-        rightPanel.add(textPN);
-        //tiêu đề bên phải 
-        JLabel rightTitle = new JLabel("Quản lý danh sách");
-        rightTitle.setFont(new Font("Times New Roman", 1, 35));
-        rightTitle.setBounds(450, 0, 1000,60);        
-        
-        //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên cơ sở", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
-        @SuppressWarnings("rawtypes")
-        JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
-        danhSachBox.setBounds(680,50,130,30);
-        JLabel chonDanhSachLabel = new JLabel("Chọn danh sách: ");
-        chonDanhSachLabel.setFont(new Font("Times New Roman", 1, 30));
-        chonDanhSachLabel.setBounds(430, 50, 300,35);
-        danhSachBox.setRenderer(renderer);
-        danhSachBox.setBackground(Color.white);
-        danhSachBox.addActionListener(new ActionListener() {
-            //xóa những gì đã hiển thị của một danh sách
-            public void xoaHienThi(JPanel rightPanel){
-                Component[] components = rightPanel.getComponents();
-                for(Component a : components){
-                    if(!(a instanceof JLabel || a instanceof JComboBox)){
-                        rightPanel.remove(a);
-                    }
-                }
-                rightPanel.revalidate();
-                rightPanel.repaint();
-            }
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JComboBox<String> comboBox = (JComboBox<String>) e.getSource(); // Lấy ra JComboBox đã được kích hoạt
-                String selectedOption = (String) comboBox.getSelectedItem(); // Lấy ra mục đã chọn trong JComboBox
-                JTable dataTable = new JTable();
-                JScrollPane scrollPane = new JScrollPane();
-                JPanel bangChinhSua = new JPanel();
-                
-                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-
-                ArrayList<String> tenCotHV = new ArrayList<String>();
-                ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
-                tenCotHV.add("Mã hội viên");
-                tenCotHV.add("Họ tên hội viên");
-                tenCotHV.add("Giới tính");
-                tenCotHV.add("Gmail");
-                tenCotHV.add("Mã Tài khoản");
-                tenCotHV.add("Số điện thoại");
-                tenCotHV.add("Ngày sinh");
-                tenCotHV.add("Tài khoản");
-                tenCotHV.add("Mật khẩu");
-
-                ArrayList<String> tenCotCS = new ArrayList<String>();
-                tenCotCS.add("Mã cơ sở");
-                tenCotCS.add("Tên cơ sở");
-                tenCotCS.add("Địa chỉ");
-                tenCotCS.add("Thời gian hoạt động");
-                tenCotCS.add("Số điện thoại");
-                tenCotCS.add("Doanh thu");
-                DSCoSo dsCS =  bllQuanLyDanhSach.layDsCoSo();
-
-                DSLoaiThietBi dsTB = bllQuanLyDanhSach.layDSLoaiThietBi();
-                ArrayList<String> tenCotTB = new ArrayList<String>();
-                tenCotTB.add("Mã thiết bị");
-                tenCotTB.add("Tên loại thiết bị");
-                tenCotTB.add("Hình ảnh");
-                tenCotTB.add("Giá thiết bị");
-                tenCotTB.add("Ngày bảo hành");
-                
-                dsHangHoa dsHH = bllQuanLyDanhSach.layDsHangHoa();
-                ArrayList<String> tenCotHH = new ArrayList<String>();
-                tenCotHH.add("Mã hàng hóa");
-                tenCotHH.add("Loại hàng hóa");
-                tenCotHH.add("Tên loại hàng hóa");
-                tenCotHH.add("Hình ảnh");
-                tenCotHH.add("Giá nhập");
-
-                if (selectedOption.equals("Cơ sở")) {
-                	coSoCTR csCTR = new coSoCTR(rightPanel,tenCotCS,dsCS,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
-                	csCTR.update();
-                }
-                else if(selectedOption.equals("Dịch vụ")){
-                    ArrayList<dichVu> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.getDataDichvu();
-                    QuanLyBangDichVuCTR qlbdvCTR = new QuanLyBangDichVuCTR();
-                    qlbdvCTR.QuanLyBangDichVu(ds, rightPanel);
-                }
-                else if (selectedOption.equals("Hội viên cơ sở")) {
-            		bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-            		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
-                    Vector<String> dsCoSo = new Vector<>();
-                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
-                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
-                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
-              
-                }
-//                else if (selectedOption.equals("Nhân viên")){
-//                    ArrayList<NhanVien> ds = new ArrayList<>();
-//                    ds = bllQuanLyDanhSach.getDataNhanVien();
-//                    QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
-//                    qlbnvCTR.QuanLyBangNhanVien(ds, rightPanel, chonDanhSachLabel);
-//                }
-                else if(selectedOption.equals("Thiết bị")){
-                    thietBiCTR tbCTR = new thietBiCTR(rightPanel, tenCotTB, dsTB, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
-                    tbCTR.update();
-                }
-                else if(selectedOption.equals("Thiết bị cơ sở")){
-                    ArrayList<ThietBiCoSo> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDanhSachThietBiCoSo();
-                    QuanLyBangThietBiCoSoCTR qlbtbcsCTR = new QuanLyBangThietBiCoSoCTR();
-                    qlbtbcsCTR.QuanLyBangThietBiCoSo(ds,rightPanel);
-                }
-                else if(selectedOption.equals("Hóa đơn")){
-                    ArrayList<HoaDon> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDSHoaDon();
-                    Vector<String> dsCoSo = new Vector<>();
-                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                    hoaDonCTR hdCTR = new hoaDonCTR();
-                    hdCTR.QuanLyHoaDon(ds, dsCoSo, rightPanel);
-                }
-                else if(selectedOption.equals("Chi tiết hóa đơn")){
-                    ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDSChiTietHoaDon();
-                    chiTietHDCTR cthdCTR = new chiTietHDCTR();
-                    cthdCTR.QuanLyChiTietHoaDon(ds,rightPanel);
-                }
-                else if(selectedOption.equals("Hàng hóa cơ sở")){
-                    ArrayList<hangHoaCoSo> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDSHangHoaCoSo();
-                    Vector<String> dsMaCoSo = new Vector<>();
-                    dsMaCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                    hangHoaCSCTR hhcsCTR = new hangHoaCSCTR();
-                    hhcsCTR.QuanLyHangHoaCoSo(ds,dsMaCoSo,rightPanel);
-                }
-//                else if(selectedOption.equals("Hội viên cơ sở")){
-//                    ArrayList<HoiVienCoSo> ds = new ArrayList<>();
-//                    Vector<String> dsCoSo = new Vector<>();
-//                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-//                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
-//                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
-//                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
-//                }
-                else if(selectedOption.equals("Hàng hóa")){
-                	hangHoaCTR hhCTR = new hangHoaCTR(rightPanel, tenCotHH, dsHH, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
-                	hhCTR.update();
-                }
-            }
-           
-        });
-        
-        rightPanel.add(rightTitle);
-        rightPanel.add(chonDanhSachLabel);
-        rightPanel.add(danhSachBox);
     }
     public static void main(String[] args){
         new GUIAdmin("Admin");

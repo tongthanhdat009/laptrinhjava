@@ -276,7 +276,7 @@ public class GUIAdmin{
         	}
         });
         QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        QuanLyThietBi.setBounds(23, 408, 300, 50);
+        QuanLyThietBi.setBounds(23, 468, 300, 50);
         managementPanel.add(QuanLyThietBi);
         
         JButton delegationBTN = new JButton("Phân quyền");

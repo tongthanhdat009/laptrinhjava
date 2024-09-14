@@ -29,8 +29,11 @@ import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
+import DTO.MayChay;
 import DTO.NhanVien;
+import DTO.Ta;
 import DTO.ThietBiCoSo;
+import DTO.Xa;
 import DTO.dichVu;
 import DTO.dsHangHoa;
 import DTO.dsHoiVien;
@@ -500,7 +503,40 @@ public class BLLQuanLyDanhSach{
         if(dataHangHoaCoSo.sua(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
         return "Bộ không tồn tại";
     }
-    
+    public String themThietBiTa(Ta ta)
+    {
+        if(ta.getKhoiLuong()<=0) return "Sai khối lượng";
+        if(Integer.parseInt(ta.getGiaThietBi())<0) return "Sai Giá";
+        if(ta.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
+        if(dataThietBi.themTB(new LoaiThietBi(ta.getMaThietBi(), ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai()))) 
+        if(dataThietBi.themTa(ta.getMaThietBi(), ta.getKhoiLuong(), ta.getChatLieu(), ta.getMauSac()))
+        return "Thành công";
+        return "Thất bại";
+    }
+    public String themThietBiTa(Xa xa)
+    {
+        if(Integer.parseInt(xa.getGiaThietBi())<0) return "Sai Giá";
+        if(xa.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
+        if(xa.getChieuDai()<=0) return "Sai chiều dài";
+        if(xa.getDuongKinh()<=0) return "Sai đường kính";
+        if(xa.getChieuCao()<=0) return "Sai chiều cao";
+        if(xa.getTaiTrong()<=0) return "Sai tải trọng";
+        if(dataThietBi.themTB(new LoaiThietBi(xa.getMaThietBi(), xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
+        if(dataThietBi.themXa(xa.getMaThietBi(), xa.getLoaiXa(),xa.getChatLieu(), xa.getChieuDai(), xa.getDuongKinh(), xa.getChieuCao(), xa.getTaiTrong()))
+        return "Thành công";
+        return "Thất bại";
+    }
+    public String themThietBiMayChay(MayChay mayChay)
+    {
+        if(Integer.parseInt(mayChay.getGiaThietBi())<0) return "Sai Giá";
+        if(mayChay.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
+        if(mayChay.getCongSuat()<0) return "Sai công suất";
+        if(mayChay.getTocDoToiDa()<0) return "Sai tốc độ tối đa"; 
+        if(dataThietBi.themTB(new LoaiThietBi(mayChay.getMaThietBi(), mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
+        if(dataThietBi.themMayChay(mayChay.getMaThietBi(), mayChay.getCongSuat(), mayChay.getTocDoToiDa(), mayChay.getNhaSanXuat(),mayChay.getKichThuoc()))
+        return "Thành công";
+        return "Thất bại";
+    }
     //quyền
     public ArrayList<String> layDSTenQuyenNV(){
     	return dataQuyen.layDSTenQuyenNV();

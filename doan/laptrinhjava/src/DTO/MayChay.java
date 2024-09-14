@@ -2,16 +2,16 @@ package DTO;
 
 public class MayChay extends LoaiThietBi {
     private int congSuat;
-    private int toDoToiDa;
+    private int tocDoToiDa;
     private String nhaSanXuat;
     private String kichThuoc;
 
     // Constructor của lớp MayChay
     public MayChay(String maThietBi, String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh, String loai,
-                   int congSuat, int toDoToiDa, String nhaSanXuat, String kichThuoc) {
+                   int congSuat, int tocDoToiDa, String nhaSanXuat, String kichThuoc) {
         super(maThietBi, tenThietBi, hinhAnh, giaThietBi, ngayBaoHanh, loai); // Gọi constructor của lớp cha
         this.congSuat = congSuat;
-        this.toDoToiDa = toDoToiDa;
+        this.tocDoToiDa = tocDoToiDa;
         this.nhaSanXuat = nhaSanXuat;
         this.kichThuoc = kichThuoc;
     }
@@ -25,12 +25,12 @@ public class MayChay extends LoaiThietBi {
         this.congSuat = congSuat;
     }
 
-    public int getToDoToiDa() {
-        return toDoToiDa;
+    public int getTocDoToiDa() {
+        return tocDoToiDa;
     }
 
-    public void setToDoToiDa(int toDoToiDa) {
-        this.toDoToiDa = toDoToiDa;
+    public void setTocDoToiDa(int tocDoToiDa) {
+        this.tocDoToiDa = tocDoToiDa;
     }
 
     public String getNhaSanXuat() {

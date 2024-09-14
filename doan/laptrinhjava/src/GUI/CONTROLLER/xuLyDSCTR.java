@@ -62,10 +62,12 @@ public class xuLyDSCTR {
         textPN.setBackground(new Color(119, 230, 163));
         textPN.add(param);
         rightPanel.add(textPN);
-        //tiêu đề bên phải 
+        //tiêu đề bên phải
         JLabel rightTitle = new JLabel("Quản lý danh sách");
         rightTitle.setFont(new Font("Times New Roman", 1, 35));
-        rightTitle.setBounds(450, 0, 1000,60);        
+        rightTitle.setBounds(450, 0, 1000,60);
+        rightPanel.add(rightTitle);
+        
         
         //Chọn bảng cần quản lý
         String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên cơ sở", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};

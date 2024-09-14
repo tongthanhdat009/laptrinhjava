@@ -50,6 +50,7 @@ public class chiTietHDCTR {
 	public void QuanLyChiTietHoaDon(ArrayList<ChiTietHoaDon> ds, JPanel rightPanel)
     {
         xoaHienThi(rightPanel);
+		rightPanel.setBackground(new Color(241,255,250));
     	JButton them = new JButton();
         ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hd.png");
         Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);

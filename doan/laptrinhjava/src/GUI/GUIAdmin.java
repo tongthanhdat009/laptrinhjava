@@ -178,13 +178,13 @@ public class GUIAdmin{
         
         // subTitle.setFont(new java.awt.Font("Times New Roman", 1, 35));
         // subTitle2.setFont(new java.awt.Font("Times New Roman", 1, 35));
-        footerLeft.setFont(new java.awt.Font("Times New Roman", 1, 20));
-        footerLeft.setBounds(45,height-70,(int)(width * 30/100),20);
+        footerLeft.setFont(new Font("Times New Roman", Font.BOLD, 13));
+        footerLeft.setBounds(10,837,(int)(width * 30/100),20);
                 
         //bảng chọn chức năng
         JPanel managementPanel = new JPanel();
         managementPanel.setLayout(null);
-        managementPanel.setBounds(25,238,352,533);
+        managementPanel.setBounds(25,238,352,547);
         
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
         TitledBorder titledBorder = BorderFactory.createTitledBorder(blackBorder,"Chức năng");
@@ -276,7 +276,7 @@ public class GUIAdmin{
         	}
         });
         QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        QuanLyThietBi.setBounds(23, 468, 300, 50);
+        QuanLyThietBi.setBounds(23, 408, 300, 50);
         managementPanel.add(QuanLyThietBi);
         
         JButton delegationBTN = new JButton("Phân quyền");
@@ -290,7 +290,7 @@ public class GUIAdmin{
         	}
         });
         delegationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        delegationBTN.setBounds(23, 408, 300, 50);
+        delegationBTN.setBounds(23, 469, 300, 50);
         managementPanel.add(delegationBTN);
         
         JButton employeeMNG = new JButton("Quản lý nhân viên");
@@ -390,7 +390,7 @@ public class GUIAdmin{
         	}
         });
         logOutBTN.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-        logOutBTN.setBounds(25, 782, 146, 37);
+        logOutBTN.setBounds(27, 796, 146, 37);
         leftPanel.add(logOutBTN);
         
         JLabel currUserLB = new JLabel("Người dùng hiện tại: ");

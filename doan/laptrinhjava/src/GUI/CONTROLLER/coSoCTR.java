@@ -65,6 +65,7 @@ public class coSoCTR {
 	
 	public void update() {
 		xoaHienThi(rightPanel);
+		rightPanel.setBackground(new Color(241,255,250));
         // tạo model bảng
         DefaultTableModel csList = new DefaultTableModel();
         csList.addColumn("Mã cơ sở");

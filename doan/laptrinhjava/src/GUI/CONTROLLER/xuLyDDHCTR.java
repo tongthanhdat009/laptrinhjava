@@ -37,7 +37,7 @@ public class xuLyDDHCTR {
     
         JPanel canGiua = new JPanel(new FlowLayout());
         canGiua.setBounds(5,5,rightPanel.getWidth(),55);
-        canGiua.setBackground(Color.WHITE);
+        canGiua.setBackground(new Color(241,255,250));
         JLabel titleNhapThietBi = new JLabel("Duyệt Đơn Hàng");
         titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
 

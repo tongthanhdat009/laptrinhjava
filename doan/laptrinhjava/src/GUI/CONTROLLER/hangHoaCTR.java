@@ -67,6 +67,7 @@ public class hangHoaCTR {
     
     public void update() {
     	xoaHienThi(rightPanel);
+		rightPanel.setBackground(new Color(241,255,250));
         // tạo model bảng
         DefaultTableModel hhList = new DefaultTableModel();
         for (int i = 0; i < tenCotHH.size(); i++) {

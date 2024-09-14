@@ -69,6 +69,7 @@ public class QuanLyBangNhanVienCTR {
         rightPanel.repaint();
     }
 	public void QuanLyBangNhanVien(ArrayList<NhanVien> dsNV, ArrayList<DTOTaiKhoan> dsTKNV,ArrayList<DTOQuyen> dsQuyen, JPanel rightPanel) {
+    	rightPanel.setBackground(new Color(241,255,250));
 		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
     	xoaHienThi(rightPanel);
     	JLabel title = new JLabel("Quản lý nhân viên");
@@ -118,7 +119,7 @@ public class QuanLyBangNhanVienCTR {
     	chucnang.add(sua);
     	chucnang.add(timkiem);
     	chucnang.setBounds(5,100,rightPanel.getWidth()-5,40);
-        chucnang.setBackground(Color.white);
+        chucnang.setBackground(new Color(241,255,250));
         rightPanel.add(chucnang);
         
         JLabel jlb_manv = new JLabel("Mã nhân viên: ");

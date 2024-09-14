@@ -40,7 +40,7 @@ public class thongKe {
 
         JPanel canGiua = new JPanel(new FlowLayout());
         canGiua.setBounds(5,5,rightPanel.getWidth(),55);
-        canGiua.setBackground(Color.yellow);
+        canGiua.setBackground(new Color(204,252,203));
         JLabel titleNhapThietBi = new JLabel("Thống kê Đơn hàng");
         titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
 
@@ -246,5 +246,6 @@ public class thongKe {
             rightPanel.add(jScrollPane);
         }
         
+        rightPanel.setBackground(new Color(241,255,250));
     }
 }

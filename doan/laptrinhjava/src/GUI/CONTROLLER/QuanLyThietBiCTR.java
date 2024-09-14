@@ -68,7 +68,6 @@ public class QuanLyThietBiCTR extends JPanel {
                 noiDung.removeAll();
                 noiDung.revalidate(); // Cập nhật layout
                 noiDung.repaint();    // Vẽ lại panel
-
                 JButton back = new JButton("Quay lại");
                 back.setBounds(0, 0, 100, 100);
                 back.addActionListener(new ActionListener() {
@@ -78,40 +77,8 @@ public class QuanLyThietBiCTR extends JPanel {
                     }
                 });
                 noiDung.add(back);
-                JButton them = new JButton();
-                ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
-                Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-                them.setPreferredSize(new Dimension (130,35));
-                them.setIcon(new ImageIcon(scaleThemBtnImg));
-                them.setHorizontalAlignment(SwingConstants.CENTER);
-                them.setBorder(null);
-
-                JButton xoa  = new JButton();
-                xoa.setPreferredSize(new Dimension (110,35));
-                ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
-                Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-                xoa.setPreferredSize(new Dimension (130,35));
-                xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
-                xoa.setHorizontalAlignment(SwingConstants.CENTER);
-                xoa.setBorder(null);
-
-                JButton sua = new JButton();
-                sua.setPreferredSize(new Dimension (110,35));
-                ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
-                Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-                sua.setPreferredSize(new Dimension (130,35));
-                sua.setIcon(new ImageIcon(scaleSuaBtnImg));
-                sua.setHorizontalAlignment(SwingConstants.CENTER);
-                sua.setBorder(null);
-
-                JPanel tinhNang = new JPanel();
-                tinhNang.setLayout(new FlowLayout());
-                tinhNang.setBounds(0,0,1200,100);
-                noiDung.add(tinhNang);
-                tinhNang.add(them);
-                tinhNang.add(xoa);
-                tinhNang.add(sua);
-                tinhNang.setBackground(Color.white);
+                QuanLyTa giaoDienTa = new QuanLyTa();
+                noiDung.add(giaoDienTa);
             }
         });
     }

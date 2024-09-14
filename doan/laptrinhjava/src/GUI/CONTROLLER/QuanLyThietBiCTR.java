@@ -40,27 +40,49 @@ public class QuanLyThietBiCTR extends JPanel {
 
         JPanel ta = new JPanel(null);
         ta.setBounds(50,0,525,300);
-        ta.setBackground(Color.BLUE);
+        ta.setBackground(new Color(118, 247, 191));
         JLabel talb = new JLabel("Tạ");
-        talb.setFont(new Font("Times New Roman",1,50));
-        talb.setBounds(220,100,100,100);
+        talb.setForeground(new Color(235, 235, 235));
+        talb.setFont(new Font("Times New Roman", Font.PLAIN, 200));
+        talb.setBounds(288,66,237,234);
         ta.add(talb);
         noiDung.add(ta);
 
         JPanel mayChay = new JPanel();
         mayChay.setBounds(625,0,525,300);
-        mayChay.setBackground(Color.BLUE);
+        mayChay.setBackground(new Color(145, 229, 229));
         noiDung.add(mayChay);
+        mayChay.setLayout(null);
+        
+        JLabel lblNewLabel = new JLabel("Máy Chạy");
+        lblNewLabel.setForeground(new Color(238, 238, 238));
+        lblNewLabel.setBounds(0, 0, 429, 142);
+        lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 100));
+        mayChay.add(lblNewLabel);
 
         JPanel xa = new JPanel();
         xa.setBounds(50,350,525,300);
-        xa.setBackground(Color.BLUE);
+        xa.setBackground(new Color(95, 221, 157));
         noiDung.add(xa);
+        xa.setLayout(null);
+        
+        JLabel lblNewLabel_2 = new JLabel("Xà ");
+        lblNewLabel_2.setForeground(new Color(255, 255, 255));
+        lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 175));
+        lblNewLabel_2.setBounds(0, 0, 280, 133);
+        xa.add(lblNewLabel_2);
 
         JPanel khac = new JPanel();
         khac.setBounds(625,350,525,300);
-        khac.setBackground(Color.BLUE);
+        khac.setBackground(new Color(145, 249, 229));
         noiDung.add(khac);
+        khac.setLayout(null);
+        
+        JLabel lblNewLabel_3 = new JLabel("Khác");
+        lblNewLabel_3.setForeground(new Color(240, 248, 255));
+        lblNewLabel_3.setFont(new Font("Times New Roman", Font.PLAIN, 150));
+        lblNewLabel_3.setBounds(196, 0, 329, 150);
+        khac.add(lblNewLabel_3);
 
         ta.addMouseListener(new MouseAdapter() {
           @Override

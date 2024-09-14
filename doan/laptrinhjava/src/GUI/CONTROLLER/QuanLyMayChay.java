@@ -14,9 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JSlider;
 
-public class QuanLyTa extends JPanel {
+public class QuanLyMayChay extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -25,7 +24,8 @@ public class QuanLyTa extends JPanel {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
-    public QuanLyTa()
+	private JTextField textField_8;
+    public QuanLyMayChay()
     {
         setLayout(null);
         setSize(1200,800);
@@ -141,19 +141,29 @@ public class QuanLyTa extends JPanel {
                 lblNewLabel_4.setBounds(358, 89, 144, 27);
                 thongTin.add(lblNewLabel_4);
                 
-                JLabel lblNewLabel_5 = new JLabel("Khối lượng:");
+                JLabel lblNewLabel_5 = new JLabel("New label");
                 lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_5.setBounds(358, 130, 133, 36);
+                lblNewLabel_5.setBounds(358, 139, 100, 14);
                 thongTin.add(lblNewLabel_5);
                 
-                JLabel lblNewLabel_6 = new JLabel("Chất liệu:");
+                JLabel lblNewLabel_6 = new JLabel("New label");
                 lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_6.setBounds(740, 30, 110, 36);
+                lblNewLabel_6.setBounds(740, 41, 100, 14);
                 thongTin.add(lblNewLabel_6);
                 
-                JLabel lblNewLabel_7 = new JLabel("Màu sắc:");
+                JLabel lblNewLabel_7 = new JLabel("New label");
                 lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_7.setBounds(740, 80, 100, 36);
+                lblNewLabel_7.setBounds(740, 91, 100, 14);
                 thongTin.add(lblNewLabel_7);
+                
+                JLabel lblNewLabel_8 = new JLabel("New label");
+                lblNewLabel_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+                lblNewLabel_8.setBounds(740, 139, 100, 14);
+                thongTin.add(lblNewLabel_8);
+                
+                textField_8 = new JTextField();
+                textField_8.setBounds(850, 127, 200, 39);
+                thongTin.add(textField_8);
+                textField_8.setColumns(10);
     }
 }

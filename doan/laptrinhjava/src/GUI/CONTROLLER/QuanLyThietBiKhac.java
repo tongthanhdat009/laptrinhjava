@@ -14,18 +14,14 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JSlider;
 
-public class QuanLyTa extends JPanel {
+public class QuanLyThietBiKhac extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField_5;
 	private JTextField textField_6;
-	private JTextField textField_7;
-    public QuanLyTa()
+    public QuanLyThietBiKhac()
     {
         setLayout(null);
         setSize(1200,800);
@@ -84,11 +80,6 @@ public class QuanLyTa extends JPanel {
                 thongTin.add(textField_1);
                 textField_1.setColumns(10);
                 
-                textField_2 = new JTextField();
-                textField_2.setBounds(850, 80, 200, 36);
-                thongTin.add(textField_2);
-                textField_2.setColumns(10);
-                
                 textField_3 = new JTextField();
                 textField_3.setBounds(501, 30, 190, 36);
                 thongTin.add(textField_3);
@@ -99,20 +90,10 @@ public class QuanLyTa extends JPanel {
                 thongTin.add(textField_4);
                 textField_4.setColumns(10);
                 
-                textField_5 = new JTextField();
-                textField_5.setBounds(501, 130, 190, 36);
-                thongTin.add(textField_5);
-                textField_5.setColumns(10);
-                
                 textField_6 = new JTextField();
                 textField_6.setBounds(130, 130, 190, 36);
                 thongTin.add(textField_6);
                 textField_6.setColumns(10);
-                
-                textField_7 = new JTextField();
-                textField_7.setBounds(850, 30, 200, 36);
-                thongTin.add(textField_7);
-                textField_7.setColumns(10);
                 
                 JLabel lblNewLabel = new JLabel("Mã thiết bị:");
                 lblNewLabel.setLabelFor(textField);
@@ -140,20 +121,5 @@ public class QuanLyTa extends JPanel {
                 lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
                 lblNewLabel_4.setBounds(358, 89, 144, 27);
                 thongTin.add(lblNewLabel_4);
-                
-                JLabel lblNewLabel_5 = new JLabel("Khối lượng:");
-                lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_5.setBounds(358, 130, 133, 36);
-                thongTin.add(lblNewLabel_5);
-                
-                JLabel lblNewLabel_6 = new JLabel("Chất liệu:");
-                lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_6.setBounds(740, 30, 110, 36);
-                thongTin.add(lblNewLabel_6);
-                
-                JLabel lblNewLabel_7 = new JLabel("Màu sắc:");
-                lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_7.setBounds(740, 80, 100, 36);
-                thongTin.add(lblNewLabel_7);
     }
 }

@@ -554,6 +554,16 @@ public class BLLQuanLyDanhSach{
         if(dataThietBi.SuaThietBiMayChay(mayChay) == true) return "Thành công";
         return "Thất bại";
     }
+    public ArrayList<Ta> layDSTa()
+    {
+        return dataThietBi.layDanhSachTa();
+    }
+    public ArrayList<Xa> layDSXa() {
+        return dataThietBi.layDanhSachXa();
+    }
+    public ArrayList<MayChay> layDSMayChay() {
+        return dataThietBi.layDanhSachMayChay();
+    }
     //quyền
     public ArrayList<String> layDSTenQuyenNV(){
     	return dataQuyen.layDSTenQuyenNV();

@@ -5,11 +5,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import BLL.BLLQuanLyDanhSach;
+import DTO.MayChay;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -165,5 +173,49 @@ public class QuanLyMayChay extends JPanel {
                 textField_8.setBounds(850, 127, 200, 39);
                 thongTin.add(textField_8);
                 textField_8.setColumns(10);
+                JTable bangMayChay = new JTable();
+bangMayChay.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
+
+// Tạo DefaultTableModel và thêm các cột
+DefaultTableModel modelMayChay = new DefaultTableModel();
+modelMayChay.addColumn("Mã thiết bị");
+modelMayChay.addColumn("Tên loại thiết bị");
+modelMayChay.addColumn("Hình ảnh");
+modelMayChay.addColumn("Giá thiết bị");
+modelMayChay.addColumn("Ngày bảo hành");
+modelMayChay.addColumn("Loại");
+modelMayChay.addColumn("Công suất");
+modelMayChay.addColumn("Tốc độ tối đa");
+modelMayChay.addColumn("Nhà sản xuất");
+modelMayChay.addColumn("Kích thước");
+
+// Gán model cho JTable
+bangMayChay.setModel(modelMayChay);
+
+// Lấy danh sách MayChay và thêm vào bảng
+BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+for (MayChay mayChay : danhSachMayChay) {
+    modelMayChay.addRow(new Object[]{
+        mayChay.getMaThietBi(),
+        mayChay.getTenLoaiThietBi(),
+        mayChay.getHinhAnh(),
+        mayChay.getGiaThietBi(),
+        mayChay.getNgayBaoHanh(),
+        mayChay.getLoai(),
+        mayChay.getCongSuat(),
+        mayChay.getTocDoToiDa(),
+        mayChay.getNhaSanXuat(),
+        mayChay.getKichThuoc()
+    });
+}
+
+// Tạo JScrollPane để chứa bảng và cho phép cuộn
+JScrollPane scrollPaneMayChay = new JScrollPane(bangMayChay);
+scrollPaneMayChay.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+
+// Thêm JScrollPane vào JPanel
+add(scrollPaneMayChay);
+
     }
 }

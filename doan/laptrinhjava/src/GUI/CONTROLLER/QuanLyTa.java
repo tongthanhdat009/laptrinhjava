@@ -5,11 +5,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import BLL.BLLQuanLyDanhSach;
+import DTO.Ta;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -156,5 +164,51 @@ public class QuanLyTa extends JPanel {
                 lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
                 lblNewLabel_7.setBounds(740, 80, 100, 36);
                 thongTin.add(lblNewLabel_7);
+                
+                // Tạo JTable
+                // Tạo JTable
+                JTable bang = new JTable();
+                bang.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
+
+                // Tạo DefaultTableModel và thêm các cột
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("Mã thiết bị");
+                model.addColumn("Tên loại thiết bị");
+                model.addColumn("Hình ảnh");
+                model.addColumn("Giá thiết bị");
+                model.addColumn("Ngày bảo hành");
+                model.addColumn("Loại");
+                model.addColumn("Khối lượng");
+                model.addColumn("Chất liệu");
+                model.addColumn("Màu sắc");
+
+                // Gán model cho JTable
+                bang.setModel(model);
+
+                // Lấy danh sách Ta và thêm vào bảng
+                BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+                ArrayList<Ta> danhSachTa = ql.layDSTa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                for (Ta ta : danhSachTa) {
+                    model.addRow(new Object[]{
+                        ta.getMaThietBi(),
+                        ta.getTenLoaiThietBi(),
+                        ta.getHinhAnh(),
+                        ta.getGiaThietBi(),
+                        ta.getNgayBaoHanh(),
+                        ta.getLoai(),
+                        ta.getKhoiLuong(),
+                        ta.getChatLieu(),
+                        ta.getMauSac()
+                    });
+                }
+
+                // Tạo JScrollPane để chứa bảng và cho phép cuộn
+                JScrollPane scrollPane = new JScrollPane(bang);
+                scrollPane.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+
+                // Thêm JScrollPane vào JPanel
+                add(scrollPane);
+                
+
     }
 }

@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import DTO.MayChay;
+
 
 public class QuanLyThietBiCTR extends JPanel {
     public QuanLyThietBiCTR() {
@@ -131,5 +133,62 @@ public class QuanLyThietBiCTR extends JPanel {
                 noiDung.add(giaoDienTa);
             }
         });
+        xa.addMouseListener(new MouseAdapter() {
+            @Override
+              public void mouseClicked(MouseEvent e) {
+                  noiDung.removeAll();
+                  noiDung.revalidate(); // Cập nhật layout
+                  noiDung.repaint();    // Vẽ lại panel
+                  JButton back = new JButton("Quay lại");
+                  back.setBounds(0, 0, 100, 100);
+                  back.addActionListener(new ActionListener() {
+                      public void actionPerformed(ActionEvent e)
+                      {
+                          GiaoDien();
+                      }
+                  });
+                  noiDung.add(back);
+                  QuanLyXa giaoDienXa = new QuanLyXa();
+                  noiDung.add(giaoDienXa);
+              }
+          });
+          mayChay.addMouseListener(new MouseAdapter() {
+            @Override
+              public void mouseClicked(MouseEvent e) {
+                  noiDung.removeAll();
+                  noiDung.revalidate(); // Cập nhật layout
+                  noiDung.repaint();    // Vẽ lại panel
+                  JButton back = new JButton("Quay lại");
+                  back.setBounds(0, 0, 100, 100);
+                  back.addActionListener(new ActionListener() {
+                      public void actionPerformed(ActionEvent e)
+                      {
+                          GiaoDien();
+                      }
+                  });
+                  noiDung.add(back);
+                  QuanLyMayChay giaoDienMayChay = new QuanLyMayChay();
+                  noiDung.add(giaoDienMayChay);
+              }
+          });
+          khac.addMouseListener(new MouseAdapter() {
+            @Override
+              public void mouseClicked(MouseEvent e) {
+                  noiDung.removeAll();
+                  noiDung.revalidate(); // Cập nhật layout
+                  noiDung.repaint();    // Vẽ lại panel
+                  JButton back = new JButton("Quay lại");
+                  back.setBounds(0, 0, 100, 100);
+                  back.addActionListener(new ActionListener() {
+                      public void actionPerformed(ActionEvent e)
+                      {
+                          GiaoDien();
+                      }
+                  });
+                  noiDung.add(back);
+                  QuanLyThietBiKhac giaoDienKhac = new QuanLyThietBiKhac();
+                  noiDung.add(giaoDienKhac);
+              }
+          });
     }
 }

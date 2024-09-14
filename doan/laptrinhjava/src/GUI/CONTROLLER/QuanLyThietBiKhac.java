@@ -5,11 +5,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import BLL.BLLQuanLyDanhSach;
+import DTO.DSLoaiThietBi;
+import DTO.LoaiThietBi;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -121,5 +130,42 @@ public class QuanLyThietBiKhac extends JPanel {
                 lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
                 lblNewLabel_4.setBounds(358, 89, 144, 27);
                 thongTin.add(lblNewLabel_4);
+
+                JTable bangKhac = new JTable();
+bangKhac.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
+
+// Tạo DefaultTableModel và thêm các cột
+DefaultTableModel modelKhac = new DefaultTableModel();
+modelKhac.addColumn("Mã thiết bị");
+modelKhac.addColumn("Tên loại thiết bị");
+modelKhac.addColumn("Hình ảnh");
+modelKhac.addColumn("Giá thiết bị");
+modelKhac.addColumn("Ngày bảo hành");
+modelKhac.addColumn("Loại");
+
+// Gán model cho JTable
+bangKhac.setModel(modelKhac);
+
+// Lấy danh sách LoaiThietBi và thêm vào bảng
+BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
+    modelKhac.addRow(new Object[]{
+        khac.getMaThietBi(),
+        khac.getTenLoaiThietBi(),
+        khac.getHinhAnh(),
+        khac.getGiaThietBi(),
+        khac.getNgayBaoHanh(),
+        khac.getLoai()
+    });
+}
+
+// Tạo JScrollPane để chứa bảng và cho phép cuộn
+JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
+scrollPaneKhac.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+
+// Thêm JScrollPane vào JPanel
+add(scrollPaneKhac);
+
     }
 }

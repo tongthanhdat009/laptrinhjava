@@ -225,14 +225,14 @@ public class DataThietBi {
         }
         return false;
     }
-    public boolean themMayChay(String MaThietBi, int congSuat, int toDoToiDa, String nhaSanXuat, String kichThuoc) {
+    public boolean themMayChay(String MaThietBi, int congSuat, int tocDoToiDa, String nhaSanXuat, String kichThuoc) {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             String sql = "INSERT INTO MayChay (MaThietBi, CongSuat, TocDoToiDa, NhaSanXuat, KichThuoc) VALUES(?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1,MaThietBi);            
             preparedStatement.setInt(2,congSuat);            
-            preparedStatement.setInt(3,toDoToiDa);            
+            preparedStatement.setInt(3,tocDoToiDa);            
             preparedStatement.setString(4,nhaSanXuat);
             preparedStatement.setString(5,kichThuoc);
             if (preparedStatement.executeUpdate() > 0)  return true;
@@ -353,7 +353,7 @@ public class DataThietBi {
        return false;
     }
     public boolean SuaMayChay(MayChay mayChay) {
-    String truyVan = "UPDATE MayChay SET CongSuat = ?, ToDoToiDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM LoaiThietBi WHERE MaThietBi = ?";
+    String truyVan = "UPDATE MayChay SET CongSuat = ?, ToDoTociDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM LoaiThietBi WHERE MaThietBi = ?";
     try {
         con = DriverManager.getConnection(dbUrl, userName, password);
         PreparedStatement statement = con.prepareStatement(truyVan);
@@ -396,9 +396,68 @@ public boolean SuaXa(Xa xa) {
 }
 
 public boolean SuaThietBiXa(Xa xa) {
-    if (suaThongTinTB(new LoaiThietBi(xa.getMaThietBi(), xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
-        if (SuaXa(xa)) return true;
-    return false;
-}
-
+        if (suaThongTinTB(new LoaiThietBi(xa.getMaThietBi(), xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
+            if (SuaXa(xa)) return true;
+        return false;
+    }
+    public ArrayList<Ta> layDanhSachTa()
+    {
+        ArrayList<Ta> a = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            String truyVan = "SELECT * FROM Ta, LoaiThietBi WHERE LoaiThietBi.MaThietBi = Ta.MaThietBi";
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                a.add(new Ta(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
+                    rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
+                    rs.getInt("NgayBaoHanh"),rs.getString("Loai"),
+                    rs.getInt("KhoiLuong"),rs.getString("ChatLieu"),rs.getString("MauSac")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return a;
+    }
+    public ArrayList<Xa> layDanhSachXa() {
+        ArrayList<Xa> a = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            String truyVan = "SELECT * FROM Xa, LoaiThietBi WHERE LoaiThietBi.MaThietBi = Xa.MaThietBi";
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                a.add(new Xa(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
+                        rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
+                        rs.getInt("NgayBaoHanh"), rs.getString("Loai"),
+                        rs.getString("LoaiXa"), rs.getString("ChatLieu"), 
+                        rs.getFloat("ChieuDai"), rs.getFloat("DuongKinh"), 
+                        rs.getFloat("ChieuCao"), rs.getFloat("TaiTrong")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return a;
+    }
+    public ArrayList<MayChay> layDanhSachMayChay() {
+        ArrayList<MayChay> a = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            String truyVan = "SELECT * FROM MayChay, LoaiThietBi WHERE LoaiThietBi.MaThietBi = MayChay.MaThietBi";
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                a.add(new MayChay(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
+                        rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
+                        rs.getInt("NgayBaoHanh"), rs.getString("Loai"),
+                        rs.getInt("CongSuat"), rs.getInt("TocDoToiDa"), 
+                        rs.getString("NhaSanXuat"), rs.getString("KichThuoc")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return a;
+    }
+        
 }

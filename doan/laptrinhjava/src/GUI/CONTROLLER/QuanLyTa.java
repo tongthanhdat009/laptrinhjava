@@ -33,8 +33,9 @@ public class QuanLyTa extends JPanel {
         giaoDien();
     }
     public void giaoDien()
-    {
-                JButton them = new JButton();
+    {			
+		    	
+		        JButton them = new JButton();
                 ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-hv.png");
                 Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
                 them.setPreferredSize(new Dimension (130,35));

@@ -47,6 +47,14 @@ public class QuanLyThietBiCTR extends JPanel {
         talb.setBounds(288,66,237,234);
         ta.add(talb);
         noiDung.add(ta);
+        
+        ImageIcon taLogo = new ImageIcon("src/asset/img/icon/ta-logo.png");
+        Image scaleTaLogoIcon = taLogo.getImage().getScaledInstance(250, 250,Image.SCALE_DEFAULT);
+        JLabel logoTaLB = new JLabel("");
+        logoTaLB.setBounds(0, 0, 246, 234);
+        logoTaLB.setIcon(new ImageIcon(scaleTaLogoIcon));
+        
+        ta.add(logoTaLB);
 
         JPanel mayChay = new JPanel();
         mayChay.setBounds(625,0,525,300);
@@ -56,9 +64,14 @@ public class QuanLyThietBiCTR extends JPanel {
         
         JLabel lblNewLabel = new JLabel("Máy Chạy");
         lblNewLabel.setForeground(new Color(238, 238, 238));
-        lblNewLabel.setBounds(0, 0, 429, 142);
-        lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 100));
+        lblNewLabel.setBounds(108, 107, 429, 142);
+        lblNewLabel.setFont(new Font("Times New Roman", Font.ITALIC, 75));
         mayChay.add(lblNewLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setIcon(new ImageIcon("D:\\github\\laptrinhjava\\doan\\laptrinhjava\\src\\asset\\img\\icon\\MayChay-logo.png"));
+        lblNewLabel_1.setBounds(118, 0, 407, 300);
+        mayChay.add(lblNewLabel_1);
 
         JPanel xa = new JPanel();
         xa.setBounds(50,350,525,300);
@@ -66,23 +79,38 @@ public class QuanLyThietBiCTR extends JPanel {
         noiDung.add(xa);
         xa.setLayout(null);
         
-        JLabel lblNewLabel_2 = new JLabel("Xà ");
-        lblNewLabel_2.setForeground(new Color(255, 255, 255));
-        lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 175));
-        lblNewLabel_2.setBounds(0, 0, 280, 133);
-        xa.add(lblNewLabel_2);
+        ImageIcon xaLogo = new ImageIcon("src/asset/img/icon/xa-logo.png");
+        Image scaleXaLogoIcon = xaLogo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
+        JLabel xaLB = new JLabel("Xà ");
+        xaLB.setForeground(new Color(255, 255, 255));
+        xaLB.setFont(new Font("Times New Roman", Font.PLAIN, 175));
+        xaLB.setBounds(0, 0, 280, 133);
+        xa.add(xaLB);
+        
+        JLabel hinhXaLB = new JLabel("");
+        hinhXaLB.setBounds(245, 0, 280, 300);
+        hinhXaLB.setIcon(new ImageIcon(scaleXaLogoIcon));
+        xa.add(hinhXaLB);
 
+        
+        ImageIcon khacLogo = new ImageIcon("src/asset/img/icon/khac-logo.png");
+        Image scaleKhacLogoIcon = khacLogo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
         JPanel khac = new JPanel();
         khac.setBounds(625,350,525,300);
         khac.setBackground(new Color(145, 249, 229));
         noiDung.add(khac);
         khac.setLayout(null);
         
+        JLabel khacLogoLB = new JLabel("");
+        khacLogoLB.setIcon(new ImageIcon("D:\\github\\laptrinhjava\\doan\\laptrinhjava\\src\\asset\\img\\icon\\khac-logo.png"));
+        khacLogoLB.setBounds(258, 0, 267, 300);
+        khac.add(khacLogoLB);
+        
         JLabel lblNewLabel_3 = new JLabel("Khác");
-        lblNewLabel_3.setForeground(new Color(240, 248, 255));
-        lblNewLabel_3.setFont(new Font("Times New Roman", Font.PLAIN, 150));
-        lblNewLabel_3.setBounds(196, 0, 329, 150);
+        lblNewLabel_3.setBounds(0, 150, 329, 150);
         khac.add(lblNewLabel_3);
+        lblNewLabel_3.setForeground(new Color(240, 248, 255));
+        lblNewLabel_3.setFont(new Font("Times New Roman", Font.PLAIN, 125));
 
         ta.addMouseListener(new MouseAdapter() {
           @Override

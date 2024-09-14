@@ -192,8 +192,10 @@ public class GUIAdmin{
         managementPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
         		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(70, 78, 71)));
         managementPanel.setBackground(new Color(204, 252, 203));
-        
-        leftPanel.add(managementPanel);
+        JScrollPane scrollPane = new JScrollPane(managementPanel);
+        scrollPane.setBounds(26, 238, 352, 547); // Kích thước và vị trí của JScrollPane
+        managementPanel.setPreferredSize(new Dimension(300, 600)); // y là tổng chiều cao của tất cả các nút
+        leftPanel.add(scrollPane);
         
         JButton listBTN = new JButton("Quản lý danh sách");
         listBTN.setSelectedIcon(null);
@@ -352,6 +354,15 @@ public class GUIAdmin{
         memberMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         memberMNG.setBounds(23, 347, 300, 50);
         managementPanel.add(memberMNG);
+        
+        JButton exportExcelBTN = new JButton("Xuất file danh sách");
+        exportExcelBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        exportExcelBTN.setFont(new Font("Times New Roman", Font.PLAIN, 23));
+        exportExcelBTN.setBounds(23, 530, 300, 50);
+        managementPanel.add(exportExcelBTN);
         
         leftPanel.add(footerLeft);
         //chức năng:

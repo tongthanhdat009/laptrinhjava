@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.Image;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import DTO.DSLoaiThietBi;
+import DTO.DTOChucNang;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.DTOThongKeDonHang;
@@ -25,17 +27,21 @@ import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
 
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import BLL.BLLNhapThietBi;
+import BLL.BLLPhanQuyen;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDonHang;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.JButton;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -43,12 +49,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
 
 public class GUIUser extends JFrame {
+	private static final long serialVersionUID = -285217257856323089L;
 	//logo
     ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
     Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
+    Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     
     //icon chức năng thống kê
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
@@ -91,11 +100,16 @@ public class GUIUser extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(null);
         
+        BLLPhanQuyen bllPhanQuyen = new BLLPhanQuyen();    
+        
         //danh sách các nút chức năng
         ArrayList<JButton> dsNut = new ArrayList<JButton>();
         
+		//danh sách các chức năng mà user có thể dùng
+        ArrayList<DTOChucNang> dsCNUser = bllPhanQuyen.layDsCNTheoIDQuyen(tk.getIDQuyen());
+        
         JPanel rightPanel = new JPanel();
-        rightPanel.setBackground(new Color(255, 255, 255));
+        rightPanel.setBackground(new Color(241, 255, 250));
         rightPanel.setBorder(new LineBorder(new Color(64, 0, 64), 2));
         rightPanel.setBounds(400, 0, 1200, 900);
         
@@ -295,21 +309,51 @@ public class GUIUser extends JFrame {
         
         JPanel managementPanel = new JPanel();
         managementPanel.setBounds(26, 238, 352, 547);
-        leftPanel.add(managementPanel);
         managementPanel.setLayout(null);
         managementPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
         		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(70, 78, 71)));
         managementPanel.setBackground(new Color(204, 252, 203));
         
         
-        for(JButton btn : dsNut) {
-        	System.out.println(btn);
-        }
         
+        btnGenerate(dsNut, dsCNUser, managementPanel,leftPanel);
+
         getContentPane().add(rightPanel);
+        rightPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        
+        JPanel introPn = new JPanel();
+        introPn.setPreferredSize(new Dimension(900, 700));
+        introPn.setBackground(new Color(241, 255, 250));
+        
+        JLabel introLB = new JLabel();
+        introLB.setIcon(new ImageIcon(scaleLogoIcon1));
+        introPn.add(introLB);
+        
+        rightPanel.add(introPn);
+        
+        JLabel logo_1 = new JLabel();
+        introPn.add(logo_1);
         this.setIconImage(logo.getImage());
         this.setVisible(true);
 	}
+    private void btnGenerate(ArrayList<JButton> dsNut, ArrayList<DTOChucNang> dsCNUser, JPanel managementPanel, JPanel leftPanel) {
+    	int x = 20;
+    	int y = 40;
+    	for(DTOChucNang cNang : dsCNUser) {
+    		for(JButton btn : dsNut) {
+    			if(cNang.getTenChucNang().trim().equals(btn.getText())) {
+    				btn.setBounds(x, y, 300, 50);
+    				managementPanel.add(btn);
+    			}
+    		}
+    		y+=60;
+    	}
+    	JScrollPane scrollPane = new JScrollPane(managementPanel);
+        scrollPane.setBounds(26,238,352,547);
+        
+        managementPanel.setPreferredSize(new Dimension(300,y));
+        leftPanel.add(managementPanel);
+    }
 	public static void main(String[] args) {
 		DTOTaiKhoan tKhoan = new DTOTaiKhoan("TK500", "TKHV500", "MKHV500", "Q0001");
         new GUIUser(tKhoan);

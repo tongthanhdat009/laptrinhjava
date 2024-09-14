@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
-import DTO.dsHangHoa;
-import DTO.hangHoa;
+import DTO.MayChay;
+import DTO.Ta;
+import DTO.Xa;
 public class DataThietBi {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -75,7 +76,7 @@ public class DataThietBi {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                LoaiThietBi thietBi = new LoaiThietBi(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                LoaiThietBi thietBi = new LoaiThietBi(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),rs.getString(6));
                 a.them(thietBi);
             }
         } catch (Exception e) {
@@ -280,15 +281,15 @@ public class DataThietBi {
     }
     public boolean suaThongTinTB(LoaiThietBi tb){
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE LoaiThietBi SET MaThietBi = ?, TenLoaiThietBi = ?, HinhAnh = ?, GiaThietBi = ?, NgayBaoHanh = ? FROM LoaiThietBi Where MaThietBi = ? ";
+        String truyVan = "UPDATE LoaiThietBi SET TenLoaiThietBi = ?, HinhAnh = ?, GiaThietBi = ?, NgayBaoHanh = ?, Loai = ? FROM LoaiThietBi Where MaThietBi = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(1, tb.getMaThietBi());
-            statement.setString(2, tb.getTenLoaiThietBi());
-            statement.setString(3, tb.getHinhAnh());
-            statement.setString(4, tb.getGiaThietBi());
-            statement.setInt(5, tb.getNgayBaoHanh());
+            statement.setString(1, tb.getTenLoaiThietBi());
+            statement.setString(2, tb.getHinhAnh());
+            statement.setString(3, tb.getGiaThietBi());
+            statement.setInt(4, tb.getNgayBaoHanh());
+            statement.setString(5, tb.getLoai());
             statement.setString(6, tb.getMaThietBi());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;
@@ -297,4 +298,107 @@ public class DataThietBi {
         }
         return false;
     }
+    public String layMaChuaTonTai() {
+        String truyVan = "SELECT MaThietBi FROM LoaiThietBi";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+    
+            int so = 0; // Khởi tạo biến so để lưu trữ giá trị lớn nhất của mã
+            String ma;
+    
+            // Duyệt qua tất cả các mã thiết bị hiện có trong bảng
+            while (rs.next()) {
+                ma = rs.getString(1); // Lấy mã thiết bị
+                ma = ma.substring(2); // Lấy phần số sau "TB"
+                
+                // Kiểm tra và cập nhật giá trị lớn nhất cho biến so
+                int soHienTai = Integer.parseInt(ma); // Chuyển đổi chuỗi thành số
+                if (so < soHienTai) {
+                    so = soHienTai; // Cập nhật số lớn nhất
+                }
+            }
+    
+            // Tạo mã mới bằng cách tăng số lớn nhất lên 1
+            so = so + 1;
+            return "TB" + so;
+    
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return "Loi";
+    }
+    public boolean SuaTa(Ta ta)
+    {
+        String truyVan = "UPDATE Ta SET KhoiLuong = ?, ChatLieu = ?, MauSac = ? FROM LoaiThietBi Where MaThietBi = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, ta.getTenLoaiThietBi());
+            statement.setString(2, ta.getHinhAnh());
+            statement.setString(3, ta.getGiaThietBi());
+            statement.setString(4, ta.getMaThietBi());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean SuaThietBiTa(Ta ta)
+    {
+       if (suaThongTinTB(new LoaiThietBi(ta.getMaThietBi(), ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai())))
+       if (SuaTa(ta)) return true;
+       return false;
+    }
+    public boolean SuaMayChay(MayChay mayChay) {
+    String truyVan = "UPDATE MayChay SET CongSuat = ?, ToDoToiDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM LoaiThietBi WHERE MaThietBi = ?";
+    try {
+        con = DriverManager.getConnection(dbUrl, userName, password);
+        PreparedStatement statement = con.prepareStatement(truyVan);
+        statement.setInt(1, mayChay.getCongSuat());
+        statement.setInt(2, mayChay.getTocDoToiDa());
+        statement.setString(3, mayChay.getNhaSanXuat());
+        statement.setString(4, mayChay.getKichThuoc());
+        statement.setString(5, mayChay.getMaThietBi());
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected > 0) return true;
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    return false;
+}
+
+public boolean SuaThietBiMayChay(MayChay mayChay) {
+    if (suaThongTinTB(new LoaiThietBi(mayChay.getMaThietBi(), mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
+        if (SuaMayChay(mayChay)) return true;
+    return false;
+}
+public boolean SuaXa(Xa xa) {
+    String truyVan = "UPDATE Xa SET LoaiXa = ?, ChatLieu = ?, ChieuDai = ?, DuongKinh = ?, ChieuCao = ?, TaiTrong = ? FROM LoaiThietBi WHERE MaThietBi = ?";
+    try {
+        con = DriverManager.getConnection(dbUrl, userName, password);
+        PreparedStatement statement = con.prepareStatement(truyVan);
+        statement.setString(1, xa.getLoaiXa());
+        statement.setString(2, xa.getChatLieu());
+        statement.setFloat(3, xa.getChieuDai());
+        statement.setFloat(4, xa.getDuongKinh());
+        statement.setFloat(5, xa.getChieuCao());
+        statement.setFloat(6, xa.getTaiTrong());
+        statement.setString(7, xa.getMaThietBi());
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected > 0) return true;
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    return false;
+}
+
+public boolean SuaThietBiXa(Xa xa) {
+    if (suaThongTinTB(new LoaiThietBi(xa.getMaThietBi(), xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
+        if (SuaXa(xa)) return true;
+    return false;
+}
+
 }

@@ -178,13 +178,15 @@ public class BLLQuanLyDanhSach{
     public boolean timKiemTheoMaTB(String maTB){
         return dataThietBi.timKiemTheoMaTB(maTB);
     }
-    public DSLoaiThietBi timKiem(LoaiThietBi tb) {
-    	return dataThietBi.timKiemTB(tb);
+    public boolean timKiem(LoaiThietBi tb) {
+    	return true;
     }
     public boolean xoaTB(String maTB){
         return dataThietBi.xoaTB(maTB);
     }
     public boolean themTB(LoaiThietBi tb){
+        tb.setMaThietBi(dataThietBi.layMaChuaTonTai());
+        if(tb.getMaThietBi().equals("Loi")) return false;
         return dataThietBi.themTB(tb);
     }
     public int kiemTraMaThietBi(){
@@ -535,6 +537,21 @@ public class BLLQuanLyDanhSach{
         if(dataThietBi.themTB(new LoaiThietBi(mayChay.getMaThietBi(), mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
         if(dataThietBi.themMayChay(mayChay.getMaThietBi(), mayChay.getCongSuat(), mayChay.getTocDoToiDa(), mayChay.getNhaSanXuat(),mayChay.getKichThuoc()))
         return "Thành công";
+        return "Thất bại";
+    }
+    public String SuaTa(Ta ta)
+    {
+        if(dataThietBi.SuaThietBiTa(ta) == true) return "Thành công";
+        return "Thất bại";
+    }
+    public String SuaXa(Xa xa)
+    {
+        if(dataThietBi.SuaThietBiXa(xa) == true) return "Thành công";
+        return "Thất bại";
+    }
+    public String SuaMayChay(MayChay mayChay)
+    {
+        if(dataThietBi.SuaThietBiMayChay(mayChay) == true) return "Thành công";
         return "Thất bại";
     }
     //quyền

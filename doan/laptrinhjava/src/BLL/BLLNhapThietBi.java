@@ -28,10 +28,10 @@ public class BLLNhapThietBi {
     {
         dataThietBiCoSo.nhapThietBi(maLoaiThietBi, maCoSo, soLuong, soNgayBaoHanh);
     }
-    public DSLoaiThietBi timKiem(String ten)
-    {
-        return dataThietBi.timKiem(ten);
-    }
+    // public DSLoaiThietBi timKiem(String ten)
+    // {
+    //     return dataThietBi.timKiem(ten);
+    // }
     public DSCoSo layDsCoSo()
     {
         return dataCoSo.layDSCoSo();

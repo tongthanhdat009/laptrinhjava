@@ -320,6 +320,7 @@ public class QuanLyBangNhanVienCTR {
         }
         bang.setModel(model);
         bang.getTableHeader().setReorderingAllowed(false);
+        bang.setFont(new Font("Times New Roman", Font.BOLD, 14));
         bang.addMouseListener(new MouseListener() {
 			
 			@Override

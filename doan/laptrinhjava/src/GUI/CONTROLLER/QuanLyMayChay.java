@@ -88,12 +88,12 @@ public class QuanLyMayChay extends JPanel {
                 thongTin.setLayout(null);
                 
                 textField = new JTextField();
-                textField.setBounds(130, 30, 190, 36);
+                textField.setBounds(140, 33, 190, 36);
                 thongTin.add(textField);
                 textField.setColumns(10);
                 
                 textField_1 = new JTextField();
-                textField_1.setBounds(130, 80, 190, 36);
+                textField_1.setBounds(140, 80, 190, 36);
                 thongTin.add(textField_1);
                 textField_1.setColumns(10);
                 
@@ -118,7 +118,7 @@ public class QuanLyMayChay extends JPanel {
                 textField_5.setColumns(10);
                 
                 textField_6 = new JTextField();
-                textField_6.setBounds(130, 130, 190, 36);
+                textField_6.setBounds(140, 130, 190, 36);
                 thongTin.add(textField_6);
                 textField_6.setColumns(10);
                 
@@ -139,9 +139,9 @@ public class QuanLyMayChay extends JPanel {
                 lblNewLabel_1.setBounds(10, 89, 110, 27);
                 thongTin.add(lblNewLabel_1);
                 
-                JLabel lblNewLabel_2 = new JLabel("Hình ảnh:");
+                JLabel lblNewLabel_2 = new JLabel("Tốc độ tối đa:");
                 lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_2.setBounds(10, 139, 100, 27);
+                lblNewLabel_2.setBounds(10, 139, 120, 27);
                 thongTin.add(lblNewLabel_2);
                 
                 JLabel lblNewLabel_3 = new JLabel("Giá:");
@@ -154,22 +154,22 @@ public class QuanLyMayChay extends JPanel {
                 lblNewLabel_4.setBounds(358, 89, 144, 27);
                 thongTin.add(lblNewLabel_4);
                 
-                JLabel lblNewLabel_5 = new JLabel("New label");
+                JLabel lblNewLabel_5 = new JLabel("Công suất:");
                 lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_5.setBounds(358, 139, 100, 14);
+                lblNewLabel_5.setBounds(368, 135, 100, 23);
                 thongTin.add(lblNewLabel_5);
                 
-                JLabel lblNewLabel_6 = new JLabel("New label");
+                JLabel lblNewLabel_6 = new JLabel("Nhà sản xuất:");
                 lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_6.setBounds(740, 41, 100, 14);
+                lblNewLabel_6.setBounds(722, 34, 118, 25);
                 thongTin.add(lblNewLabel_6);
                 
-                JLabel lblNewLabel_7 = new JLabel("New label");
+                JLabel lblNewLabel_7 = new JLabel("Hình ảnh:");
                 lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
                 lblNewLabel_7.setBounds(740, 91, 100, 14);
                 thongTin.add(lblNewLabel_7);
                 
-                JLabel lblNewLabel_8 = new JLabel("New label");
+                JLabel lblNewLabel_8 = new JLabel("Kích thước:");
                 lblNewLabel_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
                 lblNewLabel_8.setBounds(740, 139, 100, 14);
                 thongTin.add(lblNewLabel_8);
@@ -355,7 +355,7 @@ public class QuanLyMayChay extends JPanel {
 
                 // Tạo JScrollPane để chứa bảng và cho phép cuộn
                 JScrollPane scrollPaneMayChay = new JScrollPane(bangMayChay);
-                scrollPaneMayChay.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+                scrollPaneMayChay.setBounds(0, 320, 1200, 700); // Đặt kích thước cho JScrollPane
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPaneMayChay);

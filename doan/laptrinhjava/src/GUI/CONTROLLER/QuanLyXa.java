@@ -200,6 +200,15 @@ public class QuanLyXa extends JPanel {
         lblNewLabel_8_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
         lblNewLabel_8_2.setBounds(908, 33, 110, 27);
         thongTin.add(lblNewLabel_8_2);
+        
+        JButton btnNewButton = new JButton("Nhập về cơ sở");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        btnNewButton.setBounds(952, 128, 214, 36);
+        thongTin.add(btnNewButton);
 
         // Initialize JTable and DefaultTableModel
         // Trong phương thức giaoDien
@@ -387,7 +396,7 @@ for (Xa xa : danhSachXa) {
 
         // Tạo JScrollPane để chứa bảng và cho phép cuộn
         JScrollPane scrollPaneXa = new JScrollPane(bangXa);
-        scrollPaneXa.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+        scrollPaneXa.setBounds(0, 320, 1200, 700); // Đặt kích thước cho JScrollPane
 
         // Thêm JScrollPane vào JPanel
         add(scrollPaneXa);

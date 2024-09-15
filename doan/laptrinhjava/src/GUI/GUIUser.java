@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.Image;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -37,6 +38,7 @@ import BLL.BLLPhanQuyen;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDonHang;
 
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -57,11 +59,26 @@ public class GUIUser extends JFrame {
     ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
     Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
-    Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
-    
+    Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(500, 500,Image.SCALE_DEFAULT);
     //icon chức năng thống kê
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng quản lý hội viên
+    ImageIcon membershipIcon = new ImageIcon("src/asset/img/icon/membership-icon.png");
+    Image scaleMembershipIcon = membershipIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng quản lý nhân viên
+    ImageIcon employeeIcon = new ImageIcon("src/asset/img/icon/employee-icon.png");
+    Image scaleEmployeeIcon = employeeIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng quản lý thiết bị
+    ImageIcon devicesIcon = new ImageIcon("src/asset/img/icon/devices-icon.png");
+    Image scaleDevicesIcon = devicesIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng phân quyền
+    ImageIcon permissionIcon = new ImageIcon("src/asset/img/icon/permission-icon.png");
+    Image scalePermissionIcon = permissionIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng danh sách
     ImageIcon checkListIcon = new ImageIcon("src/asset/img/icon/checklist-icon.png");
@@ -92,6 +109,8 @@ public class GUIUser extends JFrame {
     //icon chức năng thống kê doanh thu
     ImageIcon chartIcon = new ImageIcon("src/asset/img/icon/stonk-icon.jpg");
     Image scaleChartIcon = chartIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    //tạo viền cho panel
+    Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
     
     public GUIUser(DTOTaiKhoan tk) {
 		this.setSize(1600, 900);
@@ -126,6 +145,7 @@ public class GUIUser extends JFrame {
         listBTN.setSelectedIcon(null);
         listBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         listBTN.setFocusPainted(false);
+        listBTN.setIcon(new ImageIcon(scaleCheckListIcon));
         dsNut.add(listBTN);
 //        listBTN.setBounds(23, 42, 300, 50);
 //        managementPanel.add(listBTN);
@@ -142,6 +162,7 @@ public class GUIUser extends JFrame {
         });
         billBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         billBTN.setFocusPainted(false);
+        billBTN.setIcon(new ImageIcon(scaleBillIcon));
         dsNut.add(billBTN);
 //        billBTN.setBounds(23, 103, 300, 50);
 //        managementPanel.add(billBTN);
@@ -158,6 +179,7 @@ public class GUIUser extends JFrame {
         });
         goodsBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         goodsBTN.setFocusPainted(false);
+        goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
         dsNut.add(goodsBTN);
 //        goodsBTN.setBounds(23, 164, 300, 50);
 //        managementPanel.add(goodsBTN);
@@ -175,6 +197,7 @@ public class GUIUser extends JFrame {
         });
         statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         statBTN.setFocusPainted(false);
+        statBTN.setIcon(new ImageIcon(scaleChartIcon));
         dsNut.add(statBTN);
 //        statBTN.setBounds(23, 225, 300, 50);
 //        managementPanel.add(statBTN);
@@ -191,6 +214,7 @@ public class GUIUser extends JFrame {
         	}
         });
         QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        QuanLyThietBi.setIcon(new ImageIcon(scaleDevicesIcon));
         dsNut.add(QuanLyThietBi);
 //        QuanLyThietBi.setBounds(23, 408, 300, 50);
 //        managementPanel.add(QuanLyThietBi);
@@ -206,6 +230,8 @@ public class GUIUser extends JFrame {
         	}
         });
         delegationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        delegationBTN.setIcon(new ImageIcon(scalePermissionIcon));
+        delegationBTN.setFocusPainted(false);
         dsNut.add(delegationBTN);
 //        delegationBTN.setBounds(23, 408, 300, 50);
 //        managementPanel.add(delegationBTN);
@@ -227,6 +253,8 @@ public class GUIUser extends JFrame {
         	}
         });
         employeeMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        employeeMNG.setIcon(new ImageIcon(scaleEmployeeIcon));
+        employeeMNG.setFocusPainted(false);
         dsNut.add(employeeMNG);
 //        employeeMNG.setBounds(23, 286, 300, 50);
 //        managementPanel.add(employeeMNG);
@@ -268,6 +296,8 @@ public class GUIUser extends JFrame {
         	}
         });
         memberMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        memberMNG.setIcon(new ImageIcon(scaleMembershipIcon));
+        memberMNG.setFocusPainted(false);
         dsNut.add(memberMNG);
 //        memberMNG.setBounds(23, 347, 300, 50);
 //        managementPanel.add(memberMNG);

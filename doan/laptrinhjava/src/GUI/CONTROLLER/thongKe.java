@@ -192,7 +192,7 @@ public class thongKe {
                 thongKe1MonHang.setBounds(20, y, 1000, 75);
                 JLabel tenHang = new JLabel(ds.get(i).getTenHangHoa());
                 tenHang.setBounds(0, 0, 250, 30);
-                tenHang.setFont(new Font("Times New Roman",1,13));
+                tenHang.setFont(new Font("Times New Roman",1,20));
                 JLabel cot = new JLabel();
                 cot.setBounds(255, 0, (int) (ds.get(i).getDoanhThu()*tiLe) , 30);
                 cot.setOpaque(true); // Thêm dòng này để cho phép vẽ nền màu
@@ -243,6 +243,7 @@ public class thongKe {
             }
             JScrollPane jScrollPane = new JScrollPane(thongKe);
             jScrollPane.setBounds(2, 150, rightPanel.getWidth() - 20, 700);
+            jScrollPane.getVerticalScrollBar().setUnitIncrement(16); 
             rightPanel.add(jScrollPane);
         }
         

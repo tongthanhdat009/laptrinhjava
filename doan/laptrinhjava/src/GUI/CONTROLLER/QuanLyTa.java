@@ -140,7 +140,7 @@ public class QuanLyTa extends JPanel {
                 
                 JLabel lblNewLabel_2 = new JLabel("Hình ảnh:");
                 lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_2.setBounds(10, 139, 100, 27);
+                lblNewLabel_2.setBounds(740, 83, 100, 27);
                 thongTin.add(lblNewLabel_2);
                 
                 JLabel lblNewLabel_3 = new JLabel("Giá:");
@@ -160,13 +160,22 @@ public class QuanLyTa extends JPanel {
                 
                 JLabel lblNewLabel_6 = new JLabel("Chất liệu:");
                 lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_6.setBounds(740, 30, 110, 36);
+                lblNewLabel_6.setBounds(10, 128, 110, 36);
                 thongTin.add(lblNewLabel_6);
                 
                 JLabel lblNewLabel_7 = new JLabel("Màu sắc:");
                 lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_7.setBounds(740, 80, 100, 36);
+                lblNewLabel_7.setBounds(746, 30, 100, 36);
                 thongTin.add(lblNewLabel_7);
+                
+                JButton btnNewButton = new JButton("Nhập về cơ sở");
+                btnNewButton.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                	}
+                });
+                btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                btnNewButton.setBounds(850, 127, 200, 39);
+                thongTin.add(btnNewButton);
                 
                 // Tạo JTable
                 // Tạo JTable
@@ -221,7 +230,7 @@ public class QuanLyTa extends JPanel {
                 });
                 // Tạo JScrollPane để chứa bảng và cho phép cuộn
                 JScrollPane scrollPane = new JScrollPane(bang);
-                scrollPane.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+                scrollPane.setBounds(0, 320, 1200, 700); // Đặt kích thước cho JScrollPane
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPane);

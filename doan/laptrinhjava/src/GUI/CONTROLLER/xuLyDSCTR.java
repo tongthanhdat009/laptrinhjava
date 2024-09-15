@@ -70,7 +70,7 @@ public class xuLyDSCTR {
         
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên cơ sở", "Thiết bị", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hội viên cơ sở", "Thiết bị cơ sở", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,130,30);
@@ -153,10 +153,10 @@ public class xuLyDSCTR {
 //                    QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
 //                    qlbnvCTR.QuanLyBangNhanVien(ds, rightPanel, chonDanhSachLabel);
 //                }
-                else if(selectedOption.equals("Thiết bị")){
-                    thietBiCTR tbCTR = new thietBiCTR(rightPanel, tenCotTB, dsTB, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
-                    tbCTR.update();
-                }
+//                else if(selectedOption.equals("Thiết bị")){
+//                    thietBiCTR tbCTR = new thietBiCTR(rightPanel, tenCotTB, dsTB, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
+//                    tbCTR.update();
+//                }
                 else if(selectedOption.equals("Thiết bị cơ sở")){
                     ArrayList<ThietBiCoSo> ds = new ArrayList<>();
                     ds = bllQuanLyDanhSach.layDanhSachThietBiCoSo();

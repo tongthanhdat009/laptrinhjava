@@ -89,7 +89,7 @@ public class QuanLyThietBiKhac extends JPanel {
                 textField.setColumns(10);
                 
                 textField_1 = new JTextField();
-                textField_1.setBounds(130, 80, 190, 36);
+                textField_1.setBounds(130, 112, 190, 36);
                 thongTin.add(textField_1);
                 textField_1.setColumns(10);
                 
@@ -99,12 +99,12 @@ public class QuanLyThietBiKhac extends JPanel {
                 textField_3.setColumns(10);
                 
                 textField_4 = new JTextField();
-                textField_4.setBounds(501, 80, 190, 36);
+                textField_4.setBounds(501, 112, 190, 36);
                 thongTin.add(textField_4);
                 textField_4.setColumns(10);
                 
                 textField_6 = new JTextField();
-                textField_6.setBounds(130, 130, 190, 36);
+                textField_6.setBounds(857, 30, 190, 36);
                 thongTin.add(textField_6);
                 textField_6.setColumns(10);
                 
@@ -117,12 +117,12 @@ public class QuanLyThietBiKhac extends JPanel {
                 JLabel lblNewLabel_1 = new JLabel("Tên thiết bị:");
                 lblNewLabel_1.setLabelFor(textField_1);
                 lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_1.setBounds(10, 89, 110, 27);
+                lblNewLabel_1.setBounds(10, 115, 110, 27);
                 thongTin.add(lblNewLabel_1);
                 
                 JLabel lblNewLabel_2 = new JLabel("Hình ảnh:");
                 lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_2.setBounds(10, 139, 100, 27);
+                lblNewLabel_2.setBounds(747, 33, 100, 27);
                 thongTin.add(lblNewLabel_2);
                 
                 JLabel lblNewLabel_3 = new JLabel("Giá:");
@@ -132,8 +132,13 @@ public class QuanLyThietBiKhac extends JPanel {
                 
                 JLabel lblNewLabel_4 = new JLabel("Ngày bảo hành:");
                 lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-                lblNewLabel_4.setBounds(358, 89, 144, 27);
+                lblNewLabel_4.setBounds(357, 115, 144, 27);
                 thongTin.add(lblNewLabel_4);
+                
+                JButton btnNewButton = new JButton("Nhập về cơ sở");
+                btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                btnNewButton.setBounds(857, 112, 190, 36);
+                thongTin.add(btnNewButton);
 
                 JTable bangKhac = new JTable();
 bangKhac.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
@@ -277,7 +282,7 @@ for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
                                 
                 // Tạo JScrollPane để chứa bảng và cho phép cuộn
                 JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
-                scrollPaneKhac.setBounds(10, 320, 1180, 300); // Đặt kích thước cho JScrollPane
+                scrollPaneKhac.setBounds(0, 320, 1200, 300); // Đặt kích thước cho JScrollPane
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPaneKhac);

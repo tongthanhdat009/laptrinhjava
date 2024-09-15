@@ -77,6 +77,22 @@ public class GUIAdmin{
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
+    //icon chức năng quản lý hội viên
+    ImageIcon membershipIcon = new ImageIcon("src/asset/img/icon/membership-icon.png");
+    Image scaleMembershipIcon = membershipIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng quản lý nhân viên
+    ImageIcon employeeIcon = new ImageIcon("src/asset/img/icon/employee-icon.png");
+    Image scaleEmployeeIcon = employeeIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng quản lý thiết bị
+    ImageIcon devicesIcon = new ImageIcon("src/asset/img/icon/devices-icon.png");
+    Image scaleDevicesIcon = devicesIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng phân quyền
+    ImageIcon permissionIcon = new ImageIcon("src/asset/img/icon/permission-icon.png");
+    Image scalePermissionIcon = permissionIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
     //icon chức năng danh sách
     ImageIcon checkListIcon = new ImageIcon("src/asset/img/icon/checklist-icon.png");
     Image scaleCheckListIcon = checkListIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
@@ -251,7 +267,7 @@ public class GUIAdmin{
         goodsBTN.setFocusPainted(false);
         goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
 
-        managementPanel.add(goodsBTN);
+//        managementPanel.add(goodsBTN);
         
         JButton statBTN = new JButton("Thống kê đơn hàng");
         statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
@@ -265,7 +281,7 @@ public class GUIAdmin{
                 TK.thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu",rightPanel );
         	}
         });
-        statBTN.setBounds(23, 225, 300, 50);
+        statBTN.setBounds(23, 164, 300, 50);
         statBTN.setFocusPainted(false);
         statBTN.setIcon(new ImageIcon(scaleChartIcon));
         managementPanel.add(statBTN);
@@ -282,7 +298,9 @@ public class GUIAdmin{
         	}
         });
         QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        QuanLyThietBi.setBounds(23, 408, 300, 50);
+        QuanLyThietBi.setBounds(23, 347, 300, 50);
+        QuanLyThietBi.setIcon(new ImageIcon(scaleDevicesIcon));
+        QuanLyThietBi.setFocusPainted(false);
         managementPanel.add(QuanLyThietBi);
         
         JButton delegationBTN = new JButton("Phân quyền");
@@ -296,7 +314,9 @@ public class GUIAdmin{
         	}
         });
         delegationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        delegationBTN.setBounds(23, 469, 300, 50);
+        delegationBTN.setBounds(23, 408, 300, 50);
+        delegationBTN.setIcon(new ImageIcon(scalePermissionIcon));
+        delegationBTN.setFocusPainted(false);
         managementPanel.add(delegationBTN);
         
         JButton employeeMNG = new JButton("Quản lý nhân viên");
@@ -316,7 +336,9 @@ public class GUIAdmin{
         	}
         });
         employeeMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        employeeMNG.setBounds(23, 286, 300, 50);
+        employeeMNG.setBounds(23, 225, 300, 50);
+        employeeMNG.setIcon(new ImageIcon(scaleEmployeeIcon));
+        employeeMNG.setFocusPainted(false);
         managementPanel.add(employeeMNG);
         
         JButton memberMNG = new JButton("Quản lý hội viên");
@@ -356,7 +378,9 @@ public class GUIAdmin{
         	}
         });
         memberMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        memberMNG.setBounds(23, 347, 300, 50);
+        memberMNG.setBounds(23, 286, 300, 50);
+        memberMNG.setIcon(new ImageIcon(scaleMembershipIcon));
+        memberMNG.setFocusPainted(false);
         managementPanel.add(memberMNG);
         
         JButton exportExcelBTN = new JButton("Xuất file danh sách");
@@ -371,8 +395,8 @@ public class GUIAdmin{
         	}
         });
         exportExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        exportExcelBTN.setBounds(23, 530, 300, 50);
-        managementPanel.add(exportExcelBTN);
+        exportExcelBTN.setBounds(23, 469, 300, 50);
+//        managementPanel.add(exportExcelBTN);
         
         leftPanel.add(footerLeft);
         //chức năng:
@@ -414,7 +438,7 @@ public class GUIAdmin{
         logOutBTN.setBounds(27, 796, 146, 37);
         leftPanel.add(logOutBTN);
         
-        JLabel currUserLB = new JLabel("Người dùng hiện tại: ");
+        JLabel currUserLB = new JLabel("Người dùng hiện tại: " + tk);
         currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         currUserLB.setBounds(25, 212, 352, 26);
         leftPanel.add(currUserLB);

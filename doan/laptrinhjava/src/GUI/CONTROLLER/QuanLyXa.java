@@ -271,7 +271,7 @@ for (Xa xa : danhSachXa) {
                 }
                 else 
                 {
-                    String maThietBi = textField.getText();
+                    String maThietBi = "null";
                     String ten = textField_1.getText();
                     String hinhAnh = textField_2.getText();
                     String giaThietBi = textField_3.getText();

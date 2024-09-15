@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import DTO.Ta;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 public class QuanLyTa extends JPanel {
@@ -222,7 +226,80 @@ public class QuanLyTa extends JPanel {
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPane);
-
+                
+                them.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (textField_1.getText().equals("") || textField_2.getText().equals("") ||
+                            textField_3.getText().equals("") || textField_4.getText().equals("") ||
+                            textField_5.getText().equals("") || textField_6.getText().equals("") || 
+                            textField_7.getText().equals("")) 
+                        {
+                            JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                        } 
+                        else 
+                        {
+                            // Kiểm tra nếu người dùng nhập mã thì cảnh báo
+                            if (!textField.getText().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                            }
+                
+                            String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
+                            String ten = textField_1.getText();
+                            String hinhAnh = textField_2.getText();
+                            String giaThietBi = textField_3.getText();
+                            int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                            int khoiLuong = Integer.parseInt(textField_5.getText());
+                            String chatLieu = textField_6.getText();
+                            String mauSac = textField_7.getText();
+                
+                            // Thêm thiết bị `Ta` vào hệ thống
+                            String kq = ql.themThietBiTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
+                            JOptionPane.showMessageDialog(null, kq);
+                        }
+                    }
+                });
+                xoa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (textField.getText().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Thiếu mã");
+                        } else {
+                            boolean isSuccess = ql.xoaTB(textField.getText());
+                            if (isSuccess) {
+                                JOptionPane.showMessageDialog(null, "Xóa thành công");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Mã không tồn tại");
+                            }
+                        }
+                    }
+                });
+                sua.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (textField.getText().equals("") || textField_1.getText().equals("") || 
+                            textField_2.getText().equals("") || textField_3.getText().equals("") || 
+                            textField_4.getText().equals("") || textField_5.getText().equals("") || 
+                            textField_6.getText().equals("") || textField_7.getText().equals("")) 
+                        {
+                            JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                        } 
+                        else 
+                        {
+                            String maThietBi = textField.getText();
+                            String ten = textField_1.getText();
+                            String hinhAnh = textField_2.getText();
+                            String giaThietBi = textField_3.getText();
+                            int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                            int khoiLuong = Integer.parseInt(textField_5.getText());
+                            String chatLieu = textField_6.getText();
+                            String mauSac = textField_7.getText();
+                
+                            // Sửa thiết bị `Ta`
+                            String kq = ql.SuaTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
+                            JOptionPane.showMessageDialog(null, kq);
+                        }
+                    }
+                });                
+                
+                
 
     }
 }

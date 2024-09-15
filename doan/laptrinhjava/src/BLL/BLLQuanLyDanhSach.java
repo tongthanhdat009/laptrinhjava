@@ -184,10 +184,11 @@ public class BLLQuanLyDanhSach{
     public boolean xoaTB(String maTB){
         return dataThietBi.xoaTB(maTB);
     }
-    public boolean themTB(LoaiThietBi tb){
+    public String themTB(LoaiThietBi tb){
+        if(Integer.parseInt(tb.getGiaThietBi())<0) return "Sai Giá";
+        if(tb.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         tb.setMaThietBi(dataThietBi.layMaChuaTonTai());
-        if(tb.getMaThietBi().equals("Loi")) return false;
-        return dataThietBi.themTB(tb);
+        return tb.getMaThietBi();
     }
     public int kiemTraMaThietBi(){
         return dataThietBi.layMaThietBiMoi()+1;
@@ -204,8 +205,9 @@ public class BLLQuanLyDanhSach{
         else
             return 1;
     }
-    public boolean suaThongTinTB(LoaiThietBi tb){
-        return dataThietBi.suaThongTinTB(tb);
+    public String suaThongTinTB(LoaiThietBi tb){
+        if (dataThietBi.suaThongTinTB(tb)) return "Thành công";
+        else return "Mã không tồn tại";
     }
     //danh sách thiết bị cơ sở
     public String themThietBiCoSo(String maThietBiCoSo,String maCoSo, String maThietBi, Date ngayNhap, Date hanBaoHanh)

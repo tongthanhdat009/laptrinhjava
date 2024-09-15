@@ -14,6 +14,7 @@ public class LoaiThietBi {
         setGiaThietBi(giaThietBi);
         setNgayBaoHanh(ngayBaoHanh);
         setHinhAnh(hinhAnh);
+        setLoai(loai);
     }
     public void setLoai(String loai) {
         this.loai = loai;

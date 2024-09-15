@@ -7,20 +7,20 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/mssql-jdbc-12.6.1.jre11.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-integration-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-ooxml-lite-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-excelant-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-examples-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-ooxml-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-ooxml-full-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-scratchpad-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/poi-5.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/commons-compress-1.20.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/xmlbeans-4.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/curvesapi-1.06.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/commons-math3-3.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/SparseBitSet-1.2.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/commons-collections4-4.4.jar"/>
-	<classpathentry kind="lib" path="D:/github/laptrinhjava/doan/laptrinhjava/lib/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="lib/poi-integration-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-lite-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-excelant-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-examples-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-full-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-scratchpad-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-compress-1.20.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/curvesapi-1.06.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/SparseBitSet-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

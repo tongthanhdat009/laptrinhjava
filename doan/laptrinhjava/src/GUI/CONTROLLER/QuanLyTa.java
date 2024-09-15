@@ -180,7 +180,6 @@ public class QuanLyTa extends JPanel {
                 model.addColumn("Hình ảnh");
                 model.addColumn("Giá thiết bị");
                 model.addColumn("Ngày bảo hành");
-                model.addColumn("Loại");
                 model.addColumn("Khối lượng");
                 model.addColumn("Chất liệu");
                 model.addColumn("Màu sắc");
@@ -190,7 +189,8 @@ public class QuanLyTa extends JPanel {
 
                 // Lấy danh sách Ta và thêm vào bảng
                 BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
-                ArrayList<Ta> danhSachTa = ql.layDSTa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                ArrayList<Ta> danhSachTa = new ArrayList<>();
+                danhSachTa = ql.layDSTa();
                 for (Ta ta : danhSachTa) {
                     model.addRow(new Object[]{
                         ta.getMaThietBi(),
@@ -198,7 +198,6 @@ public class QuanLyTa extends JPanel {
                         ta.getHinhAnh(),
                         ta.getGiaThietBi(),
                         ta.getNgayBaoHanh(),
-                        ta.getLoai(),
                         ta.getKhoiLuong(),
                         ta.getChatLieu(),
                         ta.getMauSac()
@@ -233,35 +232,37 @@ public class QuanLyTa extends JPanel {
                             textField_3.getText().equals("") || textField_4.getText().equals("") ||
                             textField_5.getText().equals("") || textField_6.getText().equals("") || 
                             textField_7.getText().equals("")) 
-                        {
-                            JOptionPane.showMessageDialog(null, "Thiếu thông tin");
-                        } 
-                        else 
-                        {
+                            {
+                                JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                                return;
+                            } 
+                       
                             // Kiểm tra nếu người dùng nhập mã thì cảnh báo
                             if (!textField.getText().equals("")) {
                                 JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                                return;
                             }
-                
+                            System.out.println(textField_1.getText());
+
                             String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
                             String ten = textField_1.getText();
                             String hinhAnh = textField_2.getText();
-                            String giaThietBi = textField_3.getText();
-                            int ngayBaoHanh = Integer.parseInt(textField_4.getText());
-                            int khoiLuong = Integer.parseInt(textField_5.getText());
-                            String chatLieu = textField_6.getText();
-                            String mauSac = textField_7.getText();
-                
-                            // Thêm thiết bị `Ta` vào hệ thống
+                            int giaThietBi = Integer.parseInt(textField_3.getText().trim());
+                            int ngayBaoHanh = Integer.parseInt(textField_4.getText().trim());
+                            int khoiLuong = Integer.parseInt(textField_5.getText().trim());
+                            String chatLieu = textField_7.getText();
+                            String mauSac = textField_6.getText();
+
                             String kq = ql.themThietBiTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
                             JOptionPane.showMessageDialog(null, kq);
-                        }
+                        
                     }
                 });
                 xoa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (textField.getText().equals("")) {
                             JOptionPane.showMessageDialog(null, "Thiếu mã");
+                            return;
                         } else {
                             boolean isSuccess = ql.xoaTB(textField.getText());
                             if (isSuccess) {
@@ -280,6 +281,7 @@ public class QuanLyTa extends JPanel {
                             textField_6.getText().equals("") || textField_7.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                            return;
                         } 
                         else 
                         {

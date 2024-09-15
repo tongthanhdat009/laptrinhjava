@@ -7,6 +7,9 @@ public class Ta extends LoaiThietBi{
     public Ta(String maThietBi,String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh, String loai, int khoiLuong, String chatLieu, String mauSac)
     {
         super(maThietBi,tenThietBi,hinhAnh,giaThietBi,ngayBaoHanh,loai);
+        setChatLieu(chatLieu);
+        setMauSac(mauSac);
+        setKhoiLuong(khoiLuong);
     }
     public void setKhoiLuong(int khoiLuong) {
         this.khoiLuong = khoiLuong;

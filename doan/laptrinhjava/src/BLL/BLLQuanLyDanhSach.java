@@ -188,6 +188,7 @@ public class BLLQuanLyDanhSach{
         if(Integer.parseInt(tb.getGiaThietBi())<0) return "Sai Giá";
         if(tb.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         tb.setMaThietBi(dataThietBi.layMaChuaTonTai());
+        System.out.println(tb.getLoai());
 		if(dataThietBi.themTB(tb))
     		return "Thanh cong";
 		else {

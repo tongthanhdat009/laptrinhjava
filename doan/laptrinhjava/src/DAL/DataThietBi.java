@@ -203,6 +203,7 @@ public class DataThietBi {
             preparedStatement.setInt(4,Integer.parseInt(tb.getGiaThietBi()));            
             preparedStatement.setInt(5,tb.getNgayBaoHanh());            
             preparedStatement.setString(6, tb.getLoai());
+            System.out.println(tb.getLoai());
             if (preparedStatement.executeUpdate() > 0)  return true;
         }catch (SQLException e){
             e.printStackTrace();
@@ -401,8 +402,7 @@ public boolean SuaThietBiXa(Xa xa) {
             if (SuaXa(xa)) return true;
         return false;
     }
-    public ArrayList<Ta> layDanhSachTa()
-    {
+    public ArrayList<Ta> layDanhSachTa(){
         ArrayList<Ta> a = new ArrayList<>();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -411,10 +411,12 @@ public boolean SuaThietBiXa(Xa xa) {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                a.add(new Ta(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
-                    rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
-                    rs.getInt("NgayBaoHanh"),rs.getString("Loai"),
-                    rs.getInt("KhoiLuong"),rs.getString("ChatLieu"),rs.getString("MauSac")));
+                Ta hello = new Ta(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
+                rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
+                rs.getInt("NgayBaoHanh"),rs.getString("Loai"),
+                rs.getInt("KhoiLuong"),rs.getString("ChatLieu"),rs.getString("MauSac"));
+                System.out.println(hello.getKhoiLuong());
+                a.add(hello);
             }
         } catch (Exception e) {
             System.out.println(e);

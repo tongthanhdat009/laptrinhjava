@@ -161,7 +161,7 @@ for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
         khac.getNgayBaoHanh(),
     });
 }
-bangKhac.addMouseListener(new MouseAdapter() {
+                    bangKhac.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         int row = bangKhac.getSelectedRow();
                         if (row >= 0) {
@@ -197,6 +197,18 @@ bangKhac.addMouseListener(new MouseAdapter() {
                         // Thêm thiết bị `ThietBiKhac` vào hệ thống
                         String kq = ql.themTB(new LoaiThietBi(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai));
                         JOptionPane.showMessageDialog(null, kq);
+                        BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+                        modelKhac.setRowCount(0);
+                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                        for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
+                            modelKhac.addRow(new Object[]{
+                                khac.getMaThietBi(),
+                                khac.getTenLoaiThietBi(),
+                                khac.getHinhAnh(),
+                                khac.getGiaThietBi(),
+                                khac.getNgayBaoHanh(),
+                            });
+                        }
         		}
                 });
                 xoa.addActionListener(new ActionListener() {
@@ -211,6 +223,18 @@ bangKhac.addMouseListener(new MouseAdapter() {
                                 JOptionPane.showMessageDialog(null, "Mã không tồn tại");
                                 return; 
                             }
+                        }
+                        modelKhac.setRowCount(0);
+                        BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                        for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
+                            modelKhac.addRow(new Object[]{
+                                khac.getMaThietBi(),
+                                khac.getTenLoaiThietBi(),
+                                khac.getHinhAnh(),
+                                khac.getGiaThietBi(),
+                                khac.getNgayBaoHanh(),
+                            });
                         }
                     }
                 });
@@ -236,15 +260,27 @@ bangKhac.addMouseListener(new MouseAdapter() {
                             String kq = ql.suaThongTinTB(new LoaiThietBi(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai));
                             JOptionPane.showMessageDialog(null, kq);
                         }
+                        BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+                        modelKhac.setRowCount(0);
+                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                        for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
+                            modelKhac.addRow(new Object[]{
+                                khac.getMaThietBi(),
+                                khac.getTenLoaiThietBi(),
+                                khac.getHinhAnh(),
+                                khac.getGiaThietBi(),
+                                khac.getNgayBaoHanh(),
+                            });
+                        }
                     }
                 });
                                 
-// Tạo JScrollPane để chứa bảng và cho phép cuộn
-JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
-scrollPaneKhac.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
+                // Tạo JScrollPane để chứa bảng và cho phép cuộn
+                JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
+                scrollPaneKhac.setBounds(10, 320, 1180, 300); // Đặt kích thước cho JScrollPane
 
-// Thêm JScrollPane vào JPanel
-add(scrollPaneKhac);
+                // Thêm JScrollPane vào JPanel
+                add(scrollPaneKhac);
 
     }
 }

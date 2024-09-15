@@ -160,6 +160,7 @@ public class QuanLyBangDichVuCTR {
         }
         bang.setModel(model);
         bang.getTableHeader().setReorderingAllowed(false);
+        bang.setFont(new Font("Times New Roman", Font.BOLD, 14));
         // for (int i = 0; i < bang.getColumnCount(); i++) {
         //     bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
         // }

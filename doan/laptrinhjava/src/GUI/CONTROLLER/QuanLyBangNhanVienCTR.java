@@ -315,7 +315,7 @@ public class QuanLyBangNhanVienCTR {
         	model.addRow(new Object[] {
     			dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
     			dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
-    			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan(), dsTKNV.get(i).getMatKhau(),dsNV.get(i).getIDTaiKhoan()
+    			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
         	});
         }
         bang.setModel(model);

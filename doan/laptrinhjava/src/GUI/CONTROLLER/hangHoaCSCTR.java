@@ -127,6 +127,7 @@ public class hangHoaCSCTR {
         JTable bang = new JTable();
         DefaultTableModel model = new DefaultTableModel();
         bang.setModel(model);
+        bang.setFont(new Font("Times New Roman", Font.BOLD, 14));
         
         model.addColumn("Mã hàng hóa");
         model.addColumn("Mã cơ sở");

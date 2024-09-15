@@ -194,6 +194,7 @@ public class hoaDonCTR {
             model.addRow(new Object[]{ds.get(i).getMaHoaDon(),ds.get(i).getNgayXuatHoaDon(),ds.get(i).getTongTien(),ds.get(i).getMaHoiVien(),ds.get(i).getMaCoSo(),trangThai});
         }
         bang.getTableHeader().setReorderingAllowed(false);
+        bang.setFont(new Font("Times New Roman", Font.BOLD, 14));
         // for (int i = 0; i < bang.getColumnCount(); i++) {
         //     bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
         // }

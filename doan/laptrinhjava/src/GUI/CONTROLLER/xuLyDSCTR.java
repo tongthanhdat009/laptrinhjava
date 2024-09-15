@@ -54,7 +54,7 @@ public class xuLyDSCTR {
     public void xuLyDanhSach(JPanel rightPanel){
         rightPanel.setLayout(null);
         //giới thiệu chức năng xử lý danh sách
-        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ<br>- Hội viên<br>- Nhân viên<br>- Thiết bị<br>- Thiết bị cơ sở <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hội viên cơ sở <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
+        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ<br>- Thiết bị cơ sở <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hội viên cơ sở <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
 
         param.setFont(new Font("Times New Roman",1,30));
         JPanel textPN = new JPanel();

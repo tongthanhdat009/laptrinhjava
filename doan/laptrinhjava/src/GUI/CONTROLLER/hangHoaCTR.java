@@ -131,6 +131,8 @@ public class hangHoaCTR {
 
         dataTable = new JTable(hhList);
         dataTable.getTableHeader().setReorderingAllowed(false);
+        dataTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
+
         // for (int i = 0; i < dataTable.getColumnCount(); i++) {
         //     dataTable.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
         // }

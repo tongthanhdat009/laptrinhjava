@@ -145,6 +145,8 @@ public class QuanLyBangThietBiCoSoCTR {
 
         DefaultTableModel model = new DefaultTableModel();
         JTable bang = new JTable(); 
+        bang.setFont(new Font("Times New Roman", Font.BOLD, 14));
+        
         model.addColumn("Mã Thiết Bị Cơ Sở");
         model.addColumn("Mã Cơ Sở");
         model.addColumn("Mã Thiết Bị");

@@ -158,7 +158,7 @@ public class QuanLyXa extends JPanel {
 
         JLabel lblNewLabel_2 = new JLabel("Hình ảnh:");
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_2.setBounds(10, 139, 100, 27);
+        lblNewLabel_2.setBounds(621, 83, 100, 27);
         thongTin.add(lblNewLabel_2);
 
         JLabel lblNewLabel_3 = new JLabel("Giá:");
@@ -178,27 +178,27 @@ public class QuanLyXa extends JPanel {
 
         JLabel lblNewLabel_6 = new JLabel("Chất liệu:");
         lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_6.setBounds(621, 28, 110, 36);
+        lblNewLabel_6.setBounds(10, 128, 110, 36);
         thongTin.add(lblNewLabel_6);
 
         JLabel lblNewLabel_7 = new JLabel("Tải trọng:");
         lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_7.setBounds(621, 78, 100, 36);
+        lblNewLabel_7.setBounds(908, 78, 100, 36);
         thongTin.add(lblNewLabel_7);
 
         JLabel lblNewLabel_8 = new JLabel("Chiều dài:");
         lblNewLabel_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_8.setBounds(621, 130, 110, 36);
+        lblNewLabel_8.setBounds(621, 30, 110, 36);
         thongTin.add(lblNewLabel_8);
 
         JLabel lblNewLabel_8_1 = new JLabel("Đường kính:");
         lblNewLabel_8_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_8_1.setBounds(900, 30, 110, 27);
+        lblNewLabel_8_1.setBounds(621, 133, 110, 27);
         thongTin.add(lblNewLabel_8_1);
 
         JLabel lblNewLabel_8_2 = new JLabel("Chiều cao:");
         lblNewLabel_8_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_8_2.setBounds(900, 80, 110, 27);
+        lblNewLabel_8_2.setBounds(908, 33, 110, 27);
         thongTin.add(lblNewLabel_8_2);
 
         // Initialize JTable and DefaultTableModel
@@ -267,40 +267,49 @@ for (Xa xa : danhSachXa) {
                 textField_1.getText().equals("")) 
                 {
                     JOptionPane.showMessageDialog(null, "Thiếu thông tin");
-                    if(!textField_1.getText().equals("")) JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                    return;
                 }
-                else 
-                {
-                    String maThietBi = "null";
-                    String ten = textField_1.getText();
-                    String hinhAnh = textField_2.getText();
-                    String giaThietBi = textField_3.getText();
-                    int ngayBaoHanh = Integer.parseInt(textField_4.getText());
-                    String loai = "Xa";
-                    String loaiXa = textField_5.getText();
-                    String chatLieu = textField_6.getText();
-                    float chieuDai = Float.parseFloat(textField_7.getText());
-                    float duongKinh = Float.parseFloat(textField_8.getText());
-                    float chieuCao = Float.parseFloat(textField_9.getText());
-                    float taiTrong = Float.parseFloat(textField_10.getText());
-                    String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
-                    JOptionPane.showMessageDialog(null,kq);
+                if(!textField.getText().equals("")) {
+                	JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                	return;
                 }
-
+                String maThietBi = "null";
+                String ten = textField_1.getText();
+                String hinhAnh = textField_2.getText();
+                String giaThietBi = textField_3.getText();
+                int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                String loai = "Xa";
+                String loaiXa = textField_5.getText();
+                String chatLieu = textField_6.getText();
+                float chieuDai = Float.parseFloat(textField_7.getText());
+                float duongKinh = Float.parseFloat(textField_8.getText());
+                float chieuCao = Float.parseFloat(textField_9.getText());
+                float taiTrong = Float.parseFloat(textField_10.getText());
+                String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                JOptionPane.showMessageDialog(null,kq);
             }
         });
         xoa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                if(textField_1.getText().equals("")) JOptionPane.showMessageDialog(null, "Thiếu mã");
+                if(textField_1.getText().equals("")) {
+                	JOptionPane.showMessageDialog(null, "Thiếu mã");
+                	return;
+                }
                 else if(ql.xoaTB(textField.getText())) JOptionPane.showMessageDialog(null,"Thành công");
-                else JOptionPane.showMessageDialog(null,"Mã không tồn tại");
+                else {
+                	JOptionPane.showMessageDialog(null,"Mã không tồn tại");
+                	return;
+                }
             }
         });
         sua.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 if(textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
                 textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
-                textField_1.getText().equals("")) JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                textField_1.getText().equals("")) {
+                	JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                	return;
+                }
                 else 
                 {
                     String maThietBi = textField.getText();

@@ -179,26 +179,25 @@ bangKhac.addMouseListener(new MouseAdapter() {
                             textField_4.getText().equals("") || textField_6.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                            return;
                         } 
-                        else 
-                        {
                             // Kiểm tra nếu người dùng nhập mã thì cảnh báo
-                            if (!textField.getText().equals("")) {
-                                JOptionPane.showMessageDialog(null, "Không cần nhập mã");
-                            }
-
-                            String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
-                            String ten = textField_1.getText();
-                            String hinhAnh = textField_6.getText();
-                            String giaThietBi = textField_3.getText();
-                            int ngayBaoHanh = Integer.parseInt(textField_4.getText());
-                            String loai = "Khac"; // Hoặc giá trị mặc định
-
-                            // Thêm thiết bị `ThietBiKhac` vào hệ thống
-                            String kq = ql.themTB(new LoaiThietBi(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai));
-                            JOptionPane.showMessageDialog(null, kq);
+                        if (!textField.getText().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                            return;
                         }
-                    }
+
+                        String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
+                        String ten = textField_1.getText();
+                        String hinhAnh = textField_6.getText();
+                        String giaThietBi = textField_3.getText();
+                        int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                        String loai = "Khac"; // Hoặc giá trị mặc định
+
+                        // Thêm thiết bị `ThietBiKhac` vào hệ thống
+                        String kq = ql.themTB(new LoaiThietBi(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai));
+                        JOptionPane.showMessageDialog(null, kq);
+        		}
                 });
                 xoa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -210,6 +209,7 @@ bangKhac.addMouseListener(new MouseAdapter() {
                                 JOptionPane.showMessageDialog(null, "Xóa thành công");
                             } else {
                                 JOptionPane.showMessageDialog(null, "Mã không tồn tại");
+                                return; 
                             }
                         }
                     }
@@ -221,6 +221,7 @@ bangKhac.addMouseListener(new MouseAdapter() {
                             textField_6.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                            return;
                         } 
                         else 
                         {

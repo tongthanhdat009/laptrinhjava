@@ -230,18 +230,21 @@ public class QuanLyMayChay extends JPanel {
                 });
                 them.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                    	System.out.print("aaaa");
                         if (textField_1.getText().equals("") || textField_2.getText().equals("") ||
                             textField_3.getText().equals("") || textField_4.getText().equals("") || 
                             textField_5.getText().equals("") || textField_6.getText().equals("") ||
                             textField_7.getText().equals("") || textField_8.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                            return;
                         } 
                         else 
                         {
                             // Kiểm tra nếu người dùng nhập mã thì cảnh báo
                             if (!textField.getText().equals("")) {
                                 JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                                return;
                             }
                 
                             String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
@@ -270,6 +273,7 @@ public class QuanLyMayChay extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Xóa thành công");
                             } else {
                                 JOptionPane.showMessageDialog(null, "Mã không tồn tại");
+                                return;
                             }
                         }
                     }
@@ -282,6 +286,7 @@ public class QuanLyMayChay extends JPanel {
                             textField_6.getText().equals("") || textField_7.getText().equals("") || textField_8.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                            return;
                         } 
                         else 
                         {

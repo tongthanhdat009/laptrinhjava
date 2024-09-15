@@ -177,6 +177,7 @@ public class xuLyDDHCTR {
         JScrollPane jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(main);
         jScrollPane.setBounds(5, 150, rightPanel.getWidth()-20, 700);
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(16); 
         rightPanel.add(jScrollPane);
     }
 }

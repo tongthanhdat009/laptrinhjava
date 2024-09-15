@@ -198,6 +198,7 @@ public class GUIAdmin{
         JScrollPane scrollPane = new JScrollPane(managementPanel);
         scrollPane.setBounds(26, 238, 352, 547); // Kích thước và vị trí của JScrollPane
         managementPanel.setPreferredSize(new Dimension(300, 600)); // y là tổng chiều cao của tất cả các nút
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16); 
         leftPanel.add(scrollPane);
         
         JButton listBTN = new JButton("Quản lý danh sách");
@@ -369,7 +370,7 @@ public class GUIAdmin{
         		rightPanel.add(xuatExcel);
         	}
         });
-        exportExcelBTN.setFont(new Font("Times New Roman", Font.PLAIN, 23));
+        exportExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         exportExcelBTN.setBounds(23, 530, 300, 50);
         managementPanel.add(exportExcelBTN);
         
@@ -377,7 +378,7 @@ public class GUIAdmin{
         //chức năng:
         //quản lý danh sách:
         //right panel
-        rightPanel.setBounds(400,0,1182,861);
+        rightPanel.setBounds(400,0,1200,900);
         rightPanel.setBackground(new Color(241, 255, 250));
         rightPanel.setBorder(border);
         //giới thiệu app

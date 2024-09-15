@@ -252,8 +252,8 @@ public class DataThietBi {
             preparedStatement.setString(3,chatLieu);            
             preparedStatement.setFloat(4,chieuDai);
             preparedStatement.setFloat(5,duongKinh);
-            preparedStatement.setFloat(4,chieuCao);
-            preparedStatement.setFloat(5,taiTrong);
+            preparedStatement.setFloat(6,chieuCao);
+            preparedStatement.setFloat(7,taiTrong);
             if (preparedStatement.executeUpdate() > 0)  return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -322,16 +322,17 @@ public class DataThietBi {
     
             // Tạo mã mới bằng cách tăng số lớn nhất lên 1
             so = so + 1;
-            return "TB" + so;
+            return String.format("TB%03d", so);
     
         } catch (Exception e) {
             System.out.println(e);
         }
         return "Loi";
     }
+    
     public boolean SuaTa(Ta ta)
     {
-        String truyVan = "UPDATE Ta SET KhoiLuong = ?, ChatLieu = ?, MauSac = ? FROM LoaiThietBi Where MaThietBi = ? ";
+        String truyVan = "UPDATE Ta SET KhoiLuong = ?, ChatLieu = ?, MauSac = ? FROM Ta Where MaThietBi = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
@@ -353,7 +354,7 @@ public class DataThietBi {
        return false;
     }
     public boolean SuaMayChay(MayChay mayChay) {
-    String truyVan = "UPDATE MayChay SET CongSuat = ?, ToDoTociDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM LoaiThietBi WHERE MaThietBi = ?";
+    String truyVan = "UPDATE MayChay SET CongSuat = ?, TocDoToiDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM MayChay WHERE MaThietBi = ?";
     try {
         con = DriverManager.getConnection(dbUrl, userName, password);
         PreparedStatement statement = con.prepareStatement(truyVan);
@@ -376,7 +377,7 @@ public boolean SuaThietBiMayChay(MayChay mayChay) {
     return false;
 }
 public boolean SuaXa(Xa xa) {
-    String truyVan = "UPDATE Xa SET LoaiXa = ?, ChatLieu = ?, ChieuDai = ?, DuongKinh = ?, ChieuCao = ?, TaiTrong = ? FROM LoaiThietBi WHERE MaThietBi = ?";
+    String truyVan = "UPDATE Xa SET LoaiXa = ?, ChatLieu = ?, ChieuDai = ?, DuongKinh = ?, ChieuCao = ?, TaiTrong = ? FROM Xa WHERE MaThietBi = ?";
     try {
         con = DriverManager.getConnection(dbUrl, userName, password);
         PreparedStatement statement = con.prepareStatement(truyVan);

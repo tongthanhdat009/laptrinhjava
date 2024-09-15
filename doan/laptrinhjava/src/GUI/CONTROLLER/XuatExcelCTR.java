@@ -6,10 +6,14 @@ import javax.swing.JTable;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.w3c.dom.css.Counter;
 
 import BLL.BLLQuanLyDanhSach;
+import BLL.BLLXuatFileExcel;
+import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
+import DTO.NhanVien;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -18,19 +22,24 @@ import java.awt.Dimension;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -42,6 +51,12 @@ public class XuatExcelCTR extends JPanel{
 	private JTextField firstSheetNameTF;
 	private JTextField chosenPathTF;
     private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
+
+    private DefaultTableModel model = new DefaultTableModel();
+    private DefaultTableModel hvList = new DefaultTableModel();
+    private ArrayList<String> tenCotHV = new ArrayList<String>();
+
+    
 	ListCellRenderer<? super String> renderer = new DefaultListCellRenderer() {
 		private static final long serialVersionUID = 1L;
 
@@ -108,6 +123,15 @@ public class XuatExcelCTR extends JPanel{
 			pathNameLB.setBounds(471, 53, 202, 30);
 			fileInforPN.add(pathNameLB);
 			
+			JPanel dataPanel = new JPanel();
+			dataPanel.setBounds(0, 250, 1200, 650);
+			add(dataPanel);
+			dataPanel.setLayout(null);
+			
+			JButton acceptBTN = new JButton("Xác nhận");
+			acceptBTN.setBounds(1015, 101, 130, 50);
+			fileInforPN.add(acceptBTN);
+			
 			@SuppressWarnings("rawtypes")
 			JComboBox comboBox = new JComboBox();
 			comboBox.setFont(new Font("Times New Roman", Font.BOLD, 25));
@@ -115,19 +139,16 @@ public class XuatExcelCTR extends JPanel{
 			comboBox.setBounds(471, 108, 202, 33);
 			comboBox.setBackground(Color.white);
 			comboBox.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<String> comboBox = (JComboBox<String>) e.getSource(); // Lấy ra JComboBox đã được kích hoạt
 	                String selectedOption = (String) comboBox.getSelectedItem(); // Lấy ra mục đã chọn trong JComboBox
 	                JTable dataTable = new JTable();
 	                JScrollPane scrollPane = new JScrollPane();
-	                JPanel bangChinhSua = new JPanel();
 	                
 	                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
 	                
 	                
-	                ArrayList<String> tenCotHV = new ArrayList<String>();
 	                ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
 	                tenCotHV.add("Mã hội viên");
 	                tenCotHV.add("Họ tên hội viên");
@@ -138,14 +159,16 @@ public class XuatExcelCTR extends JPanel{
 	                tenCotHV.add("Ngày sinh");
 	                tenCotHV.add("Tài khoản");
 	                tenCotHV.add("Mật khẩu");
-
+	                
 	                switch (selectedOption) {
 	                case "Hội viên":
+	                	dataPanel.removeAll();
+	                	dataPanel.revalidate();
+	                    dataPanel.repaint();
 	                	// lấy danh sách mã tài khoản
 	            		ArrayList<DTOTaiKhoan> dsTK = bllQuanLyDanhSach.layDSTKHV(); 
 	            		
 	                    // tạo model bảng
-	                    DefaultTableModel hvList = new DefaultTableModel();
 	                    for (int i = 0; i < tenCotHV.size(); i++) {
 	                        hvList.addColumn(tenCotHV.get(i));
 	                    }
@@ -169,12 +192,53 @@ public class XuatExcelCTR extends JPanel{
 	                    dataTable.setFont(new Font("Times New Roman", 1, 15));
 	                    dataTable.setRowHeight(20);
 	                    scrollPane = new JScrollPane(dataTable);
-	                    scrollPane.setBounds(5,255,1200-20,610);
-	                    add(scrollPane);
-	                    revalidate();
-	                    repaint();
+	                    scrollPane.setBounds(3, 0, 1200-20, 900-250);
+	                    dataPanel.add(scrollPane);
+	                    
+	                    //sự kiện cho nút xác nhận
 	                	break;
-	                	
+	                case "Nhân viên":
+	                	dataPanel.removeAll();
+	                	dataPanel.revalidate();
+	                    dataPanel.repaint();
+		        		ArrayList<NhanVien> dsNV = new ArrayList<>();
+		        		ArrayList<DTOQuyen> dsQuyen = bllQuanLyDanhSach.layDSQuyenNV();
+		                dsNV = bllQuanLyDanhSach.getDataNhanVien();
+		                ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
+	                	DefaultTableModel model = new DefaultTableModel();
+	                    JTable bang = new JTable();
+	                    bang.setRowHeight(30);
+	                    model.addColumn("Mã nhân viên");
+	                    model.addColumn("Họ và tên");
+	                    model.addColumn("Giới tính");
+	                    model.addColumn("Ngày sinh");
+	                    model.addColumn("Số điện thoại");
+	                    model.addColumn("Số căn cước");
+	                    model.addColumn("Mã cơ sở");
+	                    model.addColumn("Vai trò");
+	                    model.addColumn("Lương");
+	                    model.addColumn("Tài khoản");
+	                    model.addColumn("Mật khẩu");
+	                    model.addColumn("ID Tài Khoản");
+	                    
+	                    model.setRowCount(0);
+	                    System.out.println(dsNV.size() +" "+ dsQuyen.size());
+	                    
+	                    for(int i = 0; i < dsNV.size();i++) {
+	                    	model.addRow(new Object[] {
+	                			dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+	                			dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+	                			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
+	                    	});
+	                    }
+	                    bang.setModel(model);
+	                    bang.getTableHeader().setReorderingAllowed(false);
+	                    bang.setFont(new Font("Times New Roman", 1, 15));
+	                    bang.setRowHeight(20);
+	                    JScrollPane scrollPane1 = new JScrollPane(bang);
+	                    scrollPane1.setBounds(3, 0, 1200-20, 900-250);
+	                    dataPanel.add(scrollPane1);
+	                    
 	                default:
 	                	break;
 	                }
@@ -212,9 +276,42 @@ public class XuatExcelCTR extends JPanel{
 			});
 			fileInforPN.add(chooseFileBTN);
 			
-			JButton acceptBTN = new JButton("Xác nhận");
-			acceptBTN.setBounds(1015, 101, 130, 50);
-			fileInforPN.add(acceptBTN);
+			//sự kiện cho nút xác nhận
+            acceptBTN.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					ArrayList<String> thongTinMoi = new ArrayList<String>();
+					BLLXuatFileExcel bllXuatFileExcel = new BLLXuatFileExcel();
+					if(firstSheetNameTF.getText().equals("") || chosenPathTF.getText().equals("") || comboBox.getSelectedItem().equals("Danh sách")) {
+                    	JOptionPane.showMessageDialog(null, "Thiếu thông tin vui lòng nhập đầy đủ thông tin!","Error",JOptionPane.ERROR_MESSAGE);
+                    	return;
+					}
+					else {						
+						if(bllXuatFileExcel.kiemTraTenFile(fileNameTF.getText().trim()) && bllXuatFileExcel.kiemTraSheetName(firstSheetNameTF.getText().trim())) {
+							int counter = 0;
+							String fileExtension = ".xlsx";
+							File file = new File(chosenPathTF.getText().trim() + fileNameTF.getText().trim() + fileExtension);
+							while (file.exists()) {
+								file = new File(chosenPathTF.getText().trim()  + fileNameTF.getText().trim() + "(" + counter + ")" + fileExtension);
+							    counter++;
+							}
+							if(comboBox.getSelectedItem().equals("Hội viên")) {
+								exportToExcel(model, chosenPathTF.getText().trim());
+						        JOptionPane.showMessageDialog(null, "Xuất file Excel thành công!");
+							}
+							else if(comboBox.getSelectedItem().equals("Nhân viên")) {
+								exportToExcel(model, chosenPathTF.getText().trim());
+						        JOptionPane.showMessageDialog(null, "Xuất file Excel thành công!");
+							}
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Tên tập tin hoặc tên sheet không hợp lệ!","Error",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+					}
+				}
+			});
 			
 			chosenPathTF = new JTextField();
 			pathNameLB.setLabelFor(chosenPathTF);
@@ -223,4 +320,42 @@ public class XuatExcelCTR extends JPanel{
 			fileInforPN.add(chosenPathTF);
 			chosenPathTF.setColumns(10);
 		}
+		
+		public void exportToExcel(TableModel model, String filePath) {
+	        Workbook workbook = new XSSFWorkbook();
+	        Sheet sheet = workbook.createSheet("Sheet1");
+
+	        // Ghi header của bảng
+	        Row headerRow = sheet.createRow(0);
+	        for (int i = 0; i < model.getColumnCount(); i++) {
+	            Cell cell = headerRow.createCell(i);
+	            cell.setCellValue(model.getColumnName(i));
+	        }
+
+	        // Ghi dữ liệu của bảng
+	        for (int i = 0; i < model.getRowCount(); i++) {
+	            Row row = sheet.createRow(i + 1);
+	            for (int j = 0; j < model.getColumnCount(); j++) {
+	                Cell cell = row.createCell(j);
+	                Object value = model.getValueAt(i, j);
+	                if (value != null) {
+	                    cell.setCellValue(value.toString());
+	                }
+	            }
+	        }
+
+	        // Ghi file ra đường dẫn đã chọn
+	        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+	            workbook.write(fileOut);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	        // Đóng workbook
+	        try {
+	            workbook.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
 }

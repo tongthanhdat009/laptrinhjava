@@ -203,6 +203,8 @@ public class hoiVienCTR {
 
         dataTable = new JTable(hvList);
         dataTable.getTableHeader().setReorderingAllowed(false);
+        dataTable.setFont(new Font("Times New Roman", 1, 15));
+        dataTable.setRowHeight(20);
         scrollPane = new JScrollPane(dataTable);
         scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
 

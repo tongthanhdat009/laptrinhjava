@@ -188,7 +188,11 @@ public class BLLQuanLyDanhSach{
         if(Integer.parseInt(tb.getGiaThietBi())<0) return "Sai Giá";
         if(tb.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         tb.setMaThietBi(dataThietBi.layMaChuaTonTai());
-        return tb.getMaThietBi();
+		if(dataThietBi.themTB(tb))
+    		return "Thanh cong";
+		else {
+			return "That bai";
+		}
     }
     public int kiemTraMaThietBi(){
         return dataThietBi.layMaThietBiMoi()+1;
@@ -512,8 +516,9 @@ public class BLLQuanLyDanhSach{
         if(ta.getKhoiLuong()<=0) return "Sai khối lượng";
         if(Integer.parseInt(ta.getGiaThietBi())<0) return "Sai Giá";
         if(ta.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
-        if(dataThietBi.themTB(new LoaiThietBi(ta.getMaThietBi(), ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai()))) 
-        if(dataThietBi.themTa(ta.getMaThietBi(), ta.getKhoiLuong(), ta.getChatLieu(), ta.getMauSac()))
+        String ma = dataThietBi.layMaChuaTonTai();
+        if(dataThietBi.themTB(new LoaiThietBi(ma, ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai()))) 
+        if(dataThietBi.themTa(ma, ta.getKhoiLuong(), ta.getChatLieu(), ta.getMauSac()))
         return "Thành công";
         return "Thất bại";
     }
@@ -525,8 +530,9 @@ public class BLLQuanLyDanhSach{
         if(xa.getDuongKinh()<=0) return "Sai đường kính";
         if(xa.getChieuCao()<=0) return "Sai chiều cao";
         if(xa.getTaiTrong()<=0) return "Sai tải trọng";
-        if(dataThietBi.themTB(new LoaiThietBi(xa.getMaThietBi(), xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
-        if(dataThietBi.themXa(xa.getMaThietBi(), xa.getLoaiXa(),xa.getChatLieu(), xa.getChieuDai(), xa.getDuongKinh(), xa.getChieuCao(), xa.getTaiTrong()))
+        String ma = dataThietBi.layMaChuaTonTai();
+        if(dataThietBi.themTB(new LoaiThietBi(ma, xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
+        if(dataThietBi.themXa(ma, xa.getLoaiXa(),xa.getChatLieu(), xa.getChieuDai(), xa.getDuongKinh(), xa.getChieuCao(), xa.getTaiTrong()))
         return "Thành công";
         return "Thất bại";
     }
@@ -536,9 +542,10 @@ public class BLLQuanLyDanhSach{
         if(mayChay.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         if(mayChay.getCongSuat()<0) return "Sai công suất";
         if(mayChay.getTocDoToiDa()<0) return "Sai tốc độ tối đa"; 
-        if(dataThietBi.themTB(new LoaiThietBi(mayChay.getMaThietBi(), mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
-        if(dataThietBi.themMayChay(mayChay.getMaThietBi(), mayChay.getCongSuat(), mayChay.getTocDoToiDa(), mayChay.getNhaSanXuat(),mayChay.getKichThuoc()))
-        return "Thành công";
+        String ma = dataThietBi.layMaChuaTonTai();
+        if(dataThietBi.themTB(new LoaiThietBi(ma, mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
+        if(dataThietBi.themMayChay(ma, mayChay.getCongSuat(), mayChay.getTocDoToiDa(), mayChay.getNhaSanXuat(),mayChay.getKichThuoc()))
+        	return "Thành công";
         return "Thất bại";
     }
     public String SuaTa(Ta ta)

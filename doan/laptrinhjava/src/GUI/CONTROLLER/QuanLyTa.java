@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -19,10 +20,8 @@ import BLL.BLLQuanLyDanhSach;
 import DTO.Ta;
 
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JSlider;
 
 public class QuanLyTa extends JPanel {
 	private JTextField textField;
@@ -202,13 +201,28 @@ public class QuanLyTa extends JPanel {
                     });
                 }
 
+                bang.addMouseListener(new MouseAdapter() {
+                     public void mouseClicked(MouseEvent e) {
+                        int row = bang.getSelectedRow();
+                        if (row >= 0) {
+                            textField.setText(model.getValueAt(row, 0).toString().trim());
+                            textField_1.setText(model.getValueAt(row, 1).toString().trim());
+                            textField_2.setText(model.getValueAt(row, 2).toString().trim());
+                            textField_3.setText(model.getValueAt(row, 3).toString().trim());
+                            textField_4.setText(model.getValueAt(row, 4).toString().trim());
+                            textField_5.setText(model.getValueAt(row, 5).toString().trim());
+                            textField_6.setText(model.getValueAt(row, 6).toString().trim());
+                            textField_7.setText(model.getValueAt(row, 7).toString().trim());
+                        }
+                    }
+                });
                 // Tạo JScrollPane để chứa bảng và cho phép cuộn
                 JScrollPane scrollPane = new JScrollPane(bang);
                 scrollPane.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPane);
-                
+
 
     }
 }

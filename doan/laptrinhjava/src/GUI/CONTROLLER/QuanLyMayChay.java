@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -15,11 +16,11 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+
 import BLL.BLLQuanLyDanhSach;
 import DTO.MayChay;
 
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -174,48 +175,62 @@ public class QuanLyMayChay extends JPanel {
                 thongTin.add(textField_8);
                 textField_8.setColumns(10);
                 JTable bangMayChay = new JTable();
-bangMayChay.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
+                bangMayChay.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
 
-// Tạo DefaultTableModel và thêm các cột
-DefaultTableModel modelMayChay = new DefaultTableModel();
-modelMayChay.addColumn("Mã thiết bị");
-modelMayChay.addColumn("Tên loại thiết bị");
-modelMayChay.addColumn("Hình ảnh");
-modelMayChay.addColumn("Giá thiết bị");
-modelMayChay.addColumn("Ngày bảo hành");
-modelMayChay.addColumn("Loại");
-modelMayChay.addColumn("Công suất");
-modelMayChay.addColumn("Tốc độ tối đa");
-modelMayChay.addColumn("Nhà sản xuất");
-modelMayChay.addColumn("Kích thước");
+                // Tạo DefaultTableModel và thêm các cột
+                DefaultTableModel modelMayChay = new DefaultTableModel();
+                modelMayChay.addColumn("Mã thiết bị");
+                modelMayChay.addColumn("Tên loại thiết bị");
+                modelMayChay.addColumn("Hình ảnh");
+                modelMayChay.addColumn("Giá thiết bị");
+                modelMayChay.addColumn("Ngày bảo hành");
+                modelMayChay.addColumn("Công suất");
+                modelMayChay.addColumn("Tốc độ tối đa");
+                modelMayChay.addColumn("Nhà sản xuất");
+                modelMayChay.addColumn("Kích thước");
 
-// Gán model cho JTable
-bangMayChay.setModel(modelMayChay);
+                // Gán model cho JTable
+                bangMayChay.setModel(modelMayChay);
+                // Lấy danh sách MayChay và thêm vào bảng
+                BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+                ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                for (MayChay mayChay : danhSachMayChay) {
+                    modelMayChay.addRow(new Object[]{
+                        mayChay.getMaThietBi(),
+                        mayChay.getTenLoaiThietBi(),
+                        mayChay.getHinhAnh(),
+                        mayChay.getGiaThietBi(),
+                        mayChay.getNgayBaoHanh(),
+                        mayChay.getCongSuat(),
+                        mayChay.getTocDoToiDa(),
+                        mayChay.getNhaSanXuat(),
+                        mayChay.getKichThuoc(),
+                    });
+                }
 
-// Lấy danh sách MayChay và thêm vào bảng
-BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
-ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
-for (MayChay mayChay : danhSachMayChay) {
-    modelMayChay.addRow(new Object[]{
-        mayChay.getMaThietBi(),
-        mayChay.getTenLoaiThietBi(),
-        mayChay.getHinhAnh(),
-        mayChay.getGiaThietBi(),
-        mayChay.getNgayBaoHanh(),
-        mayChay.getLoai(),
-        mayChay.getCongSuat(),
-        mayChay.getTocDoToiDa(),
-        mayChay.getNhaSanXuat(),
-        mayChay.getKichThuoc()
-    });
-}
+                bangMayChay.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        int row = bangMayChay.getSelectedRow();
+                        if (row >= 0) {
+                            textField.setText(modelMayChay.getValueAt(row, 0).toString().trim());
+                            textField_1.setText(modelMayChay.getValueAt(row, 1).toString().trim());
+                            textField_2.setText(modelMayChay.getValueAt(row, 2).toString().trim());
+                            textField_3.setText(modelMayChay.getValueAt(row, 3).toString().trim());
+                            textField_4.setText(modelMayChay.getValueAt(row, 4).toString().trim());
+                            textField_5.setText(modelMayChay.getValueAt(row, 5).toString().trim());
+                            textField_6.setText(modelMayChay.getValueAt(row, 6).toString().trim());
+                            textField_7.setText(modelMayChay.getValueAt(row, 7).toString().trim());
+                            textField_8.setText(modelMayChay.getValueAt(row, 8).toString().trim());
+                        }
+                    }
+                });
+                
+                // Tạo JScrollPane để chứa bảng và cho phép cuộn
+                JScrollPane scrollPaneMayChay = new JScrollPane(bangMayChay);
+                scrollPaneMayChay.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
 
-// Tạo JScrollPane để chứa bảng và cho phép cuộn
-JScrollPane scrollPaneMayChay = new JScrollPane(bangMayChay);
-scrollPaneMayChay.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane
-
-// Thêm JScrollPane vào JPanel
-add(scrollPaneMayChay);
+                // Thêm JScrollPane vào JPanel
+                add(scrollPaneMayChay);
 
     }
 }

@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,7 +21,6 @@ import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
 
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -141,7 +141,6 @@ modelKhac.addColumn("Tên loại thiết bị");
 modelKhac.addColumn("Hình ảnh");
 modelKhac.addColumn("Giá thiết bị");
 modelKhac.addColumn("Ngày bảo hành");
-modelKhac.addColumn("Loại");
 
 // Gán model cho JTable
 bangKhac.setModel(modelKhac);
@@ -156,10 +155,20 @@ for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
         khac.getHinhAnh(),
         khac.getGiaThietBi(),
         khac.getNgayBaoHanh(),
-        khac.getLoai()
     });
 }
-
+bangKhac.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        int row = bangKhac.getSelectedRow();
+                        if (row >= 0) {
+                            textField.setText(modelKhac.getValueAt(row, 0).toString().trim());
+                            textField_1.setText(modelKhac.getValueAt(row, 1).toString().trim());
+                            textField_3.setText(modelKhac.getValueAt(row, 3).toString().trim());
+                            textField_4.setText(modelKhac.getValueAt(row, 4).toString().trim());       
+                            textField_6.setText(modelKhac.getValueAt(row, 2).toString().trim());
+                        }
+                    }
+                });
 // Tạo JScrollPane để chứa bảng và cho phép cuộn
 JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
 scrollPaneKhac.setBounds(10, 320, 1180, 700); // Đặt kích thước cho JScrollPane

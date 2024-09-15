@@ -39,6 +39,7 @@ import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyBangThietBiCoSoCTR;
 import GUI.CONTROLLER.QuanLyHoiVienCoSoCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
+import GUI.CONTROLLER.XuatExcelCTR;
 import GUI.CONTROLLER.chiTietHDCTR;
 import GUI.CONTROLLER.coSoCTR;
 import GUI.CONTROLLER.delegateCTR;
@@ -166,13 +167,15 @@ public class GUIAdmin{
         adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adminFrame.getContentPane().setLayout(null);
         adminFrame.setIconImage(logo.getImage());
+        mainPanel.setLocation(0, 0);
 
         //main
-        mainPanel.setSize(new Dimension(width,height));
+        mainPanel.setSize(new Dimension(1600, 861));
         mainPanel.setLayout(null);
+        leftPanel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 
         //left panel
-        leftPanel.setBounds(0,0,(int)(width * 0.25),height);
+        leftPanel.setBounds(0,0,400,861);
         leftPanel.setBackground(new Color(0, 191, 99));
         leftPanel.setLayout(null);
         
@@ -358,6 +361,12 @@ public class GUIAdmin{
         JButton exportExcelBTN = new JButton("Xuất file danh sách");
         exportExcelBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		XuatExcelCTR xuatExcel = new XuatExcelCTR();
+        		rightPanel.add(xuatExcel);
         	}
         });
         exportExcelBTN.setFont(new Font("Times New Roman", Font.PLAIN, 23));
@@ -368,7 +377,7 @@ public class GUIAdmin{
         //chức năng:
         //quản lý danh sách:
         //right panel
-        rightPanel.setBounds((int)(width * 0.25),0,(int)(width * 0.75),height);
+        rightPanel.setBounds(400,0,1182,861);
         rightPanel.setBackground(new Color(241, 255, 250));
         rightPanel.setBorder(border);
         //giới thiệu app
@@ -450,7 +459,7 @@ public class GUIAdmin{
                 {
                     BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
                     DSLoaiThietBi ds = new DSLoaiThietBi();
-                    ds = bllNhapThietBi.timKiem(nhapTen.getText());
+//                    ds = bllNhapThietBi.timKiem(nhapTen.getText());
                     int soLuongLoaiThietBi = ds.dsThietBi.size();
                     xuLyNhapHang(ds, soLuongLoaiThietBi);
                 }

@@ -50,6 +50,8 @@ public class DataTaiKhoan {
         }
         return null; 
     }
+	
+//	kiểm tra mã đã có chưa
 	private boolean kiemTraTonTaiMaTK(String maTK) {
         try {
         	con = DriverManager.getConnection(dbUrl, userName, password);
@@ -65,6 +67,8 @@ public class DataTaiKhoan {
         }
         return false;
     }
+	
+	//lấy danh sách mã tài khoản hội viên
 	public ArrayList<String> layDanhSachMaTKHV() {
         ArrayList<String> ds = new ArrayList<>();
         String query = "SELECT IDTaiKhoan From TaiKhoan TK WHERE TK.TaiKhoan LIKE 'TKHV%'";
@@ -147,6 +151,7 @@ public class DataTaiKhoan {
         }
         return false;
     }
+	
 	//sửa thông tin tài khoản
 	public boolean sua(DTOTaiKhoan a) //test rồi
     {
@@ -165,6 +170,7 @@ public class DataTaiKhoan {
         }
         return false;
     }
+	
 	//tìm kiếm tài khoản tài khoản hội viên
 	public ArrayList<DTOTaiKhoan> timKiemTKHV(HoiVien a)
     {
@@ -208,6 +214,8 @@ public class DataTaiKhoan {
         }
         return dsTK;
     }
+	
+	//tìm kiếm tài khoản nhân viên
 	public ArrayList<DTOTaiKhoan> timKiemTKNV(NhanVien a)
     {
         ArrayList<String> ds = new ArrayList<String>();
@@ -261,6 +269,7 @@ public class DataTaiKhoan {
         return dsTK;
     }
 	
+	//kiểm tra đăng nhập
     public String KiemTraDangNhap(String taiKhoan, String matKhau) 
     {
         try{
@@ -282,4 +291,6 @@ public class DataTaiKhoan {
         }
         return "Lỗi mở database";
     }
+    
+    
 }

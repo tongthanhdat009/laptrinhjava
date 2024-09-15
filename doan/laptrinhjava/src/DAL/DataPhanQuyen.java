@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import DTO.DTOChucNang;
 import DTO.DTOPhanQuyen;
 import DTO.DTOQuyen;
+import DTO.DTOTaiKhoan;
 
 public class DataPhanQuyen {
 	private Connection con;
@@ -137,5 +138,35 @@ public class DataPhanQuyen {
             System.out.println(e);
         }
         return false;
+    }
+    
+  //kiếm tên người dùng đang dùng
+    public String kiemTenUser(DTOTaiKhoan tk) {
+    	String truyVanHV = "SELECT HoTenHV FROM TaiKhoan tk JOIN HoiVien hv on hv.IDTaiKhoan = tk.IDTaiKhoan WHERE tk.IDQuyen = ? AND tk.IDTaiKhoan = ?";
+        String truyVanNV = "SELECT HoTenNV FROM TaiKhoan tk JOIN NhanVien nv on nv.IDTaiKhoan = tk.IDTaiKhoan WHERE tk.IDQuyen = ? AND tk.IDTaiKhoan = ?";
+    	try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            if(tk.getIDQuyen().trim().equals("Q0001")) {
+            	PreparedStatement statement = con.prepareStatement(truyVanHV);
+            	statement.setString(1, tk.getIDQuyen().trim());
+            	statement.setString(2, tk.getIDTaiKhoan().trim());
+            	ResultSet rs = statement.executeQuery();
+            	while (rs.next()) {
+            		return rs.getString(1).trim();					
+				}
+            }
+            else if (tk.getIDQuyen().trim().equals("Q0002") || tk.getIDQuyen().trim().equals("Q0003")) {
+            	PreparedStatement statement = con.prepareStatement(truyVanNV);
+            	statement.setString(1, tk.getIDQuyen().trim());
+            	statement.setString(2, tk.getIDTaiKhoan().trim());
+            	ResultSet rs = statement.executeQuery();
+            	while (rs.next()) {
+            		return rs.getString(1).trim();					
+				}
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+		return "NULL";
     }
 }

@@ -6,6 +6,7 @@ import DAL.DataPhanQuyen;
 import DTO.DTOChucNang;
 import DTO.DTOPhanQuyen;
 import DTO.DTOQuyen;
+import DTO.DTOTaiKhoan;
 
 public class BLLPhanQuyen {
 	private DataPhanQuyen dataPhanQuyen; 
@@ -36,5 +37,9 @@ public class BLLPhanQuyen {
 	//thêm phân quyền
 	public boolean themPhanQuyen(DTOPhanQuyen pq) {
 		return dataPhanQuyen.themPQ(pq);
+	}
+	//kiếm tên user đang sử dụng
+	public String kiemTenUser(DTOTaiKhoan tk) {
+		return dataPhanQuyen.kiemTenUser(tk);
 	}
 }

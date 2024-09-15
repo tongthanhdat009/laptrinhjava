@@ -279,8 +279,8 @@ public class GUIUser extends JFrame {
         getContentPane().add(leftPanel);
         leftPanel.setLayout(null);
         
-        JLabel currUserLB = new JLabel("Người dùng hiện tại: ");
-        currUserLB.setBounds(27, 201, 186, 26);
+        JLabel currUserLB = new JLabel("Người dùng hiện tại: " + bllPhanQuyen.kiemTenUser(tk));
+        currUserLB.setBounds(27, 201, leftPanel.getWidth(), 26);
         currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         leftPanel.add(currUserLB);
         

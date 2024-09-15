@@ -178,6 +178,11 @@ public class QuanLyMayChay extends JPanel {
                 textField_8.setBounds(850, 127, 200, 39);
                 thongTin.add(textField_8);
                 textField_8.setColumns(10);
+                
+                JButton btnNewButton = new JButton("Nhập về cơ sở");
+                btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                btnNewButton.setBounds(850, 177, 200, 25);
+                thongTin.add(btnNewButton);
                 JTable bangMayChay = new JTable();
                 bangMayChay.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
 

@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import DTO.Xa;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTable;
 
@@ -204,7 +208,7 @@ JTable bangXa = new JTable();
 
 DefaultTableModel modelXa = new DefaultTableModel();
 modelXa.addColumn("Mã thiết bị");
-modelXa.addColumn("Tên loại thiết bị");
+modelXa.addColumn("Tên thiết bị");
 modelXa.addColumn("Hình ảnh");
 modelXa.addColumn("Giá thiết bị");
 modelXa.addColumn("Ngày bảo hành");
@@ -238,24 +242,84 @@ for (Xa xa : danhSachXa) {
 }
 
 // Thêm MouseListener cho JTable
-bangXa.addMouseListener(new MouseAdapter() {
-    public void mouseClicked(MouseEvent e) {
-        int row = bangXa.getSelectedRow();
-        if (row >= 0) {
-            textField.setText(modelXa.getValueAt(row, 0).toString().trim());
-            textField_1.setText(modelXa.getValueAt(row, 1).toString().trim());
-            textField_2.setText(modelXa.getValueAt(row, 2).toString().trim());
-            textField_3.setText(modelXa.getValueAt(row, 3).toString().trim());
-            textField_4.setText(modelXa.getValueAt(row, 4).toString().trim());
-            textField_5.setText(modelXa.getValueAt(row, 5).toString().trim());
-            textField_6.setText(modelXa.getValueAt(row, 6).toString().trim());
-            textField_7.setText(modelXa.getValueAt(row, 7).toString().trim());
-            textField_8.setText(modelXa.getValueAt(row, 8).toString().trim());
-            textField_9.setText(modelXa.getValueAt(row, 9).toString().trim());
-            textField_10.setText(modelXa.getValueAt(row, 10).toString().trim());
-        }
-    }
-});
+        bangXa.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int row = bangXa.getSelectedRow();
+                if (row >= 0) {
+                    textField.setText(modelXa.getValueAt(row, 0).toString().trim());
+                    textField_1.setText(modelXa.getValueAt(row, 1).toString().trim());
+                    textField_2.setText(modelXa.getValueAt(row, 2).toString().trim());
+                    textField_3.setText(modelXa.getValueAt(row, 3).toString().trim());
+                    textField_4.setText(modelXa.getValueAt(row, 4).toString().trim());
+                    textField_5.setText(modelXa.getValueAt(row, 5).toString().trim());
+                    textField_6.setText(modelXa.getValueAt(row, 6).toString().trim());
+                    textField_7.setText(modelXa.getValueAt(row, 7).toString().trim());
+                    textField_8.setText(modelXa.getValueAt(row, 8).toString().trim());
+                    textField_9.setText(modelXa.getValueAt(row, 9).toString().trim());
+                    textField_10.setText(modelXa.getValueAt(row, 10).toString().trim());
+                }
+            }
+        });
+        them.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if(textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
+                textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
+                textField_1.getText().equals("")) 
+                {
+                    JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                    if(!textField_1.getText().equals("")) JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                }
+                else 
+                {
+                    String maThietBi = textField.getText();
+                    String ten = textField_1.getText();
+                    String hinhAnh = textField_2.getText();
+                    String giaThietBi = textField_3.getText();
+                    int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                    String loai = "Xa";
+                    String loaiXa = textField_5.getText();
+                    String chatLieu = textField_6.getText();
+                    float chieuDai = Float.parseFloat(textField_7.getText());
+                    float duongKinh = Float.parseFloat(textField_8.getText());
+                    float chieuCao = Float.parseFloat(textField_9.getText());
+                    float taiTrong = Float.parseFloat(textField_10.getText());
+                    String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                    JOptionPane.showMessageDialog(null,kq);
+                }
+
+            }
+        });
+        xoa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if(textField_1.getText().equals("")) JOptionPane.showMessageDialog(null, "Thiếu mã");
+                else if(ql.xoaTB(textField.getText())) JOptionPane.showMessageDialog(null,"Thành công");
+                else JOptionPane.showMessageDialog(null,"Mã không tồn tại");
+            }
+        });
+        sua.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if(textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
+                textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
+                textField_1.getText().equals("")) JOptionPane.showMessageDialog(null, "Thiếu thông tin");
+                else 
+                {
+                    String maThietBi = textField.getText();
+                    String ten = textField_1.getText();
+                    String hinhAnh = textField_2.getText();
+                    String giaThietBi = textField_3.getText();
+                    int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                    String loai = "Xa";
+                    String loaiXa = textField_5.getText();
+                    String chatLieu = textField_6.getText();
+                    float chieuDai = Float.parseFloat(textField_7.getText());
+                    float duongKinh = Float.parseFloat(textField_8.getText());
+                    float chieuCao = Float.parseFloat(textField_9.getText());
+                    float taiTrong = Float.parseFloat(textField_10.getText());
+                    String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                    JOptionPane.showMessageDialog(null, kq);
+                }
+            }
+        });
 
         // Tạo JScrollPane để chứa bảng và cho phép cuộn
         JScrollPane scrollPaneXa = new JScrollPane(bangXa);

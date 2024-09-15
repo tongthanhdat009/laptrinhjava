@@ -515,7 +515,7 @@ public class BLLQuanLyDanhSach{
         return "Thành công";
         return "Thất bại";
     }
-    public String themThietBiTa(Xa xa)
+    public String themThietBiXa(Xa xa)
     {
         if(Integer.parseInt(xa.getGiaThietBi())<0) return "Sai Giá";
         if(xa.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
@@ -541,18 +541,31 @@ public class BLLQuanLyDanhSach{
     }
     public String SuaTa(Ta ta)
     {
+        if(ta.getKhoiLuong()<=0) return "Sai khối lượng";
+        if(Integer.parseInt(ta.getGiaThietBi())<0) return "Sai Giá";
+        if(ta.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         if(dataThietBi.SuaThietBiTa(ta) == true) return "Thành công";
-        return "Thất bại";
+        return "Mã không tồn tại";
     }
     public String SuaXa(Xa xa)
     {
+        if(Integer.parseInt(xa.getGiaThietBi())<0) return "Sai Giá";
+        if(xa.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
+        if(xa.getChieuDai()<=0) return "Sai chiều dài";
+        if(xa.getDuongKinh()<=0) return "Sai đường kính";
+        if(xa.getChieuCao()<=0) return "Sai chiều cao";
+        if(xa.getTaiTrong()<=0) return "Sai tải trọng";
         if(dataThietBi.SuaThietBiXa(xa) == true) return "Thành công";
-        return "Thất bại";
+        return "Mã không tồn tại";
     }
     public String SuaMayChay(MayChay mayChay)
     {
+        if(Integer.parseInt(mayChay.getGiaThietBi())<0) return "Sai Giá";
+        if(mayChay.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
+        if(mayChay.getCongSuat()<0) return "Sai công suất";
+        if(mayChay.getTocDoToiDa()<0) return "Sai tốc độ tối đa"; 
         if(dataThietBi.SuaThietBiMayChay(mayChay) == true) return "Thành công";
-        return "Thất bại";
+        return "Mã không tồn tại";
     }
     public ArrayList<Ta> layDSTa()
     {

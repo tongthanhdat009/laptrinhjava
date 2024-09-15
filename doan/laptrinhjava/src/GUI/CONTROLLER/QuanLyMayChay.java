@@ -260,6 +260,21 @@ public class QuanLyMayChay extends JPanel {
                             // Thêm thiết bị `MayChay` vào hệ thống
                             String kq = ql.themThietBiMayChay(new MayChay(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "MayChay", congSuat, tocDoToiDa, nhaSanXuat, kichThuoc));
                             JOptionPane.showMessageDialog(null, kq);
+                            modelMayChay.setRowCount(0);
+                            ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                            for (MayChay mayChay : danhSachMayChay) {
+                                modelMayChay.addRow(new Object[]{
+                                    mayChay.getMaThietBi(),
+                                    mayChay.getTenLoaiThietBi(),
+                                    mayChay.getHinhAnh(),
+                                    mayChay.getGiaThietBi(),
+                                    mayChay.getNgayBaoHanh(),
+                                    mayChay.getCongSuat(),
+                                    mayChay.getTocDoToiDa(),
+                                    mayChay.getNhaSanXuat(),
+                                    mayChay.getKichThuoc(),
+                    });
+                }
                         }
                     }
                 });
@@ -271,6 +286,21 @@ public class QuanLyMayChay extends JPanel {
                             boolean isSuccess = ql.xoaTB(textField.getText());
                             if (isSuccess) {
                                 JOptionPane.showMessageDialog(null, "Xóa thành công");
+                                modelMayChay.setRowCount(0);
+                            ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                            for (MayChay mayChay : danhSachMayChay) {
+                                modelMayChay.addRow(new Object[]{
+                                    mayChay.getMaThietBi(),
+                                    mayChay.getTenLoaiThietBi(),
+                                    mayChay.getHinhAnh(),
+                                    mayChay.getGiaThietBi(),
+                                    mayChay.getNgayBaoHanh(),
+                                    mayChay.getCongSuat(),
+                                    mayChay.getTocDoToiDa(),
+                                    mayChay.getNhaSanXuat(),
+                                    mayChay.getKichThuoc(),
+                                    });
+                                }
                             } else {
                                 JOptionPane.showMessageDialog(null, "Mã không tồn tại");
                                 return;
@@ -303,6 +333,21 @@ public class QuanLyMayChay extends JPanel {
                             // Sửa thiết bị `MayChay`
                             String kq = ql.SuaMayChay(new MayChay(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "MayChay", congSuat, tocDoToiDa, nhaSanXuat, kichThuoc));
                             JOptionPane.showMessageDialog(null, kq);
+                            modelMayChay.setRowCount(0);
+                            ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                            for (MayChay mayChay : danhSachMayChay) {
+                                modelMayChay.addRow(new Object[]{
+                                    mayChay.getMaThietBi(),
+                                    mayChay.getTenLoaiThietBi(),
+                                    mayChay.getHinhAnh(),
+                                    mayChay.getGiaThietBi(),
+                                    mayChay.getNgayBaoHanh(),
+                                    mayChay.getCongSuat(),
+                                    mayChay.getTocDoToiDa(),
+                                    mayChay.getNhaSanXuat(),
+                                    mayChay.getKichThuoc(),
+                                });
+                            }
                         }
                     }
                 });

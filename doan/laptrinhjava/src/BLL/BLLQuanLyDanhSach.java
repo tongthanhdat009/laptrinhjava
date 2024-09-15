@@ -518,6 +518,7 @@ public class BLLQuanLyDanhSach{
         if(Integer.parseInt(ta.getGiaThietBi())<0) return "Sai Giá";
         if(ta.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         String ma = dataThietBi.layMaChuaTonTai();
+        System.out.println(ma);
         if(dataThietBi.themTB(new LoaiThietBi(ma, ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai()))) 
         if(dataThietBi.themTa(ma, ta.getKhoiLuong(), ta.getChatLieu(), ta.getMauSac()))
         return "Thành công";

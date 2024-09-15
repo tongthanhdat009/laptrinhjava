@@ -242,12 +242,12 @@ public class QuanLyTa extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Không cần nhập mã");
                                 return;
                             }
-                            System.out.println(textField_1.getText());
+
 
                             String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
                             String ten = textField_1.getText();
                             String hinhAnh = textField_2.getText();
-                            int giaThietBi = Integer.parseInt(textField_3.getText().trim());
+                            String giaThietBi = textField_3.getText().trim();
                             int ngayBaoHanh = Integer.parseInt(textField_4.getText().trim());
                             int khoiLuong = Integer.parseInt(textField_5.getText().trim());
                             String chatLieu = textField_7.getText();
@@ -255,7 +255,21 @@ public class QuanLyTa extends JPanel {
 
                             String kq = ql.themThietBiTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
                             JOptionPane.showMessageDialog(null, kq);
-                        
+                            model.setRowCount(0);
+                            ArrayList<Ta> danhSachTa = new ArrayList<>();
+                            danhSachTa = ql.layDSTa();
+                            for (Ta ta : danhSachTa) {
+                                model.addRow(new Object[]{
+                                    ta.getMaThietBi(),
+                                    ta.getTenLoaiThietBi(),
+                                    ta.getHinhAnh(),
+                                    ta.getGiaThietBi(),
+                                    ta.getNgayBaoHanh(),
+                                    ta.getKhoiLuong(),
+                                    ta.getChatLieu(),
+                                    ta.getMauSac()
+                                });
+                            }
                     }
                 });
                 xoa.addActionListener(new ActionListener() {
@@ -271,6 +285,21 @@ public class QuanLyTa extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Mã không tồn tại");
                             }
                         }
+                        model.setRowCount(0);
+                        ArrayList<Ta> danhSachTa = new ArrayList<>();
+                danhSachTa = ql.layDSTa();
+                for (Ta ta : danhSachTa) {
+                    model.addRow(new Object[]{
+                        ta.getMaThietBi(),
+                        ta.getTenLoaiThietBi(),
+                        ta.getHinhAnh(),
+                        ta.getGiaThietBi(),
+                        ta.getNgayBaoHanh(),
+                        ta.getKhoiLuong(),
+                        ta.getChatLieu(),
+                        ta.getMauSac()
+                    });
+                }
                     }
                 });
                 sua.addActionListener(new ActionListener() {
@@ -298,6 +327,21 @@ public class QuanLyTa extends JPanel {
                             String kq = ql.SuaTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
                             JOptionPane.showMessageDialog(null, kq);
                         }
+                        model.setRowCount(0);
+                        ArrayList<Ta> danhSachTa = new ArrayList<>();
+                danhSachTa = ql.layDSTa();
+                for (Ta ta : danhSachTa) {
+                    model.addRow(new Object[]{
+                        ta.getMaThietBi(),
+                        ta.getTenLoaiThietBi(),
+                        ta.getHinhAnh(),
+                        ta.getGiaThietBi(),
+                        ta.getNgayBaoHanh(),
+                        ta.getKhoiLuong(),
+                        ta.getChatLieu(),
+                        ta.getMauSac()
+                    });
+                }
                     }
                 });                
                 

@@ -214,7 +214,7 @@ public class DataThietBi {
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO LoaiThietBi (MaThietBi, TenLoaiThietBi, HinhAnh, GiaThietBi, NgayBaoHanh, Loai) VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO Ta (MaThietBi, KhoiLuong, ChatLieu, MauSac) VALUES(?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1,MaThietBi);            
             preparedStatement.setInt(2,khoiLuong);            
@@ -337,9 +337,9 @@ public class DataThietBi {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(1, ta.getTenLoaiThietBi());
-            statement.setString(2, ta.getHinhAnh());
-            statement.setString(3, ta.getGiaThietBi());
+            statement.setInt(1, ta.getKhoiLuong());
+            statement.setString(2, ta.getChatLieu());
+            statement.setString(3, ta.getMauSac());
             statement.setString(4, ta.getMaThietBi());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;

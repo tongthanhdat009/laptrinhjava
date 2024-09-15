@@ -287,6 +287,23 @@ for (Xa xa : danhSachXa) {
                 float taiTrong = Float.parseFloat(textField_10.getText());
                 String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
                 JOptionPane.showMessageDialog(null,kq);
+                modelXa.setRowCount(0);
+                ArrayList<Xa> danhSachXa = ql.layDSXa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                for (Xa xa : danhSachXa) {
+                    modelXa.addRow(new Object[]{
+                        xa.getMaThietBi(),
+                        xa.getTenLoaiThietBi(),
+                        xa.getHinhAnh(),
+                        xa.getGiaThietBi(),
+                        xa.getNgayBaoHanh(),
+                        xa.getLoaiXa(),
+                        xa.getChatLieu(),
+                        xa.getChieuDai(),
+                        xa.getDuongKinh(),
+                        xa.getChieuCao(),
+                        xa.getTaiTrong()
+                    });
+                }
             }
         });
         xoa.addActionListener(new ActionListener() {
@@ -295,7 +312,28 @@ for (Xa xa : danhSachXa) {
                 	JOptionPane.showMessageDialog(null, "Thiếu mã");
                 	return;
                 }
-                else if(ql.xoaTB(textField.getText())) JOptionPane.showMessageDialog(null,"Thành công");
+                else if(ql.xoaTB(textField.getText()))
+                {
+                    JOptionPane.showMessageDialog(null,"Thành công");
+                    modelXa.setRowCount(0);
+                    ArrayList<Xa> danhSachXa = ql.layDSXa();
+                    for (Xa xa : danhSachXa) {
+                        modelXa.addRow(new Object[]{
+                            xa.getMaThietBi(),
+                            xa.getTenLoaiThietBi(),
+                            xa.getHinhAnh(),
+                            xa.getGiaThietBi(),
+                            xa.getNgayBaoHanh(),
+                            xa.getLoaiXa(),
+                            xa.getChatLieu(),
+                            xa.getChieuDai(),
+                            xa.getDuongKinh(),
+                            xa.getChieuCao(),
+                            xa.getTaiTrong()
+                        });
+                    }
+                } 
+                    
                 else {
                 	JOptionPane.showMessageDialog(null,"Mã không tồn tại");
                 	return;
@@ -326,6 +364,23 @@ for (Xa xa : danhSachXa) {
                     float taiTrong = Float.parseFloat(textField_10.getText());
                     String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
                     JOptionPane.showMessageDialog(null, kq);
+                    modelXa.setRowCount(0);
+                    ArrayList<Xa> danhSachXa = ql.layDSXa();
+                    for (Xa xa : danhSachXa) {
+                        modelXa.addRow(new Object[]{
+                            xa.getMaThietBi(),
+                            xa.getTenLoaiThietBi(),
+                            xa.getHinhAnh(),
+                            xa.getGiaThietBi(),
+                            xa.getNgayBaoHanh(),
+                            xa.getLoaiXa(),
+                            xa.getChatLieu(),
+                            xa.getChieuDai(),
+                            xa.getDuongKinh(),
+                            xa.getChieuCao(),
+                            xa.getTaiTrong()
+                        });
+                    }
                 }
             }
         });

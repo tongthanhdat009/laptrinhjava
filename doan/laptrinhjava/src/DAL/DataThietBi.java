@@ -415,7 +415,6 @@ public boolean SuaThietBiXa(Xa xa) {
                 rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
                 rs.getInt("NgayBaoHanh"),rs.getString("Loai"),
                 rs.getInt("KhoiLuong"),rs.getString("ChatLieu"),rs.getString("MauSac"));
-                System.out.println(hello.getKhoiLuong());
                 a.add(hello);
             }
         } catch (Exception e) {

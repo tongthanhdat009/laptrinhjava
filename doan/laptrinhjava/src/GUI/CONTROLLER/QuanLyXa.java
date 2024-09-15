@@ -1,4 +1,7 @@
 package GUI.CONTROLLER;
+
+import java.util.Vector;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,15 +11,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
+import java.awt.*;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import javax.swing.JComboBox;
+import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
+import DAL.DataCoSo;
+import DTO.CoSo;
+import DTO.DSCoSo;
 import DTO.Xa;
 
 import javax.swing.JTextField;
@@ -24,7 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.JTable;
+
 
 public class QuanLyXa extends JPanel {
     private JTextField textField;
@@ -209,7 +218,67 @@ public class QuanLyXa extends JPanel {
         btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
         btnNewButton.setBounds(952, 128, 214, 36);
         thongTin.add(btnNewButton);
+        btnNewButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        JPanel thongTinChiTiet = new JPanel(new GridLayout(5,1));
+                        thongTinChiTiet.setPreferredSize(new Dimension(300,150));
+                        JLabel ten = new JLabel("Tên: "+textField_1.getText());
+                        System.out.print(textField_1.getText()+"hello");
+                        JLabel ma = new JLabel("Mã thiết bị: "+textField.getText());
+                        JLabel soNgayBaoHanh = new JLabel("Số ngày bảo hành: "+textField_4.getText());
+                        
+                        JPanel chonSoLuong = new JPanel(new GridLayout(1,2));
+                        JLabel labelSoLuong = new JLabel("Số Lượng: ");
+                        JTextField soLuong = new JTextField();
+                        chonSoLuong.add(labelSoLuong);
+                        chonSoLuong.add(soLuong);
+                        thongTinChiTiet.add(ten);
+                        thongTinChiTiet.add(ma);
+                        thongTinChiTiet.add(soNgayBaoHanh);
+                        thongTinChiTiet.add(chonSoLuong);
+                        boolean flag = false;
 
+                        DataCoSo dataCoSo = new DataCoSo();
+                        DSCoSo dsCS = new DSCoSo();
+                        dsCS = dataCoSo.layDSCoSo();
+                        Vector<String> s = new Vector<>();
+                        for(CoSo a : dsCS.dsCoSo)
+                        {
+                            s.add(a.getMaCoSo());
+                        }
+                        @SuppressWarnings("rawtypes")
+                        JComboBox chonCoSo = new JComboBox<>(s);
+                        JLabel labelCoSo = new JLabel("Chọn cơ sở: ");
+
+                        JPanel panelChonCoSo = new JPanel(new GridLayout(1,2));
+                        panelChonCoSo.add(labelCoSo);
+                        panelChonCoSo.add(chonCoSo);
+
+                        thongTinChiTiet.add(panelChonCoSo);
+
+                        while(flag == false)
+                        {
+                            int qes = JOptionPane.showConfirmDialog(null, thongTinChiTiet,"Nhập thiết bị",JOptionPane.OK_OPTION);
+                            if(qes == 0)
+                            {
+                                try {
+                                    int sl = Integer.parseInt(soLuong.getText());
+                                    if(sl > 0) 
+                                    {
+                                        BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+                                        bllNhapThietBi.nhapHangVeCoSo(textField.getText(),chonCoSo.getSelectedItem().toString(),sl,Integer.parseInt(textField_4.getText()));
+                                        flag = true;
+                                    }
+                                    else JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0");
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(null, "Số lượng phải là số lớn hơn 0");
+                                }
+                            }
+                            else flag = true;
+                        }
+                    }
+                });
         // Initialize JTable and DefaultTableModel
         // Trong phương thức giaoDien
 // Initialize JTable và DefaultTableModel

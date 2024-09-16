@@ -2,52 +2,28 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
-import java.time.LocalDate;
-import java.time.Year;
 
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
-import BLL.BLLThongKeDT;
 import BLL.BLLThongKeDonHang;
 import DAL.DataCoSo;
-import DTO.ChiTietHoaDon;
 import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
-import DTO.DTODuyetDonHang;
 import DTO.DTOQuyen;
 import DTO.DTOThongKeDonHang;
 import DTO.HoaDon;
 import DTO.HoiVien;
-import DTO.HoiVienCoSo;
 import DTO.LoaiThietBi;
 import DTO.NhanVien;
-import DTO.ThietBiCoSo;
-import DTO.dichVu;
-import DTO.dsHangHoa;
-import DTO.dsHoiVien;
-import DTO.hangHoa;
-import DTO.hangHoaCoSo;
 import DTO.DTOTaiKhoan;
-import GUI.CONTROLLER.QuanLyBangDichVuCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
-import GUI.CONTROLLER.QuanLyBangThietBiCoSoCTR;
-import GUI.CONTROLLER.QuanLyHoiVienCoSoCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.XuatExcelCTR;
-import GUI.CONTROLLER.chiTietHDCTR;
-import GUI.CONTROLLER.coSoCTR;
 import GUI.CONTROLLER.delegateCTR;
-import GUI.CONTROLLER.hangHoaCSCTR;
-import GUI.CONTROLLER.hangHoaCTR;
-import GUI.CONTROLLER.hoaDonCTR;
 import GUI.CONTROLLER.hoiVienCTR;
-import GUI.CONTROLLER.thietBiCTR;
 import GUI.CONTROLLER.thongKe;
 import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
@@ -58,13 +34,11 @@ import java.util.Vector;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Date;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
 
 
 public class GUIAdmin{
-    private static final String BORDER = null;
     private JFrame adminFrame = new JFrame("Quản lý cửa hàng dụ cụ thể thao");
     private final int width = 1600;
     private final int height = 900;
@@ -138,7 +112,9 @@ public class GUIAdmin{
 
     //màu cho combobox
     ListCellRenderer<? super String> renderer = new DefaultListCellRenderer() {
-        @Override
+		private static final long serialVersionUID = 3791056176578510864L;
+
+		@Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
@@ -482,7 +458,8 @@ public class GUIAdmin{
             timkiem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e)
                 {
-                    BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+                    @SuppressWarnings("unused")
+					BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
                     DSLoaiThietBi ds = new DSLoaiThietBi();
 //                    ds = bllNhapThietBi.timKiem(nhapTen.getText());
                     int soLuongLoaiThietBi = ds.dsThietBi.size();

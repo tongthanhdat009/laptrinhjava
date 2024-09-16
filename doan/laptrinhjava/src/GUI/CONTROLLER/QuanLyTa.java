@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import javax.swing.border.LineBorder;
 
 public class QuanLyTa extends JPanel {
 	private JTextField textField;
@@ -47,7 +48,7 @@ public class QuanLyTa extends JPanel {
     {
         setLayout(null);
         setSize(1200,800);
-        setBackground(Color.white);
+        setBackground(new Color(241, 255, 250));
         giaoDien();
     }
     public void giaoDien()
@@ -86,9 +87,11 @@ public class QuanLyTa extends JPanel {
                 tinhNang.add(them);
                 tinhNang.add(xoa);
                 tinhNang.add(sua);
-                tinhNang.setBackground(Color.white);
+                tinhNang.setBackground(new Color(241, 255, 250));
                 
                 JPanel thongTin = new JPanel();
+                thongTin.setBorder(new LineBorder(new Color(0, 0, 0)));
+                thongTin.setBackground(new Color(119, 230, 163));
                 thongTin.setBounds(0, 100, 1200, 213);
                 add(thongTin);
                 thongTin.setLayout(null);
@@ -248,6 +251,7 @@ public class QuanLyTa extends JPanel {
                 // Tạo JTable
                 // Tạo JTable
                 JTable bang = new JTable();
+                bang.setFont(new Font("Times New Roman", Font.BOLD, 15));
                 bang.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
 
                 // Tạo DefaultTableModel và thêm các cột

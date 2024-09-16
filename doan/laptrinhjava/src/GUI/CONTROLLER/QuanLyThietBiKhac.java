@@ -28,6 +28,7 @@ import DTO.Xa;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
 public class QuanLyThietBiKhac extends JPanel {
 	private JTextField textField;
@@ -77,9 +78,11 @@ public class QuanLyThietBiKhac extends JPanel {
                 tinhNang.add(them);
                 tinhNang.add(xoa);
                 tinhNang.add(sua);
-                tinhNang.setBackground(Color.white);
+                tinhNang.setBackground(new Color(241, 255, 250));
                 
                 JPanel thongTin = new JPanel();
+                thongTin.setBorder(new LineBorder(new Color(0, 0, 0)));
+                thongTin.setBackground(new Color(119, 230, 163));
                 thongTin.setBounds(0, 100, 1200, 213);
                 add(thongTin);
                 thongTin.setLayout(null);
@@ -203,6 +206,7 @@ public class QuanLyThietBiKhac extends JPanel {
                 });
 
                 JTable bangKhac = new JTable();
+                bangKhac.setFont(new Font("Times New Roman", Font.BOLD, 15));
 bangKhac.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
 
 // Tạo DefaultTableModel và thêm các cột
@@ -344,7 +348,7 @@ for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
                                 
                 // Tạo JScrollPane để chứa bảng và cho phép cuộn
                 JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
-                scrollPaneKhac.setBounds(0, 320, 1200, 300); // Đặt kích thước cho JScrollPane
+                scrollPaneKhac.setBounds(0, 320, 1183, 450); // Đặt kích thước cho JScrollPane
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPaneKhac);

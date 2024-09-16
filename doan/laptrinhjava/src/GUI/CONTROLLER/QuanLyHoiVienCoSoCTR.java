@@ -33,6 +33,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.microsoft.sqlserver.jdbc.dataclassification.Label;
+
 import BLL.BLLQuanLyDanhSach;
 import DTO.HoiVienCoSo;
 
@@ -124,6 +126,10 @@ public class QuanLyHoiVienCoSoCTR {
 
         JLabel lbmaHoiVien = new JLabel("Mã hội viên: ");
         JTextField tfMaHoiVien = new JTextField();
+        
+        JLabel lbHoTen = new JLabel("Họ tên:");
+        JTextField tfHoTen = new JTextField();
+        
         JLabel lbMaCoSo = new JLabel("Mã Cơ Sở: ");
         @SuppressWarnings("rawtypes")
         JComboBox cbMaCoSo = new JComboBox<>(dsCoSo);

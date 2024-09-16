@@ -134,10 +134,10 @@ public class GUILogin extends JFrame implements ActionListener{
                 }
             }
         }
-        else if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
-            new GUISignup();
-            dispose();
-        }
+//        else if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
+//            new GUISignup();
+//            dispose();
+//        }
         else JOptionPane.showMessageDialog(this,"Chức năng hiện đang phát triển");
     }
     

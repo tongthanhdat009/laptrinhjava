@@ -51,7 +51,7 @@ public class QuanLyXa extends JPanel {
     public QuanLyXa() {
         setLayout(null);
         setSize(1200, 800);
-        setBackground(Color.white);
+        setBackground(new Color(241, 255, 250));
         giaoDien();
     }
 
@@ -89,9 +89,10 @@ public class QuanLyXa extends JPanel {
         tinhNang.add(them);
         tinhNang.add(xoa);
         tinhNang.add(sua);
-        tinhNang.setBackground(Color.white);
+        tinhNang.setBackground(new Color(241, 255, 250));
 
         JPanel thongTin = new JPanel();
+        thongTin.setBackground(new Color(119, 230, 163));
         thongTin.setBounds(0, 100, 1200, 213);
         add(thongTin);
         thongTin.setLayout(null);
@@ -283,6 +284,7 @@ public class QuanLyXa extends JPanel {
         // Trong phương thức giaoDien
 // Initialize JTable và DefaultTableModel
 JTable bangXa = new JTable();
+bangXa.setFont(new Font("Times New Roman", Font.BOLD, 15));
 
 DefaultTableModel modelXa = new DefaultTableModel();
 modelXa.addColumn("Mã thiết bị");

@@ -17,13 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import DTO.MayChay;
+import javax.swing.border.LineBorder;
 
 
 public class QuanLyThietBiCTR extends JPanel {
     public QuanLyThietBiCTR() {
         setLayout(null);
         setSize(1200,900);
-        setBackground(Color.white);
+        setBackground(new Color(241, 255, 250));
         GiaoDien();
     }
     public void GiaoDien() {
@@ -32,15 +33,17 @@ public class QuanLyThietBiCTR extends JPanel {
         repaint(); // Vẽ lại JPanel
         setLayout(null);
         JLabel tieude = new JLabel("Quản lý thiết bị");
-        tieude.setBounds(490, 20, 300, 40);
-        tieude.setFont(new Font("Times New Roman",1,35));
+        tieude.setBounds(490, 20, 244, 40);
+        tieude.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
         add(tieude);
 
         JPanel noiDung = new JPanel(null);
+        noiDung.setBackground(new Color(241, 255, 250));
         noiDung.setBounds(0,100,1200,800);
         add(noiDung);
 
         JPanel ta = new JPanel(null);
+        ta.setBorder(new LineBorder(new Color(0, 0, 0)));
         ta.setBounds(50,0,525,300);
         ta.setBackground(new Color(118, 247, 191));
         JLabel talb = new JLabel("Tạ");
@@ -59,6 +62,7 @@ public class QuanLyThietBiCTR extends JPanel {
         ta.add(logoTaLB);
 
         JPanel mayChay = new JPanel();
+        mayChay.setBorder(new LineBorder(new Color(0, 0, 0)));
         mayChay.setBounds(625,0,525,300);
         mayChay.setBackground(new Color(145, 229, 229));
         noiDung.add(mayChay);
@@ -76,6 +80,7 @@ public class QuanLyThietBiCTR extends JPanel {
         mayChay.add(lblNewLabel_1);
 
         JPanel xa = new JPanel();
+        xa.setBorder(new LineBorder(new Color(0, 0, 0)));
         xa.setBounds(50,350,525,300);
         xa.setBackground(new Color(95, 221, 157));
         noiDung.add(xa);
@@ -98,6 +103,7 @@ public class QuanLyThietBiCTR extends JPanel {
         ImageIcon khacLogo = new ImageIcon("src/asset/img/icon/khac-logo.png");
         Image scaleKhacLogoIcon = khacLogo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
         JPanel khac = new JPanel();
+        khac.setBorder(new LineBorder(new Color(0, 0, 0)));
         khac.setBounds(625,350,525,300);
         khac.setBackground(new Color(145, 249, 229));
         noiDung.add(khac);

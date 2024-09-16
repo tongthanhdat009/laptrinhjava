@@ -1,5 +1,3 @@
-/GUI/
-/BLL/
-/DTO/
 /DAL/
-/asset/
+/DTO/
+/GUI/

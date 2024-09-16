@@ -359,20 +359,18 @@ public class GUIAdmin{
         memberMNG.setFocusPainted(false);
         managementPanel.add(memberMNG);
         
-        JButton exportExcelBTN = new JButton("Xuất file danh sách");
-        exportExcelBTN.addActionListener(new ActionListener() {
+        JButton buyBTN = new JButton("Mua Hàng");
+        buyBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
         		rightPanel.setLayout(null);
-        		XuatExcelCTR xuatExcel = new XuatExcelCTR();
-        		rightPanel.add(xuatExcel);
         	}
         });
-        exportExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        exportExcelBTN.setBounds(23, 469, 300, 50);
-//        managementPanel.add(exportExcelBTN);
+        buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        buyBTN.setBounds(23, 469, 300, 50);
+        managementPanel.add(buyBTN);
         
         leftPanel.add(footerLeft);
         //chức năng:

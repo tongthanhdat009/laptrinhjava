@@ -5,6 +5,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import java.util.Vector;
+
+import DTO.DTOQuanLyThietBiCoSo;
 import DTO.ThietBiCoSo;
 public class DataThietBiCoSo {
     private Connection con;
@@ -90,20 +93,54 @@ public class DataThietBiCoSo {
         }
         return ds;
     }
-    public ArrayList<ThietBiCoSo> timKiem(String maThietBiCoSo)
+    public ArrayList<DTOQuanLyThietBiCoSo> layDSLoaiThietBiCoSo2()
     {
-        String truyVan = "SELECT * FROM ThietBiOMotCoSo, LoaiThietBi WHERE LoaiThietBi.MaThietBi = ThietBiOMotCoSo.MaThietBi AND MaThietBiOCoSo = '" + maThietBiCoSo + "'";
-        ArrayList<ThietBiCoSo> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM ThietBiOMotCoSo, LoaiThietBi WHERE ThietBiOMotCoSo.MaThietBi = LoaiThietBi.MaThietBi";
+        ArrayList<DTOQuanLyThietBiCoSo> ds = new ArrayList<>();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(truyVan);
             while(rs.next())
             {
-                LocalDate date =rs.getDate("NgayNhap").toLocalDate();
-                date = date.plusDays(rs.getInt("NgayBaoHanh"));
-                Date ngayHetBaoHanhSQL = Date.valueOf(date);
-                ds.add(new ThietBiCoSo(rs.getString("MaThietBiOCoSo"), rs.getString("MaCoSo"),rs.getString("MaThietBi"),rs.getDate("NgayNhap"),ngayHetBaoHanhSQL));
+                ds.add(new DTOQuanLyThietBiCoSo(rs.getString("MaThietBiOCoSo"), rs.getString("MaCoSo"),rs.getString("MaThietBi"),rs.getDate("NgayNhap"),rs.getDate("HanBaoHanh"),rs.getString("TenLoaiThietBi"),rs.getString("Loai")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
+    public ArrayList<DTOQuanLyThietBiCoSo> timKiem(String maThietBiCoSo, String maCoSo, String maThietBi)
+    {
+        String truyVan = "SELECT * FROM ThietBiOMotCoSo, LoaiThietBi WHERE LoaiThietBi.MaThietBi = ThietBiOMotCoSo.MaThietBi ";
+        Vector<String> a = new Vector<>();
+        if(!maThietBiCoSo.equals("NULL")) {
+            a.add(maThietBiCoSo);
+            truyVan += "AND MaThietBiOCoSo = ? ";
+        }
+        if(!maCoSo.equals("NULL")) {
+            a.add(maCoSo);
+            truyVan += "AND MaCoSo = ? ";
+        }
+        if(!maThietBi.equals("NULL")) {
+            a.add(maThietBi);
+            truyVan += "AND ThietBiOMotCoSo.MaThietBi = ? ";
+        }
+        truyVan = truyVan.trim();
+        System.out.println(truyVan);
+        ArrayList<DTOQuanLyThietBiCoSo> ds = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement stmt = con.prepareStatement(truyVan);
+            
+            for(int i=0;i<a.size();i++)
+            {
+                stmt.setString(i+1, a.get(i));
+            }
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                ds.add(new DTOQuanLyThietBiCoSo(rs.getString("MaThietBiOCoSo"), rs.getString("MaCoSo"),rs.getString("MaThietBi"),rs.getDate("NgayNhap"),rs.getDate("HanBaoHanh"),rs.getString("TenLoaiThietBi"),rs.getString("Loai")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -162,7 +199,6 @@ public class DataThietBiCoSo {
             stmt.setString(2, a.getMaThietBi());
             stmt.setDate(3, a.getNgayNhap());
             stmt.setDate(4, a.getHanBaoHanh());
-            System.out.println(a.getHanBaoHanh());
             stmt.setString(5, a.getMaThietBiCoSo());
             int rowsAffected = stmt.executeUpdate();
             System.out.println(rowsAffected);

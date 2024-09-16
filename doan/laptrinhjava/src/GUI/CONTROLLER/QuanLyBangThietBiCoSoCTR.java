@@ -30,6 +30,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLQuanLyDanhSach;
+import DTO.DTOQuanLyThietBiCoSo;
 import DTO.ThietBiCoSo;
 
 public class QuanLyBangThietBiCoSoCTR {
@@ -47,16 +48,16 @@ public class QuanLyBangThietBiCoSoCTR {
         rightPanel.revalidate();
         rightPanel.repaint();
     }
-	public void QuanLyBangThietBiCoSo(ArrayList<ThietBiCoSo> ds, JPanel rightPanel)
+	public void QuanLyBangThietBiCoSo(ArrayList<DTOQuanLyThietBiCoSo> ds, JPanel rightPanel)
     {
         xoaHienThi(rightPanel);
-    	JButton them = new JButton();
-        ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-tb.png");
-        Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-        them.setPreferredSize(new Dimension (130,35));
-        them.setIcon(new ImageIcon(scaleThemBtnImg));
-        them.setHorizontalAlignment(SwingConstants.CENTER);
-        them.setBorder(null);
+    	// JButton them = new JButton();
+        // ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/them-tb.png");
+        // Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+        // them.setPreferredSize(new Dimension (130,35));
+        // them.setIcon(new ImageIcon(scaleThemBtnImg));
+        // them.setHorizontalAlignment(SwingConstants.CENTER);
+        // them.setBorder(null);
 
     	JButton xoa  = new JButton();
         xoa.setPreferredSize(new Dimension (110,35));
@@ -87,7 +88,7 @@ public class QuanLyBangThietBiCoSoCTR {
         timKiem.setBorder(null);
 
         JPanel chucNang = new JPanel(new FlowLayout());
-        chucNang.add(them);
+        // chucNang.add(them);
         chucNang.add(xoa);
         chucNang.add(sua);
         chucNang.add(timKiem);
@@ -150,6 +151,8 @@ public class QuanLyBangThietBiCoSoCTR {
         model.addColumn("Mã Thiết Bị Cơ Sở");
         model.addColumn("Mã Cơ Sở");
         model.addColumn("Mã Thiết Bị");
+        model.addColumn("Tên thiết bị");
+        model.addColumn("Loại");
         model.addColumn("Ngày Nhập");
         model.addColumn("Hạn Bảo Hành");
 
@@ -157,7 +160,7 @@ public class QuanLyBangThietBiCoSoCTR {
         model.setRowCount(0);
         for(int i = 0; i < ds.size(); i++) {
             model.addRow(new Object[] {
-                ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
+                ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getTenThietBi(),ds.get(i).getLoaiThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
             });
         }
         
@@ -176,43 +179,43 @@ public class QuanLyBangThietBiCoSoCTR {
                     textMaThietBiCoSo.setText(model.getValueAt(i, 0).toString());
                     textMaCoSo.setText(model.getValueAt(i, 1).toString());
                     textMaThietBi.setText(model.getValueAt(i, 2).toString());
-                    textNgayNhap.setText(model.getValueAt(i, 3).toString());
-                    textHanBaoHanh.setText(model.getValueAt(i, 4).toString());
+                    textNgayNhap.setText(model.getValueAt(i, 5).toString());
+                    textHanBaoHanh.setText(model.getValueAt(i, 6).toString());
                 }
             }
         });
-        them.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                if(!textMaThietBiCoSo.getText().equals("") || !textHanBaoHanh.getText().equals("")) 
-                JOptionPane.showMessageDialog(rightPanel, "Không cần nhập mã thiết bị cơ sở và hạn bảo hành");
-                else 
-                {
-                    if(textMaCoSo.getText().equals("")||textMaThietBi.getText().equals("")||textNgayNhap.getText().equals("")) 
-                    JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
-                    else 
-                    {   
-                        LocalDate lDateNgayNhap = LocalDate.parse(textNgayNhap.getText());
-                        Date ngayNhap = Date.valueOf(lDateNgayNhap);
+        // them.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e)
+        //     {
+        //         if(!textMaThietBiCoSo.getText().equals("") || !textHanBaoHanh.getText().equals("")) 
+        //         JOptionPane.showMessageDialog(rightPanel, "Không cần nhập mã thiết bị cơ sở và hạn bảo hành");
+        //         else 
+        //         {
+        //             if(textMaCoSo.getText().equals("")||textMaThietBi.getText().equals("")||textNgayNhap.getText().equals("")) 
+        //             JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+        //             else 
+        //             {   
+        //                 LocalDate lDateNgayNhap = LocalDate.parse(textNgayNhap.getText());
+        //                 Date ngayNhap = Date.valueOf(lDateNgayNhap);
 
-                        BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-                        String ma = bllQuanLyDanhSach.layMaThietBiCoSo();
-                        Date hanBaoHanh = bllQuanLyDanhSach.layHanBaoHanh(textMaThietBi.getText(), ngayNhap);
-                        String s = bllQuanLyDanhSach.themThietBiCoSo(ma,textMaCoSo.getText(),textMaThietBi.getText(),ngayNhap,hanBaoHanh);
-                        if(s.equals("ThanhCong"))
-                        {
-                            model.addRow(new Object[]{
-                                ma,textMaCoSo.getText(),textMaThietBi.getText(),ngayNhap,hanBaoHanh
-                            });
-                            textMaThietBiCoSo.setText(ma);
-                            textHanBaoHanh.setText(String.valueOf(hanBaoHanh));
-                        }
-                        else JOptionPane.showMessageDialog(rightPanel, s);
-                    }
-                }
+        //                 BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+        //                 String ma = bllQuanLyDanhSach.layMaThietBiCoSo();
+        //                 Date hanBaoHanh = bllQuanLyDanhSach.layHanBaoHanh(textMaThietBi.getText(), ngayNhap);
+        //                 String s = bllQuanLyDanhSach.themThietBiCoSo(ma,textMaCoSo.getText(),textMaThietBi.getText(),ngayNhap,hanBaoHanh);
+        //                 if(s.equals("ThanhCong"))
+        //                 {
+        //                     model.addRow(new Object[]{
+        //                         ma,textMaCoSo.getText(),textMaThietBi.getText(),ngayNhap,hanBaoHanh
+        //                     });
+        //                     textMaThietBiCoSo.setText(ma);
+        //                     textHanBaoHanh.setText(String.valueOf(hanBaoHanh));
+        //                 }
+        //                 else JOptionPane.showMessageDialog(rightPanel, s);
+        //             }
+        //         }
 
-            }
-        });
+        //     }
+        // });
         xoa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -251,8 +254,8 @@ public class QuanLyBangThietBiCoSoCTR {
                         {
                             model.setValueAt(textMaCoSo.getText(),i,1);
                             model.setValueAt(textMaThietBi.getText(),i,2);
-                            model.setValueAt(textNgayNhap.getText(),i,3);
-                            model.setValueAt(textHanBaoHanh.getText(),i,4);
+                            model.setValueAt(textNgayNhap.getText(),i,5);
+                            model.setValueAt(textHanBaoHanh.getText(),i,6);
                         }
                     }
                     else JOptionPane.showMessageDialog(rightPanel, s);
@@ -262,20 +265,20 @@ public class QuanLyBangThietBiCoSoCTR {
         timKiem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 model.setRowCount(0);
-                if(textMaThietBiCoSo.getText().equals(""))
+                if(textMaThietBiCoSo.getText().equals("")&&textMaCoSo.getText().equals(""))
                 for(int i = 0; i < ds.size(); i++) {
                     model.addRow(new Object[] {
-                        ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
+                        ds.get(i).getMaThietBiCoSo(),ds.get(i).getMaCoSo(),ds.get(i).getMaThietBi(),ds.get(i).getTenThietBi(),ds.get(i).getLoaiThietBi(),ds.get(i).getNgayNhap(),ds.get(i).getHanBaoHanh() 
                     });
                 }
                 else
                 {
                     BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-                    ArrayList<ThietBiCoSo> ds2 = new ArrayList<>();
-                    ds2 = bllQuanLyDanhSach.timKiemThietBiCoSo(textMaThietBiCoSo.getText());
+                    ArrayList<DTOQuanLyThietBiCoSo> ds2 = new ArrayList<>();
+                    ds2 = bllQuanLyDanhSach.timKiemThietBiCoSo(textMaThietBiCoSo.getText(),textMaCoSo.getText(),textMaThietBi.getText());
                     for(int i = 0; i < ds2.size(); i++) {
                         model.addRow(new Object[] {
-                            ds2.get(i).getMaThietBiCoSo(),ds2.get(i).getMaCoSo(),ds2.get(i).getMaThietBi(),ds2.get(i).getNgayNhap(),ds2.get(i).getHanBaoHanh() 
+                            ds2.get(i).getMaThietBiCoSo(),ds2.get(i).getMaCoSo(),ds2.get(i).getMaThietBi(),ds2.get(i).getTenThietBi(),ds2.get(i).getLoaiThietBi(),ds2.get(i).getNgayNhap(),ds2.get(i).getHanBaoHanh() 
                         });
                     }
                 }

@@ -21,6 +21,7 @@ import BLL.BLLQuanLyDanhSach;
 import DTO.ChiTietHoaDon;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
+import DTO.DTOQuanLyThietBiCoSo;
 import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.HoiVienCoSo;
@@ -158,8 +159,8 @@ public class xuLyDSCTR {
 //                    tbCTR.update();
 //                }
                 else if(selectedOption.equals("Thiết bị cơ sở")){
-                    ArrayList<ThietBiCoSo> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDanhSachThietBiCoSo();
+                    ArrayList<DTOQuanLyThietBiCoSo> ds = new ArrayList<>();
+                    ds = bllQuanLyDanhSach.layDanhSachThietBiCoSo2();
                     QuanLyBangThietBiCoSoCTR qlbtbcsCTR = new QuanLyBangThietBiCoSoCTR();
                     qlbtbcsCTR.QuanLyBangThietBiCoSo(ds,rightPanel);
                 }

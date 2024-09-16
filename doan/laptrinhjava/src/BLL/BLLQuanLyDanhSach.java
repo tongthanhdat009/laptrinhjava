@@ -23,6 +23,7 @@ import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DTODuyetDonHang;
+import DTO.DTOQuanLyThietBiCoSo;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.HoaDon;
@@ -253,9 +254,16 @@ public class BLLQuanLyDanhSach{
     {
         return dataThietBiCoSo.layDSLoaiThietBiCoSo();
     }
-    public ArrayList<ThietBiCoSo> timKiemThietBiCoSo(String maThietBiCoSo)
+    public ArrayList<DTOQuanLyThietBiCoSo> layDanhSachThietBiCoSo2()
     {
-        return dataThietBiCoSo.timKiem(maThietBiCoSo);
+        return dataThietBiCoSo.layDSLoaiThietBiCoSo2();
+    }
+    public ArrayList<DTOQuanLyThietBiCoSo> timKiemThietBiCoSo(String maThietBiCoSo, String maCoSo, String maThietBi)
+    {
+        if(maThietBiCoSo.equals("")) maThietBiCoSo = "NULL";
+        if(maCoSo.equals("")) maCoSo = "NULL";
+        if(maThietBi.equals("")) maThietBi = "NULL";
+        return dataThietBiCoSo.timKiem(maThietBiCoSo,maCoSo,maThietBi);
     }
 
     //danh sách hội viên cơ sở

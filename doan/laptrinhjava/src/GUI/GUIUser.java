@@ -112,7 +112,7 @@ public class GUIUser extends JFrame {
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
     
-    public GUIUser(DTOTaiKhoan tk) {
+    public GUIUser(DTOTaiKhoan tk, String coSoHienTai) {
 		this.setSize(1600, 900);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -382,10 +382,10 @@ public class GUIUser extends JFrame {
         scrollPane.setBounds(26,238,352,547);
         
         managementPanel.setPreferredSize(new Dimension(300,y));
-        leftPanel.add(managementPanel);
+        leftPanel.add(scrollPane);
     }
 	public static void main(String[] args) {
 		DTOTaiKhoan tKhoan = new DTOTaiKhoan("TK500", "TKHV500", "MKHV500", "Q0001");
-        new GUIUser(tKhoan);
+        new GUIUser(tKhoan, "CS001");
     }
 }

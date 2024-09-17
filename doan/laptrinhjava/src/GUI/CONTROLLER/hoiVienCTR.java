@@ -122,7 +122,6 @@ public class hoiVienCTR {
             tempTF.setPreferredSize(new Dimension(200,20));
             tempTF.setBounds(0,20,120,20);
             tempTF.setName(tenCotHV.get(i));
-
             if(i==2){
                 Font font = new Font("Times New Roman", Font.BOLD, 20); // Thay đổi font và kích thước chữ ở đây
                 JRadioButton nam = new JRadioButton("Nam");
@@ -209,10 +208,9 @@ public class hoiVienCTR {
         scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
 
         //nút chức năng
-        String[] cmtNut = {"add", "remove", "edit", "Search"};
+        String[] cmtNut = {"add", "edit", "Search"};
         String[] anhStrings = {
             "src/asset/img/button/them-hv.png",
-            "src/asset/img/button/xoa-hv.png",
             "src/asset/img/button/sua-hv.png",
             "src/asset/img/button/tim-hv.png"
         };
@@ -252,9 +250,7 @@ public class hoiVienCTR {
                                         else if(i==4) {
                                         	textField.setText(bllQuanLyDanhSach.kiemTraMaTK());
                                             thongTinMoi.add(textField.getText());
-                                            
                                         }
-                                        
                                         else if (i==5){
                                             String hvSDT = textField.getText().trim();
                                             if(!bllQuanLyDanhSach.kiemTraSDT(hvSDT)){
@@ -347,72 +343,75 @@ public class hoiVienCTR {
                             return;
                         }
                     }
-                    else if (e.getActionCommand().equals(cmtNut[1])) {//XÓA HỘI VIÊN
-                        int i=dataTable.getSelectedRow();
-                        if(i>=0){
-                            Component[] components = bangChinhSua.getComponents();
-                            hvList.removeRow(i);
-                            ArrayList<String> maTKVaHV = new ArrayList<String>();
-                            for (Component component : components) {
-                                if (component instanceof JPanel) {
-                                    JPanel tempPanel = (JPanel) component;
-                                    Component[] smallComponents = tempPanel.getComponents();
-                                    for (Component smallComponent : smallComponents) {
-                                        if(smallComponent instanceof JTextField){
-                                            JTextField textField = (JTextField) smallComponent;
-                                            if(components[4] == component || components[0] == component){
-            									maTKVaHV.add(textField.getText().trim());
-                                            }
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                            if(bllQuanLyDanhSach.xoaHV(maTKVaHV.get(0))&&bllQuanLyDanhSach.xoaTK(maTKVaHV.get(1))) {
-                                JOptionPane.showMessageDialog(bangChinhSua, "Xóa thành công!");
-                                for (Component component : components) {
-                                  if (component instanceof JPanel) {
-                                      JPanel tempPanel = (JPanel) component;
-                                      Component[] smallComponents = tempPanel.getComponents();
-                                      for (Component smallComponent : smallComponents) {
-                                          if(smallComponent instanceof JTextField){
-                                              JTextField textField = (JTextField) smallComponent;
-                                                  textField.setText("");
-                                          }
-                                          else if(smallComponent instanceof JComboBox){
-                                              @SuppressWarnings("rawtypes")
-                                              JComboBox cb = (JComboBox) smallComponent;
-                                              if("Day".equals(cb.getName())){
-                                                  cb.setSelectedItem(1);
-                                              }
-                                              if("Month".equals(cb.getName())){
-                                                  cb.setSelectedItem(1);
-                                              }
-                                              if("Year".equals(cb.getName())){
-                                                  cb.setSelectedItem(2000);
-                                              }
-                                          }
-                                          
-                                      }
-                                  
-                                  }
-  
-                              }
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(bangChinhSua, "Xóa không thành công!");
-                                return;
-                            }
-                        }
-                    } 
-                    else if (e.getActionCommand().equals(cmtNut[2])) {//SỬA THÔNG TIN HỘI VIÊN
+//                    else if (e.getActionCommand().equals(cmtNut[1])) {//XÓA HỘI VIÊN
+//                        int i=dataTable.getSelectedRow();
+//                        if(i>=0){
+//                            Component[] components = bangChinhSua.getComponents();
+//                            hvList.removeRow(i);
+//                            ArrayList<String> maTKVaHV = new ArrayList<String>();
+//                            for (Component component : components) {
+//                                if (component instanceof JPanel) {
+//                                    JPanel tempPanel = (JPanel) component;
+//                                    Component[] smallComponents = tempPanel.getComponents();
+//                                    for (Component smallComponent : smallComponents) {
+//                                        if(smallComponent instanceof JTextField){
+//                                            JTextField textField = (JTextField) smallComponent;
+//                                            if(components[4] == component || components[0] == component){
+//            									maTKVaHV.add(textField.getText().trim());
+//                                            }
+//                                        }
+//                                        
+//                                    }
+//                                }
+//                            }
+//                            if(bllQuanLyDanhSach.xoaHV(maTKVaHV.get(0))&&bllQuanLyDanhSach.xoaTK(maTKVaHV.get(1))) {
+//                                JOptionPane.showMessageDialog(bangChinhSua, "Xóa thành công!");
+//                                for (Component component : components) {
+//                                  if (component instanceof JPanel) {
+//                                      JPanel tempPanel = (JPanel) component;
+//                                      Component[] smallComponents = tempPanel.getComponents();
+//                                      for (Component smallComponent : smallComponents) {
+//                                          if(smallComponent instanceof JTextField){
+//                                              JTextField textField = (JTextField) smallComponent;
+//                                                  textField.setText("");
+//                                          }
+//                                          else if(smallComponent instanceof JComboBox){
+//                                              @SuppressWarnings("rawtypes")
+//                                              JComboBox cb = (JComboBox) smallComponent;
+//                                              if("Day".equals(cb.getName())){
+//                                                  cb.setSelectedItem(1);
+//                                              }
+//                                              if("Month".equals(cb.getName())){
+//                                                  cb.setSelectedItem(1);
+//                                              }
+//                                              if("Year".equals(cb.getName())){
+//                                                  cb.setSelectedItem(2000);
+//                                              }
+//                                          }
+//                                          
+//                                      }
+//                                  
+//                                  }
+//  
+//                              }
+//                            }
+//                            else {
+//                                JOptionPane.showMessageDialog(bangChinhSua, "Xóa không thành công!");
+//                                return;
+//                            }
+//                        }
+//                    } 
+                    else if (e.getActionCommand().equals(cmtNut[1])) {//SỬA THÔNG TIN HỘI VIÊN
                         int i= dataTable.getSelectedRow();
                         Date date;
                         ArrayList<String> thongTinMoi = new ArrayList<String>(); 
                         int day=1, year=2000, month=1;
                         String maGoc = new String();
+                        String tenGoc = new String();
                         if (i>=0){
                         	maGoc = hvList.getValueAt(i, 0).toString();
+                        	tenGoc = hvList.getValueAt(i, 1).toString();
+                        	System.out.println(tenGoc);
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
                             for (Component component : components) {
@@ -460,10 +459,15 @@ public class hoiVienCTR {
                                 }
                             }
                             if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(5))){
-                                JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                return;
                             }
                             if(thongTinMoi.get(8).length()<6){
-                                JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            if(!thongTinMoi.get(1).equals(tenGoc)) {
+                                JOptionPane.showMessageDialog(null, "Không được sửa tên hội viên!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
                             if(!thongTinMoi.get(0).equals("") && thongTinMoi.get(0).equals(maGoc)) {

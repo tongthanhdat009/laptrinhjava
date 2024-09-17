@@ -159,6 +159,7 @@ public class DataNhanVien {
         	truyVan+="nv.MaCoSo = ? AND ";
         	ds.add(a.getMacoso());
         }
+        
         truyVan = truyVan.trim();
         if (truyVan.endsWith("AND")) {
             // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
@@ -181,6 +182,7 @@ public class DataNhanVien {
         }
         return dsNV;
     }
+    
     public boolean xoanv(String manv) {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);

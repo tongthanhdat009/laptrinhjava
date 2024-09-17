@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import DTO.CoSo;
+import DTO.DSCoSo;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.NhanVien;
@@ -292,5 +294,38 @@ public class DataTaiKhoan {
         return "Lỗi mở database";
     }
     
+    public DSCoSo layDSCoSo()
+    {
+        String truyVan = "SELECT * FROM CoSo";
+        DSCoSo ds = new DSCoSo();
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.them(new CoSo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
     
+    //kiểm tra tài khoản có thuộc cơ sở không
+    public boolean kiemTraTaiKhoanCoSo(DTOTaiKhoan tk, String maCoSo) {
+        String truyVan = "SELECT * FROM NhanVien nv, TaiKhoan tk WHERE nv.IDTaiKhoan = tk.IDTaiKhoan AND nv.MaCoSo = ? AND tk.IDTaiKhoan = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maCoSo.trim());
+            statement.setString(2, tk.getIDTaiKhoan().trim());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return true; // Có kết quả trả về, tài khoản tồn tại
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
 }

@@ -68,6 +68,22 @@ public class DataCoSo {
         }
         return s;
     }
+    
+    public ArrayList<String> DSMaCoSoARR()
+    {
+        ArrayList<String> s = new ArrayList<String>();
+        String truyVan = "SELECT MaCoSo FROM CoSo";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            s.add(rs.getString(1));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return s;
+    }
 
     public ArrayList<String> layTenCotCoSo(){
         try {

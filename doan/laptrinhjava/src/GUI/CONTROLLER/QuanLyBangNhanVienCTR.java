@@ -115,7 +115,7 @@ public class QuanLyBangNhanVienCTR {
 
     	JPanel chucnang = new JPanel(new FlowLayout());
     	chucnang.add(them);
-    	chucnang.add(xoa);
+//    	chucnang.add(xoa);
     	chucnang.add(sua);
     	chucnang.add(timkiem);
     	chucnang.setBounds(5,100,rightPanel.getWidth()-5,40);
@@ -202,10 +202,11 @@ public class QuanLyBangNhanVienCTR {
         
         JLabel jlb_macoso = new JLabel("Mã cơ sở: ");
         cbb_CoSo = new JComboBox<String>();
-        DSCoSo dsCS = bllQuanLyDanhSach.layDsCoSo();
+//        DSCoSo dsCS = bllQuanLyDanhSach.layDsCoSo();
+        String[] dsCS = {"CS001", "CS002", "CS003"};
         cbb_CoSo.addItem("Cơ sở");
-        for(CoSo cs: dsCS.dsCoSo) {
-        	cbb_CoSo.addItem(cs.getMaCoSo());
+        for(String cs: dsCS) {
+        	cbb_CoSo.addItem(cs);
         }
         jlb_macoso.setFont(f);
         
@@ -309,7 +310,6 @@ public class QuanLyBangNhanVienCTR {
         model.addColumn("ID Tài Khoản");
         
         model.setRowCount(0);
-        System.out.println(dsNV.size() +" "+ dsQuyen.size());
         
         for(int i = 0; i < dsNV.size();i++) {
         	model.addRow(new Object[] {
@@ -491,6 +491,7 @@ public class QuanLyBangNhanVienCTR {
 				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
                 Date date;
                 String maGoc = new String();
+                String tenGoc = new String();
 				if(i>=0) {
 					maGoc = bang.getValueAt(i, 0).toString().trim();
 					int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
@@ -505,7 +506,6 @@ public class QuanLyBangNhanVienCTR {
 					String gioitinh = male.isSelected() ? "Nam" : "Nữ";
 					String vaitro = cbb_vaiTro.getSelectedItem().toString();
 					String matKhau = jtf_password.getText().trim();
-					System.out.println(matKhau);
 					String taiKhoan = jtf_account.getText().trim();
 					String IDTaiKhoan = jtf_idAccount.getText().trim();
                     String luong = (String)jtf_luong.getText();
@@ -527,6 +527,10 @@ public class QuanLyBangNhanVienCTR {
 					}
 					if(matKhau.length() < 6) {
 						JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự trở lên","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(!ten.equals(tenGoc)) {
+						JOptionPane.showMessageDialog(rightPanel, "Không được sửa tên nhân viên!","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					if(bllqlds.kiemTraLuong(luong)==-1) {
@@ -612,8 +616,8 @@ public class QuanLyBangNhanVienCTR {
                     			dsNhanVien.get(i).getMacoso(),
                     			dsNhanVien.get(i).getVaitro().trim(),
                     			dsNhanVien.get(i).getLuong(),
-                    			dsTKNV2.get(i).getTaiKhoan(),
-                    			dsTKNV2.get(i).getMatKhau(),
+                    			dsTKNV2.get(i).getTaiKhoan().trim(),
+                    			dsTKNV2.get(i).getMatKhau().trim(),
                     			dsNhanVien.get(i).getIDTaiKhoan()
                         	});
                     }

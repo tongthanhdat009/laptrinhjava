@@ -1,16 +1,28 @@
 package BLL;
+import java.util.ArrayList;
+
+import DAL.DataCoSo;
 import DAL.DataHoiVien;
 import DAL.DataTaiKhoan;
+import DTO.DSCoSo;
 import DTO.DTOTaiKhoan;
 
 public class BLLDangNhap {
     private DataTaiKhoan data;
+    private DataCoSo dataCoSo;
     public BLLDangNhap()
     {
+    	dataCoSo = new DataCoSo();
         data = new DataTaiKhoan();
     }
     public String KiemTraDangNhap(String taiKhoan, String matKhau)
     {
         return data.KiemTraDangNhap(taiKhoan, matKhau);
+    }
+    public boolean kiemTraTaiKhoanCoSo(DTOTaiKhoan tk, String maCoSo) {
+    	return data.kiemTraTaiKhoanCoSo(tk, maCoSo);
+    }
+    public ArrayList<String> dsMaCS(){
+    	return dataCoSo.DSMaCoSoARR();
     }
 }

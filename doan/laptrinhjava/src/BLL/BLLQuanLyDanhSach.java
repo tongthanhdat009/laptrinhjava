@@ -34,6 +34,7 @@ import DTO.MayChay;
 import DTO.NhanVien;
 import DTO.Ta;
 import DTO.ThietBiCoSo;
+import DTO.ThongTinChiTietHangHoa;
 import DTO.Xa;
 import DTO.dichVu;
 import DTO.dsHangHoa;
@@ -593,6 +594,10 @@ public class BLLQuanLyDanhSach{
     }
     public ArrayList<MayChay> layDSMayChay() {
         return dataThietBi.layDanhSachMayChay();
+    }
+    public ArrayList<ThongTinChiTietHangHoa> layDSBanHang(String CoSo)
+    {
+        return dataHangHoa.layDSBanHang(CoSo);
     }
     //quyền
     public ArrayList<String> layDSTenQuyenNV(){

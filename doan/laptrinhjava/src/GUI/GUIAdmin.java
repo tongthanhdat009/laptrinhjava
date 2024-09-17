@@ -19,6 +19,7 @@ import DTO.HoiVien;
 import DTO.LoaiThietBi;
 import DTO.NhanVien;
 import DTO.DTOTaiKhoan;
+import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.XuatExcelCTR;
@@ -366,6 +367,7 @@ public class GUIAdmin{
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
         		rightPanel.setLayout(null);
+                rightPanel.add(new MuaHangCTR());
         	}
         });
         buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));

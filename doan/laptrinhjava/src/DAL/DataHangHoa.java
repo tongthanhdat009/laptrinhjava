@@ -2,10 +2,8 @@ package DAL;
 
 import java.sql.*;
 import java.util.ArrayList;
-
-import DTO.HoiVien;
+import DTO.ThongTinChiTietHangHoa;
 import DTO.dsHangHoa;
-import DTO.dsHoiVien;
 import DTO.hangHoa;
 
 public class DataHangHoa {
@@ -195,5 +193,84 @@ public class DataHangHoa {
         }
         return dsHH;
     }
- 
+    public ArrayList<ThongTinChiTietHangHoa> layDSBanHang(String maCoSo)
+    {
+        ArrayList<ThongTinChiTietHangHoa> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = 'Đang bán'";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.add(new ThongTinChiTietHangHoa(rs.getString("MaHangHoa"), rs.getString("TenLoaiHangHoa"), rs.getInt("GiaBan"), rs.getString("MaCoSo"),rs.getString("HinhAnh"),rs.getInt("SoLuong")));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
+    public String timLoai(String maHangHoa)
+    {
+        String truyVan = "SELECT Loai FROM HangHoa WHERE MaHangHoa = '"+maHangHoa+"'";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            if(rs.next())
+            return rs.getString(1);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return "error";
+    }
+    public String timThongTinChiTietHangHoa(String maHangHoa, String maCoSo)
+    {
+        String maLoai = timLoai(maHangHoa);
+        String thongTin="";
+        System.out.println(maLoai);
+        String truyVan;
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            if(maLoai.equals("Ta"))
+            truyVan = "SELECT * FROM "+maLoai+",HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo";
+            else truyVan = "SELECT * FROM HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo";
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maHangHoa);
+            statement.setString(2, maCoSo);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()) {
+                thongTin+=rs.getString("TenLoaiHangHoa")+"\n";
+                thongTin +="Tên cơ sở: "+rs.getString("TenCoSo")+"\n";
+                if(maLoai.equals("Ta")) {
+                    thongTin += "Loại: Tạ\n";
+                    thongTin+="Còn: "+rs.getInt("SoLuong")+" quả\n";
+                    thongTin+="Khối lượng: "+rs.getInt("KhoiLuong")+"kg\n";
+                    thongTin+="Chất liệu: "+rs.getString("ChatLieu")+"\n";
+                    thongTin+="Màu sắc: "+rs.getString("MauSac")+"\n";
+                }
+                else if(maLoai.equals("MayChay")){
+                    thongTin += "Loại: Máy chạy";
+                    thongTin+="Còn: "+rs.getInt("SoLuong")+" Máy\n";
+                    thongTin+="Công suất: "+rs.getInt("CongSuat")+"w\n";
+                    thongTin+="Tốc độ tối đa: "+rs.getInt("TocDoToiDa")+"km/h\n";
+                    thongTin+="Nhà sản xuất: "+rs.getString("NhaSanXuat")+"\n";
+                    thongTin+="Kích thước: "+rs.getString("KichThuoc")+"\n";
+                }
+                else if(maLoai.equals("Xa")) {
+                    thongTin += "Loại: Xà";
+                    thongTin+="Còn: "+rs.getInt("SoLuong")+" Thiết bị";
+                    thongTin+="Kiểu: "+rs.getString("LoaiXa")+"\n";
+                    thongTin+="Chất liệu: "+rs.getString("ChatLieu")+"\n";
+                    thongTin+="Chiều dài: "+rs.getInt("ChieuDai")+"cm\n";
+                    thongTin+="Đường kính: "+rs.getInt("DuongKinh")+"cm\n";
+                    thongTin+="Chiều cao: "+rs.getInt("ChieuCao")+"cm\n";
+                    thongTin+="Tải trọng: "+rs.getInt("KichThuoc")+"kg\n";
+                }
+                else thongTin+="Còn: "+rs.getInt("SoLuong")+" Thiết bị\n";
+                thongTin+="Giá: "+rs.getString("GiaBan")+"";
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return thongTin;
+    }
 }

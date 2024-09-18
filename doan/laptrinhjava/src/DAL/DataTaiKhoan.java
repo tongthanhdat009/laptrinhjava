@@ -6,10 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import DTO.CoSo;
 import DTO.DSCoSo;
+import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.NhanVien;
@@ -327,5 +332,22 @@ public class DataTaiKhoan {
         }
         return false;
     }
-
+    
+    //thông tin người dùng hiện tại theo mã quyền hội viên
+    public HoiVien thongTinCaNhan(DTOTaiKhoan tk) {
+    	   String truyVan = "SELECT hv.*, tk.TaiKhoan, tk.MatKhau From TaiKhoan tk, HoiVien hv WHERE hv.IDTaiKhoan = tk.IDTaiKhoan AND tk.IDTaiKhoan = '"+tk.getIDTaiKhoan()+"'";
+    	   try {
+               con = DriverManager.getConnection(dbUrl, userName, password);
+               Statement stmt = con.createStatement();
+               ResultSet rs = stmt.executeQuery(truyVan);
+               if (rs.next()) {
+            	   return new HoiVien(rs.getString(1), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim(), rs.getDate(5), rs.getString(6),rs.getString(7));
+               }
+//               while(rs.next())
+//               ds.them(new CoSo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6)));
+           } catch (Exception e) {
+               System.out.println(e);
+           }
+           return null;
+    }
 }

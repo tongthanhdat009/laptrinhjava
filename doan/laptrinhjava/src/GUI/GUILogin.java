@@ -136,6 +136,8 @@ public class GUILogin extends JFrame implements ActionListener{
                     else if (parts[3].trim().equals("Q0001")){
 //                    	tạo giao diện hội viên
                     	System.out.println("Đăng nhập thành công");
+                    	new GUIUser(tk,"");
+                    	dispose();
                     }
                     else {
 //                    	if(dangNhap.kiemTraTaiKhoanCoSo(tk, trangThaiDangNhap))
@@ -149,7 +151,7 @@ public class GUILogin extends JFrame implements ActionListener{
                             String coSoDaChon = (String) comboBox.getSelectedItem();
                             if(dangNhap.kiemTraTaiKhoanCoSo(tk, coSoDaChon)) {
                             	JOptionPane.showMessageDialog(null, "Đăng nhập thành công!" + coSoDaChon);
-    	                    	new GUIUser(tk,"text");
+    	                    	new GUIUser(tk, coSoDaChon);
 		                    	dispose();
                             	return;
                             }

@@ -23,6 +23,7 @@ import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
+import GUI.CONTROLLER.informationCTR;
 import GUI.CONTROLLER.thongKe;
 import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
@@ -299,6 +300,22 @@ public class GUIUser extends JFrame {
         memberMNG.setIcon(new ImageIcon(scaleMembershipIcon));
         memberMNG.setFocusPainted(false);
         dsNut.add(memberMNG);
+
+        JButton showInforBTN = new JButton("Thông tin cá nhân");
+        showInforBTN.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		informationCTR inforCTR = new informationCTR(tk);
+        		rightPanel.add(inforCTR);
+			}
+		});
+        showInforBTN.setFont(new Font("Times New Roman", Font.BOLD, 23));
+        showInforBTN.setFocusPainted(false);
+        dsNut.add(showInforBTN);
 //        memberMNG.setBounds(23, 347, 300, 50);
 //        managementPanel.add(memberMNG);
         
@@ -347,6 +364,8 @@ public class GUIUser extends JFrame {
         
         
         btnGenerate(dsNut, dsCNUser, managementPanel,leftPanel);
+        for(int i =0; i<dsCNUser.size();i++)
+        	System.out.println(dsCNUser.get(i).getiDChucNang());
 
         getContentPane().add(rightPanel);
         rightPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -371,7 +390,7 @@ public class GUIUser extends JFrame {
     	int y = 40;
     	for(DTOChucNang cNang : dsCNUser) {
     		for(JButton btn : dsNut) {
-    			if(cNang.getTenChucNang().trim().equals(btn.getText())) {
+    			if(cNang.getTenChucNang().trim().equals(btn.getText().trim())) {
     				btn.setBounds(x, y, 300, 50);
     				managementPanel.add(btn);
     			}

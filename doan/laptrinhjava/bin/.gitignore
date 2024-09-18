@@ -1,4 +1,8 @@
+/.vscode/
 /BLL/
+/CONTROLLER/
 /DAL/
 /DTO/
 /GUI/
+/asset/
+/bin/

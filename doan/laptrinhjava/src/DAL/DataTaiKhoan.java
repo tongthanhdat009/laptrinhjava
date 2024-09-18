@@ -341,7 +341,7 @@ public class DataTaiKhoan {
                Statement stmt = con.createStatement();
                ResultSet rs = stmt.executeQuery(truyVan);
                if (rs.next()) {
-            	   return new HoiVien(rs.getString(1), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim(), rs.getDate(5), rs.getString(6),rs.getString(7));
+            	   return new HoiVien(rs.getString(1), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim(), rs.getDate(5), rs.getString(6),rs.getString(7),rs.getString(8));
                }
 //               while(rs.next())
 //               ds.them(new CoSo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6)));
@@ -350,4 +350,22 @@ public class DataTaiKhoan {
            }
            return null;
     }
+    
+    //đổi mật khẩu một tài khoản
+	public boolean doiMatKhauTaiKhoan(DTOTaiKhoan a, String newPass) {
+        //trả về 1 sửa thành công, 0 thất bại
+        String truyVan = "UPDATE TaiKhoan SET MatKhau = ? FROM TaiKhoan Where IDTaiKhoan = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, newPass);
+            statement.setString(2, a.getIDTaiKhoan());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
 }

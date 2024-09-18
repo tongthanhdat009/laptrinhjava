@@ -1,6 +1,8 @@
 package DAL;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.dsHoiVien;
 public class DataHoiVien {
@@ -59,7 +61,7 @@ public class DataHoiVien {
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, NgaySinh, SoDienThoai, IDTaiKhoan) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO HoiVien (MAHV, HoTenHV, GioiTinh, Gmail, NgaySinh, SoDienThoai, IDTaiKhoan, Anh) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, hoiVien.getMaHoiVien());
             preparedStatement.setString(2, hoiVien.getHoten());
@@ -68,6 +70,7 @@ public class DataHoiVien {
             preparedStatement.setString(5, hoiVien.getNgaysinh());
             preparedStatement.setString(6, hoiVien.getSdt());
             preparedStatement.setString(7, hoiVien.getIDTaiKhoan());
+            preparedStatement.setString(8, "src/asset/img/avatar/user.png");
             
             if (preparedStatement.executeUpdate() > 0)  return true;
         } catch(Exception e){
@@ -111,7 +114,7 @@ public class DataHoiVien {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6),rs.getString(7)));
+                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8)));
             }
         }catch(Exception e)
         {
@@ -164,16 +167,15 @@ public class DataHoiVien {
     public boolean sua(HoiVien a) //test rồi
     {
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE HoiVien SET HoTenHV = ?, GioiTinh = ?, Gmail = ?, NgaySinh = ?, SoDienThoai = ? FROM HoiVien Where MaHV = ? ";
+        String truyVan = "UPDATE HoiVien SET GioiTinh = ?, Gmail = ?, NgaySinh = ?, SoDienThoai = ? FROM HoiVien Where MaHV = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(1, a.getHoten());
-            statement.setString(2, a.getGioitinh());
-            statement.setString(3, a.getMail());
-            statement.setString(4, a.getNgaysinh());
-            statement.setString(5, a.getSdt());
-            statement.setString(6, a.getMaHoiVien());
+            statement.setString(1, a.getGioitinh());
+            statement.setString(2, a.getMail());
+            statement.setString(3, a.getNgaysinh());
+            statement.setString(4, a.getSdt());
+            statement.setString(5, a.getMaHoiVien());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;
         } catch (Exception e) {
@@ -196,7 +198,9 @@ public class DataHoiVien {
                                     rs.getString(4),
                                     rs.getDate(5),
                                     rs.getString(6),
-                                    rs.getString(7)));
+                                    rs.getString(7),
+                                    rs.getString(8)
+            						));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -291,5 +295,4 @@ public class DataHoiVien {
     	return false;
     }
     
-   
 }

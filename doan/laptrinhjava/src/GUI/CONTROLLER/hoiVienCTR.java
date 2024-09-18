@@ -30,6 +30,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.commons.math3.analysis.function.Atanh;
+
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
@@ -88,6 +90,7 @@ public class hoiVienCTR {
         System.out.println(dsTK.size() +" "+dsHV.size() );
         // Thêm dữ liệu vào bảng
         for (int i = 0; i < dsHV.size(); i++) {
+        	String anh = new String();
             hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
                 dsHV.get(i).getHoten().trim(),
                 dsHV.get(i).getGioitinh().trim(),
@@ -97,6 +100,7 @@ public class hoiVienCTR {
                 dsHV.get(i).getNgaysinh().trim(),
                 dsTK.get(i).getTaiKhoan().trim(),
                 dsTK.get(i).getMatKhau().trim(),
+                dsHV.get(i).getAnh(),
                 });
         }
         
@@ -189,6 +193,11 @@ public class hoiVienCTR {
                 tempPanel.add(yearCBB);
 
             }
+            else if(i==9) {
+            	tempTF.setEditable(false);
+            	tempPanel.add(tempTF);
+                bangChinhSua.add(tempPanel);
+            }
             // tempPanel.add(tempLabel);
             else{
                 tempPanel.add(tempTF);
@@ -271,6 +280,9 @@ public class hoiVienCTR {
                                                 thongTinMoi.add(matKhau);
                                             }
                                         }
+                                        else if(i == 9){
+        									thongTinMoi.add("src/asset/img/avatar/user.png");
+            							}
                                         else if (text.equals("")) {
                                             JOptionPane.showMessageDialog(bangChinhSua, "Không được để trống thông tin!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
                                             return; // Kết thúc sự kiện nếu có thông tin bị thiếu
@@ -312,9 +324,8 @@ public class hoiVienCTR {
 
                             }
                         }
-                        System.out.println(thongTinMoi);
                         //  Kiểm tra xem thongTinMoi có đủ 6 phần tử không trước khi thêm vào hvList
-                        if (thongTinMoi.size() >= 9) {
+                        if (thongTinMoi.size() >= 10) {
                             
                             Date date = new Date(year-1900, month-1, day); // Tạo đối tượng Date từ năm, tháng và ngày
                             
@@ -324,7 +335,8 @@ public class hoiVienCTR {
 		                            thongTinMoi.get(3),
 		                            date,
 		                            thongTinMoi.get(5),
-		                            thongTinMoi.get(4));
+		                            thongTinMoi.get(4),
+		                            thongTinMoi.get(9));
                             DTOTaiKhoan tempTK = new DTOTaiKhoan(thongTinMoi.get(4),
                             		thongTinMoi.get(7),
                             		thongTinMoi.get(8),
@@ -411,7 +423,6 @@ public class hoiVienCTR {
                         if (i>=0){
                         	maGoc = hvList.getValueAt(i, 0).toString();
                         	tenGoc = hvList.getValueAt(i, 1).toString();
-                        	System.out.println(tenGoc);
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
                             for (Component component : components) {
@@ -472,13 +483,14 @@ public class hoiVienCTR {
                             }
                             if(!thongTinMoi.get(0).equals("") && thongTinMoi.get(0).equals(maGoc)) {
                                 date = new Date(year - 1900, month - 1, day);
-                                HoiVien tempHV = new HoiVien(maGoc,
+                                HoiVien tempHV = new HoiVien(thongTinMoi.get(0),
     		                            thongTinMoi.get(1),
     		                            thongTinMoi.get(2),
     		                            thongTinMoi.get(3),
     		                            date,
     		                            thongTinMoi.get(5),
-    		                            thongTinMoi.get(4));
+    		                            thongTinMoi.get(4),
+    		                            thongTinMoi.get(9));
                                 DTOTaiKhoan tempTK = new DTOTaiKhoan(thongTinMoi.get(4),
                                 		thongTinMoi.get(7),
                                 		thongTinMoi.get(8),
@@ -505,7 +517,7 @@ public class hoiVienCTR {
                         }
                     }
                     //tỉm kiếm hội viên
-                    else if (e.getActionCommand().equals(cmtNut[3])) {
+                    else if (e.getActionCommand().equals(cmtNut[2])) {
                         ArrayList<String> thongTin = new ArrayList<String>();
                         Component[] components = bangChinhSua.getComponents();
                         int day=1, month=1, year=2000;
@@ -554,14 +566,16 @@ public class hoiVienCTR {
                                 }
                             }
                         }
-                        if(thongTin.size()>=9){
+                        if(thongTin.size()>=10){
+                        	System.out.println(thongTin);
                         	HoiVien tempHV = new HoiVien(thongTin.get(0),
 		                            thongTin.get(1),
 		                            thongTin.get(2),
 		                            thongTin.get(3),
 		                            date,
 		                            thongTin.get(5),
-		                            thongTin.get(4));
+		                            thongTin.get(4),
+		                            thongTin.get(9));
                             if(bllQuanLyDanhSach.timKiemHoiVien(tempHV).dsHV.size() != 0 && bllQuanLyDanhSach.timKiemTKHV(tempHV).size() != 0){
                                 JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm hội viên", JOptionPane.INFORMATION_MESSAGE);
                                 ArrayList<DTOTaiKhoan> dsTK2 = bllQuanLyDanhSach.timKiemTKHV(tempHV);
@@ -575,8 +589,9 @@ public class hoiVienCTR {
                                         dsHV2.dsHV.get(i).getIDTaiKhoan().trim(),
                                         dsHV2.dsHV.get(i).getSdt().trim(),
                                         dsHV2.dsHV.get(i).getNgaysinh().trim(),
-                                        dsTK2.get(i).getTaiKhoan(),
-                                        dsTK2.get(i).getMatKhau()});
+                                        dsTK2.get(i).getTaiKhoan().trim(),
+                                        dsTK2.get(i).getMatKhau().trim(),
+                                        dsHV.get(i).getAnh()});
                                 }
                             }
                             else{
@@ -589,8 +604,9 @@ public class hoiVienCTR {
                                         dsHV.get(i).getIDTaiKhoan().trim(),
                                         dsHV.get(i).getSdt().trim(),
                                         dsHV.get(i).getNgaysinh().trim(),
-                                        dsTK.get(i).getTaiKhoan(),
-                                        dsTK.get(i).getMatKhau()});
+                                        dsTK.get(i).getTaiKhoan().trim(),
+                                        dsTK.get(i).getMatKhau().trim(),
+                                        dsHV.get(i).getAnh()});
                                 }
                             }
                         }
@@ -622,7 +638,12 @@ public class hoiVienCTR {
                             for(Component b : smallComponents){
                                 if(b instanceof JTextField){
                                     JTextField tempTF = (JTextField) b;
-                                    tempTF.setText(hvList.getValueAt(i, j).toString().trim());
+                                    if(hvList.getValueAt(i, j)==null) {
+                                        tempTF.setText("NULL");
+                                    }
+                                    else {
+                                    	tempTF.setText(hvList.getValueAt(i, j).toString().trim());
+									}
                                     
                                 }
                                 else if(b instanceof JRadioButton) { 

@@ -350,6 +350,7 @@ public class GUIAdmin{
                 tenCotHV.add("Ngày sinh");
                 tenCotHV.add("Tài khoản");
                 tenCotHV.add("Mật khẩu");
+                tenCotHV.add("Ảnh đại diện");
                 hoiVienCTR hvCTR = new hoiVienCTR(rightPanel,tenCotHV,dsHV,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
                 hvCTR.update();
         	}

@@ -12,4 +12,7 @@ public class BLLInformation {
 	public HoiVien layThongTinNguoiDung(DTOTaiKhoan tk) {
 		return data.thongTinCaNhan(tk);
 	}
+	public boolean doiMatKhauHoiVien(DTOTaiKhoan tk, String pass) {
+		return data.doiMatKhauTaiKhoan(tk,pass);
+	}
 }

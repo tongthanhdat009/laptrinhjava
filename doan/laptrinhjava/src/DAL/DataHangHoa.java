@@ -196,7 +196,7 @@ public class DataHangHoa {
     public ArrayList<ThongTinChiTietHangHoa> layDSBanHang(String maCoSo)
     {
         ArrayList<ThongTinChiTietHangHoa> ds = new ArrayList<>();
-        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = 'Đang bán'";
+        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = 'Đang bán' AND MaCoSo = '"+maCoSo+"'";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
@@ -226,7 +226,6 @@ public class DataHangHoa {
     {
         String maLoai = timLoai(maHangHoa);
         String thongTin="";
-        System.out.println(maLoai);
         String truyVan;
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -272,5 +271,37 @@ public class DataHangHoa {
             System.out.println(e);
         }
         return thongTin;
+    }
+    public ArrayList<ThongTinChiTietHangHoa> timDSHangBan(String ten, String maCoSo, String loai)
+    {
+        ArrayList<ThongTinChiTietHangHoa> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = 'Đang bán'";
+        ArrayList<String> s = new ArrayList<>();
+        if(!ten.equals("NULL")) {
+            truyVan+=" AND TenLoaiHangHoa = ?";
+            s.add(ten);
+        }
+        if(!maCoSo.equals("NULL")) {
+            truyVan+=" AND MaCoSo = ?";
+            s.add(maCoSo);
+        }
+        if(!loai.equals("NULL")) {
+            truyVan+=" AND Loai = ?";
+            s.add(loai);
+        }
+        System.out.print(truyVan);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            for(int i=0;i<s.size();i++)
+            statement.setString(i+1,s.get(i));
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            ds.add(new ThongTinChiTietHangHoa(rs.getString("MaHangHoa"), rs.getString("TenLoaiHangHoa"), rs.getInt("GiaBan"), rs.getString("MaCoSo"),rs.getString("HinhAnh"),rs.getInt("SoLuong")));
+            System.out.println(ds.size());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
     }
 }

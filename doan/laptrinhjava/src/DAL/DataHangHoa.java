@@ -2,6 +2,8 @@ package DAL;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import DTO.GioHang;
 import DTO.ThongTinChiTietHangHoa;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
@@ -196,7 +198,7 @@ public class DataHangHoa {
     public ArrayList<ThongTinChiTietHangHoa> layDSBanHang(String maCoSo)
     {
         ArrayList<ThongTinChiTietHangHoa> ds = new ArrayList<>();
-        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = 'Đang bán' AND MaCoSo = '"+maCoSo+"'";
+        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = N'Đang bán' AND MaCoSo = '"+maCoSo+"'";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
@@ -229,9 +231,10 @@ public class DataHangHoa {
         String truyVan;
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            if(maLoai.equals("Ta"))
-            truyVan = "SELECT * FROM "+maLoai+",HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo";
-            else truyVan = "SELECT * FROM HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo";
+            if(maLoai.equals("Ta")||maLoai.equals("MayChay")||maLoai.equals("Xa"))
+            truyVan = "SELECT * FROM "+maLoai+",HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo AND HangHoa.MaHangHoa = HangHoaOCoSo.MaHangHoa";
+            else truyVan = "SELECT * FROM HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo AND HangHoa.MaHangHoa = HangHoaOCoSo.MaHangHoa";
+            System.out.println(truyVan);
             PreparedStatement statement = con.prepareStatement(truyVan);
             statement.setString(1, maHangHoa);
             statement.setString(2, maCoSo);
@@ -275,7 +278,7 @@ public class DataHangHoa {
     public ArrayList<ThongTinChiTietHangHoa> timDSHangBan(String ten, String maCoSo, String loai)
     {
         ArrayList<ThongTinChiTietHangHoa> ds = new ArrayList<>();
-        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = 'Đang bán'";
+        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoaOCoSo.MaHangHoa = HangHoa.MaHangHoa AND TrangThai = N'Đang bán'";
         ArrayList<String> s = new ArrayList<>();
         if(!ten.equals("NULL")) {
             truyVan+=" AND TenLoaiHangHoa = ?";
@@ -289,7 +292,7 @@ public class DataHangHoa {
             truyVan+=" AND Loai = ?";
             s.add(loai);
         }
-        System.out.print(truyVan);
+        System.out.println(truyVan);
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
@@ -298,10 +301,139 @@ public class DataHangHoa {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             ds.add(new ThongTinChiTietHangHoa(rs.getString("MaHangHoa"), rs.getString("TenLoaiHangHoa"), rs.getInt("GiaBan"), rs.getString("MaCoSo"),rs.getString("HinhAnh"),rs.getInt("SoLuong")));
-            System.out.println(ds.size());
         } catch (Exception e) {
             System.out.println(e);
         }
         return ds;
+    }
+    public int kiemTraTonTaiGioHang(String IDTaiKhoan, String maHangHoa, String MaCoSo)
+    {
+        String truyVan = "SELECT * FROM GioHang WHERE IDTaiKhoan = '"+IDTaiKhoan+"' AND MaHangHoa = '"+maHangHoa+"' AND MaCoSo = '"+MaCoSo+"'";
+        System.out.println(truyVan);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            if(rs.next()) return rs.getInt("SoLuongHangHoa");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    public boolean choVaoGioHang(String IDTaiKhoan, String maHangHoa,String maCoSo, int soLuong)
+    {
+        int soLuongHienTai = kiemTraTonTaiGioHang(IDTaiKhoan,maHangHoa,maCoSo);
+        if(soLuongHienTai == 0) 
+            return themVaoGioHang(IDTaiKhoan,maHangHoa,soLuong,maCoSo);
+        else return suaSoLuongHangGioHang(IDTaiKhoan,maHangHoa,soLuong+soLuongHienTai,maCoSo);
+    }
+    public int timSoLuongHangHoaCoSo(String maHangHoa, String maCoSo)
+    {
+        String truyVan = "SELECT * FROM HangHoaOCoSo WHERE MaHangHoa = ? AND MaCoSo = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maHangHoa);
+            statement.setString(2, maCoSo);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()) return rs.getInt("SoLuong");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+    public boolean suaSoLuongHangHoaOCoSo(String maHangHoa, String maCoSo, int soLuong)
+    {
+        String truyVan = "UPDATE HangHoaOCoSo SET SoLuong = ? WHERE MaHangHoa = ? AND MaCoSo = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setInt(1, soLuong);
+            statement.setString(2, maHangHoa);
+            statement.setString(3,maCoSo);
+            if(statement.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean suaSoLuongHangGioHang(String IDTaiKhoan, String maHangHoa, int soLuong, String maCoSo)
+    {
+        String truyVan = "UPDATE GioHang SET SoLuongHangHoa = ? WHERE IDTaiKhoan = ? AND MaHangHoa = ? AND MaCoSo = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setInt(1, soLuong);
+            statement.setString(2, IDTaiKhoan);
+            statement.setString(3, maHangHoa);
+            statement.setString(4, maCoSo);
+            if(statement.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public int timGia(String maCoSo, String maHangHoa)
+    {
+        String truyVan = "Select * From HangHoaOCoSo WHERE MaCoSo = ? AND MaHangHoa = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maCoSo);
+            statement.setString(2, maHangHoa);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()) return rs.getInt("Gia");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    public boolean themVaoGioHang(String IDTaiKhoan, String maHangHoa, int soLuong, String maCoSo)
+    {
+        String truyVan = "INSERT INTO GioHang(IDTaiKhoan, MaHangHoa, MaCoSo, SoLuongHangHoa) VALUES (?,?,?,?)";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, IDTaiKhoan);
+            statement.setString(2, maHangHoa);
+            statement.setString(3, maCoSo);
+            statement.setInt(4, soLuong);
+            if(statement.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public ArrayList<GioHang> layDSGioHang(String IDTaiKhoan)
+    {
+        ArrayList<GioHang> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM GioHang, HangHoa, HangHoaOCoSo WHERE IDTaiKhoan = '"+IDTaiKhoan+"' AND HangHoa.MaHangHoa = GioHang.MaHangHoa AND HangHoaOCoSo.MaHangHoa = GioHang.MaHangHoa AND HangHoaOCoSo.MaCoSo = GioHang.MaCoSo";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.add(new GioHang(rs.getString("IDTaiKhoan"), rs.getString("MaHangHoa"), rs.getInt("SoLuongHangHoa"), rs.getInt("GiaBan"), rs.getString("MaCoSo"), rs.getString("HinhAnh"), rs.getString("TenLoaiHangHoa")));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
+    public boolean xoaGioHang(String maHangHoa, String IDTaiKhoan, String maCoSo)
+    {
+        System.out.println(maHangHoa+":"+IDTaiKhoan+":"+maCoSo);
+        String truyVan = "DELETE FROM GioHang WHERE MaHangHoa = ? AND IDTaiKhoan = ? AND MaCoSo = ?";
+        System.out.println(truyVan);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, maHangHoa);
+            statement.setString(2, IDTaiKhoan);
+            statement.setString(3, maCoSo);
+            if(statement.executeUpdate() > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

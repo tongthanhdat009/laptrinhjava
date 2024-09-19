@@ -416,6 +416,10 @@ public class QuanLyBangNhanVienCTR {
                             String taiKhoan = jtf_account.getText().trim();
                             String IDTaiKhoan = bllqlds.kiemTraMaTK().trim();
                             String vaitro = cbb_vaiTro.getSelectedItem().toString().trim();
+                            if(!bllQuanLyDanhSach.kiemTraTenTK(taiKhoan)){
+                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                        	}
                             if(vaitro.equals("Vai trò")) {
                                 JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn vai trò của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
@@ -492,8 +496,12 @@ public class QuanLyBangNhanVienCTR {
                 Date date;
                 String maGoc = new String();
                 String tenGoc = new String();
+                String taiKhoanGoc = new String();
 				if(i>=0) {
 					maGoc = bang.getValueAt(i, 0).toString().trim();
+					tenGoc = bang.getValueAt(i, 1).toString().trim();
+					taiKhoanGoc = bang.getValueAt(i, 9).toString().trim();
+					
 					int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
 					int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
 					int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
@@ -533,6 +541,10 @@ public class QuanLyBangNhanVienCTR {
 						JOptionPane.showMessageDialog(rightPanel, "Không được sửa tên nhân viên!","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					if(!taiKhoan.equals(taiKhoanGoc)){
+                		JOptionPane.showMessageDialog(null, "Không được sửa đổi tên tài khoản!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                        return;
+                	}
 					if(bllqlds.kiemTraLuong(luong)==-1) {
 						JOptionPane.showMessageDialog(rightPanel, "Lương không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;

@@ -141,7 +141,13 @@ public class BLLQuanLyDanhSach{
     public ArrayList<String> layDSMaTKHV(){
     	return dataTaiKhoan.layDanhSachMaTKHV();
     }
+    public boolean kiemTraTenTK(String tenTaiKhoan) {
+		return dataTaiKhoan.kiemTraTrungLapTK(tenTaiKhoan);
+	}
     
+    public boolean kiemTraTenTKKhiTKDaTonTai(String tenTaiKhoan, String IDTaiKhoan) {
+    	return dataTaiKhoan.kiemTraTrungLapTKVoiTKDaTonTai(tenTaiKhoan, IDTaiKhoan);
+    }
     //danh sách cơ sở
     public DSCoSo layDsCoSo(){
         return dataCoSo.layDSCoSo();

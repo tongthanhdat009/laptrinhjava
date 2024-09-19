@@ -274,6 +274,16 @@ public class hoiVienCTR {
                                                 thongTinMoi.add(hvSDT);
                                             }
                                         }
+                                        else if (i==7) {
+                                        	String tenTK = textField.getText().trim();
+                                        	if(!bllQuanLyDanhSach.kiemTraTenTK(tenTK)){
+                                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                                return;
+                                        	}
+                                        	else {
+                                        		thongTinMoi.add(tenTK);
+                                        	}
+                                        }
                                         else if(i==8) {
                                         	String matKhau = text;
                                         	if(matKhau.length() < 6) {
@@ -424,9 +434,12 @@ public class hoiVienCTR {
                         int day=1, year=2000, month=1;
                         String maGoc = new String();
                         String tenGoc = new String();
+                        String taiKhoanGoc = new String();
                         if (i>=0){
                         	maGoc = hvList.getValueAt(i, 0).toString();
                         	tenGoc = hvList.getValueAt(i, 1).toString();
+                        	taiKhoanGoc = hvList.getValueAt(i, 5).toString().trim();
+                        	
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
                             for (Component component : components) {
@@ -485,6 +498,15 @@ public class hoiVienCTR {
                                 JOptionPane.showMessageDialog(null, "Không được sửa tên hội viên!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
+                            if(!thongTinMoi.get(7).equals(taiKhoanGoc)) {
+                            	JOptionPane.showMessageDialog(null, "Không được sửa đổi tên tài khoản!!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        	String tenTK = thongTinMoi.get(7).trim();
+                        	if(!bllQuanLyDanhSach.kiemTraTenTK(tenTK)){
+                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                        	}
                             if(!thongTinMoi.get(0).equals("") && thongTinMoi.get(0).equals(maGoc)) {
                                 date = new Date(year - 1900, month - 1, day);
                                 HoiVien tempHV = new HoiVien(thongTinMoi.get(0),

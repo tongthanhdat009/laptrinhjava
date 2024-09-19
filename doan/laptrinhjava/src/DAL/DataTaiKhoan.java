@@ -20,6 +20,7 @@ import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.NhanVien;
 import DTO.dsHoiVien;
+import GUI.renderer;
 
 public class DataTaiKhoan {
 	private Connection con;
@@ -384,4 +385,44 @@ public class DataTaiKhoan {
             System.out.println(e);
         }
         return false;	}
+	//kiểm tra trùng lập tài khoản khi hội viên tự đăng ký hoặc khi sử dụng chức năng thêm hội viên hoặc nhân viên
+	public boolean kiemTraTrungLapTK(String tenTK) {
+		String truyVan ="SELECT COUNT(*) FROM TaiKhoan WHERE TaiKhoan = '"+tenTK+"';";
+		int count = 0;
+		try {
+			con = DriverManager.getConnection(dbUrl,userName,password);
+			Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);		
+            while (rs.next()) {
+            	count = rs.getInt(1);
+			}
+            if(count > 0) {
+            	return false;
+            }
+		}
+		catch (Exception ex) {
+			System.out.println(ex);
+		}
+		return true;
+	}
+	//kiểm tra trùng lập tài khoản khi sử dụng chức năng sửa thông tin hội viên hoặc nhân viên
+	public boolean kiemTraTrungLapTKVoiTKDaTonTai(String tenTK, String iDTaiKhoan) {
+		String truyVan ="SELECT COUNT(*) FROM TaiKhoan WHERE TaiKhoan = '"+tenTK+"' AND IDTaiKhoan = '"+iDTaiKhoan+"'";
+		int count = 0;
+		try {
+			con = DriverManager.getConnection(dbUrl,userName,password);
+			Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);		
+            while (rs.next()) {
+            	count = rs.getInt(1);
+			}
+            if(count > 1) {
+            	return false;
+            }
+		}
+		catch (Exception ex) {
+			System.out.println(ex);
+		}
+		return true;
+	}
 }

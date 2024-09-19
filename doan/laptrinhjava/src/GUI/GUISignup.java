@@ -65,7 +65,7 @@ public class GUISignup extends JFrame {
 	private JComboBox cb_day,cb_month,cb_year;
 	private JTextField userNameTF;
 	private String anh = "src//asset//img//avatar//user.png";
-
+	private BLLDangKy bllDangKy = new BLLDangKy();
 	//ảnh khi chưa chọn ảnh đại diện
     ImageIcon noneAva = new ImageIcon("src//asset//img//avatar//user.png");
     Image scaleNoneAvaIcon = noneAva.getImage().getScaledInstance(250, 250,Image.SCALE_DEFAULT);
@@ -141,10 +141,10 @@ public class GUISignup extends JFrame {
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
-		JLabel accountNameLB = new JLabel("Tên đăng kí:");
+		JLabel accountNameLB = new JLabel("Tên tài khoản:");
 		accountNameLB.setIcon(new ImageIcon("src//asset//img/icon//Administrator-icon.png"));
 		accountNameLB.setFont(new Font("Times New Roman", Font.BOLD, 25));
-		accountNameLB.setBounds(30, 160, 202, 48);
+		accountNameLB.setBounds(30, 160, 252, 48);
 		getContentPane().add(accountNameLB);
 		
 		JLabel emailLB = new JLabel("Địa chỉ Email:");
@@ -205,17 +205,11 @@ public class GUISignup extends JFrame {
 			}
 		});
 		
-		
-		
 		btn_login.setBackground(new Color(11, 244, 122));
 		btn_login.setIcon(new ImageIcon("src//asset//img//icon//Login-icon.png"));
 		btn_login.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btn_login.setBounds(245, 670, 180, 70);
 		getContentPane().add(btn_login);
-		
-		
-		
-		
 		
 		JLabel sexLB = new JLabel("Giới tính:");
 		sexLB.setIcon(new ImageIcon("src//asset//img//icon//sex-icon.png"));
@@ -399,6 +393,10 @@ public class GUISignup extends JFrame {
 	            }
 				else if(!m_email.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Email không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else if(!bllDangKy.kiemTraTenTK(accountNameTF.getText().trim())) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Tên tài khoản đã được sử dụng vui lòng thử lại!","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				//regex username

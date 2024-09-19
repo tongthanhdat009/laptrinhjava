@@ -36,6 +36,7 @@ import BLL.BLLQuanLyDanhSach;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.dsHoiVien;
+import GUI.renderer;
 
 public class hoiVienCTR {
 	private JPanel rightPanel;
@@ -90,7 +91,6 @@ public class hoiVienCTR {
         System.out.println(dsTK.size() +" "+dsHV.size() );
         // Thêm dữ liệu vào bảng
         for (int i = 0; i < dsHV.size(); i++) {
-        	String anh = new String();
             hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
                 dsHV.get(i).getHoten().trim(),
                 dsHV.get(i).getGioitinh().trim(),
@@ -215,7 +215,11 @@ public class hoiVienCTR {
         dataTable.setRowHeight(20);
         scrollPane = new JScrollPane(dataTable);
         scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
-
+        dataTable.setRowHeight(100);
+        
+        renderer rd = new renderer();
+        dataTable.getColumnModel().getColumn(9).setCellRenderer(rd);
+        
         //nút chức năng
         String[] cmtNut = {"add", "edit", "Search"};
         String[] anhStrings = {

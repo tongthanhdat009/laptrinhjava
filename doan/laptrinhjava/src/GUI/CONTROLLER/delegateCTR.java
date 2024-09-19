@@ -51,13 +51,6 @@ public class delegateCTR extends JPanel {
 		userPN.setBounds(33, 68, 195, 659);
 		panelContainUser.add(userPN);
 
-		JLabel titleLB = new JLabel("Phân quyền");
-		titleLB.setBounds(520, 5, 174, 42);
-		titleLB.setBackground(new Color(251, 255, 250));
-		titleLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
-
-		this.add(titleLB);
-
 		functionPN = new JPanel();
 		functionPN.setBorder(new LineBorder(new Color(0, 0, 0)));
 		functionPN.setBackground(new Color(86, 130, 89));
@@ -90,6 +83,17 @@ public class delegateCTR extends JPanel {
 		userPN.setLayout(null);
 		rightPanel.setBackground(new Color(241,255,250));
 		rightPanel.add(this);
+		
+		JPanel titlePanel = new JPanel();
+		titlePanel.setBackground(new Color(204, 252, 203));
+		titlePanel.setBounds(0, 0, 1200, 50);
+		add(titlePanel);
+				titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+				JLabel titleLB_1 = new JLabel("Phân quyền");
+				titlePanel.add(titleLB_1);
+				titleLB_1.setBackground(new Color(251, 255, 250));
+				titleLB_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
 	}
 
 	public void generateUser() {
@@ -314,5 +318,4 @@ public class delegateCTR extends JPanel {
 
         return result;
 	}
-
 }

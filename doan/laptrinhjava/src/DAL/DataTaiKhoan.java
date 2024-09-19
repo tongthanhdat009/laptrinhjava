@@ -1,5 +1,6 @@
 package DAL;
 
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -368,4 +369,19 @@ public class DataTaiKhoan {
         return false;
     }
     
+//	cập nhật ảnh cho tài khoản hội viên
+	public boolean thayAnh(DTOTaiKhoan tk, Path anhMoi) {
+		//trả về 1 sửa thành công, 0 thất bại
+        String truyVan = "UPDATE HoiVien SET Anh = ? FROM HoiVien Where IDTaiKhoan = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, anhMoi.toString());
+            statement.setString(2, tk.getIDTaiKhoan());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;	}
 }

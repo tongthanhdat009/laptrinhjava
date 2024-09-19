@@ -22,7 +22,7 @@ import DTO.DTOTaiKhoan;
 import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
-import GUI.CONTROLLER.XuatExcelCTR;
+//import GUI.CONTROLLER.XuatExcelCTR;
 import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
 import GUI.CONTROLLER.thongKe;

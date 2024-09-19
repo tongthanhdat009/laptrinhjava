@@ -15,11 +15,18 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.collections4.functors.AndPredicate;
+import org.apache.xmlbeans.impl.xb.xsdownload.DownloadedSchemaEntry;
 
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -38,6 +45,7 @@ public class informationCTR extends JPanel{
     private JPasswordField confirmOldPassTF;
     private JPasswordField confirmNewPassTF;
 	public informationCTR(DTOTaiKhoan tk){
+		setBackground(new Color(241, 255, 250));
 		this.setLayout(null);
 		this.setBounds(0,0,1200,900);
 		HoiVien thongTin = bllInformation.layThongTinNguoiDung(tk);
@@ -98,10 +106,58 @@ public class informationCTR extends JPanel{
         add(avtLB);
         
         //nút đổi ảnh đại diện
+        
         JButton changeAvarBTN = new JButton("Đổi ảnh đại diện");
         changeAvarBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		JFileChooser imgChooser = new JFileChooser();
+        		 JFileChooser fileChooser = new JFileChooser();
+        	        
+        	        // Tạo bộ lọc chỉ nhận file ảnh (jpg, png, gif)
+        	        FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+        	                "Hình ảnh (JPG, PNG, GIF)", "jpg", "png", "gif");
+        	        
+        	        // Thêm bộ lọc vào JFileChooser
+        	        fileChooser.setFileFilter(imageFilter);
+        	        
+        	        // Loại bỏ tùy chọn "All Files"
+        	        fileChooser.setAcceptAllFileFilterUsed(false);
+        	        
+        	        int result = fileChooser.showOpenDialog(null); // Mở hộp thoại chọn file
+        	        
+        	        if (result == JFileChooser.APPROVE_OPTION) {
+        	        	 File selectedFile = fileChooser.getSelectedFile();
+    	                // Tên file
+    	                String fileName = selectedFile.getName();
+    	                System.out.println("Tên file: " + fileName);
+    	                
+    	                // Thư mục đích (nơi file sẽ được sao chép tới)
+    	                File destinationDir = new File("src//asset//img//avatar");
+    	                
+    	                // Kiểm tra thư mục đích có tồn tại không, nếu không thì tạo mới
+    	                if (!destinationDir.exists()) {
+    	                    destinationDir.mkdirs();
+    	                }
+    	                
+    	                // Đường dẫn đích (bao gồm tên tệp)
+    	                Path destinationPath = destinationDir.toPath().resolve(fileName);
+    	                
+    	                try {
+    	                    // Sao chép tệp tới thư mục đích, ghi đè nếu tệp đã tồn tại
+    	                    Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+    	                    System.out.println("Đã sao chép tệp tới: " + destinationPath);
+    	                    if(bllInformation.thayAnhDaiDien(tk, destinationPath)) {
+    	                    	JOptionPane.showMessageDialog(null, "Đổi ảnh đại diện thành công","Đổi ảnh đại diện", JOptionPane.INFORMATION_MESSAGE);
+    	                    	return;
+    	                    }
+    	                    else {
+    	                    	JOptionPane.showMessageDialog(null, "Đổi ảnh đại diện không thành công","Đổi ảnh đại diện", JOptionPane.ERROR_MESSAGE);
+    	                    	return;
+    	                    }
+    	                } catch (IOException ioException) {
+    	                    ioException.printStackTrace();
+    	                    System.out.println("Sao chép tệp thất bại!");
+    	                }
+        	        }
         	}
         });
         changeAvarBTN.setFont(new Font("Times New Roman", Font.PLAIN, 23));
@@ -109,7 +165,8 @@ public class informationCTR extends JPanel{
         add(changeAvarBTN);
         
         JPanel titlePanel = new JPanel();
-        titlePanel.setBounds(0, 0, 1200, 62);
+        titlePanel.setBackground(new Color(204, 252, 203));
+        titlePanel.setBounds(0, 0, 1200, 50);
         add(titlePanel);
         JLabel title = new JLabel("Thông tin cá nhân");
         titlePanel.add(title);
@@ -249,6 +306,8 @@ public class informationCTR extends JPanel{
         changePassBTN.setBounds(0, 81, 186, 50);
         showPassPanel.add(changePassBTN);
         changePassBTN.setFont(new Font("Tahoma", Font.PLAIN, 23));
+        
+
         
 //		hiển thị hoặc ẩn mật khẩu bằng checkBox
         JCheckBox showPassCheckOnChange = new JCheckBox("Hiển thị mật khẩu");

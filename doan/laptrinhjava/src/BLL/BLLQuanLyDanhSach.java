@@ -612,4 +612,11 @@ public class BLLQuanLyDanhSach{
     public boolean ganLaiQuyenTK(String maTK, String maQuyen) {
     	return dataQuyen.ganLaiQuyenTK(maTK, maQuyen);
     }
+
+    public String getTenNVbyId(String maNV){
+        return dataNhanVien.getTenNhanVien(maNV);
+    }
+    public String getTenCoSobyId(String maCoSo){
+        return dataCoSo.getTenCoSo(maCoSo);
+    }
 }

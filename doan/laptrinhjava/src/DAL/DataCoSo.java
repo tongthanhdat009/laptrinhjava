@@ -6,22 +6,24 @@ import java.util.Vector;
 
 import DTO.CoSo;
 import DTO.DSCoSo;
-import DTO.HoiVien;
-import DTO.dsHoiVien;
 public class DataCoSo {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
     private String userName = "sa"; String password= "123456";
     public ArrayList<String> tenCot = new ArrayList<String>();
 
-    public DataCoSo()
-    {
+    public DataCoSo() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        } catch (Exception e) {
-            System.out.println(e);
+            // Khởi tạo kết nối cơ sở dữ liệu
+            con = DriverManager.getConnection(dbUrl, userName, password);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Không tìm thấy driver cơ sở dữ liệu: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Lỗi kết nối cơ sở dữ liệu: " + e.getMessage());
         }
     }
+    
     public DSCoSo layDSCoSo()
     {
         String truyVan = "SELECT * FROM CoSo";
@@ -243,5 +245,24 @@ public class DataCoSo {
             System.out.println(e);
         }
         return dsCS;
+    }
+
+    public String getTenCoSo(String maCoSo) {
+        String tenCoSo = null;
+        try {
+            // Tạo câu lệnh SQL để lấy tên cơ sở từ mã cơ sở
+            String query = "SELECT TenCoSo FROM CoSo WHERE MaCoSo = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, maCoSo);
+    
+            // Thực hiện truy vấn
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                tenCoSo = rs.getString("TenCoSo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tenCoSo;
     }
 }

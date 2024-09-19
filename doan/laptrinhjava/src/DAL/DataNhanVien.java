@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import DTO.DTOTaiKhoan;
 import DTO.NhanVien;
 
 public class DataNhanVien {
@@ -287,5 +286,23 @@ public class DataNhanVien {
         }
         return null; 
     }
-	
+
+    public String getTenNhanVien(String maNV) {
+        String tenNV = null;
+        try {
+            // Tạo câu lệnh SQL để lấy tên nhân viên từ mã nhân viên
+            String query = "SELECT HoTenNV FROM NhanVien WHERE MaNV = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, maNV);
+    
+            // Thực hiện truy vấn
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                tenNV = rs.getString("HoTenNV");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tenNV;
+    }
 }

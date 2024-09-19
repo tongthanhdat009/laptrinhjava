@@ -16,6 +16,7 @@ import DTO.DTOChucNang;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.DTOThongKeDonHang;
+import DTO.DonNhap;
 import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.NhanVien;
@@ -27,6 +28,7 @@ import GUI.CONTROLLER.informationCTR;
 import GUI.CONTROLLER.thongKe;
 import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
+import GUI.CONTROLLER.xulyDDNCTR;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -34,6 +36,7 @@ import java.awt.Component;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import BLL.BLLDonNhap;
 import BLL.BLLNhapThietBi;
 import BLL.BLLPhanQuyen;
 import BLL.BLLQuanLyDanhSach;
@@ -167,7 +170,22 @@ public class GUIUser extends JFrame {
         dsNut.add(billBTN);
 //        billBTN.setBounds(23, 103, 300, 50);
 //        managementPanel.add(billBTN);
-        
+
+        JButton purchaseOrderBTN = new JButton("Duyệt phiếu nhập");
+        purchaseOrderBTN.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                BLLDonNhap bllDonNhap=new BLLDonNhap();
+                BLLQuanLyDanhSach bllQuanLyDanhSach=new BLLQuanLyDanhSach();
+                ArrayList<DonNhap> ds = bllDonNhap.layDsDonNhap(coSoHienTai);
+                xulyDDNCTR xulyDDNCTR=new xulyDDNCTR();
+                xulyDDNCTR.XuLyDuyetDonNhap(ds, bllDonNhap, bllQuanLyDanhSach, rightPanel, coSoHienTai);
+            }
+        });
+        purchaseOrderBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        purchaseOrderBTN.setFocusPainted(false);
+        purchaseOrderBTN.setIcon(new ImageIcon(scaleBillIcon));
+        dsNut.add(purchaseOrderBTN);
+
         JButton goodsBTN = new JButton("Nhập thiết bị");
         goodsBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -361,8 +379,6 @@ public class GUIUser extends JFrame {
         		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(70, 78, 71)));
         managementPanel.setBackground(new Color(204, 252, 203));
         
-        
-        
         btnGenerate(dsNut, dsCNUser, managementPanel,leftPanel);
         for(int i =0; i<dsCNUser.size();i++)
         	System.out.println(dsCNUser.get(i).getiDChucNang());
@@ -404,7 +420,7 @@ public class GUIUser extends JFrame {
         leftPanel.add(scrollPane);
     }
 	public static void main(String[] args) {
-		DTOTaiKhoan tKhoan = new DTOTaiKhoan("TK500", "TKHV500", "MKHV500", "Q0001");
+		DTOTaiKhoan tKhoan = new DTOTaiKhoan("TK048", "TKHV001", "MKHV001", "Q0002");
         new GUIUser(tKhoan, "CS001");
     }
 }

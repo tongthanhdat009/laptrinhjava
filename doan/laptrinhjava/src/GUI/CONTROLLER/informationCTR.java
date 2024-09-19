@@ -110,55 +110,72 @@ public class informationCTR extends JPanel{
         JButton changeAvarBTN = new JButton("Đổi ảnh đại diện");
         changeAvarBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		 JFileChooser fileChooser = new JFileChooser();
-        	        
-        	        // Tạo bộ lọc chỉ nhận file ảnh (jpg, png, gif)
-        	        FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
-        	                "Hình ảnh (JPG, PNG, GIF)", "jpg", "png", "gif");
-        	        
-        	        // Thêm bộ lọc vào JFileChooser
-        	        fileChooser.setFileFilter(imageFilter);
-        	        
-        	        // Loại bỏ tùy chọn "All Files"
-        	        fileChooser.setAcceptAllFileFilterUsed(false);
-        	        
-        	        int result = fileChooser.showOpenDialog(null); // Mở hộp thoại chọn file
-        	        
-        	        if (result == JFileChooser.APPROVE_OPTION) {
-        	        	 File selectedFile = fileChooser.getSelectedFile();
-    	                // Tên file
-    	                String fileName = selectedFile.getName();
-    	                System.out.println("Tên file: " + fileName);
-    	                
-    	                // Thư mục đích (nơi file sẽ được sao chép tới)
-    	                File destinationDir = new File("src//asset//img//avatar");
-    	                
-    	                // Kiểm tra thư mục đích có tồn tại không, nếu không thì tạo mới
-    	                if (!destinationDir.exists()) {
-    	                    destinationDir.mkdirs();
-    	                }
-    	                
-    	                // Đường dẫn đích (bao gồm tên tệp)
-    	                Path destinationPath = destinationDir.toPath().resolve(fileName);
-    	                
-    	                try {
-    	                    // Sao chép tệp tới thư mục đích, ghi đè nếu tệp đã tồn tại
-    	                    Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-    	                    System.out.println("Đã sao chép tệp tới: " + destinationPath);
-    	                    if(bllInformation.thayAnhDaiDien(tk, destinationPath)) {
-    	                    	JOptionPane.showMessageDialog(null, "Đổi ảnh đại diện thành công","Đổi ảnh đại diện", JOptionPane.INFORMATION_MESSAGE);
-    	                    	return;
-    	                    }
-    	                    else {
-    	                    	JOptionPane.showMessageDialog(null, "Đổi ảnh đại diện không thành công","Đổi ảnh đại diện", JOptionPane.ERROR_MESSAGE);
-    	                    	return;
-    	                    }
-    	                } catch (IOException ioException) {
-    	                    ioException.printStackTrace();
-    	                    System.out.println("Sao chép tệp thất bại!");
-    	                }
+        	    JFileChooser fileChooser = new JFileChooser();
+
+        	    // Tạo bộ lọc chỉ nhận file ảnh (jpg, png, gif)
+        	    FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+        	            "Hình ảnh (JPG, PNG, GIF)", "jpg", "png", "gif");
+
+        	    // Thêm bộ lọc vào JFileChooser
+        	    fileChooser.setFileFilter(imageFilter);
+
+        	    // Loại bỏ tùy chọn "All Files"
+        	    fileChooser.setAcceptAllFileFilterUsed(false);
+
+        	    int result = fileChooser.showOpenDialog(null); // Mở hộp thoại chọn file
+
+        	    if (result == JFileChooser.APPROVE_OPTION) {
+        	        File selectedFile = fileChooser.getSelectedFile();
+        	        // Tên file
+        	        String fileName = selectedFile.getName();
+        	        System.out.println("Tên file: " + fileName);
+
+        	        // Thư mục đích (nơi file sẽ được sao chép tới)
+        	        File destinationDir = new File("src//asset//img//avatar");
+
+        	        // Kiểm tra thư mục đích có tồn tại không, nếu không thì tạo mới
+        	        if (!destinationDir.exists()) {
+        	            destinationDir.mkdirs();
         	        }
+
+        	        // Đường dẫn đích (bao gồm tên tệp)
+        	        Path destinationPath = destinationDir.toPath().resolve(fileName);
+
+        	        // Nếu tệp đã tồn tại, thêm số vào tên tệp cho đến khi tìm được tên tệp mới không trùng
+        	        int counter = 1;
+        	        String newFileName = fileName;
+        	        while (Files.exists(destinationPath)) {
+        	            String fileNameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
+        	            String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+        	            newFileName = fileNameWithoutExt + "_" + counter + fileExtension;
+        	            destinationPath = destinationDir.toPath().resolve(newFileName);
+        	            counter++;
+        	        }
+
+        	        try {
+        	            // Sao chép tệp tới thư mục đích với tên mới nếu cần
+        	            Files.copy(selectedFile.toPath(), destinationPath);
+        	            System.out.println("Đã sao chép tệp tới: " + destinationPath);
+
+        	            // Gọi phương thức thay đổi ảnh đại diện với đường dẫn mới
+        	            if (bllInformation.thayAnhDaiDien(tk, destinationPath)) {
+        	                JOptionPane.showMessageDialog(null, "Đổi ảnh đại diện thành công","Đổi ảnh đại diện", JOptionPane.INFORMATION_MESSAGE);
+        	                String anh = destinationPath.toString();
+        	                //render ảnh đại diện
+        	        		ImageIcon Ava = new ImageIcon(anh);
+        	        		Image scaleAvaImage = Ava.getImage().getScaledInstance(250, 250,Image.SCALE_DEFAULT);
+        	                avtLB.setIcon(new ImageIcon(scaleAvaImage));
+        	            } else {
+        	                JOptionPane.showMessageDialog(null, "Đổi ảnh đại diện không thành công","Đổi ảnh đại diện", JOptionPane.ERROR_MESSAGE);
+        	                return;
+        	            }
+        	        } catch (IOException ioException) {
+        	            ioException.printStackTrace();
+        	            System.out.println("Sao chép tệp thất bại!");
+        	        }
+        	    }
         	}
+
         });
         changeAvarBTN.setFont(new Font("Times New Roman", Font.PLAIN, 23));
         changeAvarBTN.setBounds(78, 380, 234, 50);
@@ -175,6 +192,7 @@ public class informationCTR extends JPanel{
         
         
         JPanel showPassPanel = new JPanel();
+        showPassPanel.setBackground(new Color(241, 255, 250));
         showPassPanel.setBounds(506, 377, 535, 133);
         add(showPassPanel);
         showPassPanel.setLayout(null);
@@ -195,6 +213,7 @@ public class informationCTR extends JPanel{
         passwordLB.setFont(new Font("Times New Roman", Font.BOLD, 30));
         
         JPanel changePassPanel = new JPanel();
+        changePassPanel.setBackground(new Color(241, 255, 250));
         changePassPanel.setBounds(506, 377, 593, 250);
         add(changePassPanel);
         changePassPanel.setLayout(null);

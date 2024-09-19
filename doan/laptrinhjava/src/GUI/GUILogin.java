@@ -18,11 +18,16 @@ public class GUILogin extends JFrame implements ActionListener{
     JPasswordField pass = new JPasswordField();
     BLLDangNhap dangNhap = new BLLDangNhap();
     JButton go;
+    //logo
+    ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
+    Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     public GUILogin() {
             setSize(1600, 900);
             setLocationRelativeTo(null);
             getContentPane().setLayout(null);
-    
+    		setIconImage(logo.getImage());
+    		setTitle("Đăng nhập");
+
             Panel dangNhap = new Panel();
             dangNhap.setLayout(null);
             dangNhap.setBounds(0, 0, 400, 900);
@@ -164,10 +169,10 @@ public class GUILogin extends JFrame implements ActionListener{
                 }
             }
         }
-//        else if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
-//            new GUISignup();
-//            dispose();
-//        }
+        else if(e.getActionCommand().equals("ĐĂNG KÝ TÀI KHOẢN")){
+            new GUISignup();
+            dispose();
+        }
         else JOptionPane.showMessageDialog(this,"Chức năng hiện đang phát triển");
     }
     

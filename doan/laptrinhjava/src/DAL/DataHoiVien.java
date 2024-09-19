@@ -274,7 +274,7 @@ public class DataHoiVien {
     }
 
     public boolean dangkiHoiVien(HoiVien hv) {
-    	String query = "INSERT INTO HoiVien (MaHV,HoTenHV,GioiTinh,Gmail,TaiKhoan,MatKhau,NgaySinh,SoDienThoai) VALUES(?,?,?,?,?,?,?,?)";
+    	String query = "INSERT INTO HoiVien (MaHV,HoTenHV,GioiTinh,Gmail,NgaySinh,SoDienThoai,IDTaiKhoan,Anh) VALUES(?,?,?,?,?,?,?,?)";
     	try {
     		String mahv = taoMaHoiVienMoi();
     		PreparedStatement ps = con.prepareStatement(query);
@@ -285,6 +285,7 @@ public class DataHoiVien {
             ps.setString(5, hv.getNgaysinh());
             ps.setString(6, hv.getSdt());
             ps.setString(7, hv.getIDTaiKhoan());
+            ps.setString(8, hv.getAnh());
             int check = ps.executeUpdate();
             if(check > 0) {
             	return true;

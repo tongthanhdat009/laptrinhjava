@@ -2,6 +2,7 @@ package DAL;
 import java.sql.*;
 import java.util.ArrayList;
 import DTO.HoaDon;
+import DTO.HoaDonVaGia;
 public class DataHoaDon {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -25,6 +26,7 @@ public class DataHoaDon {
             while(rs.next())
             {
                 String ma = rs.getString("MaHD");
+                ma=ma.trim();
                 ma = ma.substring(2);
                 if(max < Integer.parseInt(ma)) max = Integer.parseInt(ma);
             }
@@ -50,6 +52,24 @@ public class DataHoaDon {
         }
         return ds;
     }
+    public ArrayList<HoaDonVaGia> layDSHoaDonVaGiaCua(String IDTaiKhoan)
+    {
+        ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+        String truyVan = "  SELECT HoaDon.MaHD, HoaDon.NgayXuatHD,IDTaiKhoan, TrangThai,SUM(Gia) AS Tong" + 
+                        "  FROM HoaDon, ChiTietHoaDon" + 
+                        "  WHERE HoaDon.MaHD = ChiTietHoaDon.MaHD AND IDTaiKhoan = '"+IDTaiKhoan+"'" + 
+                        "  Group by HoaDon.MaHD, NgayXuatHD, TrangThai, IDTaiKhoan";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.add(new HoaDonVaGia(rs.getString("MaHD"),rs.getDate("NgayXuatHD"), rs.getString("IDTaiKhoan"), rs.getString("TrangThai"),rs.getInt("Tong")));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;      
+    }
     public boolean xoa(String maHoaDon)
     {
         String truyVan = "DELETE FROM HoaDon WHERE MaHD = ?";
@@ -65,16 +85,14 @@ public class DataHoaDon {
     }
     public boolean them(HoaDon hoaDon)
     {
-        String truyVan = "INSERT INTO HoaDon (MaHD, NgayXuatHD, TongTien, MaHV, MaCoSo, TrangThai) VALUES (?, ?, ?, ?, ?, ?)";
+        String truyVan = "INSERT INTO HoaDon (MaHD, NgayXuatHD, IDTaiKhoan, TrangThai) VALUES (?, ?, ?, ?)";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
             stmt.setString(1, hoaDon.getMaHoaDon());
             stmt.setDate(2, hoaDon.getNgayXuatHoaDon());
-            stmt.setInt(3, hoaDon.getTongTien());
-            stmt.setString(4, hoaDon.getMaHoiVien());
-            stmt.setString(5, hoaDon.getMaCoSo());
-            stmt.setString(6, hoaDon.getTrangThai());
+            stmt.setString(3, hoaDon.getMaHoiVien());
+            stmt.setString(4, hoaDon.getTrangThai());
             if(stmt.executeUpdate() > 0) return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -83,15 +101,14 @@ public class DataHoaDon {
     }
     public boolean sua(HoaDon hoaDon)
     {
-        String truyVan = "UPDATE HoaDon SET NgayXuatHD = ?, MaHV = ?, MaCoSo = ?, TrangThai = ? WHERE MaHD = ?";
+        String truyVan = "UPDATE HoaDon SET NgayXuatHD = ?, MaHV = ?, TrangThai = ? WHERE MaHD = ?";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
             stmt.setDate(1, hoaDon.getNgayXuatHoaDon());
             stmt.setString(2, hoaDon.getMaHoiVien());
-            stmt.setString(3, hoaDon.getMaCoSo());
-            stmt.setString(4, hoaDon.getTrangThai());
-            stmt.setString(5, hoaDon.getMaHoaDon());
+            stmt.setString(3, hoaDon.getTrangThai());
+            stmt.setString(4, hoaDon.getMaHoaDon());
             if(stmt.executeUpdate() > 0) return true;
         } catch (Exception e) {
             System.out.println(e);

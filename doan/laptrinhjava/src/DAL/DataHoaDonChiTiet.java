@@ -32,13 +32,20 @@ public class DataHoaDonChiTiet {
     }
     public boolean them(ChiTietHoaDon chiTietHoaDon)
     {
-        String truyVan = "INSERT INTO ChiTietHoaDon (SoLuongHang, MaHD, MaHangHoa) VALUES (?, ?, ?)";
+        System.out.println(chiTietHoaDon.getSoLuong());
+        System.out.println(chiTietHoaDon.getMaHoaDon());
+        System.out.println(chiTietHoaDon.getMaHangHoa());
+        System.out.println(chiTietHoaDon.getGia());
+        System.out.println(chiTietHoaDon.getMaCoSo());
+        String truyVan = "INSERT INTO ChiTietHoaDon (SoLuongHang, MaHD, MaHH, Gia, MaCoSo) VALUES (?, ?, ? ,? ,?)";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
             stmt.setInt(1, chiTietHoaDon.getSoLuong());
             stmt.setString(2,chiTietHoaDon.getMaHoaDon());
             stmt.setString(3,chiTietHoaDon.getMaHangHoa());
+            stmt.setInt(4,chiTietHoaDon.getGia());
+            stmt.setString(5,chiTietHoaDon.getMaCoSo());
             if(stmt.executeUpdate() > 0) return true;
         } catch (Exception e) {
             System.out.println(e);   

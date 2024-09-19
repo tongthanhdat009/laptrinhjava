@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 import BLL.BLLQuanLyDanhSach;
 import BLL.TuanBLL;
 import DTO.GioHang;
+import DTO.HoaDonVaGia;
 import DTO.ThongTinChiTietHangHoa;
 
 public class MuaHangCTR extends JPanel {
@@ -36,6 +37,7 @@ public class MuaHangCTR extends JPanel {
     BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
     TuanBLL bll = new TuanBLL();
     private String IDTaiKhoan;
+    private JPanel tongTienpn = new JPanel(null);
     public MuaHangCTR(String tk)
     {
         setLayout(null);
@@ -97,7 +99,14 @@ public class MuaHangCTR extends JPanel {
         JButton xemHoaDon = new JButton("Xem hóa đơn");
         xemHoaDon.setBounds(900,55,150,40);
         xemHoaDon.setBackground(Color.WHITE);
-
+        xemHoaDon.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+                ds = bll.layDSHoaDonCua(IDTaiKhoan);
+                xemHoaDon(ds);
+            }
+        });
         loc.add(xemGioHang);
         loc.add(xemHoaDon);
 
@@ -134,17 +143,76 @@ public class MuaHangCTR extends JPanel {
         ds1 = ql.layDSBanHang(cbCoSo.getSelectedItem().toString());
         xuatSanPham(ds1);
     }
+    public void xemHoaDon(ArrayList<HoaDonVaGia> ds)
+    {
+        banHang.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        banHang.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        banHang.repaint(); // Vẽ lại JPanel
+        banHang.setLayout(null);
+        int soLuong = ds.size();
+        banHang.setPreferredSize(new Dimension(1150, soLuong * 90 + 100));
+        int y = 30;
+        System.out.println(soLuong);
+        for(int i=0;i<soLuong;i++)
+        {
+            int x = 200;
+            JPanel hoaDonPn = new JPanel(null);
+            hoaDonPn.setBounds(0, y, 1200, 60);
+            JLabel maHoaDon = new JLabel(ds.get(i).getMaHoaDon());
+            maHoaDon.setBounds(x, 0, 70, 60); x+=90;
+            maHoaDon.setFont(new Font("Arial", Font.BOLD, 20));
+            hoaDonPn.add(maHoaDon);
+
+            JLabel ngayXuat = new JLabel(ds.get(i).getNgayXuatHoaDon().toString());
+            ngayXuat.setBounds(x, 0, 130, 60); x+=150;
+            ngayXuat.setFont(new Font("Arial", Font.BOLD, 20));
+            hoaDonPn.add(ngayXuat);
+
+            JLabel trangThai = new JLabel(ds.get(i).getTrangThai().trim());
+            trangThai.setBounds(x, 0, 150, 60); x+=170;
+            trangThai.setFont(new Font("Arial", Font.BOLD, 20));
+            hoaDonPn.add(trangThai);
+
+            JLabel tongTien = new JLabel(String.valueOf(ds.get(i).getTongTien()/1000)+"K");
+            tongTien.setBounds(x, 0, 250, 60); x+=270;
+            tongTien.setFont(new Font("Arial", Font.BOLD, 20));
+            hoaDonPn.add(tongTien);
+
+            JButton xemChiTiet = new JButton("Xem chi tiết");
+            xemChiTiet.setBackground(Color.WHITE);
+            xemChiTiet.setBounds(x, 0, 250, 60); x+=270;
+            xemChiTiet.setFont(new Font("Arial", Font.BOLD, 20));
+            hoaDonPn.add(xemChiTiet);
+
+            y+=90;
+            banHang.add(hoaDonPn);
+        }
+        scrollPane.setBounds(0, 160, 1200, 760);
+    }
     public void xemGioHang(ArrayList<GioHang> dsGioHang)
     {
         banHang.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
         banHang.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
         banHang.repaint(); // Vẽ lại JPanel
         banHang.setLayout(null);
-
         int tongTien = 0;
         int soLuongGioHang = dsGioHang.size();
         banHang.setPreferredSize(new Dimension(1150, soLuongGioHang * 100 + 150));
-        int y = 100;
+        int y = 50;
+        JLabel sttlb = new JLabel("STT"); sttlb.setBounds(20,0,40,40); banHang.add(sttlb);
+        JLabel anh = new JLabel("Ảnh"); anh.setBounds(70,0,90,40); banHang.add(anh);
+        JLabel tenlb = new JLabel("Tên"); tenlb.setBounds(200,0,350,40); banHang.add(tenlb);
+        JLabel coSolb = new JLabel("Cơ sở");coSolb.setBounds(580,0,100,40); banHang.add(coSolb);
+        JLabel soLuong = new JLabel("Số lượng");soLuong.setBounds(710,0,90,40); banHang.add(soLuong);
+        JLabel gialb2 = new JLabel("Giá");gialb2.setBounds(810,0,150,40); banHang.add(gialb2);
+        JLabel xoalb = new JLabel("Xóa");xoalb.setBounds(990,0,90,40); banHang.add(xoalb);
+        sttlb.setFont(new Font("Arial", Font.BOLD, 20));
+        anh.setFont(new Font("Arial", Font.BOLD, 20));
+        tenlb.setFont(new Font("Arial", Font.BOLD, 20));
+        coSolb.setFont(new Font("Arial", Font.BOLD, 20));
+        soLuong.setFont(new Font("Arial", Font.BOLD, 20));
+        gialb2.setFont(new Font("Arial", Font.BOLD, 20));
+        xoalb.setFont(new Font("Arial", Font.BOLD, 20));
         for(int i=0;i<soLuongGioHang;i++)
         {
             int x = 30;
@@ -197,30 +265,37 @@ public class MuaHangCTR extends JPanel {
                 {
                     String s = bll.xoaGioHang(dsGioHang.get(index).getIDTaiKhoan(), dsGioHang.get(index).getMaHangHoa(),dsGioHang.get(index).getMaCoSo(),dsGioHang.get(index).getSoLuong());
                     JOptionPane.showMessageDialog(null,s);
+                    ArrayList<GioHang> dsGioHang = new ArrayList<>();
+                    dsGioHang = bll.layDSGioHang(IDTaiKhoan);
+                    xemGioHang(dsGioHang);
                 }
             });
             pnGioHang.add(xoa);
             banHang.add(pnGioHang);
             y+=100;
         }
-
+        tongTienpn.removeAll();
+        tongTienpn.revalidate();
+        tongTienpn.repaint();
+        tongTienpn.setBounds(0,755,1200,100);
         JLabel tongTienlb = new JLabel("Tổng: "+String.valueOf(tongTien/1000)+"K");
-        tongTienlb.setBounds(600, 770, 200, 80);
+        tongTienlb.setBounds(600, 10, 200, 80);
         tongTienlb.setFont(new Font("Arial", Font.BOLD, 25));
         JButton thanhToanBt = new JButton("Thanh toán");
-        thanhToanBt.setBounds(850, 770, 200, 80);
+        thanhToanBt.setBounds(850, 10, 200, 80);
         thanhToanBt.setBackground(Color.WHITE);
         thanhToanBt.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                
+                String s;
+                s = bll.thanhToan(IDTaiKhoan);
+                JOptionPane.showMessageDialog(null,s);
             }
         });
-        add(tongTienlb);
-        add(thanhToanBt);
+        tongTienpn.add(tongTienlb);
+        tongTienpn.add(thanhToanBt);
+        add(tongTienpn);
         scrollPane.setBounds(0, 160, 1200, 600);
-        // banHang.revalidate();
-        // banHang.repaint();
     }
     public void xuatSanPham(ArrayList<ThongTinChiTietHangHoa> ds) {
         banHang.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel

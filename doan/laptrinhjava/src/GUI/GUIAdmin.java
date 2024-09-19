@@ -368,7 +368,7 @@ public class GUIAdmin{
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
         		rightPanel.setLayout(null);
-                rightPanel.add(new MuaHangCTR(tk));
+                rightPanel.add(new MuaHangCTR("TK001"));
         	}
         });
         buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));

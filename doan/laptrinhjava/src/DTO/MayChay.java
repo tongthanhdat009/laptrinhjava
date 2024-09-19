@@ -1,15 +1,15 @@
 package DTO;
 
-public class MayChay extends LoaiThietBi {
+public class MayChay extends hangHoa {
     private int congSuat;
     private int tocDoToiDa;
     private String nhaSanXuat;
     private String kichThuoc;
 
     // Constructor của lớp MayChay
-    public MayChay(String maThietBi, String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh, String loai,
+    public MayChay(String maHangHoa, String loaiHangHoa, String tenLoaiHangHoa, String hinhAnh,
                    int congSuat, int tocDoToiDa, String nhaSanXuat, String kichThuoc) {
-        super(maThietBi, tenThietBi, hinhAnh, giaThietBi, ngayBaoHanh, loai); // Gọi constructor của lớp cha
+        super(maHangHoa,  loaiHangHoa,  tenLoaiHangHoa,  hinhAnh); // Gọi constructor của lớp cha
         this.congSuat = congSuat;
         this.tocDoToiDa = tocDoToiDa;
         this.nhaSanXuat = nhaSanXuat;

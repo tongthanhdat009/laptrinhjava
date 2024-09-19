@@ -1,4 +1,7 @@
-/GUI/
-/asset/
+/.vscode/
 /BLL/
 /DAL/
+/DTO/
+/GUI/
+/asset/
+/bin/

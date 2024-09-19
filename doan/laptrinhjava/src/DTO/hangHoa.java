@@ -7,14 +7,12 @@ public class hangHoa {
     private String loaiHangHoa;
     private String tenLoaiHangHoa;
     private String hinhAnh;
-    private long giaNhap;
     //hàm khởi tạo
-    public hangHoa(String maHangHoa, String loaiHangHoa, String tenLoaiHangHoa, String hinhAnh, long giaNhap){
+    public hangHoa(String maHangHoa, String loaiHangHoa, String tenLoaiHangHoa, String hinhAnh){
         setMaHangHoa(maHangHoa);
         setLoaiHangHoa(loaiHangHoa);
         setTenLoaiHangHoa(tenLoaiHangHoa);
         setHinhAnh(hinhAnh);
-        setGiaNhap(giaNhap);
     }
     
     public hangHoa(){
@@ -22,7 +20,6 @@ public class hangHoa {
         this.loaiHangHoa = "none";
         this.tenLoaiHangHoa = "none";
         this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
-        this.giaNhap = 0;
     }
 
     //hàm get&set
@@ -54,12 +51,6 @@ public class hangHoa {
 //            this.hinhAnh = hinhAnh;
     }
 
-    public void setGiaNhap(long giaNhap){
-//        if(giaNhap >= 0)
-            this.giaNhap = giaNhap;
-//        else
-//            throw new IllegalArgumentException("Giá nhập hàng hóa không hợp lệ!");
-    }
 
     public String getMaHangHoa(){
         return this.maHangHoa;        
@@ -73,10 +64,7 @@ public class hangHoa {
     public String getHinhAnh(){
         return this.hinhAnh;
     }
-    public long getGiaNhap(){
-        return this.giaNhap;
-    }
     public String toString(){
-        return this.maHangHoa + " " + this.loaiHangHoa +" " + this.tenLoaiHangHoa + " " + hinhAnh + " " + giaNhap;  
+        return this.maHangHoa + " " + this.loaiHangHoa +" " + this.tenLoaiHangHoa + " " + hinhAnh ;  
     }
 }

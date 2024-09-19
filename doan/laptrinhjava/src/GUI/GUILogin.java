@@ -49,9 +49,13 @@ public class GUILogin extends JFrame implements ActionListener{
 
             username.setToolTipText("Tên đăng nhập");
             pass.setToolTipText("Mật khẩu");
-            nhapLieu.add(new JLabel("Tên tài khoản"));
+            JLabel label_1 = new JLabel("Tên tài khoản");
+            label_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
+            nhapLieu.add(label_1);
             nhapLieu.add(username);
-            nhapLieu.add(new JLabel("Mật khẩu"));
+            JLabel label = new JLabel("Mật khẩu");
+            label.setFont(new Font("Times New Roman", Font.BOLD, 20));
+            nhapLieu.add(label);
             nhapLieu.add(pass);
             
             JPanel dangNhapKieuKhac = new JPanel(new GridLayout(1,4,10,0));
@@ -99,16 +103,32 @@ public class GUILogin extends JFrame implements ActionListener{
             go.addActionListener(this);
             dangNhap.add(go);
     
-            Label title = new Label("PHÒNG GYM SGU");
+            Label title = new Label("Cửa hàng dụng cụ SGU");
             title.setFont(new Font("Arial",Font.BOLD,16));
-            title.setBounds(127,800,200,30);
+            title.setBounds(107,801,200,30);
             dangNhap.add(title);
     
             JLabel moTa = new JLabel("Hãy chuẩn bị thay đổi cơ thể của bạn");
-            moTa.setBounds(85,825,340,30);
+            moTa.setBounds(95,824,340,30);
             dangNhap.add(moTa);
     
             getContentPane().add(dangNhap);
+            
+            JCheckBox showPassCheck = new JCheckBox("Hiển thị mật khẩu");
+            showPassCheck.setBackground(new Color(255, 255, 255));
+            showPassCheck.setBounds(238, 437, 123, 30);
+            showPassCheck.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (showPassCheck.isSelected()) {
+                    		pass.setEchoChar((char) 0);
+                    } 
+                    else {
+                		pass.setEchoChar('●');
+                    }
+            	}
+            });
+            dangNhap.add(showPassCheck);
             getContentPane().add(imageBackground);
     
             setDefaultCloseOperation(EXIT_ON_CLOSE);

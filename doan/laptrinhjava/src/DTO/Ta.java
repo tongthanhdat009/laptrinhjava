@@ -1,12 +1,12 @@
 package DTO;
 
-public class Ta extends LoaiThietBi{
+public class Ta extends hangHoa{
     private int khoiLuong;
     private String chatLieu;
     private String mauSac;
-    public Ta(String maThietBi,String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh, String loai, int khoiLuong, String chatLieu, String mauSac)
+    public Ta(String maHangHoa, String loaiHangHoa, String tenLoaiHangHoa, String hinhAnh, int khoiLuong, String chatLieu, String mauSac)
     {
-        super(maThietBi,tenThietBi,hinhAnh,giaThietBi,ngayBaoHanh,loai);
+        super(maHangHoa, loaiHangHoa, tenLoaiHangHoa, hinhAnh);
         setChatLieu(chatLieu);
         setMauSac(mauSac);
         setKhoiLuong(khoiLuong);

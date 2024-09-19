@@ -36,17 +36,16 @@ import java.awt.Font;
 
 
 public class QuanLyXa extends JPanel {
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
-    private JTextField textField_4;
-    private JTextField textField_5;
-    private JTextField textField_6;
-    private JTextField textField_7;
-    private JTextField textField_8;
-    private JTextField textField_9;
-    private JTextField textField_10;
+    private JTextField IDGoodsTF;
+    private JTextField goodsNameTF;
+    private JTextField picTF;
+    private JTextField loaiXaTF;
+    private JTextField materialTF;
+    private JTextField lengthTF;
+    private JTextField duongKinhTF;
+    private JTextField chieuCaoTF;
+    private JTextField taiTrongTF;
+    private JTextField loaiTF;
 
     public QuanLyXa() {
         setLayout(null);
@@ -63,15 +62,8 @@ public class QuanLyXa extends JPanel {
         them.setIcon(new ImageIcon(scaleThemBtnImg));
         them.setHorizontalAlignment(SwingConstants.CENTER);
         them.setBorder(null);
-
-        JButton xoa = new JButton();
-        xoa.setPreferredSize(new Dimension(110, 35));
         ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
         Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130, 35, Image.SCALE_DEFAULT);
-        xoa.setPreferredSize(new Dimension(130, 35));
-        xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
-        xoa.setHorizontalAlignment(SwingConstants.CENTER);
-        xoa.setBorder(null);
 
         JButton sua = new JButton();
         sua.setPreferredSize(new Dimension(110, 35));
@@ -87,7 +79,6 @@ public class QuanLyXa extends JPanel {
         tinhNang.setBounds(0, 0, 1200, 100);
         add(tinhNang);
         tinhNang.add(them);
-        tinhNang.add(xoa);
         tinhNang.add(sua);
         tinhNang.setBackground(new Color(241, 255, 250));
 
@@ -98,227 +89,146 @@ public class QuanLyXa extends JPanel {
         thongTin.setLayout(null);
 
         // Initialize JTextFields
-        textField = new JTextField();
-        textField.setBounds(130, 30, 149, 36);
-        thongTin.add(textField);
-        textField.setColumns(10);
+        IDGoodsTF = new JTextField();
+        IDGoodsTF.setBounds(145, 30, 149, 36);
+        thongTin.add(IDGoodsTF);
+        IDGoodsTF.setColumns(10);
 
-        textField_1 = new JTextField();
-        textField_1.setBounds(130, 80, 149, 36);
-        thongTin.add(textField_1);
-        textField_1.setColumns(10);
+        goodsNameTF = new JTextField();
+        goodsNameTF.setBounds(145, 77, 149, 36);
+        thongTin.add(goodsNameTF);
+        goodsNameTF.setColumns(10);
 
-        textField_2 = new JTextField();
-        textField_2.setBounds(741, 80, 149, 36);
-        thongTin.add(textField_2);
-        textField_2.setColumns(10);
+        picTF = new JTextField();
+        picTF.setBounds(426, 124, 149, 36);
+        thongTin.add(picTF);
+        picTF.setColumns(10);
 
-        textField_3 = new JTextField();
-        textField_3.setBounds(462, 30, 149, 36);
-        thongTin.add(textField_3);
-        textField_3.setColumns(10);
+        loaiXaTF = new JTextField();
+        loaiXaTF.setBounds(426, 30, 149, 36);
+        thongTin.add(loaiXaTF);
+        loaiXaTF.setColumns(10);
 
-        textField_4 = new JTextField();
-        textField_4.setBounds(462, 80, 149, 36);
-        thongTin.add(textField_4);
-        textField_4.setColumns(10);
+        materialTF = new JTextField();
+        materialTF.setBounds(145, 124, 149, 36);
+        thongTin.add(materialTF);
+        materialTF.setColumns(10);
 
-        textField_5 = new JTextField();
-        textField_5.setBounds(462, 130, 149, 36);
-        thongTin.add(textField_5);
-        textField_5.setColumns(10);
+        lengthTF = new JTextField();
+        lengthTF.setBounds(426, 77, 149, 36);
+        thongTin.add(lengthTF);
+        lengthTF.setColumns(10);
 
-        textField_6 = new JTextField();
-        textField_6.setBounds(130, 130, 149, 36);
-        thongTin.add(textField_6);
-        textField_6.setColumns(10);
+        duongKinhTF = new JTextField();
+        duongKinhTF.setBounds(738, 29, 149, 39);
+        thongTin.add(duongKinhTF);
+        duongKinhTF.setColumns(10);
 
-        textField_7 = new JTextField();
-        textField_7.setBounds(741, 30, 149, 36);
-        thongTin.add(textField_7);
-        textField_7.setColumns(10);
+        chieuCaoTF = new JTextField();
+        chieuCaoTF.setColumns(10);
+        chieuCaoTF.setBounds(738, 77, 149, 36);
+        thongTin.add(chieuCaoTF);
 
-        textField_8 = new JTextField();
-        textField_8.setBounds(741, 127, 149, 39);
-        thongTin.add(textField_8);
-        textField_8.setColumns(10);
-
-        textField_9 = new JTextField();
-        textField_9.setColumns(10);
-        textField_9.setBounds(1018, 30, 149, 36);
-        thongTin.add(textField_9);
-
-        textField_10 = new JTextField();
-        textField_10.setColumns(10);
-        textField_10.setBounds(1018, 80, 149, 36);
-        thongTin.add(textField_10);
+        taiTrongTF = new JTextField();
+        taiTrongTF.setColumns(10);
+        taiTrongTF.setBounds(738, 124, 149, 36);
+        thongTin.add(taiTrongTF);
 
         // Initialize JLabel
-        JLabel lblNewLabel = new JLabel("Mã thiết bị:");
-        lblNewLabel.setLabelFor(textField);
-        lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel.setBounds(10, 39, 100, 27);
-        thongTin.add(lblNewLabel);
+        JLabel IDGoodsLB = new JLabel("Mã hàng hóa:");
+        IDGoodsLB.setLabelFor(IDGoodsTF);
+        IDGoodsLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        IDGoodsLB.setBounds(10, 39, 147, 27);
+        thongTin.add(IDGoodsLB);
 
-        JLabel lblNewLabel_1 = new JLabel("Tên thiết bị:");
-        lblNewLabel_1.setLabelFor(textField_1);
-        lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_1.setBounds(10, 89, 110, 27);
-        thongTin.add(lblNewLabel_1);
+        JLabel goodsNameLB = new JLabel("Tên hàng hóa:");
+        goodsNameLB.setLabelFor(goodsNameTF);
+        goodsNameLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        goodsNameLB.setBounds(10, 89, 147, 27);
+        thongTin.add(goodsNameLB);
 
-        JLabel lblNewLabel_2 = new JLabel("Hình ảnh:");
-        lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_2.setBounds(621, 83, 100, 27);
-        thongTin.add(lblNewLabel_2);
+        JLabel picLB = new JLabel("Hình ảnh:");
+        picLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        picLB.setBounds(316, 133, 100, 27);
+        thongTin.add(picLB);
 
-        JLabel lblNewLabel_3 = new JLabel("Giá:");
-        lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_3.setBounds(319, 28, 100, 36);
-        thongTin.add(lblNewLabel_3);
+        JLabel loaiXaLB = new JLabel("Loại xà:");
+        loaiXaLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        loaiXaLB.setBounds(316, 28, 133, 36);
+        thongTin.add(loaiXaLB);
 
-        JLabel lblNewLabel_4 = new JLabel("Ngày bảo hành:");
-        lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_4.setBounds(319, 83, 144, 27);
-        thongTin.add(lblNewLabel_4);
+        JLabel materialLB = new JLabel("Chất liệu:");
+        materialLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        materialLB.setBounds(10, 128, 110, 36);
+        thongTin.add(materialLB);
 
-        JLabel lblNewLabel_5 = new JLabel("Loại xà:");
-        lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_5.setBounds(319, 128, 133, 36);
-        thongTin.add(lblNewLabel_5);
+        JLabel taiTrongLB = new JLabel("Tải trọng:");
+        taiTrongLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        taiTrongLB.setBounds(607, 122, 100, 36);
+        thongTin.add(taiTrongLB);
 
-        JLabel lblNewLabel_6 = new JLabel("Chất liệu:");
-        lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_6.setBounds(10, 128, 110, 36);
-        thongTin.add(lblNewLabel_6);
+        JLabel lengthLB = new JLabel("Chiều dài:");
+        lengthLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        lengthLB.setBounds(316, 75, 110, 36);
+        thongTin.add(lengthLB);
 
-        JLabel lblNewLabel_7 = new JLabel("Tải trọng:");
-        lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_7.setBounds(908, 78, 100, 36);
-        thongTin.add(lblNewLabel_7);
+        JLabel duongKinhLB = new JLabel("Đường kính:");
+        duongKinhLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        duongKinhLB.setBounds(607, 33, 110, 27);
+        thongTin.add(duongKinhLB);
 
-        JLabel lblNewLabel_8 = new JLabel("Chiều dài:");
-        lblNewLabel_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_8.setBounds(621, 30, 110, 36);
-        thongTin.add(lblNewLabel_8);
-
-        JLabel lblNewLabel_8_1 = new JLabel("Đường kính:");
-        lblNewLabel_8_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_8_1.setBounds(621, 133, 110, 27);
-        thongTin.add(lblNewLabel_8_1);
-
-        JLabel lblNewLabel_8_2 = new JLabel("Chiều cao:");
-        lblNewLabel_8_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        lblNewLabel_8_2.setBounds(908, 33, 110, 27);
-        thongTin.add(lblNewLabel_8_2);
+        JLabel chieuCaoLB = new JLabel("Chiều cao:");
+        chieuCaoLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        chieuCaoLB.setBounds(607, 80, 110, 27);
+        thongTin.add(chieuCaoLB);
         
-        JButton btnNewButton = new JButton("Nhập về cơ sở");
-        btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
-        btnNewButton.setBounds(952, 128, 214, 36);
-        thongTin.add(btnNewButton);
-        btnNewButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        JPanel thongTinChiTiet = new JPanel(new GridLayout(5,1));
-                        thongTinChiTiet.setPreferredSize(new Dimension(300,150));
-                        JLabel ten = new JLabel("Tên: "+textField_1.getText());
-                        System.out.print(textField_1.getText()+"hello");
-                        JLabel ma = new JLabel("Mã thiết bị: "+textField.getText());
-                        JLabel soNgayBaoHanh = new JLabel("Số ngày bảo hành: "+textField_4.getText());
-                        
-                        JPanel chonSoLuong = new JPanel(new GridLayout(1,2));
-                        JLabel labelSoLuong = new JLabel("Số Lượng: ");
-                        JTextField soLuong = new JTextField();
-                        chonSoLuong.add(labelSoLuong);
-                        chonSoLuong.add(soLuong);
-                        thongTinChiTiet.add(ten);
-                        thongTinChiTiet.add(ma);
-                        thongTinChiTiet.add(soNgayBaoHanh);
-                        thongTinChiTiet.add(chonSoLuong);
-                        boolean flag = false;
-
-                        DataCoSo dataCoSo = new DataCoSo();
-                        DSCoSo dsCS = new DSCoSo();
-                        dsCS = dataCoSo.layDSCoSo();
-                        Vector<String> s = new Vector<>();
-                        for(CoSo a : dsCS.dsCoSo)
-                        {
-                            s.add(a.getMaCoSo());
-                        }
-                        @SuppressWarnings("rawtypes")
-                        JComboBox chonCoSo = new JComboBox<>(s);
-                        JLabel labelCoSo = new JLabel("Chọn cơ sở: ");
-
-                        JPanel panelChonCoSo = new JPanel(new GridLayout(1,2));
-                        panelChonCoSo.add(labelCoSo);
-                        panelChonCoSo.add(chonCoSo);
-
-                        thongTinChiTiet.add(panelChonCoSo);
-
-                        while(flag == false)
-                        {
-                            int qes = JOptionPane.showConfirmDialog(null, thongTinChiTiet,"Nhập thiết bị",JOptionPane.OK_OPTION);
-                            if(qes == 0)
-                            {
-                                try {
-                                    int sl = Integer.parseInt(soLuong.getText());
-                                    if(sl > 0) 
-                                    {
-                                        BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-                                        bllNhapThietBi.nhapHangVeCoSo(textField.getText(),chonCoSo.getSelectedItem().toString(),sl,Integer.parseInt(textField_4.getText()));
-                                        flag = true;
-                                    }
-                                    else JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0");
-                                } catch (Exception ex) {
-                                    JOptionPane.showMessageDialog(null, "Số lượng phải là số lớn hơn 0");
-                                }
-                            }
-                            else flag = true;
-                        }
-                    }
-                });
+        loaiTF = new JTextField();
+        loaiTF.setBounds(1041, 30, 79, 36);
+        thongTin.add(loaiTF);
+        loaiTF.setColumns(10);
+        
+        JLabel loaiLB = new JLabel("Loại hàng hóa:");
+        loaiLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+        loaiLB.setBounds(897, 28, 156, 36);
+        thongTin.add(loaiLB);
         // Initialize JTable and DefaultTableModel
         // Trong phương thức giaoDien
-// Initialize JTable và DefaultTableModel
-JTable bangXa = new JTable();
-bangXa.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		// Initialize JTable và DefaultTableModel
+		JTable bangXa = new JTable();
+		bangXa.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bangXa.getTableHeader().setReorderingAllowed(false);
+		
+		DefaultTableModel modelXa = new DefaultTableModel();
+		modelXa.addColumn("Mã hàng hóa");
+		modelXa.addColumn("Tên hàng hóa");
+		modelXa.addColumn("Loại");
+		modelXa.addColumn("Loại xà");
+		modelXa.addColumn("Chất liệu");
+		modelXa.addColumn("Chiều dài");
+		modelXa.addColumn("Đường kính");
+		modelXa.addColumn("Chiều cao");
+		modelXa.addColumn("Tải trọng");
+		modelXa.addColumn("Hình ảnh");
 
-DefaultTableModel modelXa = new DefaultTableModel();
-modelXa.addColumn("Mã thiết bị");
-modelXa.addColumn("Tên thiết bị");
-modelXa.addColumn("Hình ảnh");
-modelXa.addColumn("Giá thiết bị");
-modelXa.addColumn("Ngày bảo hành");
-modelXa.addColumn("Loại xà");
-modelXa.addColumn("Chất liệu");
-modelXa.addColumn("Chiều dài");
-modelXa.addColumn("Đường kính");
-modelXa.addColumn("Chiều cao");
-modelXa.addColumn("Tải trọng");
-
-// Gán model cho JTable
-bangXa.setModel(modelXa);
-
-// Lấy danh sách Xa và thêm vào bảng
-BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
-ArrayList<Xa> danhSachXa = ql.layDSXa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
-for (Xa xa : danhSachXa) {
-    modelXa.addRow(new Object[]{
-        xa.getMaThietBi(),
-        xa.getTenLoaiThietBi(),
-        xa.getHinhAnh(),
-        xa.getGiaThietBi(),
-        xa.getNgayBaoHanh(),
-        xa.getLoaiXa(),
-        xa.getChatLieu(),
-        xa.getChieuDai(),
-        xa.getDuongKinh(),
-        xa.getChieuCao(),
-        xa.getTaiTrong()
-    });
+		// Gán model cho JTable
+		bangXa.setModel(modelXa);
+		
+		// Lấy danh sách Xa và thêm vào bảng
+		BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+		ArrayList<Xa> danhSachXa = ql.layDSXa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+		for (Xa xa : danhSachXa) {
+		    modelXa.addRow(new Object[]{
+		        xa.getMaHangHoa(),
+		        xa.getTenLoaiHangHoa(),
+		        xa.getLoaiXa(),
+		        xa.getLoaiHangHoa(),
+		        xa.getChatLieu(),
+		        xa.getChieuDai(),
+		        xa.getDuongKinh(),
+		        xa.getChieuCao(),
+		        xa.getTaiTrong(),
+		        xa.getHinhAnh()
+		    });
 }
 
 // Thêm MouseListener cho JTable
@@ -326,139 +236,98 @@ for (Xa xa : danhSachXa) {
             public void mouseClicked(MouseEvent e) {
                 int row = bangXa.getSelectedRow();
                 if (row >= 0) {
-                    textField.setText(modelXa.getValueAt(row, 0).toString().trim());
-                    textField_1.setText(modelXa.getValueAt(row, 1).toString().trim());
-                    textField_2.setText(modelXa.getValueAt(row, 2).toString().trim());
-                    textField_3.setText(modelXa.getValueAt(row, 3).toString().trim());
-                    textField_4.setText(modelXa.getValueAt(row, 4).toString().trim());
-                    textField_5.setText(modelXa.getValueAt(row, 5).toString().trim());
-                    textField_6.setText(modelXa.getValueAt(row, 6).toString().trim());
-                    textField_7.setText(modelXa.getValueAt(row, 7).toString().trim());
-                    textField_8.setText(modelXa.getValueAt(row, 8).toString().trim());
-                    textField_9.setText(modelXa.getValueAt(row, 9).toString().trim());
-                    textField_10.setText(modelXa.getValueAt(row, 10).toString().trim());
+                    IDGoodsTF.setText(modelXa.getValueAt(row, 0).toString().trim());
+                    goodsNameTF.setText(modelXa.getValueAt(row, 1).toString().trim());
+                    loaiXaTF.setText(modelXa.getValueAt(row, 2).toString().trim());
+                    loaiTF.setText(modelXa.getValueAt(row, 3).toString().trim());
+                    materialTF.setText(modelXa.getValueAt(row, 4).toString().trim());
+                    lengthTF.setText(modelXa.getValueAt(row, 5).toString().trim());
+                    duongKinhTF.setText(modelXa.getValueAt(row, 6).toString().trim());
+                    chieuCaoTF.setText(modelXa.getValueAt(row, 7).toString().trim());
+                    taiTrongTF.setText(modelXa.getValueAt(row, 8).toString().trim());
+                    picTF.setText(modelXa.getValueAt(row, 9).toString().trim());
                 }
             }
         });
         them.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                if(textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
-                textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
-                textField_1.getText().equals("")) 
+                if(goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||
+                goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||
+                goodsNameTF.getText().equals("")) 
                 {
                     JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                     return;
                 }
-                if(!textField.getText().equals("")) {
+                if(!IDGoodsTF.getText().equals("")) {
                 	JOptionPane.showMessageDialog(null, "Không cần nhập mã");
                 	return;
                 }
                 String maThietBi = "null";
-                String ten = textField_1.getText();
-                String hinhAnh = textField_2.getText();
-                String giaThietBi = textField_3.getText();
-                int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                String ten = goodsNameTF.getText();
+                String hinhAnh = picTF.getText();
                 String loai = "Xa";
-                String loaiXa = textField_5.getText();
-                String chatLieu = textField_6.getText();
-                float chieuDai = Float.parseFloat(textField_7.getText());
-                float duongKinh = Float.parseFloat(textField_8.getText());
-                float chieuCao = Float.parseFloat(textField_9.getText());
-                float taiTrong = Float.parseFloat(textField_10.getText());
-                String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
-                JOptionPane.showMessageDialog(null,kq);
+                String loaiXa = loaiXaTF.getText();
+                String chatLieu = materialTF.getText();
+                float chieuDai = Float.parseFloat(lengthTF.getText());
+                float duongKinh = Float.parseFloat(duongKinhTF.getText());
+                float chieuCao = Float.parseFloat(chieuCaoTF.getText());
+                float taiTrong = Float.parseFloat(taiTrongTF.getText());
+//                String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+//                JOptionPane.showMessageDialog(null,kq);
                 modelXa.setRowCount(0);
                 ArrayList<Xa> danhSachXa = ql.layDSXa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
                 for (Xa xa : danhSachXa) {
                     modelXa.addRow(new Object[]{
-                        xa.getMaThietBi(),
-                        xa.getTenLoaiThietBi(),
-                        xa.getHinhAnh(),
-                        xa.getGiaThietBi(),
-                        xa.getNgayBaoHanh(),
-                        xa.getLoaiXa(),
-                        xa.getChatLieu(),
-                        xa.getChieuDai(),
-                        xa.getDuongKinh(),
-                        xa.getChieuCao(),
-                        xa.getTaiTrong()
+                    		xa.getMaHangHoa(),
+             		        xa.getTaiTrong(),
+             		        xa.getLoaiHangHoa(),
+             		        xa.getLoaiHangHoa(),
+             		        xa.getChatLieu(),
+             		        xa.getChieuDai(),
+             		        xa.getDuongKinh(),
+             		        xa.getChieuCao(),
+             		        xa.getTaiTrong(),
+             		        xa.getHinhAnh()
                     });
-                }
-            }
-        });
-        xoa.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                if(textField_1.getText().equals("")) {
-                	JOptionPane.showMessageDialog(null, "Thiếu mã");
-                	return;
-                }
-                else if(ql.xoaTB(textField.getText()))
-                {
-                    JOptionPane.showMessageDialog(null,"Thành công");
-                    modelXa.setRowCount(0);
-                    ArrayList<Xa> danhSachXa = ql.layDSXa();
-                    for (Xa xa : danhSachXa) {
-                        modelXa.addRow(new Object[]{
-                            xa.getMaThietBi(),
-                            xa.getTenLoaiThietBi(),
-                            xa.getHinhAnh(),
-                            xa.getGiaThietBi(),
-                            xa.getNgayBaoHanh(),
-                            xa.getLoaiXa(),
-                            xa.getChatLieu(),
-                            xa.getChieuDai(),
-                            xa.getDuongKinh(),
-                            xa.getChieuCao(),
-                            xa.getTaiTrong()
-                        });
-                    }
-                } 
-                    
-                else {
-                	JOptionPane.showMessageDialog(null,"Mã không tồn tại");
-                	return;
                 }
             }
         });
         sua.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                if(textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
-                textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||textField_1.getText().equals("")||
-                textField_1.getText().equals("")) {
+                if(goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||
+                goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||
+                goodsNameTF.getText().equals("")) {
                 	JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                 	return;
                 }
                 else 
                 {
-                    String maThietBi = textField.getText();
-                    String ten = textField_1.getText();
-                    String hinhAnh = textField_2.getText();
-                    String giaThietBi = textField_3.getText();
-                    int ngayBaoHanh = Integer.parseInt(textField_4.getText());
+                    String maThietBi = IDGoodsTF.getText();
+                    String ten = goodsNameTF.getText();
+                    String hinhAnh = picTF.getText();
                     String loai = "Xa";
-                    String loaiXa = textField_5.getText();
-                    String chatLieu = textField_6.getText();
-                    float chieuDai = Float.parseFloat(textField_7.getText());
-                    float duongKinh = Float.parseFloat(textField_8.getText());
-                    float chieuCao = Float.parseFloat(textField_9.getText());
-                    float taiTrong = Float.parseFloat(textField_10.getText());
-                    String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
-                    JOptionPane.showMessageDialog(null, kq);
+                    String loaiXa = loaiXaTF.getText();
+                    String chatLieu = materialTF.getText();
+                    float chieuDai = Float.parseFloat(lengthTF.getText());
+                    float duongKinh = Float.parseFloat(duongKinhTF.getText());
+                    float chieuCao = Float.parseFloat(chieuCaoTF.getText());
+                    float taiTrong = Float.parseFloat(taiTrongTF.getText());
+//                    String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+//                    JOptionPane.showMessageDialog(null, kq);
                     modelXa.setRowCount(0);
                     ArrayList<Xa> danhSachXa = ql.layDSXa();
                     for (Xa xa : danhSachXa) {
                         modelXa.addRow(new Object[]{
-                            xa.getMaThietBi(),
-                            xa.getTenLoaiThietBi(),
-                            xa.getHinhAnh(),
-                            xa.getGiaThietBi(),
-                            xa.getNgayBaoHanh(),
-                            xa.getLoaiXa(),
-                            xa.getChatLieu(),
-                            xa.getChieuDai(),
-                            xa.getDuongKinh(),
-                            xa.getChieuCao(),
-                            xa.getTaiTrong()
+                        		 xa.getMaHangHoa(),
+                 		        xa.getTaiTrong(),
+                 		        xa.getLoaiHangHoa(),
+                 		        xa.getLoaiHangHoa(),
+                 		        xa.getChatLieu(),
+                 		        xa.getChieuDai(),
+                 		        xa.getDuongKinh(),
+                 		        xa.getChieuCao(),
+                 		        xa.getTaiTrong(),
+                 		        xa.getHinhAnh()
                         });
                     }
                 }

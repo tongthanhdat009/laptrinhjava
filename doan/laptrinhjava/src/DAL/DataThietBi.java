@@ -406,14 +406,13 @@ public boolean SuaThietBiXa(Xa xa) {
         ArrayList<Ta> a = new ArrayList<>();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String truyVan = "SELECT * FROM Ta, LoaiThietBi WHERE LoaiThietBi.MaThietBi = Ta.MaThietBi";
+            String truyVan = "SELECT * FROM Ta, HangHoa WHERE HangHoa.MaHangHoa = Ta.MaHangHoa";
             PreparedStatement stmt = con.prepareStatement(truyVan);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                Ta hello = new Ta(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
-                rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
-                rs.getInt("NgayBaoHanh"),rs.getString("Loai"),
+                Ta hello = new Ta(rs.getString("MaHangHoa"),rs.getString("Loai"),
+                		rs.getString("TenLoaiHangHoa"),rs.getString("HinhAnh"),
                 rs.getInt("KhoiLuong"),rs.getString("ChatLieu"),rs.getString("MauSac"));
                 a.add(hello);
             }
@@ -426,13 +425,12 @@ public boolean SuaThietBiXa(Xa xa) {
         ArrayList<Xa> a = new ArrayList<>();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String truyVan = "SELECT * FROM Xa, LoaiThietBi WHERE LoaiThietBi.MaThietBi = Xa.MaThietBi";
+            String truyVan = "SELECT * FROM Xa, HangHoa WHERE HangHoa.MaHangHoa = Xa.MaHangHoa";
             PreparedStatement stmt = con.prepareStatement(truyVan);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                a.add(new Xa(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
-                        rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
-                        rs.getInt("NgayBaoHanh"), rs.getString("Loai"),
+                a.add(new Xa(rs.getString("MaHangHoa"), rs.getString("TenLoaiHangHoa"),
+                        rs.getString("HinhAnh"),  rs.getString("Loai"),
                         rs.getString("LoaiXa"), rs.getString("ChatLieu"), 
                         rs.getFloat("ChieuDai"), rs.getFloat("DuongKinh"), 
                         rs.getFloat("ChieuCao"), rs.getFloat("TaiTrong")));
@@ -446,14 +444,14 @@ public boolean SuaThietBiXa(Xa xa) {
         ArrayList<MayChay> a = new ArrayList<>();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String truyVan = "SELECT * FROM MayChay, LoaiThietBi WHERE LoaiThietBi.MaThietBi = MayChay.MaThietBi";
+            String truyVan = "SELECT * FROM MayChay, HangHoa WHERE HangHoa.MaHangHoa = MayChay.MaHangHoa";
             PreparedStatement stmt = con.prepareStatement(truyVan);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                a.add(new MayChay(rs.getString("MaThietBi"), rs.getString("TenLoaiThietBi"),
-                        rs.getString("HinhAnh"), rs.getString("GiaThietBi"), 
-                        rs.getInt("NgayBaoHanh"), rs.getString("Loai"),
-                        rs.getInt("CongSuat"), rs.getInt("TocDoToiDa"), 
+                a.add(new MayChay(rs.getString("MaHangHoa"), rs.getString("Loai"),
+                        rs.getString("TenLoaiHangHoa"), rs.getString("HinhAnh"), 
+                        rs.getInt("CongSuat"), 
+                         rs.getInt("TocDoToiDa"), 
                         rs.getString("NhaSanXuat"), rs.getString("KichThuoc")));
             }
         } catch (Exception e) {

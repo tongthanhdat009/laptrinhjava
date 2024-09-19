@@ -1,6 +1,6 @@
 package DTO;
 
-public class Xa extends LoaiThietBi {
+public class Xa extends hangHoa {
     private String loaiXa;
     private String chatLieu;
     private float chieuDai;
@@ -9,9 +9,9 @@ public class Xa extends LoaiThietBi {
     private float taiTrong;
 
     // Constructor của lớp Xa
-    public Xa(String maThietBi, String tenThietBi, String hinhAnh, String giaThietBi, int ngayBaoHanh, String loai,
+    public Xa(String maHangHoa, String tenLoaiHangHoa, String hinhAnh, String loaiHangHoa,
               String loaiXa, String chatLieu, float chieuDai, float duongKinh, float chieuCao, float taiTrong) {
-        super(maThietBi, tenThietBi, hinhAnh, giaThietBi, ngayBaoHanh, loai); // Gọi constructor của lớp cha
+        super( maHangHoa,  loaiHangHoa,  tenLoaiHangHoa,  hinhAnh); // Gọi constructor của lớp cha
         this.loaiXa = loaiXa;
         this.chatLieu = chatLieu;
         this.chieuDai = chieuDai;

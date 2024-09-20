@@ -28,6 +28,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.formula.functions.IfFunc;
+
 import BLL.BLLQuanLyDanhSach;
 import DTO.hangHoaCoSo;
 
@@ -66,14 +68,14 @@ public class hangHoaCSCTR {
 //        xoa.setHorizontalAlignment(SwingConstants.CENTER);
 //        xoa.setBorder(null);
 //
-//    	JButton sua = new JButton();
-//        sua.setPreferredSize(new Dimension (110,35));
-//        ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/hh-sua.png");
-//        Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-//        sua.setPreferredSize(new Dimension (130,35));
-//        sua.setIcon(new ImageIcon(scaleSuaBtnImg));
-//        sua.setHorizontalAlignment(SwingConstants.CENTER);
-//        sua.setBorder(null);
+    	JButton sua = new JButton();
+        sua.setPreferredSize(new Dimension (110,35));
+        ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/hh-sua.png");
+        Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+        sua.setPreferredSize(new Dimension (130,35));
+        sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+        sua.setHorizontalAlignment(SwingConstants.CENTER);
+        sua.setBorder(null);
 
     	JButton timKiem = new JButton();
         timKiem.setPreferredSize(new Dimension (110,35));
@@ -88,7 +90,7 @@ public class hangHoaCSCTR {
         chucNang.setBackground(new Color(241, 255, 250));
 //        chucNang.add(them);
 //        chucNang.add(xoa);
-//        chucNang.add(sua);
+        chucNang.add(sua);
         chucNang.add(timKiem);
         chucNang.setBounds(5,100,rightPanel.getWidth()-5,38);
         rightPanel.add(chucNang);
@@ -125,6 +127,8 @@ public class hangHoaCSCTR {
         tfSoLuong.setBounds(x+10, 25, 100, 30);x+=110;
         lbTrangThai.setBounds(x+50,25,100,30);x+=120;
         cbTrangThai.setBounds(x+10,25,100,30);
+        
+        tfSoLuong.setEditable(false);
         
         nhapLieu.add(lbMaHangHoa);
         nhapLieu.add(tfMaHangHoa);
@@ -205,24 +209,31 @@ public class hangHoaCSCTR {
 //                }
 //            }
 //        });
-//        sua.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e)
-//            {
-//                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals(""))
-//                JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
-//                else
-//                {
-//                    String s = bllQuanLyDanhSach.suaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText(), Integer.parseInt(tfSoLuong.getText()));
-//                    JOptionPane.showMessageDialog(rightPanel, s);
-//                    if(s.equals("Thành công"))
-//                    {
-//                        for(int i=0;i<model.getRowCount();i++)
-//                        if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString()))
-//                        model.setValueAt(tfSoLuong.getText(), i, 2);
-//                    }
-//                }
-//            }
-//        });
+        sua.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals("")) {
+                	JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                	return;
+                }
+                else
+                {	
+                	if(cbTrangThai.getSelectedItem().toString().equals("Chọn trạng thái:")){
+                		JOptionPane.showMessageDialog(null, "Vui lòng chọn trạng thái để sửa");
+                		return;
+                	}
+                    String s = bllQuanLyDanhSach.suaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText(), cbTrangThai.getSelectedItem().toString());
+                    JOptionPane.showMessageDialog(rightPanel, s);
+                    if(s.equals("Thành công"))
+                    {
+                        for(int i=0;i<model.getRowCount();i++)
+	                        if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString())) {
+	                        	model.setValueAt(cbTrangThai.getSelectedItem().toString(), i, 2);
+	                        }
+                    }
+                }
+            }
+        });
         timKiem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {

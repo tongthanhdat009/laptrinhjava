@@ -522,11 +522,12 @@ public class BLLQuanLyDanhSach{
 //        if(dataHangHoaCoSo.xoa(maCoSo, maHangHoa) == true) return "Thành công";
 //        return "Bộ không tồn tại";
 //    }
-//    public String suaHangHoaCoSo(String maCoSo, String maHangHoa, int soLuong)
-//    {
-//        if(dataHangHoaCoSo.sua(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
-//        return "Bộ không tồn tại";
-//    }
+    public String suaHangHoaCoSo(String maCoSo, String maHangHoa, String trangThai)
+    {
+        if(dataHangHoaCoSo.sua(maCoSo,  maHangHoa, trangThai)) 
+        	return "Thành công";
+        return "Bộ không tồn tại";
+    }
     public String themThietBiTa(Ta ta)
     {
         if(ta.getKhoiLuong()<=0) return "Sai khối lượng";

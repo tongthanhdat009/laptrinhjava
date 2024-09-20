@@ -46,18 +46,17 @@ public class DataHangHoaCoSo{
         return dsHHCS;
     }
 
-    public boolean sua(hangHoaCoSo a)
+    public boolean sua(String maCoSo, String maHangHoa, String trangThai)
     {
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE HangHoaOCoSo SET MaCoSo = ?, SoLuong = ?, MaHangHoa = ? FROM HangHoaOCoSo Where MaCoSo = ? AND MaHangHoa = ?";
+        String truyVan = "UPDATE HangHoaOCoSo SET MaCoSo = ?, TrangThai = N'"+ trangThai +"', MaHangHoa = ? FROM HangHoaOCoSo Where MaCoSo = ? AND MaHangHoa = ?";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(1, a.getMaCoSo());
-            statement.setInt(2, a.getSoLuong());
-            statement.setString(3, a.getMaHangHoa());
-            statement.setString(4, a.getMaCoSo());
-            statement.setString(5, a.getMaHangHoa());
+            statement.setString(1, maCoSo);
+            statement.setString(2, maHangHoa);
+            statement.setString(3, maCoSo);
+            statement.setString(4, maHangHoa);
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;
         } catch (Exception e) {

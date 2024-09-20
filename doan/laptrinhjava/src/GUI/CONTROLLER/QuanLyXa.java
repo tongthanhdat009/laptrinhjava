@@ -220,8 +220,8 @@ public class QuanLyXa extends JPanel {
 		    modelXa.addRow(new Object[]{
 		        xa.getMaHangHoa(),
 		        xa.getTenLoaiHangHoa(),
-		        xa.getLoaiXa(),
 		        xa.getLoaiHangHoa(),
+		        xa.getLoaiXa(),
 		        xa.getChatLieu(),
 		        xa.getChieuDai(),
 		        xa.getDuongKinh(),
@@ -263,31 +263,31 @@ public class QuanLyXa extends JPanel {
                 	return;
                 }
                 String maThietBi = "null";
-                String ten = goodsNameTF.getText();
-                String hinhAnh = picTF.getText();
-                String loai = "Xa";
-                String loaiXa = loaiXaTF.getText();
-                String chatLieu = materialTF.getText();
+                String ten = goodsNameTF.getText().trim();
+                String hinhAnh = picTF.getText().trim();
+                String loai = "Xà";
+                String loaiXa = loaiXaTF.getText().trim();
+                String chatLieu = materialTF.getText().trim();
                 float chieuDai = Float.parseFloat(lengthTF.getText());
                 float duongKinh = Float.parseFloat(duongKinhTF.getText());
                 float chieuCao = Float.parseFloat(chieuCaoTF.getText());
                 float taiTrong = Float.parseFloat(taiTrongTF.getText());
-//                String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
-//                JOptionPane.showMessageDialog(null,kq);
+                String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                JOptionPane.showMessageDialog(null,kq);
                 modelXa.setRowCount(0);
                 ArrayList<Xa> danhSachXa = ql.layDSXa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
                 for (Xa xa : danhSachXa) {
                     modelXa.addRow(new Object[]{
                     		xa.getMaHangHoa(),
-             		        xa.getTaiTrong(),
-             		        xa.getLoaiHangHoa(),
-             		        xa.getLoaiHangHoa(),
-             		        xa.getChatLieu(),
-             		        xa.getChieuDai(),
-             		        xa.getDuongKinh(),
-             		        xa.getChieuCao(),
-             		        xa.getTaiTrong(),
-             		        xa.getHinhAnh()
+            		        xa.getTenLoaiHangHoa(),
+            		        xa.getLoaiHangHoa(),
+            		        xa.getLoaiXa(),
+            		        xa.getChatLieu(),
+            		        xa.getChieuDai(),
+            		        xa.getDuongKinh(),
+            		        xa.getChieuCao(),
+            		        xa.getTaiTrong(),
+            		        xa.getHinhAnh()
                     });
                 }
             }
@@ -305,29 +305,29 @@ public class QuanLyXa extends JPanel {
                     String maThietBi = IDGoodsTF.getText();
                     String ten = goodsNameTF.getText();
                     String hinhAnh = picTF.getText();
-                    String loai = "Xa";
+                    String loai = "Xà";
                     String loaiXa = loaiXaTF.getText();
                     String chatLieu = materialTF.getText();
                     float chieuDai = Float.parseFloat(lengthTF.getText());
                     float duongKinh = Float.parseFloat(duongKinhTF.getText());
                     float chieuCao = Float.parseFloat(chieuCaoTF.getText());
                     float taiTrong = Float.parseFloat(taiTrongTF.getText());
-//                    String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
-//                    JOptionPane.showMessageDialog(null, kq);
+                    String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                    JOptionPane.showMessageDialog(null, kq);
                     modelXa.setRowCount(0);
                     ArrayList<Xa> danhSachXa = ql.layDSXa();
                     for (Xa xa : danhSachXa) {
                         modelXa.addRow(new Object[]{
-                        		 xa.getMaHangHoa(),
-                 		        xa.getTaiTrong(),
-                 		        xa.getLoaiHangHoa(),
-                 		        xa.getLoaiHangHoa(),
-                 		        xa.getChatLieu(),
-                 		        xa.getChieuDai(),
-                 		        xa.getDuongKinh(),
-                 		        xa.getChieuCao(),
-                 		        xa.getTaiTrong(),
-                 		        xa.getHinhAnh()
+                        		xa.getMaHangHoa(),
+                		        xa.getTenLoaiHangHoa(),
+                		        xa.getLoaiHangHoa(),
+                		        xa.getLoaiXa(),
+                		        xa.getChatLieu(),
+                		        xa.getChieuDai(),
+                		        xa.getDuongKinh(),
+                		        xa.getChieuCao(),
+                		        xa.getTaiTrong(),
+                		        xa.getHinhAnh()
                         });
                     }
                 }

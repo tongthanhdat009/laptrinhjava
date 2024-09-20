@@ -4,7 +4,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import DTO.GioHang;
+import DTO.LoaiThietBi;
+import DTO.MayChay;
+import DTO.Ta;
 import DTO.ThongTinChiTietHangHoa;
+import DTO.Xa;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
 
@@ -35,7 +39,6 @@ public class DataHangHoa {
                 hh.setLoaiHangHoa(rs.getString("LoaiHangHoa"));
                 hh.setTenLoaiHangHoa(rs.getString("TenLoaiHangHoa"));
                 hh.setHinhAnh(rs.getString("HinhAnh"));
-                hh.setGiaNhap(rs.getLong("GiaNhap"));
                 ds.them(hh);
             }
         } catch (SQLException e){
@@ -80,13 +83,12 @@ public class DataHangHoa {
     public boolean themHangHoa(hangHoa hh){
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO HangHoa (MaHangHoa,LoaiHangHoa,TenLoaiHangHoa,HinhAnh,GiaNhap) VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO HangHoa (MaHangHoa,Loai,TenLoaiHangHoa,HinhAnh) VALUES(?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1,hh.getMaHangHoa());            
             preparedStatement.setString(2,hh.getLoaiHangHoa());            
             preparedStatement.setString(3,hh.getTenLoaiHangHoa());            
             preparedStatement.setString(4,hh.getHinhAnh());            
-            preparedStatement.setLong(5,hh.getGiaNhap());            
             if (preparedStatement.executeUpdate() > 0)  return true;
         }catch (SQLException e){
             e.printStackTrace();
@@ -119,13 +121,12 @@ public class DataHangHoa {
     public boolean suaHangHoa(hangHoa hh){
 
         try (Connection con = DriverManager.getConnection(dbUrl, userName, password)) {
-            PreparedStatement preparedStatement = con.prepareStatement("UPDATE HangHoa SET MaHangHoa = ?, LoaiHangHoa = ?, TenLoaiHangHoa= ?, HinhAnh = ?, GiaNhap = ? WHERE MaHangHoa = ?");
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE HangHoa SET MaHangHoa = ?, Loai = ?, TenLoaiHangHoa= ?, HinhAnh = ? WHERE MaHangHoa = ?");
             preparedStatement.setString(1, hh.getMaHangHoa().toUpperCase());
             preparedStatement.setString(2, hh.getLoaiHangHoa());
             preparedStatement.setString(3, hh.getTenLoaiHangHoa());
             preparedStatement.setString(4, hh.getHinhAnh());
-            preparedStatement.setLong(5, hh.getGiaNhap());
-            preparedStatement.setString(6, hh.getMaHangHoa());
+            preparedStatement.setString(5, hh.getMaHangHoa());
             if(preparedStatement.executeUpdate() > 0) return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,7 +188,7 @@ public class DataHangHoa {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-                dsHH.them(new hangHoa(rs.getString(1),rs.getString(2),rs.getString(3),"",0));
+                dsHH.them(new hangHoa(rs.getString(1),rs.getString(2),rs.getString(3),""));
             }
         }catch(Exception e)
         {
@@ -436,4 +437,81 @@ public class DataHangHoa {
         }
         return false;
     }
+    
+    //sửa thông tin hàng hóa loại tạ
+    public boolean SuaTa(Ta ta)
+    {
+        String truyVan = "UPDATE Ta SET KhoiLuong = ?, ChatLieu = ?, MauSac = ? FROM Ta Where MaHangHoa = ? ";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setInt(1, ta.getKhoiLuong());
+            statement.setString(2, ta.getChatLieu());
+            statement.setString(3, ta.getMauSac());
+            statement.setString(4, ta.getMaHangHoa());
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected>0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean SuaThietBiTa(Ta ta)
+    {
+       if (suaHangHoa(new hangHoa(ta.getMaHangHoa(), ta.getLoaiHangHoa(), ta.getTenLoaiHangHoa(),ta.getHinhAnh())))
+       if (SuaTa(ta)) return true;
+       return false;
+    }
+
+    //sửa thông tin hàng hóa loại máy chạy
+    public boolean SuaMayChay(MayChay mayChay) {
+        String truyVan = "UPDATE MayChay SET CongSuat = ?, TocDoToiDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM MayChay WHERE MaHangHoa = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setInt(1, mayChay.getCongSuat());
+            statement.setInt(2, mayChay.getTocDoToiDa());
+            statement.setString(3, mayChay.getNhaSanXuat());
+            statement.setString(4, mayChay.getKichThuoc());
+            statement.setString(5, mayChay.getMaHangHoa());
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean SuaThietBiMayChay(MayChay mayChay) {
+        if (suaHangHoa(new hangHoa(mayChay.getMaHangHoa(), mayChay.getLoaiHangHoa(), mayChay.getTenLoaiHangHoa(),mayChay.getHinhAnh()))) 
+            if (SuaMayChay(mayChay)) return true;
+        return false;
+    }
+    
+    //sửa thông tin hàng hóa loại xà
+    public boolean SuaXa(Xa xa) {
+        String truyVan = "UPDATE Xa SET LoaiXa = ?, ChatLieu = ?, ChieuDai = ?, DuongKinh = ?, ChieuCao = ?, TaiTrong = ? FROM Xa WHERE MaHangHoa = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement statement = con.prepareStatement(truyVan);
+            statement.setString(1, xa.getLoaiXa());
+            statement.setString(2, xa.getChatLieu());
+            statement.setFloat(3, xa.getChieuDai());
+            statement.setFloat(4, xa.getDuongKinh());
+            statement.setFloat(5, xa.getChieuCao());
+            statement.setFloat(6, xa.getTaiTrong());
+            statement.setString(7, xa.getMaHangHoa());
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean SuaThietBiXa(Xa xa) {
+            if (suaHangHoa(new hangHoa(xa.getMaHangHoa(), xa.getLoaiHangHoa(), xa.getTenLoaiHangHoa(),xa.getHinhAnh()))) 
+                if (SuaXa(xa)) return true;
+            return false;
+        }
 }

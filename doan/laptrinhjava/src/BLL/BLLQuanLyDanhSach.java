@@ -529,36 +529,30 @@ public class BLLQuanLyDanhSach{
     public String themThietBiTa(Ta ta)
     {
         if(ta.getKhoiLuong()<=0) return "Sai khối lượng";
-        if(Integer.parseInt(ta.getGiaThietBi())<0) return "Sai Giá";
-        if(ta.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         String ma = dataThietBi.layMaChuaTonTai();
-        if(dataThietBi.themTB(new LoaiThietBi(ma, ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai()))) 
+        if(dataHangHoa.themHangHoa(new hangHoa(ma, ta.getLoaiHangHoa(), ta.getTenLoaiHangHoa(), ta.getHinhAnh()))) 
         if(dataThietBi.themTa(ma, ta.getKhoiLuong(), ta.getChatLieu(), ta.getMauSac()))
         return "Thành công";
         return "Thất bại";
     }
     public String themThietBiXa(Xa xa)
     {
-        if(Integer.parseInt(xa.getGiaThietBi())<0) return "Sai Giá";
-        if(xa.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         if(xa.getChieuDai()<=0) return "Sai chiều dài";
         if(xa.getDuongKinh()<=0) return "Sai đường kính";
         if(xa.getChieuCao()<=0) return "Sai chiều cao";
         if(xa.getTaiTrong()<=0) return "Sai tải trọng";
         String ma = dataThietBi.layMaChuaTonTai();
-        if(dataThietBi.themTB(new LoaiThietBi(ma, xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
+        if(dataHangHoa.themHangHoa(new hangHoa(ma, xa.getLoaiHangHoa(), xa.getTenLoaiHangHoa(), xa.getHinhAnh()))) 
         if(dataThietBi.themXa(ma, xa.getLoaiXa(),xa.getChatLieu(), xa.getChieuDai(), xa.getDuongKinh(), xa.getChieuCao(), xa.getTaiTrong()))
-        return "Thành công";
+        	return "Thành công";
         return "Thất bại";
     }
     public String themThietBiMayChay(MayChay mayChay)
     {
-        if(Integer.parseInt(mayChay.getGiaThietBi())<0) return "Sai Giá";
-        if(mayChay.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         if(mayChay.getCongSuat()<0) return "Sai công suất";
         if(mayChay.getTocDoToiDa()<0) return "Sai tốc độ tối đa"; 
         String ma = dataThietBi.layMaChuaTonTai();
-        if(dataThietBi.themTB(new LoaiThietBi(ma, mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
+        if(dataHangHoa.themHangHoa(new hangHoa(ma,mayChay.getLoaiHangHoa(),mayChay.getTenLoaiHangHoa(),mayChay.getHinhAnh()))) 
         if(dataThietBi.themMayChay(ma, mayChay.getCongSuat(), mayChay.getTocDoToiDa(), mayChay.getNhaSanXuat(),mayChay.getKichThuoc()))
         	return "Thành công";
         return "Thất bại";
@@ -566,29 +560,23 @@ public class BLLQuanLyDanhSach{
     public String SuaTa(Ta ta)
     {
         if(ta.getKhoiLuong()<=0) return "Sai khối lượng";
-        if(Integer.parseInt(ta.getGiaThietBi())<0) return "Sai Giá";
-        if(ta.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
-        if(dataThietBi.SuaThietBiTa(ta) == true) return "Thành công";
+        if(dataHangHoa.SuaThietBiTa(ta) == true) return "Thành công";
         return "Mã không tồn tại";
     }
     public String SuaXa(Xa xa)
     {
-        if(Integer.parseInt(xa.getGiaThietBi())<0) return "Sai Giá";
-        if(xa.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         if(xa.getChieuDai()<=0) return "Sai chiều dài";
         if(xa.getDuongKinh()<=0) return "Sai đường kính";
         if(xa.getChieuCao()<=0) return "Sai chiều cao";
         if(xa.getTaiTrong()<=0) return "Sai tải trọng";
-        if(dataThietBi.SuaThietBiXa(xa) == true) return "Thành công";
+        if(dataHangHoa.SuaThietBiXa(xa) == true) return "Thành công";
         return "Mã không tồn tại";
     }
     public String SuaMayChay(MayChay mayChay)
     {
-        if(Integer.parseInt(mayChay.getGiaThietBi())<0) return "Sai Giá";
-        if(mayChay.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         if(mayChay.getCongSuat()<0) return "Sai công suất";
         if(mayChay.getTocDoToiDa()<0) return "Sai tốc độ tối đa"; 
-        if(dataThietBi.SuaThietBiMayChay(mayChay) == true) return "Thành công";
+        if(dataHangHoa.SuaThietBiMayChay(mayChay) == true) return "Thành công";
         return "Mã không tồn tại";
     }
     public ArrayList<Ta> layDSTa()

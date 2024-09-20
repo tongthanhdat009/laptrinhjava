@@ -43,6 +43,8 @@ public class QuanLyMayChay extends JPanel {
 	private JTextField speedMaxTF;
 	private JTextField nsxTF;
 	private JTextField kichThuocTF;
+	private JTextField typeTF;
+
     public QuanLyMayChay()
     {
         setLayout(null);
@@ -101,6 +103,11 @@ public class QuanLyMayChay extends JPanel {
                 thongTin.add(picTF);
                 picTF.setColumns(10);
                 
+                typeTF = new JTextField();
+                typeTF.setBounds(832, 80, 200, 36);
+                thongTin.add(typeTF);
+                typeTF.setColumns(10);
+                
                 congSuatTF = new JTextField();
                 congSuatTF.setBounds(521, 33, 144, 36);
                 thongTin.add(congSuatTF);
@@ -148,6 +155,11 @@ public class QuanLyMayChay extends JPanel {
                 picLB.setBounds(699, 33, 123, 36);
                 thongTin.add(picLB);
                 
+                JLabel typeLB = new JLabel("Loại:");
+                typeLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
+                typeLB.setBounds(699, 80, 123, 36);
+                thongTin.add(typeLB);
+                
                 JLabel kichThuocLB = new JLabel("Kích thước:");
                 kichThuocLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
                 kichThuocLB.setBounds(367, 139, 149, 27);
@@ -171,11 +183,12 @@ public class QuanLyMayChay extends JPanel {
                 modelMayChay.addColumn("Mã hàng hóa");
                 modelMayChay.addColumn("Tên hàng hóa");
                 modelMayChay.addColumn("Loại");
-                modelMayChay.addColumn("Tốc độ tối đa");
+                modelMayChay.addColumn("Hình ảnh");
                 modelMayChay.addColumn("Công suất");
+                modelMayChay.addColumn("Tốc độ tối đa");
                 modelMayChay.addColumn("Nhà sản xuất");
                 modelMayChay.addColumn("Kích thước");
-                modelMayChay.addColumn("Hình ảnh");
+                
 
                 // Gán model cho JTable
                 bangMayChay.setModel(modelMayChay);
@@ -187,11 +200,11 @@ public class QuanLyMayChay extends JPanel {
                         mayChay.getMaHangHoa(),
                         mayChay.getTenLoaiHangHoa(),
                         mayChay.getLoaiHangHoa(),
+                        mayChay.getHinhAnh(),
                         mayChay.getCongSuat(),
                         mayChay.getTocDoToiDa(),
                         mayChay.getNhaSanXuat(),
                         mayChay.getKichThuoc(),
-                        mayChay.getHinhAnh(),
                     });
                 }
 
@@ -201,11 +214,12 @@ public class QuanLyMayChay extends JPanel {
                         if (row >= 0) {
                             IDGoodsTF.setText(modelMayChay.getValueAt(row, 0).toString().trim());
                             goodsNameTF.setText(modelMayChay.getValueAt(row, 1).toString().trim());
-                            speedMaxTF.setText(modelMayChay.getValueAt(row, 2).toString().trim());
-                            congSuatTF.setText(modelMayChay.getValueAt(row, 3).toString().trim());
-                            nsxTF.setText(modelMayChay.getValueAt(row, 4).toString().trim());
-                            kichThuocTF.setText(modelMayChay.getValueAt(row, 5).toString().trim());
-                            picTF.setText(modelMayChay.getValueAt(row, 6).toString().trim());
+                            typeTF.setText(modelMayChay.getValueAt(row, 2).toString().trim());
+                            picTF.setText(modelMayChay.getValueAt(row, 3).toString().trim());
+                            congSuatTF.setText(modelMayChay.getValueAt(row, 4).toString().trim());
+                            speedMaxTF.setText(modelMayChay.getValueAt(row, 5).toString().trim());
+                            nsxTF.setText(modelMayChay.getValueAt(row, 6).toString().trim());
+                            kichThuocTF.setText(modelMayChay.getValueAt(row, 7).toString().trim());
                         }
                     }
                 });
@@ -236,15 +250,15 @@ public class QuanLyMayChay extends JPanel {
                             String kichThuoc = kichThuocTF.getText();
                 
                             // Thêm thiết bị `MayChay` vào hệ thống
-//                            String kq = ql.themThietBiMayChay(new MayChay(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "MayChay", congSuat, tocDoToiDa, nhaSanXuat, kichThuoc));
-//                            JOptionPane.showMessageDialog(null, kq);
+                            String kq = ql.themThietBiMayChay(new MayChay(maThietBi, "Máy chạy", ten, hinhAnh, congSuat, tocDoToiDa, nhaSanXuat, kichThuoc));
+                            JOptionPane.showMessageDialog(null, kq);
                             modelMayChay.setRowCount(0);
                             ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
                             for (MayChay mayChay : danhSachMayChay) {
                                 modelMayChay.addRow(new Object[]{
                                 		mayChay.getMaHangHoa(),
-                                        mayChay.getLoaiHangHoa(),
                                         mayChay.getTenLoaiHangHoa(),
+                                        mayChay.getLoaiHangHoa(),
                                         mayChay.getHinhAnh(),
                                         mayChay.getCongSuat(),
                                         mayChay.getTocDoToiDa(),
@@ -275,15 +289,15 @@ public class QuanLyMayChay extends JPanel {
                             String kichThuoc = kichThuocTF.getText();
                 
                             // Sửa thiết bị `MayChay`
-//                            String kq = ql.SuaMayChay(new MayChay(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "MayChay", congSuat, tocDoToiDa, nhaSanXuat, kichThuoc));
-//                            JOptionPane.showMessageDialog(null, kq);
+                            String kq = ql.SuaMayChay(new MayChay(maThietBi, "Máy chạy", ten, hinhAnh,  congSuat, tocDoToiDa, nhaSanXuat, kichThuoc));
+                            JOptionPane.showMessageDialog(null, kq);
                             modelMayChay.setRowCount(0);
                             ArrayList<MayChay> danhSachMayChay = ql.layDSMayChay(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
                             for (MayChay mayChay : danhSachMayChay) {
                                 modelMayChay.addRow(new Object[]{
                                 		mayChay.getMaHangHoa(),
-                                        mayChay.getLoaiHangHoa(),
                                         mayChay.getTenLoaiHangHoa(),
+                                        mayChay.getLoaiHangHoa(),
                                         mayChay.getHinhAnh(),
                                         mayChay.getCongSuat(),
                                         mayChay.getTocDoToiDa(),

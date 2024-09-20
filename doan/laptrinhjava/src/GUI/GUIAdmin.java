@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-
+import BLL.BLLDonNhap;
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDonHang;
@@ -14,6 +14,7 @@ import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.DTOQuyen;
 import DTO.DTOThongKeDonHang;
+import DTO.DonNhap;
 import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.LoaiThietBi;
@@ -25,9 +26,11 @@ import GUI.CONTROLLER.QuanLyThietBiCTR;
 //import GUI.CONTROLLER.XuatExcelCTR;
 import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
+import GUI.CONTROLLER.informationCTR;
 import GUI.CONTROLLER.thongKe;
 import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
+import GUI.CONTROLLER.xulyDDNCTR;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -150,7 +153,7 @@ public class GUIAdmin{
     
     public String curr_user = new String();
     
-    public GUIAdmin(String tk){    
+    public GUIAdmin(String tk, String coSoHienTai){    
 //    	người dùng hiện tại
     	this.curr_user = tk;
         //main frame
@@ -189,11 +192,12 @@ public class GUIAdmin{
         		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(70, 78, 71)));
         managementPanel.setBackground(new Color(204, 252, 203));
         JScrollPane scrollPane = new JScrollPane(managementPanel);
-        scrollPane.setBounds(26, 238, 352, 547); // Kích thước và vị trí của JScrollPane
-        managementPanel.setPreferredSize(new Dimension(300, 600)); // y là tổng chiều cao của tất cả các nút
+        scrollPane.setBounds(26, 238, 352, 600); // Kích thước và vị trí của JScrollPane
+        managementPanel.setPreferredSize(new Dimension(300, 800)); // y là tổng chiều cao của tất cả các nút
         scrollPane.getVerticalScrollBar().setUnitIncrement(16); 
         leftPanel.add(scrollPane);
         
+        //chức năng quản lý danh sách
         JButton listBTN = new JButton("Quản lý danh sách");
         listBTN.setSelectedIcon(null);
         listBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
@@ -212,6 +216,7 @@ public class GUIAdmin{
 
         managementPanel.add(listBTN);
         
+        //chức năng  duyệt đơn hàng
         JButton billBTN = new JButton("Duyệt đơn hàng");
         billBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         billBTN.addActionListener(new ActionListener() {
@@ -246,6 +251,7 @@ public class GUIAdmin{
 
 //        managementPanel.add(goodsBTN);
         
+        //chức năng thống kê đơn hàng
         JButton statBTN = new JButton("Thống kê đơn hàng");
         statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         statBTN.addActionListener(new ActionListener() {
@@ -263,7 +269,8 @@ public class GUIAdmin{
         statBTN.setIcon(new ImageIcon(scaleChartIcon));
         managementPanel.add(statBTN);
 
-        JButton QuanLyThietBi = new JButton("Quản lý thiết bị");
+        
+        JButton QuanLyThietBi = new JButton("Quản lý hàng hóa");
         QuanLyThietBi.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
@@ -280,6 +287,7 @@ public class GUIAdmin{
         QuanLyThietBi.setFocusPainted(false);
         managementPanel.add(QuanLyThietBi);
         
+        //chức năng phân quyền
         JButton delegationBTN = new JButton("Phân quyền");
         delegationBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -296,6 +304,7 @@ public class GUIAdmin{
         delegationBTN.setFocusPainted(false);
         managementPanel.add(delegationBTN);
         
+        //quản lý nhân viên
         JButton employeeMNG = new JButton("Quản lý nhân viên");
         employeeMNG.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -318,6 +327,7 @@ public class GUIAdmin{
         employeeMNG.setFocusPainted(false);
         managementPanel.add(employeeMNG);
         
+        //quản lý hội viên
         JButton memberMNG = new JButton("Quản lý hội viên");
         memberMNG.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -361,6 +371,7 @@ public class GUIAdmin{
         memberMNG.setFocusPainted(false);
         managementPanel.add(memberMNG);
         
+        //chức năng mua hàng
         JButton buyBTN = new JButton("Mua Hàng");
         buyBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -368,16 +379,48 @@ public class GUIAdmin{
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
         		rightPanel.setLayout(null);
-                rightPanel.add(new MuaHangCTR("TK001"));
+                rightPanel.add(new MuaHangCTR("TK082")); //id tài khoản admin
         	}
         });
         buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         buyBTN.setBounds(23, 469, 300, 50);
+        buyBTN.setFocusPainted(false);
         managementPanel.add(buyBTN);
         
+        JButton purchaseOrderBTN = new JButton("Duyệt phiếu nhập");
+        purchaseOrderBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                BLLDonNhap bllDonNhap=new BLLDonNhap();
+                BLLQuanLyDanhSach bllQuanLyDanhSach=new BLLQuanLyDanhSach();
+                ArrayList<DonNhap> ds = bllDonNhap.layDsDonNhap(coSoHienTai);
+                xulyDDNCTR xulyDDNCTR=new xulyDDNCTR();
+                xulyDDNCTR.XuLyDuyetDonNhap(ds, bllDonNhap, bllQuanLyDanhSach, rightPanel, coSoHienTai);
+            }
+        });
+        purchaseOrderBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        purchaseOrderBTN.setBounds(23, 530, 300, 50);
+        purchaseOrderBTN.setIcon(new ImageIcon(scaleBillIcon));
+        purchaseOrderBTN.setFocusPainted(false);
+        managementPanel.add(purchaseOrderBTN);
+        
+        JButton informationBTN = new JButton("Thông tin cá nhân");
+        informationBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		informationCTR inforCTR = new informationCTR(new DTOTaiKhoan("TK002", "TKNV002", "MKNV002", "Q0002"));
+        		rightPanel.add(inforCTR);
+			}
+        });
+        informationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        informationBTN.setBounds(23, 590, 300, 50);
+        informationBTN.setFocusPainted(false);
+        managementPanel.add(informationBTN);
+        
         leftPanel.add(footerLeft);
-        //chức năng:
-        //quản lý danh sách:
+
         //right panel
         rightPanel.setBounds(400,0,1200,900);
         rightPanel.setBackground(new Color(241, 255, 250));
@@ -414,6 +457,8 @@ public class GUIAdmin{
         logOutBTN.setFont(new Font("Times New Roman", Font.PLAIN, 17));
         logOutBTN.setBounds(27, 796, 146, 37);
         leftPanel.add(logOutBTN);
+        
+        
         
         JLabel currUserLB = new JLabel("Người dùng hiện tại: " + tk);
         currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
@@ -636,6 +681,6 @@ public class GUIAdmin{
         rightPanel.add(filter);
     }
     public static void main(String[] args){
-        new GUIAdmin("Admin");
+        new GUIAdmin("Admin","CS001");
     }
 }

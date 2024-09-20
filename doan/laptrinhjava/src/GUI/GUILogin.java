@@ -155,8 +155,19 @@ public class GUILogin extends JFrame implements ActionListener{
                     String[] parts = trangThaiDangNhap.split(":");
                     DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim());
                     if(parts[3].trim().equals("Q0004")) { //mã quyền admin
-                    	new GUIAdmin("Admin");
-                    	dispose();
+                    	ArrayList<String> options = dangNhap.dsMaCS();
+                        JComboBox<String> comboBox = new JComboBox<String>(options.toArray(new String[0]));
+
+                        int result = JOptionPane.showConfirmDialog(null, comboBox, 
+                                "Vui lòng chọn cơ sở", JOptionPane.OK_CANCEL_OPTION);
+
+                        if (result == JOptionPane.OK_OPTION) {
+                            String coSoDaChon = (String) comboBox.getSelectedItem();
+                        	JOptionPane.showMessageDialog(null, "Đăng nhập thành công!" + coSoDaChon);
+                        	new GUIAdmin("Admin", coSoDaChon);
+                        	dispose();
+                        	return;
+                        }
                     }
                     else if (parts[3].trim().equals("Q0001")){
 //                    	tạo giao diện hội viên

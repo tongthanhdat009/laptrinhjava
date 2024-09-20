@@ -9,6 +9,7 @@ import DTO.LoaiThietBi;
 import DTO.MayChay;
 import DTO.Ta;
 import DTO.Xa;
+import DTO.hangHoa;
 public class DataThietBi {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -210,13 +211,13 @@ public class DataThietBi {
         }
         return false;
     }
-    public boolean themTa(String MaThietBi, int khoiLuong, String chatLieu, String mauSac)
+    public boolean themTa(String MaHangHoa, int khoiLuong, String chatLieu, String mauSac)
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO Ta (MaThietBi, KhoiLuong, ChatLieu, MauSac) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO Ta (MaHangHoa, KhoiLuong, ChatLieu, MauSac) VALUES(?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1,MaThietBi);            
+            preparedStatement.setString(1,MaHangHoa);            
             preparedStatement.setInt(2,khoiLuong);            
             preparedStatement.setString(3,chatLieu);            
             preparedStatement.setString(4,mauSac);
@@ -226,12 +227,12 @@ public class DataThietBi {
         }
         return false;
     }
-    public boolean themMayChay(String MaThietBi, int congSuat, int tocDoToiDa, String nhaSanXuat, String kichThuoc) {
+    public boolean themMayChay(String MaHangHoa, int congSuat, int tocDoToiDa, String nhaSanXuat, String kichThuoc) {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO MayChay (MaThietBi, CongSuat, TocDoToiDa, NhaSanXuat, KichThuoc) VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO MayChay (MaHangHoa, CongSuat, TocDoToiDa, NhaSanXuat, KichThuoc) VALUES(?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1,MaThietBi);            
+            preparedStatement.setString(1,MaHangHoa);            
             preparedStatement.setInt(2,congSuat);            
             preparedStatement.setInt(3,tocDoToiDa);            
             preparedStatement.setString(4,nhaSanXuat);
@@ -242,13 +243,13 @@ public class DataThietBi {
         }
         return false;
     }
-    public boolean themXa(String MaThietBi, String loaiXa, String chatLieu, float chieuDai, float duongKinh, float chieuCao, float taiTrong)
+    public boolean themXa(String MaHangHoa, String loaiXa, String chatLieu, float chieuDai, float duongKinh, float chieuCao, float taiTrong)
     {
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO Xa (MaThietBi, LoaiXa, ChatLieu, ChieuDai, DuongKinh, ChieuCao, TaiTrong) VALUES(?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Xa (MaHangHoa, LoaiXa, ChatLieu, ChieuDai, DuongKinh, ChieuCao, TaiTrong) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1,MaThietBi);            
+            preparedStatement.setString(1,MaHangHoa);            
             preparedStatement.setString(2,loaiXa);            
             preparedStatement.setString(3,chatLieu);            
             preparedStatement.setFloat(4,chieuDai);
@@ -300,7 +301,7 @@ public class DataThietBi {
         return false;
     }
     public String layMaChuaTonTai() {
-        String truyVan = "SELECT MaThietBi FROM LoaiThietBi";
+        String truyVan = "SELECT MaHangHoa FROM HangHoa";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
@@ -323,7 +324,7 @@ public class DataThietBi {
     
             // Tạo mã mới bằng cách tăng số lớn nhất lên 1
             so = so + 1;
-            return String.format("TB%03d", so);
+            return String.format("HH%03d", so);
     
         } catch (Exception e) {
             System.out.println(e);
@@ -331,77 +332,8 @@ public class DataThietBi {
         return "Loi";
     }
     
-    public boolean SuaTa(Ta ta)
-    {
-        String truyVan = "UPDATE Ta SET KhoiLuong = ?, ChatLieu = ?, MauSac = ? FROM Ta Where MaThietBi = ? ";
-        try {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setInt(1, ta.getKhoiLuong());
-            statement.setString(2, ta.getChatLieu());
-            statement.setString(3, ta.getMauSac());
-            statement.setString(4, ta.getMaThietBi());
-            int rowsAffected = statement.executeUpdate();
-            if(rowsAffected>0) return true;
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false;
-    }
-    public boolean SuaThietBiTa(Ta ta)
-    {
-       if (suaThongTinTB(new LoaiThietBi(ta.getMaThietBi(), ta.getTenLoaiThietBi(), ta.getHinhAnh(), ta.getGiaThietBi(), ta.getNgayBaoHanh(), ta.getLoai())))
-       if (SuaTa(ta)) return true;
-       return false;
-    }
-    public boolean SuaMayChay(MayChay mayChay) {
-    String truyVan = "UPDATE MayChay SET CongSuat = ?, TocDoToiDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM MayChay WHERE MaThietBi = ?";
-    try {
-        con = DriverManager.getConnection(dbUrl, userName, password);
-        PreparedStatement statement = con.prepareStatement(truyVan);
-        statement.setInt(1, mayChay.getCongSuat());
-        statement.setInt(2, mayChay.getTocDoToiDa());
-        statement.setString(3, mayChay.getNhaSanXuat());
-        statement.setString(4, mayChay.getKichThuoc());
-        statement.setString(5, mayChay.getMaThietBi());
-        int rowsAffected = statement.executeUpdate();
-        if (rowsAffected > 0) return true;
-    } catch (Exception e) {
-        System.out.println(e);
-    }
-    return false;
-}
+    
 
-public boolean SuaThietBiMayChay(MayChay mayChay) {
-    if (suaThongTinTB(new LoaiThietBi(mayChay.getMaThietBi(), mayChay.getTenLoaiThietBi(), mayChay.getHinhAnh(), mayChay.getGiaThietBi(), mayChay.getNgayBaoHanh(), mayChay.getLoai()))) 
-        if (SuaMayChay(mayChay)) return true;
-    return false;
-}
-public boolean SuaXa(Xa xa) {
-    String truyVan = "UPDATE Xa SET LoaiXa = ?, ChatLieu = ?, ChieuDai = ?, DuongKinh = ?, ChieuCao = ?, TaiTrong = ? FROM Xa WHERE MaThietBi = ?";
-    try {
-        con = DriverManager.getConnection(dbUrl, userName, password);
-        PreparedStatement statement = con.prepareStatement(truyVan);
-        statement.setString(1, xa.getLoaiXa());
-        statement.setString(2, xa.getChatLieu());
-        statement.setFloat(3, xa.getChieuDai());
-        statement.setFloat(4, xa.getDuongKinh());
-        statement.setFloat(5, xa.getChieuCao());
-        statement.setFloat(6, xa.getTaiTrong());
-        statement.setString(7, xa.getMaThietBi());
-        int rowsAffected = statement.executeUpdate();
-        if (rowsAffected > 0) return true;
-    } catch (Exception e) {
-        System.out.println(e);
-    }
-    return false;
-}
-
-public boolean SuaThietBiXa(Xa xa) {
-        if (suaThongTinTB(new LoaiThietBi(xa.getMaThietBi(), xa.getTenLoaiThietBi(), xa.getHinhAnh(), xa.getGiaThietBi(), xa.getNgayBaoHanh(), xa.getLoai()))) 
-            if (SuaXa(xa)) return true;
-        return false;
-    }
     public ArrayList<Ta> layDanhSachTa(){
         ArrayList<Ta> a = new ArrayList<>();
         try {

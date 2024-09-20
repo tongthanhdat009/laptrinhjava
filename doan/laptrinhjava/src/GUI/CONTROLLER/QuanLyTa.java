@@ -191,8 +191,8 @@ public class QuanLyTa extends JPanel {
                             goodsNameTF.setText(model.getValueAt(row, 1).toString().trim());
                             picTF.setText(model.getValueAt(row, 2).toString().trim());
                             weightTF.setText(model.getValueAt(row, 3).toString().trim());
-                            materialTF.setText(model.getValueAt(row, 4).toString().trim());
-                            colorTF.setText(model.getValueAt(row, 5).toString().trim());
+                            colorTF.setText(model.getValueAt(row, 4).toString().trim());
+                            materialTF.setText(model.getValueAt(row, 5).toString().trim());
                         }
                     }
                 });
@@ -227,8 +227,8 @@ public class QuanLyTa extends JPanel {
                             String chatLieu = colorTF.getText();
                             String mauSac = materialTF.getText();
 
-//                            String kq = ql.themThietBiTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
-//                            JOptionPane.showMessageDialog(null, kq);
+                            String kq = ql.themThietBiTa(new Ta(maThietBi, ten, hinhAnh, "Tạ", khoiLuong, chatLieu, mauSac));
+                            JOptionPane.showMessageDialog(null, kq);
                             model.setRowCount(0);
                             ArrayList<Ta> danhSachTa = new ArrayList<>();
                             danhSachTa = ql.layDSTa();
@@ -246,6 +246,7 @@ public class QuanLyTa extends JPanel {
                 });
                 sua.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                    	System.out.println("a");
                         if (IDGoodsTF.getText().equals("") || goodsNameTF.getText().equals("") || 
                             picTF.getText().equals("") ||
                             weightTF.getText().equals("") || 
@@ -266,8 +267,8 @@ public class QuanLyTa extends JPanel {
                             String mauSac = colorTF.getText();
                 
                             // Sửa thiết bị `Ta`
-//                            String kq = ql.SuaTa(new Ta(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, "Ta", khoiLuong, chatLieu, mauSac));
-//                            JOptionPane.showMessageDialog(null, kq);
+                            String kq = ql.SuaTa(new Ta(maThietBi, ten, hinhAnh, "Tạ", khoiLuong, chatLieu, mauSac));
+                            JOptionPane.showMessageDialog(null, kq);
                         }
                         model.setRowCount(0);
                         ArrayList<Ta> danhSachTa = new ArrayList<>();

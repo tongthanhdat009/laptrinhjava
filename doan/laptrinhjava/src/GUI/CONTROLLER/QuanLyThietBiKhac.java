@@ -120,8 +120,6 @@ DefaultTableModel modelKhac = new DefaultTableModel();
 modelKhac.addColumn("Mã thiết bị");
 modelKhac.addColumn("Tên thiết bị");
 modelKhac.addColumn("Hình ảnh");
-modelKhac.addColumn("Giá thiết bị");
-modelKhac.addColumn("Ngày bảo hành");
 
 // Gán model cho JTable
 bangKhac.setModel(modelKhac);
@@ -134,8 +132,6 @@ for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
         khac.getMaThietBi(),
         khac.getTenLoaiThietBi(),
         khac.getHinhAnh(),
-        khac.getGiaThietBi(),
-        khac.getNgayBaoHanh(),
     });
 }
                     bangKhac.addMouseListener(new MouseAdapter() {

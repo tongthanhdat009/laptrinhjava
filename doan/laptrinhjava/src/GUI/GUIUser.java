@@ -20,6 +20,7 @@ import DTO.DonNhap;
 import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.NhanVien;
+import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.delegateCTR;
@@ -221,7 +222,7 @@ public class GUIUser extends JFrame {
 //        statBTN.setBounds(23, 225, 300, 50);
 //        managementPanel.add(statBTN);
         
-        JButton QuanLyThietBi = new JButton("Quản lý thiết bị");
+        JButton QuanLyThietBi = new JButton("Quản lý hàng hóa");
         QuanLyThietBi.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
@@ -310,6 +311,7 @@ public class GUIUser extends JFrame {
                 tenCotHV.add("Ngày sinh");
                 tenCotHV.add("Tài khoản");
                 tenCotHV.add("Mật khẩu");
+                tenCotHV.add("Hình ảnh");
                 hoiVienCTR hvCTR = new hoiVienCTR(rightPanel,tenCotHV,dsHV,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
                 hvCTR.update();
         	}
@@ -318,7 +320,8 @@ public class GUIUser extends JFrame {
         memberMNG.setIcon(new ImageIcon(scaleMembershipIcon));
         memberMNG.setFocusPainted(false);
         dsNut.add(memberMNG);
-
+        
+        //chức năng xem thông tin cá nhân
         JButton showInforBTN = new JButton("Thông tin cá nhân");
         showInforBTN.addActionListener(new ActionListener() {
 			@Override
@@ -336,6 +339,21 @@ public class GUIUser extends JFrame {
         dsNut.add(showInforBTN);
 //        memberMNG.setBounds(23, 347, 300, 50);
 //        managementPanel.add(memberMNG);
+        
+        //chức năng mua hàng
+        JButton buyBTN = new JButton("Mua hàng");
+        buyBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+                rightPanel.add(new MuaHangCTR(tk.getIDTaiKhoan()));
+        	}
+        });
+        buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        buyBTN.setFocusPainted(false);
+        dsNut.add(buyBTN);
         
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(new LineBorder(new Color(64, 0, 64), 2));
@@ -408,6 +426,7 @@ public class GUIUser extends JFrame {
     		for(JButton btn : dsNut) {
     			if(cNang.getTenChucNang().trim().equals(btn.getText().trim())) {
     				btn.setBounds(x, y, 300, 50);
+    				System.out.println(btn.getText());
     				managementPanel.add(btn);
     			}
     		}
@@ -415,7 +434,7 @@ public class GUIUser extends JFrame {
     	}
     	JScrollPane scrollPane = new JScrollPane(managementPanel);
         scrollPane.setBounds(26,238,352,547);
-        
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16); 
         managementPanel.setPreferredSize(new Dimension(300,y));
         leftPanel.add(scrollPane);
     }

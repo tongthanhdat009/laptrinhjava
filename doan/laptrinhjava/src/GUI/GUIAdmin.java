@@ -153,9 +153,9 @@ public class GUIAdmin{
     
     public String curr_user = new String();
     
-    public GUIAdmin(String tk, String coSoHienTai){    
+    public GUIAdmin(DTOTaiKhoan tk, String coSoHienTai){    
 //    	người dùng hiện tại
-    	this.curr_user = tk;
+    	this.curr_user = "Admin";
         //main frame
         adminFrame.setSize(width, height);
         adminFrame.setLocationRelativeTo(null);
@@ -192,8 +192,8 @@ public class GUIAdmin{
         		"Chức năng", TitledBorder.LEADING, TitledBorder.TOP, new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30), new Color(70, 78, 71)));
         managementPanel.setBackground(new Color(204, 252, 203));
         JScrollPane scrollPane = new JScrollPane(managementPanel);
-        scrollPane.setBounds(26, 238, 352, 600); // Kích thước và vị trí của JScrollPane
-        managementPanel.setPreferredSize(new Dimension(300, 800)); // y là tổng chiều cao của tất cả các nút
+        scrollPane.setBounds(26, 238,352,547); // Kích thước và vị trí của JScrollPane
+        managementPanel.setPreferredSize(new Dimension(300, 650)); // y là tổng chiều cao của tất cả các nút
         scrollPane.getVerticalScrollBar().setUnitIncrement(16); 
         leftPanel.add(scrollPane);
         
@@ -318,7 +318,7 @@ public class GUIAdmin{
                 dsNV = bllQuanLyDanhSach.getDataNhanVien();
                 ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
                 QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
-                qlbnvCTR.QuanLyBangNhanVien(dsNV,dsTKNV,dsQuyen, rightPanel);
+                qlbnvCTR.QuanLyBangNhanVien(dsNV,dsTKNV,dsQuyen, rightPanel, tk, coSoHienTai);
         	}
         });
         employeeMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
@@ -410,7 +410,7 @@ public class GUIAdmin{
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
         		rightPanel.setLayout(null);
-        		informationCTR inforCTR = new informationCTR(new DTOTaiKhoan("TK002", "TKNV002", "MKNV002", "Q0002"));
+        		informationCTR inforCTR = new informationCTR(new DTOTaiKhoan("TK082", "admin", "admin", "Q0004"));
         		rightPanel.add(inforCTR);
 			}
         });
@@ -460,7 +460,7 @@ public class GUIAdmin{
         
         
         
-        JLabel currUserLB = new JLabel("Người dùng hiện tại: " + tk);
+        JLabel currUserLB = new JLabel("Người dùng hiện tại: Admin" );
         currUserLB.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         currUserLB.setBounds(25, 212, 352, 26);
         leftPanel.add(currUserLB);
@@ -679,8 +679,5 @@ public class GUIAdmin{
         filter.add(timkiem);
 
         rightPanel.add(filter);
-    }
-    public static void main(String[] args){
-        new GUIAdmin("Admin","CS001");
     }
 }

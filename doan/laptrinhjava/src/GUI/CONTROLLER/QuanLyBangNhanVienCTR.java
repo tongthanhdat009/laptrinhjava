@@ -68,7 +68,7 @@ public class QuanLyBangNhanVienCTR {
         rightPanel.revalidate();
         rightPanel.repaint();
     }
-	public void QuanLyBangNhanVien(ArrayList<NhanVien> dsNV, ArrayList<DTOTaiKhoan> dsTKNV,ArrayList<DTOQuyen> dsQuyen, JPanel rightPanel) {
+	public void QuanLyBangNhanVien(ArrayList<NhanVien> dsNV, ArrayList<DTOTaiKhoan> dsTKNV,ArrayList<DTOQuyen> dsQuyen, JPanel rightPanel,DTOTaiKhoan tk, String coSoHienTai) {
     	rightPanel.setBackground(new Color(241,255,250));
 		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
     	xoaHienThi(rightPanel);
@@ -208,6 +208,10 @@ public class QuanLyBangNhanVienCTR {
         for(String cs: dsCS) {
         	cbb_CoSo.addItem(cs);
         }
+        if(tk.getIDQuyen().equals("Q0002") || tk.getIDQuyen().equals("Q0003")) {
+        	cbb_CoSo.setSelectedItem(coSoHienTai);
+        	cbb_CoSo.setEnabled(false);
+        }
         jlb_macoso.setFont(f);
         
         JLabel jlb_vaitro = new JLabel("Vai trò: ");
@@ -222,8 +226,6 @@ public class QuanLyBangNhanVienCTR {
         JLabel jlb_luong = new JLabel("Lương: ");
         jtf_luong = new JTextField();
         jlb_luong.setFont(f);
-        
-        
         
         JPanel nhapLieu = new JPanel(null);
         nhapLieu.setBounds(2, 175, rightPanel.getWidth()-20, 175);
@@ -312,11 +314,20 @@ public class QuanLyBangNhanVienCTR {
         model.setRowCount(0);
         
         for(int i = 0; i < dsNV.size();i++) {
-        	model.addRow(new Object[] {
-    			dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
-    			dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
-    			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
-        	});
+        	if(coSoHienTai.equals(dsNV.get(i).getMacoso())&&(tk.getIDQuyen().equals("Q0002") || tk.getIDQuyen().equals("Q0003"))) {
+        		model.addRow(new Object[] {
+        				dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+        				dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+        				dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
+        		});
+        	}
+        	else if(tk.getIDQuyen().equals("Q0004")){
+        		model.addRow(new Object[] {
+        				dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+        				dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+        				dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
+        		});
+        	}
         }
         bang.setModel(model);
         bang.getTableHeader().setReorderingAllowed(false);
@@ -638,11 +649,20 @@ public class QuanLyBangNhanVienCTR {
                 else {
                 	JOptionPane.showMessageDialog(rightPanel, "Tìm kiếm không thành công vui lòng chọn thêm đầy đủ thông tin như giới tính, vai trò, cơ sở","Tìm kiếm thông tin",JOptionPane.ERROR_MESSAGE);
                 	for(int i = 0; i < dsNV.size();i++) {
-                    	model.addRow(new Object[] {
-                			dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
-                			dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
-                			dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan(), dsTKNV.get(i).getMatKhau(),dsNV.get(i).getIDTaiKhoan()
-                    	});
+                		if(coSoHienTai.equals(dsNV.get(i).getMacoso())&&(tk.getIDQuyen().equals("Q0002") || tk.getIDQuyen().equals("Q0003"))) {
+                    		model.addRow(new Object[] {
+                    				dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+                    				dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+                    				dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
+                    		});
+                    	}
+                    	else if(tk.getIDQuyen().equals("Q0004")){
+                    		model.addRow(new Object[] {
+                    				dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
+                    				dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
+                    				dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
+                    		});
+                    	}
                     }
                 }
             }

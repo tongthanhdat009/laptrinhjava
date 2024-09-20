@@ -48,8 +48,11 @@ public class informationCTR extends JPanel{
 		setBackground(new Color(241, 255, 250));
 		this.setLayout(null);
 		this.setBounds(0,0,1200,900);
+		if(!tk.getIDQuyen().equals("Q0001")) {
+			JOptionPane.showMessageDialog(null, "Vui lòng đăng nhập vào tài khoản hội viên để xem chức năng này!","Sai tài khoản", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
 		HoiVien thongTin = bllInformation.layThongTinNguoiDung(tk);
-		
 		//render ảnh đại diện
 		ImageIcon Ava = new ImageIcon(thongTin.getAnh().trim());
 		Image scaleAvaImage = Ava.getImage().getScaledInstance(250, 250,Image.SCALE_DEFAULT);

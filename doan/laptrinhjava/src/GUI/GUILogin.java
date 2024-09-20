@@ -164,7 +164,7 @@ public class GUILogin extends JFrame implements ActionListener{
                         if (result == JOptionPane.OK_OPTION) {
                             String coSoDaChon = (String) comboBox.getSelectedItem();
                         	JOptionPane.showMessageDialog(null, "Đăng nhập thành công!" + coSoDaChon);
-                        	new GUIAdmin("Admin", coSoDaChon);
+                        	new GUIAdmin(tk, coSoDaChon);
                         	dispose();
                         	return;
                         }
@@ -181,7 +181,7 @@ public class GUILogin extends JFrame implements ActionListener{
                         JComboBox<String> comboBox = new JComboBox<String>(options.toArray(new String[0]));
 
                         int result = JOptionPane.showConfirmDialog(null, comboBox, 
-                                "Vui lòng chọn cơ sở", JOptionPane.OK_CANCEL_OPTION);
+                                "Vui lòng chọn cơ sở để có thể xem thông tin phiếu nhập ở cơ sở", JOptionPane.OK_CANCEL_OPTION);
 
                         if (result == JOptionPane.OK_OPTION) {
                             String coSoDaChon = (String) comboBox.getSelectedItem();

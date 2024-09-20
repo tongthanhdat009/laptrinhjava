@@ -269,7 +269,7 @@ public class GUIUser extends JFrame {
                 dsNV = bllQuanLyDanhSach.getDataNhanVien();
                 ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
                 QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
-                qlbnvCTR.QuanLyBangNhanVien(dsNV,dsTKNV,dsQuyen, rightPanel);
+                qlbnvCTR.QuanLyBangNhanVien(dsNV,dsTKNV,dsQuyen, rightPanel,tk, coSoHienTai);
         	}
         });
         employeeMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));

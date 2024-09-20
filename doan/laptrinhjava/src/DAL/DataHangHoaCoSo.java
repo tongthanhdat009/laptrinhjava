@@ -26,15 +26,20 @@ public class DataHangHoaCoSo{
     public ArrayList<hangHoaCoSo> layDanhSachHangHoaCoSo()
     {
         ArrayList<hangHoaCoSo> dsHHCS = new ArrayList<hangHoaCoSo>();
-        String truyVan = "SELECT * FROM HangHoaOCoSo";
+        String truyVan = "SELECT * FROM HangHoaOCoSo, HangHoa WHERE HangHoa.MaHangHoa = HangHoaOCoSo.MaHangHoa";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(truyVan);
             while(rs.next())
-            dsHHCS.add(new hangHoaCoSo(rs.getString(1),
-                                    rs.getInt(2),
-                                    rs.getString(3)));
+            dsHHCS.add(new hangHoaCoSo(rs.getString("MaCoSo"),
+                                    rs.getString("MaHangHoa"),
+                                    rs.getString("TrangThai"),
+                                    rs.getInt("Soluong"),
+                                    rs.getInt("GiaBan"),
+                                    rs.getString("Loai"),
+                                    rs.getString("TenLoaiHangHoa"),
+                                    rs.getString("HinhAnh")));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -78,9 +83,9 @@ public class DataHangHoaCoSo{
         return false;
     }
 
-    public ArrayList<hangHoaCoSo> timKiem(String maCoSo, String maHangHoa)
-    {
-        String truyVan = "SELECT * FROM HangHoaOCoSo WHERE";
+    public ArrayList<hangHoaCoSo> timKiem(String maCoSo, String maHangHoa, String trangThai)
+    {	
+        String truyVan = "SELECT * FROM HangHoa, HangHoaOCoSo WHERE HangHoa.MaHangHoa = HangHoaOCoSo.MaHangHoa AND";
         ArrayList<String> s = new ArrayList<>();
         ArrayList<hangHoaCoSo> ds = new ArrayList<>();
         if(!maCoSo.equals("NULL"))
@@ -88,11 +93,15 @@ public class DataHangHoaCoSo{
             truyVan+=" MaCoSo = ? AND";
             s.add(maCoSo);
         }
+        if(!trangThai.equals("NULL")) {
+        	truyVan+=" HangHoaOCoSo.TrangThai = N'"+trangThai+"' AND";
+        }
         if(!maHangHoa.equals("NULL"))
         {
-            truyVan+=" MaHangHoa = ? ";
+            truyVan+=" HangHoa.MaHangHoa = ? AND";
             s.add(maHangHoa);
         }
+      	
         if(truyVan.endsWith(" AND")) truyVan = truyVan.substring(0, truyVan.length()-4);
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
@@ -101,7 +110,14 @@ public class DataHangHoaCoSo{
             stmt.setString(i,s.get(i-1));
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
-            ds.add(new hangHoaCoSo(rs.getString(1), rs.getInt(2), rs.getString(3)));
+            	ds.add(new hangHoaCoSo(rs.getString("MaCoSo"),
+                        rs.getString("MaHangHoa"),
+                        rs.getString("TrangThai"),
+                        rs.getInt("Soluong"),
+                        rs.getInt("GiaBan"),
+                        rs.getString("Loai"),
+                        rs.getString("TenLoaiHangHoa"),
+                        rs.getString("HinhAnh")));
         } catch (Exception e) {
             System.out.println(e);   
         }

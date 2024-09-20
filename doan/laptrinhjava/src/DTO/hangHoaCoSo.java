@@ -1,20 +1,26 @@
 package DTO;
 
-public class hangHoaCoSo{
+public class hangHoaCoSo extends hangHoa{
     private String maHangHoa;
-    private int soLuong;
     private String maCoSo;
-    
+    private String trangThai;
+    private int soLuong;
+    private int giaBan;
     //hàm khởi tạo
     hangHoaCoSo(){
         this.soLuong = 0;
         this.maHangHoa = "";
         this.maCoSo = "";
+        this.giaBan = 0;
+        this.trangThai ="";
     }
-    public hangHoaCoSo(String maCoSo, int soLuong, String maHangHoa){
-        setSoLuong(soLuong);
+    public hangHoaCoSo(String maHangHoa, String maCoSo, String trangThai, Integer soLuong, Integer giaBan, String loai, String tenLoaiHangHoa, String hinhAnh){
+    	super(maHangHoa, loai, tenLoaiHangHoa, hinhAnh);
         setMaHangHoa(maHangHoa);
         setMaCoSo(maCoSo);
+        setTrangThai(trangThai);
+        setSoLuong(soLuong);
+        setGiaBan(giaBan);
     }
 
     //hàm get&set
@@ -48,4 +54,16 @@ public class hangHoaCoSo{
     public String toString(){
         return this.maHangHoa + " " + this.maCoSo + " " + this.soLuong;  
     }
+	public int getGiaBan() {
+		return giaBan;
+	}
+	public void setGiaBan(int giaBan) {
+		this.giaBan = giaBan;
+	}
+	public String getTrangThai() {
+		return trangThai;
+	}
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
+	}
 }

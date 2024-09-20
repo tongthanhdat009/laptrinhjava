@@ -142,17 +142,10 @@ public class DataNhanVien {
         } 
         if(!a.getGioitinh().equals(""))
         {
-            truyVan+="nv.GioiTinh = ? AND ";
-            ds.add(a.getGioitinh());
+            truyVan+="nv.GioiTinh = N'"+a.getGioitinh()+"' AND ";
         } 
-        if(!a.getSdt().equals(""))
-        {
-            truyVan+="nv.SoDienThoai = ? AND ";
-            ds.add(a.getSdt());
-        }
         if(!a.getVaitro().equals("Vai Trò")) {
-        	truyVan+="q.TenQuyen = ? AND ";
-        	ds.add(a.getVaitro());
+        	truyVan+="q.TenQuyen = N'"+a.getVaitro()+"' AND ";
         }
         if(!a.getMacoso().equals("Cơ Sở")) {
         	truyVan+="nv.MaCoSo = ? AND ";

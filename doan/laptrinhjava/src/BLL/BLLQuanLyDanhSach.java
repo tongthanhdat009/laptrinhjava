@@ -503,29 +503,30 @@ public class BLLQuanLyDanhSach{
     {
         return dataHangHoaCoSo.layDanhSachHangHoaCoSo();
     }
-    public ArrayList<hangHoaCoSo> timKiemHangHoaCoSo(String maCoSo, String maHangHoa)
+    public ArrayList<hangHoaCoSo> timKiemHangHoaCoSo(String maCoSo, String maHangHoa, String trangThai)
     {
+    	if(trangThai.equals("Chọn trạng thái"))trangThai = "NULL";
         if(maHangHoa.equals("")) maHangHoa ="NULL";
         if(maCoSo.equals("Chọn cơ sở")) maCoSo ="NULL";
-        return dataHangHoaCoSo.timKiem(maCoSo, maHangHoa);
+        return dataHangHoaCoSo.timKiem(maCoSo, maHangHoa, trangThai);
     }
-    public String themHangHoaCoSo(String maHangHoa, String maCoSo, int soLuong)
-    {
-        if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
-        if(soLuong <= 0) return "Số lượng không hợp lệ";
-        if(dataHangHoaCoSo.them(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
-        return "Bộ đã tồn tại";
-    }
-    public String xoaHangHoaCoSo(String maCoSo, String maHangHoa)
-    {
-        if(dataHangHoaCoSo.xoa(maCoSo, maHangHoa) == true) return "Thành công";
-        return "Bộ không tồn tại";
-    }
-    public String suaHangHoaCoSo(String maCoSo, String maHangHoa, int soLuong)
-    {
-        if(dataHangHoaCoSo.sua(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
-        return "Bộ không tồn tại";
-    }
+//    public String themHangHoaCoSo(String maHangHoa, String maCoSo, int soLuong)
+//    {
+//        if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
+//        if(soLuong <= 0) return "Số lượng không hợp lệ";
+//        if(dataHangHoaCoSo.them(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
+//        return "Bộ đã tồn tại";
+//    }
+//    public String xoaHangHoaCoSo(String maCoSo, String maHangHoa)
+//    {
+//        if(dataHangHoaCoSo.xoa(maCoSo, maHangHoa) == true) return "Thành công";
+//        return "Bộ không tồn tại";
+//    }
+//    public String suaHangHoaCoSo(String maCoSo, String maHangHoa, int soLuong)
+//    {
+//        if(dataHangHoaCoSo.sua(new hangHoaCoSo(maCoSo, soLuong, maHangHoa)) == true) return "Thành công";
+//        return "Bộ không tồn tại";
+//    }
     public String themThietBiTa(Ta ta)
     {
         if(ta.getKhoiLuong()<=0) return "Sai khối lượng";

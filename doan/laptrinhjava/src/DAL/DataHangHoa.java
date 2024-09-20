@@ -36,7 +36,7 @@ public class DataHangHoa {
             while(rs.next()){
                 hangHoa hh = new hangHoa();
                 hh.setMaHangHoa(rs.getString("MaHangHoa"));
-                hh.setLoaiHangHoa(rs.getString("LoaiHangHoa"));
+                hh.setLoaiHangHoa(rs.getString("Loai"));
                 hh.setTenLoaiHangHoa(rs.getString("TenLoaiHangHoa"));
                 hh.setHinhAnh(rs.getString("HinhAnh"));
                 ds.them(hh);
@@ -165,7 +165,7 @@ public class DataHangHoa {
         } 
         if(!a.getLoaiHangHoa().equals(""))
         {
-            truyVan+="LoaiHangHoa = ? AND ";
+            truyVan+="Loai = ? AND ";
             ds.add(a.getLoaiHangHoa());
         } 
         if(!a.getTenLoaiHangHoa().equals(""))

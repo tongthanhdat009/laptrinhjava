@@ -55,7 +55,7 @@ public class xuLyDSCTR {
     public void xuLyDanhSach(JPanel rightPanel){
         rightPanel.setLayout(null);
         //giới thiệu chức năng xử lý danh sách
-        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
+        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
 
         param.setFont(new Font("Times New Roman",1,30));
         JPanel textPN = new JPanel();
@@ -71,7 +71,7 @@ public class xuLyDSCTR {
         
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa","Hàng hóa cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,130,30);
@@ -126,7 +126,6 @@ public class xuLyDSCTR {
                 tenCotHH.add("Loại hàng hóa");
                 tenCotHH.add("Tên loại hàng hóa");
                 tenCotHH.add("Hình ảnh");
-                tenCotHH.add("Giá nhập");
 
                 if (selectedOption.equals("Cơ sở")) {
                 	coSoCTR csCTR = new coSoCTR(rightPanel,tenCotCS,dsCS,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
@@ -194,10 +193,10 @@ public class xuLyDSCTR {
 //                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
 //                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
 //                }
-                else if(selectedOption.equals("Hàng hóa")){
-                	hangHoaCTR hhCTR = new hangHoaCTR(rightPanel, tenCotHH, dsHH, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
-                	hhCTR.update();
-                }
+//                else if(selectedOption.equals("Hàng hóa")){
+//                	hangHoaCTR hhCTR = new hangHoaCTR(rightPanel, tenCotHH, dsHH, bangChinhSua, dataTable, scrollPane, bllQuanLyDanhSach);
+//                	hhCTR.update();
+//                }
             }
            
         });

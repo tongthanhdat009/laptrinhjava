@@ -49,31 +49,31 @@ public class hangHoaCSCTR {
 	public void QuanLyHangHoaCoSo(ArrayList<hangHoaCoSo> ds, Vector<String> dsMaCoSo, JPanel rightPanel)
     {
         xoaHienThi(rightPanel);
-    	JButton them = new JButton();
-        ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/hh-them.png");
-        Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-        them.setPreferredSize(new Dimension (130,35));
-        them.setIcon(new ImageIcon(scaleThemBtnImg));
-        them.setHorizontalAlignment(SwingConstants.CENTER);
-        them.setBorder(null);
-
-    	JButton xoa  = new JButton();
-        xoa.setPreferredSize(new Dimension (110,35));
-        ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/hh-xoa.png");
-        Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-        xoa.setPreferredSize(new Dimension (130,35));
-        xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
-        xoa.setHorizontalAlignment(SwingConstants.CENTER);
-        xoa.setBorder(null);
-
-    	JButton sua = new JButton();
-        sua.setPreferredSize(new Dimension (110,35));
-        ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/hh-sua.png");
-        Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-        sua.setPreferredSize(new Dimension (130,35));
-        sua.setIcon(new ImageIcon(scaleSuaBtnImg));
-        sua.setHorizontalAlignment(SwingConstants.CENTER);
-        sua.setBorder(null);
+//    	JButton them = new JButton();
+//        ImageIcon themBtnImg = new ImageIcon("src/asset/img/button/hh-them.png");
+//        Image scaleThemBtnImg = themBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+//        them.setPreferredSize(new Dimension (130,35));
+//        them.setIcon(new ImageIcon(scaleThemBtnImg));
+//        them.setHorizontalAlignment(SwingConstants.CENTER);
+//        them.setBorder(null);
+//
+//    	JButton xoa  = new JButton();
+//        xoa.setPreferredSize(new Dimension (110,35));
+//        ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/hh-xoa.png");
+//        Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+//        xoa.setPreferredSize(new Dimension (130,35));
+//        xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
+//        xoa.setHorizontalAlignment(SwingConstants.CENTER);
+//        xoa.setBorder(null);
+//
+//    	JButton sua = new JButton();
+//        sua.setPreferredSize(new Dimension (110,35));
+//        ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/hh-sua.png");
+//        Image scaleSuaBtnImg = suaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+//        sua.setPreferredSize(new Dimension (130,35));
+//        sua.setIcon(new ImageIcon(scaleSuaBtnImg));
+//        sua.setHorizontalAlignment(SwingConstants.CENTER);
+//        sua.setBorder(null);
 
     	JButton timKiem = new JButton();
         timKiem.setPreferredSize(new Dimension (110,35));
@@ -85,12 +85,12 @@ public class hangHoaCSCTR {
         timKiem.setBorder(null);
 
         JPanel chucNang = new JPanel(new FlowLayout());
-        chucNang.add(them);
-        chucNang.add(xoa);
-        chucNang.add(sua);
+        chucNang.setBackground(new Color(241, 255, 250));
+//        chucNang.add(them);
+//        chucNang.add(xoa);
+//        chucNang.add(sua);
         chucNang.add(timKiem);
         chucNang.setBounds(5,100,rightPanel.getWidth()-5,38);
-        chucNang.setBackground(Color.WHITE);
         rightPanel.add(chucNang);
 
         JPanel nhapLieu = new JPanel(null);
@@ -104,115 +104,155 @@ public class hangHoaCSCTR {
         JLabel lbMaHangHoa = new JLabel("Mã hàng hóa: ");
         JLabel lbMaCoSo = new JLabel("Mã cơ sở: ");
         JLabel lbSoLuong = new JLabel("Số lượng: ");
+        JLabel lbTrangThai = new JLabel("Trạng thái:");
         JTextField tfMaHangHoa = new JTextField();
         @SuppressWarnings("rawtypes")
         JComboBox cbMaCoSo = new JComboBox<>(dsMaCoSo);
         cbMaCoSo.setBackground(Color.WHITE);
+        JComboBox<String> cbTrangThai = new JComboBox<String>();
+        cbTrangThai.addItem("Chọn trạng thái");
+        cbTrangThai.addItem("Đang bán");
+        cbTrangThai.addItem("Ngừng bán");
+        cbTrangThai.setBackground(Color.white);
+        
         JTextField tfSoLuong = new JTextField();
-        int x = 250;
+        int x = 120;
         lbMaHangHoa.setBounds(x, 25, 80, 30); x+=80;
         tfMaHangHoa.setBounds(x+10, 25, 100, 30); x+=110;
         lbMaCoSo.setBounds(x+50, 25, 70, 30); x+=120;
         cbMaCoSo.setBounds(x+10, 25, 100, 30); x+=110;
         lbSoLuong.setBounds(x+50, 25, 70, 30); x+=120;
-        tfSoLuong.setBounds(x+10, 25, 100, 30);
+        tfSoLuong.setBounds(x+10, 25, 100, 30);x+=110;
+        lbTrangThai.setBounds(x+50,25,100,30);x+=120;
+        cbTrangThai.setBounds(x+10,25,100,30);
+        
         nhapLieu.add(lbMaHangHoa);
         nhapLieu.add(tfMaHangHoa);
         nhapLieu.add(lbMaCoSo);
         nhapLieu.add(cbMaCoSo);
         nhapLieu.add(lbSoLuong);
         nhapLieu.add(tfSoLuong);
+        nhapLieu.add(lbTrangThai);
+        nhapLieu.add(cbTrangThai);
         rightPanel.add(nhapLieu);
 
         JTable bang = new JTable();
         DefaultTableModel model = new DefaultTableModel();
         bang.setModel(model);
         bang.setFont(new Font("Times New Roman", Font.BOLD, 14));
+        bang.getTableHeader().setReorderingAllowed(false);
         
-        model.addColumn("Mã hàng hóa");
         model.addColumn("Mã cơ sở");
+        model.addColumn("Mã hàng hóa");
+        model.addColumn("Trạng Thái");
         model.addColumn("Số lượng");
+        model.addColumn("Giá bán");
+        model.addColumn("Loại");
+        model.addColumn("Tên loại hàng hóa");
+        model.addColumn("Hình ảnh");
         // for (int i = 0; i < bang.getColumnCount(); i++) {
         //     bang.getColumnModel().getColumn(i).setCellRenderer(rendererTable);
         // }
         BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
         for(int i=0;i<ds.size();i++)
-        model.addRow(new Object[]{ds.get(i).getMaHangHoa(),ds.get(i).getMaCoSo(),ds.get(i).getSoLuong()});
+        model.addRow(new Object[]{ds.get(i).getMaHangHoa(),
+        		ds.get(i).getMaCoSo(),
+        		ds.get(i).getTrangThai(),
+        		ds.get(i).getSoLuong(),
+        		ds.get(i).getGiaBan(),
+        		ds.get(i).getLoaiHangHoa(),
+        		ds.get(i).getTenLoaiHangHoa(),
+        		ds.get(i).getHinhAnh()});
         bang.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e)
             {
                 int i = bang.getSelectedRow();
                 if(i>=0)
                 {
-                    tfMaHangHoa.setText(model.getValueAt(i, 0).toString());
-                    cbMaCoSo.setSelectedItem(model.getValueAt(i, 1).toString());
-                    tfSoLuong.setText(model.getValueAt(i, 2).toString());
+                    cbMaCoSo.setSelectedItem(model.getValueAt(i, 0).toString());
+                    tfMaHangHoa.setText(model.getValueAt(i, 1).toString());
+                    cbTrangThai.setSelectedItem(model.getValueAt(i, 2).toString().trim());
+                    tfSoLuong.setText(model.getValueAt(i, 3).toString());
                 }
             }
         });
-        them.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals(""))
-                JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
-                else
-                {
-                    String s = bllQuanLyDanhSach.themHangHoaCoSo(tfMaHangHoa.getText(), cbMaCoSo.getSelectedItem().toString(), Integer.parseInt(tfSoLuong.getText()));
-                    JOptionPane.showMessageDialog(rightPanel, s);
-                    if(s.equals("Thành công"))
-                    model.addRow(new Object[]{tfMaHangHoa.getText(), cbMaCoSo.getSelectedItem().toString(), Integer.parseInt(tfSoLuong.getText())});
-                }
-            }
-        });
-        xoa.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0) JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã cơ sở và mã hàng hóa");
-                else
-                {
-                    String s = bllQuanLyDanhSach.xoaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText());
-                    JOptionPane.showMessageDialog(rightPanel, s);
-                    if(s.equals("Thành công"))
-                    for(int i=0;i<model.getRowCount();i++)
-                    if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString()))
-                    model.removeRow(i);
-                }
-            }
-        });
-        sua.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals(""))
-                JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
-                else
-                {
-                    String s = bllQuanLyDanhSach.suaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText(), Integer.parseInt(tfSoLuong.getText()));
-                    JOptionPane.showMessageDialog(rightPanel, s);
-                    if(s.equals("Thành công"))
-                    {
-                        for(int i=0;i<model.getRowCount();i++)
-                        if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString()))
-                        model.setValueAt(tfSoLuong.getText(), i, 2);
-                    }
-                }
-            }
-        });
+//        them.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals(""))
+//                JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+//                else
+//                {
+//                    String s = bllQuanLyDanhSach.themHangHoaCoSo(tfMaHangHoa.getText(), cbMaCoSo.getSelectedItem().toString(), Integer.parseInt(tfSoLuong.getText()));
+//                    JOptionPane.showMessageDialog(rightPanel, s);
+//                    if(s.equals("Thành công"))
+//                    model.addRow(new Object[]{tfMaHangHoa.getText(), cbMaCoSo.getSelectedItem().toString(), Integer.parseInt(tfSoLuong.getText())});
+//                }
+//            }
+//        });
+//        xoa.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0) JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã cơ sở và mã hàng hóa");
+//                else
+//                {
+//                    String s = bllQuanLyDanhSach.xoaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText());
+//                    JOptionPane.showMessageDialog(rightPanel, s);
+//                    if(s.equals("Thành công"))
+//                    for(int i=0;i<model.getRowCount();i++)
+//                    if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString()))
+//                    model.removeRow(i);
+//                }
+//            }
+//        });
+//        sua.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals(""))
+//                JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+//                else
+//                {
+//                    String s = bllQuanLyDanhSach.suaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText(), Integer.parseInt(tfSoLuong.getText()));
+//                    JOptionPane.showMessageDialog(rightPanel, s);
+//                    if(s.equals("Thành công"))
+//                    {
+//                        for(int i=0;i<model.getRowCount();i++)
+//                        if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString()))
+//                        model.setValueAt(tfSoLuong.getText(), i, 2);
+//                    }
+//                }
+//            }
+//        });
         timKiem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                model.setRowCount(0);
-                if(tfMaHangHoa.getText().equals("")&&cbMaCoSo.getSelectedIndex()==0) 
-                {
-                    for(int i=0;i<ds.size();i++)
-                    model.addRow(new Object[]{ds.get(i).getMaHangHoa(),ds.get(i).getMaCoSo(),ds.get(i).getSoLuong()});
-                }
-                else
-                {
+            	model.setRowCount(0);
+//                if(tfMaHangHoa.getText().equals("")&&cbMaCoSo.getSelectedIndex()==0) 
+//                {
+//                    for(int i=0;i<ds.size();i++)
+//                    model.addRow(new Object[]{ds.get(i).getMaHangHoa(),
+//                    		ds.get(i).getMaCoSo(),
+//                    		ds.get(i).getTrangThai(),
+//                    		ds.get(i).getSoLuong(),
+//                    		ds.get(i).getGiaBan(),
+//                    		ds.get(i).getLoaiHangHoa(),
+//                    		ds.get(i).getTenLoaiHangHoa(),
+//                    		ds.get(i).getHinhAnh()});
+//                }
+//                else
+//                {
                     ArrayList<hangHoaCoSo> ds2 = new ArrayList<>();
-                    ds2 = bllQuanLyDanhSach.timKiemHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText());
+                    ds2 = bllQuanLyDanhSach.timKiemHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText(), cbTrangThai.getSelectedItem().toString());
                     for(int i=0;i<ds2.size();i++)
-                    model.addRow(new Object[]{ds2.get(i).getMaHangHoa(),ds2.get(i).getMaCoSo(),ds2.get(i).getSoLuong()});
-                }
+                    	model.addRow(new Object[]{ds2.get(i).getMaHangHoa(),
+                        		ds2.get(i).getMaCoSo(),
+                        		ds2.get(i).getTrangThai(),
+                        		ds2.get(i).getSoLuong(),
+                        		ds2.get(i).getGiaBan(),
+                        		ds2.get(i).getLoaiHangHoa(),
+                        		ds2.get(i).getTenLoaiHangHoa(),
+                        		ds2.get(i).getHinhAnh()});
+//                }
             }
         });
         JScrollPane scrollPane = new JScrollPane(bang);

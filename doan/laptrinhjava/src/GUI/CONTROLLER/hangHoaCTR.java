@@ -32,6 +32,7 @@ import DTO.CoSo;
 import DTO.DSCoSo;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
+import GUI.renderer;
 
 public class hangHoaCTR {
 	private final int width = 1600;
@@ -80,7 +81,6 @@ public class hangHoaCTR {
                 dsHH.dsHangHoa.get(i).getLoaiHangHoa().trim(),
                 dsHH.dsHangHoa.get(i).getTenLoaiHangHoa().trim(),
                 dsHH.dsHangHoa.get(i).getHinhAnh().trim(),
-                dsHH.dsHangHoa.get(i).getGiaNhap(),
                 });
         }
         
@@ -108,7 +108,7 @@ public class hangHoaCTR {
             tempTF.setName(tenCotHH.get(i));
 
             if(i==1){
-                String[] tempStr = {"Dụng cụ", "Thực phẩm chức năng"};
+                String[] tempStr = {"Dụng cụ", "Thực phẩm chức năng", "Xà", "Tạ", "Máy chạy"};
                 @SuppressWarnings("rawtypes")
                 JComboBox tempCB = new JComboBox<String>(tempStr);
                 tempCB.setPreferredSize(new Dimension(150,30));
@@ -178,10 +178,6 @@ public class hangHoaCTR {
                                             thongTinMoi.add(textField.getText());
                                             flag = false;
                                         }
-                                        else if(bllQuanLyDanhSach.kiemTraGiaNhapHangHoa(text)== -1 && components[4] == tempPanel) {
-                                        	JOptionPane.showMessageDialog(null, "Giá nhập hàng hóa phải là số và lớn hơn 0", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
-                                        	return;
-                                        }
                                         else if (text.equals("")) {
                                             JOptionPane.showMessageDialog(bangChinhSua, "Không được để trống thông tin!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
                                             textField.requestFocus();
@@ -200,14 +196,13 @@ public class hangHoaCTR {
                             }
                         }
                          // Kiểm tra xem thongTinMoi có đủ 5 phần tử không trước khi thêm vào hhList
-                        if (thongTinMoi.size() >= 5) {
+                        if (thongTinMoi.size() >= 4) {
                             try{
                                 hangHoa tempHH;
                                 tempHH = new hangHoa(thongTinMoi.get(0),
                                                     thongTinMoi.get(1),
                                                     thongTinMoi.get(2),
-                                                    thongTinMoi.get(3),
-                                                    Integer.parseInt(thongTinMoi.get(4)));
+                                                    thongTinMoi.get(3));
                                 if(bllQuanLyDanhSach.themHH(tempHH)){
                                     JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công!");
                                     hhList.addRow(thongTinMoi.toArray());
@@ -289,24 +284,18 @@ public class hangHoaCTR {
                                     }
                                 }
                             }
-                            if(bllQuanLyDanhSach.kiemTraGiaNhapHangHoa(thongTinMoi.get(4)) == -1) {
-                            	JOptionPane.showMessageDialog(null, "Giá nhập hàng hóa phải là số và lớn hơn 0", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
-                            	return;
-                            }
                             if(!thongTinMoi.get(0).equals("") && thongTinMoi.get(0).equals(maGoc)) {
                             	hangHoa tempHH;
                             	tempHH = new hangHoa(thongTinMoi.get(0),
                             			thongTinMoi.get(1),
                             			thongTinMoi.get(2),
-                            			thongTinMoi.get(3),
-                            			Integer.parseInt(thongTinMoi.get(4)));
+                            			thongTinMoi.get(3));
                             	if(bllQuanLyDanhSach.suaThongTinHH(tempHH)){
                             		JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin",JOptionPane.DEFAULT_OPTION);
                             		hhList.setValueAt(thongTinMoi.get(0).toUpperCase(), i, 0);
                             		hhList.setValueAt(thongTinMoi.get(1), i, 1);
                             		hhList.setValueAt(thongTinMoi.get(2), i, 2);
                             		hhList.setValueAt(thongTinMoi.get(3), i, 3);
-                            		hhList.setValueAt(thongTinMoi.get(4), i, 4);
                             	}
                             	else{
                             		JOptionPane.showMessageDialog(null, "Sửa thông tin không thành công! Lưu ý: Không được sửa mã hàng hóa", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
@@ -351,8 +340,7 @@ public class hangHoaCTR {
                         hangHoa tempHH = new hangHoa(thongTin.get(0),
                                                     thongTin.get(1),
                                                     thongTin.get(2),
-                                                    "",
-                                                    0);
+                                                    "");
                         if(bllQuanLyDanhSach.timKiemHH(tempHH).dsHangHoa.size() != 0 && bllQuanLyDanhSach.timKiemHH(tempHH).dsHangHoa.size() != dsHH.dsHangHoa.size()){
                             JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm hàng hóa", JOptionPane.INFORMATION_MESSAGE);
                             dsHangHoa dsHH2 = bllQuanLyDanhSach.timKiemHH(tempHH);
@@ -362,8 +350,7 @@ public class hangHoaCTR {
                                 hhList.addRow(new Object[]{dsHH2.dsHangHoa.get(i).getMaHangHoa().trim(),
                                 		dsHH2.dsHangHoa.get(i).getLoaiHangHoa().trim(),
                                 		dsHH2.dsHangHoa.get(i).getTenLoaiHangHoa().trim(),
-                                		dsHH.dsHangHoa.get(i).getHinhAnh().trim(),
-                                		dsHH.dsHangHoa.get(i).getGiaNhap()});
+                                		dsHH.dsHangHoa.get(i).getHinhAnh().trim()});
                             }
                             for(Component component : components) {
                                 if(component instanceof JPanel){
@@ -379,8 +366,7 @@ public class hangHoaCTR {
                                 hhList.addRow(new Object[]{dsHH.dsHangHoa.get(i).getMaHangHoa(),
                             		dsHH.dsHangHoa.get(i).getLoaiHangHoa().trim(),
                             		dsHH.dsHangHoa.get(i).getTenLoaiHangHoa().trim(),
-                            		dsHH.dsHangHoa.get(i).getHinhAnh().trim(),
-                            		dsHH.dsHangHoa.get(i).getGiaNhap()});
+                            		dsHH.dsHangHoa.get(i).getHinhAnh().trim()});
                             }
                             
                         }
@@ -442,5 +428,8 @@ public class hangHoaCTR {
             }
             
         });
+        renderer rd = new renderer();
+        dataTable.getColumnModel().getColumn(3).setCellRenderer(rd);
+        dataTable.setRowHeight(75);
     }
 }

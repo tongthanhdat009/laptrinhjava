@@ -4,13 +4,11 @@ public class HoaDon {
     private String maHoaDon;
     private String maHoiVien;
     private Date ngayXuatHoaDon;
-    private String trangThai;
-    public HoaDon(String maHoaDon, Date ngayXuatHoaDon, String maHoiVien, String trangThai)
+    public HoaDon(String maHoaDon, Date ngayXuatHoaDon, String maHoiVien)
     {
         setMaHoiVien(maHoiVien);
         setNgayXuatHoaDon(ngayXuatHoaDon);
         setMaHoaDon(maHoaDon);
-        setTrangThai(trangThai);
     }
     public String getMaHoaDon() {
         return maHoaDon;
@@ -26,12 +24,6 @@ public class HoaDon {
     }
     public void setNgayXuatHoaDon(Date ngayXuatHoaDon) {
         this.ngayXuatHoaDon = ngayXuatHoaDon;
-    }
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-    public String getTrangThai() {
-        return trangThai;
     }
     public void setMaHoaDon(String maHoaDon) {
         this.maHoaDon = maHoaDon;

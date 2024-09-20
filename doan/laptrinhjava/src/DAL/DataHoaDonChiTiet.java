@@ -37,7 +37,7 @@ public class DataHoaDonChiTiet {
         System.out.println(chiTietHoaDon.getMaHangHoa());
         System.out.println(chiTietHoaDon.getGia());
         System.out.println(chiTietHoaDon.getMaCoSo());
-        String truyVan = "INSERT INTO ChiTietHoaDon (SoLuongHang, MaHD, MaHH, Gia, MaCoSo) VALUES (?, ?, ? ,? ,?)";
+        String truyVan = "INSERT INTO ChiTietHoaDon (SoLuongHang, MaHD, MaHH, Gia, MaCoSo, TrangThai) VALUES (?, ?, ? ,? ,?, ?)";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement stmt = con.prepareStatement(truyVan);
@@ -46,6 +46,7 @@ public class DataHoaDonChiTiet {
             stmt.setString(3,chiTietHoaDon.getMaHangHoa());
             stmt.setInt(4,chiTietHoaDon.getGia());
             stmt.setString(5,chiTietHoaDon.getMaCoSo());
+            stmt.setString(6,chiTietHoaDon.getTrangThai());
             if(stmt.executeUpdate() > 0) return true;
         } catch (Exception e) {
             System.out.println(e);   

@@ -10,8 +10,9 @@ public class ChiTietChiTietHoaDon {
     private String tenHangHoa;
     private int soLuong;
     private int gia;
+    private String trangThai;
 
-    public ChiTietChiTietHoaDon(String maCoSo, Date ngayMua, String maHoiVien, String tenHoiVien, String tenHangHoa, int soLuong, int gia) {
+    public ChiTietChiTietHoaDon(String maCoSo, Date ngayMua, String maHoiVien, String tenHoiVien, String tenHangHoa, int soLuong, int gia, String trangThai) {
         this.setMaCoSo(maCoSo);
         this.setNgayMua(ngayMua);
         this.setMaHoiVien(maHoiVien);
@@ -19,8 +20,14 @@ public class ChiTietChiTietHoaDon {
         this.setTenHangHoa(tenHangHoa);
         this.setSoLuong(soLuong);
         this.setGia(gia);
+        setTrangThai(trangThai);
     }
-    
+    public String getTrangThai() {
+        return trangThai;
+    }
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
     // Getter and Setter for maCoSo
     public String getMaCoSo() {
         return maCoSo;

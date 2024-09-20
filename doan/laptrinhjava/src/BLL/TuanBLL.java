@@ -76,14 +76,14 @@ public class TuanBLL {
         if(maHoaDon.equals("Loi")) return "Lỗi không sinh được mã hóa đơn";
         LocalDate today = LocalDate.now();
         Date todayDate = Date.valueOf(today);
-        if(dataHoaDon.them(new HoaDon(maHoaDon, todayDate, IDTaiKhoan, "Chua duyet")))
+        if(dataHoaDon.them(new HoaDon(maHoaDon, todayDate, IDTaiKhoan)))
         {
             ArrayList<GioHang> ds = new ArrayList<>();
             ds = dataHangHoa.layDSGioHang(IDTaiKhoan);
             boolean flag = true;
             for(int i=0;i<ds.size();i++)
             {
-                flag = dataHoaDonChiTiet.them(new ChiTietHoaDon(ds.get(i).getSoLuong(), maHoaDon, ds.get(i).getMaHangHoa(), ds.get(i).getGia() * ds.get(i).getSoLuong(), ds.get(i).getMaCoSo()));
+                flag = dataHoaDonChiTiet.them(new ChiTietHoaDon(ds.get(i).getSoLuong(), maHoaDon, ds.get(i).getMaHangHoa(), ds.get(i).getGia() * ds.get(i).getSoLuong(), ds.get(i).getMaCoSo(),"Chưa duyệt"));
                 if(flag == false) return "Lỗi thêm chi tiết hóa đơn";
             }
             if(flag ==  true && dataHangHoa.xoaGioHangCua(IDTaiKhoan)) return "Thanh toán thành công";

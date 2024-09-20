@@ -6,13 +6,21 @@ public class ChiTietHoaDon {
     private String maHangHoa;
     private int gia;
     private String maCoSo;
-    public ChiTietHoaDon(int soLuong, String maHoaDon, String maHangHoa, int gia, String maCoSo)
+    private String trangThai;
+    public ChiTietHoaDon(int soLuong, String maHoaDon, String maHangHoa, int gia, String maCoSo,String trangThai)
     {
+        setTrangThai(trangThai);
         setMaHangHoa(maHangHoa);
         setMaHoaDon(maHoaDon);
         setSoLuong(soLuong);
         setGia(gia);
         setMaCoSo(maCoSo);
+    }
+    public String getTrangThai() {
+        return trangThai;
+    }
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
     }
     public void setGia(int gia) {
         this.gia = gia;

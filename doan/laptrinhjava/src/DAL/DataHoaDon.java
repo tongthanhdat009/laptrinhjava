@@ -1,6 +1,10 @@
 package DAL;
 import java.sql.*;
 import java.util.ArrayList;
+
+import org.apache.poi.hpsf.Array;
+
+import DTO.ChiTietChiTietHoaDon;
 import DTO.HoaDon;
 import DTO.HoaDonVaGia;
 public class DataHoaDon {
@@ -216,6 +220,30 @@ public class DataHoaDon {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) 
             ds.add(new HoaDon(rs.getString(1), rs.getDate(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
+    public ArrayList<ChiTietChiTietHoaDon> chiTietHoaDon(String IDTaiKhoan, String MaHoaDon)
+    {
+
+        ArrayList<ChiTietChiTietHoaDon> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM HoaDon HD, ChiTietHoaDon CTHD, HoiVien HV, HangHoa HH WHERE HD.MaHD = CTHD.MaHD AND HD.IDTaiKhoan = '"+IDTaiKhoan+"' AND HV.IDTaiKhoan = '"+IDTaiKhoan+"' AND CTHD.MaHH = HH.MaHangHoa AND HD.MaHD = '"+MaHoaDon+"'";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.add(new ChiTietChiTietHoaDon(
+                    rs.getString("MaCoSo"),
+                    rs.getDate("NgayXuatHD"), // Sử dụng java.sql.Date
+                    rs.getString("MaHV"),
+                    rs.getString("HoTenHV"),
+                    rs.getString("TenLoaiHangHoa"),
+                    rs.getInt("SoLuongHang"),
+                    rs.getInt("Gia")
+                ));
         } catch (Exception e) {
             System.out.println(e);
         }

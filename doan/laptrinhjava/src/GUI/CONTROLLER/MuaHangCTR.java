@@ -3,7 +3,6 @@ package GUI.CONTROLLER;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
 import java.util.ArrayList;
@@ -15,21 +14,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.apache.commons.math3.ode.events.Action;
-
 import java.util.Vector;
 import java.awt.event.*;
-
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 
 
 import BLL.BLLQuanLyDanhSach;
 import BLL.TuanBLL;
+import DTO.ChiTietChiTietHoaDon;
 import DTO.GioHang;
 import DTO.HoaDonVaGia;
 import DTO.ThongTinChiTietHangHoa;
+import GUI.ChiTietHoaDon;
 
 public class MuaHangCTR extends JPanel {
     private JPanel banHang = new JPanel();
@@ -152,7 +149,6 @@ public class MuaHangCTR extends JPanel {
         int soLuong = ds.size();
         banHang.setPreferredSize(new Dimension(1150, soLuong * 90 + 100));
         int y = 30;
-        System.out.println(soLuong);
         for(int i=0;i<soLuong;i++)
         {
             int x = 200;
@@ -183,6 +179,16 @@ public class MuaHangCTR extends JPanel {
             xemChiTiet.setBounds(x, 0, 250, 60); x+=270;
             xemChiTiet.setFont(new Font("Arial", Font.BOLD, 20));
             hoaDonPn.add(xemChiTiet);
+            int index = i;
+            xemChiTiet.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e)
+                {
+                    String maHD = ds.get(index).getMaHoaDon();
+                    ArrayList<ChiTietChiTietHoaDon> chiTietHoaDon = new ArrayList<>();
+                    chiTietHoaDon = bll.layDSChiTietHoaDonCua(IDTaiKhoan, maHD);
+                    new ChiTietHoaDon(chiTietHoaDon);
+                }
+            });
 
             y+=90;
             banHang.add(hoaDonPn);
@@ -290,6 +296,7 @@ public class MuaHangCTR extends JPanel {
                 String s;
                 s = bll.thanhToan(IDTaiKhoan);
                 JOptionPane.showMessageDialog(null,s);
+                xemGioHang(new ArrayList<>());
             }
         });
         tongTienpn.add(tongTienlb);

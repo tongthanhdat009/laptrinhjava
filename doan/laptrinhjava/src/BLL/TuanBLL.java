@@ -3,6 +3,7 @@ package BLL;
 import DAL.DataHangHoa;
 import DAL.DataHoaDon;
 import DAL.DataHoaDonChiTiet;
+import DTO.ChiTietChiTietHoaDon;
 import DTO.ChiTietHoaDon;
 import DTO.GioHang;
 import DTO.HoaDon;
@@ -85,12 +86,18 @@ public class TuanBLL {
                 flag = dataHoaDonChiTiet.them(new ChiTietHoaDon(ds.get(i).getSoLuong(), maHoaDon, ds.get(i).getMaHangHoa(), ds.get(i).getGia() * ds.get(i).getSoLuong(), ds.get(i).getMaCoSo()));
                 if(flag == false) return "Lỗi thêm chi tiết hóa đơn";
             }
-            return "Thanh toán thành công";
+            if(flag ==  true && dataHangHoa.xoaGioHangCua(IDTaiKhoan)) return "Thanh toán thành công";
+            else return "Lỗi xóa giỏ hàng";
+            
         }
         return "Lỗi thêm hóa đơn";
     }
     public ArrayList<HoaDonVaGia> layDSHoaDonCua(String IDTaiKhoan)
     {
         return dataHoaDon.layDSHoaDonVaGiaCua(IDTaiKhoan);
+    }
+    public ArrayList<ChiTietChiTietHoaDon> layDSChiTietHoaDonCua(String IDTaiKhoan, String maHD)
+    {
+        return dataHoaDon.chiTietHoaDon(IDTaiKhoan,maHD);
     }
 }

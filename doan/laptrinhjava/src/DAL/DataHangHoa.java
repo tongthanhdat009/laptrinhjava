@@ -235,7 +235,6 @@ public class DataHangHoa {
             if(maLoai.equals("Ta")||maLoai.equals("MayChay")||maLoai.equals("Xa"))
             truyVan = "SELECT * FROM "+maLoai+",HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo AND HangHoa.MaHangHoa = HangHoaOCoSo.MaHangHoa";
             else truyVan = "SELECT * FROM HangHoa, HangHoaOCoSo, CoSo WHERE HangHoa.MaHangHoa = ? AND CoSo.MaCoSo = ? AND HangHoaOCoSo.MaCoSo = CoSo.MaCoSo AND HangHoa.MaHangHoa = HangHoaOCoSo.MaHangHoa";
-            System.out.println(truyVan);
             PreparedStatement statement = con.prepareStatement(truyVan);
             statement.setString(1, maHangHoa);
             statement.setString(2, maCoSo);
@@ -293,7 +292,6 @@ public class DataHangHoa {
             truyVan+=" AND Loai = ?";
             s.add(loai);
         }
-        System.out.println(truyVan);
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
@@ -310,7 +308,6 @@ public class DataHangHoa {
     public int kiemTraTonTaiGioHang(String IDTaiKhoan, String maHangHoa, String MaCoSo)
     {
         String truyVan = "SELECT * FROM GioHang WHERE IDTaiKhoan = '"+IDTaiKhoan+"' AND MaHangHoa = '"+maHangHoa+"' AND MaCoSo = '"+MaCoSo+"'";
-        System.out.println(truyVan);
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();
@@ -422,9 +419,7 @@ public class DataHangHoa {
     }
     public boolean xoaGioHang(String maHangHoa, String IDTaiKhoan, String maCoSo)
     {
-        System.out.println(maHangHoa+":"+IDTaiKhoan+":"+maCoSo);
         String truyVan = "DELETE FROM GioHang WHERE MaHangHoa = ? AND IDTaiKhoan = ? AND MaCoSo = ?";
-        System.out.println(truyVan);
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
@@ -462,7 +457,21 @@ public class DataHangHoa {
        if (SuaTa(ta)) return true;
        return false;
     }
-
+    public boolean xoaGioHangCua(String IDTaiKhoan)
+    {
+        String truyVan = "DELETE FROM GioHang WHERE IDTaiKhoan = ?";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            PreparedStatement pstmt = con.prepareStatement(truyVan);
+            pstmt.setString(1, IDTaiKhoan);
+            int rowsAffected = pstmt.executeUpdate();
+            
+            if(rowsAffected > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     //sửa thông tin hàng hóa loại máy chạy
     public boolean SuaMayChay(MayChay mayChay) {
         String truyVan = "UPDATE MayChay SET CongSuat = ?, TocDoToiDa = ?, NhaSanXuat = ?, KichThuoc = ? FROM MayChay WHERE MaHangHoa = ?";

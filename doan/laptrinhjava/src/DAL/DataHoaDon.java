@@ -61,7 +61,7 @@ public class DataHoaDon {
         String truyVan ="  SELECT HoaDon.MaHD, HoaDon.NgayXuatHD,IDTaiKhoan ,SUM(Gia) AS Tong" + 
                         "  FROM HoaDon, ChiTietHoaDon" + 
                         "  WHERE HoaDon.MaHD = ChiTietHoaDon.MaHD AND IDTaiKhoan = '"+IDTaiKhoan+"'" + 
-                        "  Group by HoaDon.MaHD, NgayXuatHD, TrangThai, IDTaiKhoan";
+                        "  Group by HoaDon.MaHD, NgayXuatHD, IDTaiKhoan";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             Statement stmt = con.createStatement();

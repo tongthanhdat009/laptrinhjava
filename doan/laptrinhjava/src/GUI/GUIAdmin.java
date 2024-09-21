@@ -21,6 +21,7 @@ import DTO.LoaiThietBi;
 import DTO.NhanVien;
 import DTO.DTOTaiKhoan;
 import GUI.CONTROLLER.DuyetDonHangCTR;
+import GUI.CONTROLLER.ExcelCTR;
 import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
@@ -194,7 +195,7 @@ public class GUIAdmin{
         managementPanel.setBackground(new Color(204, 252, 203));
         JScrollPane scrollPane = new JScrollPane(managementPanel);
         scrollPane.setBounds(26, 238,352,547); // Kích thước và vị trí của JScrollPane
-        managementPanel.setPreferredSize(new Dimension(300, 650)); // y là tổng chiều cao của tất cả các nút
+        managementPanel.setPreferredSize(new Dimension(300, 750)); // y là tổng chiều cao của tất cả các nút
         scrollPane.getVerticalScrollBar().setUnitIncrement(16); 
         leftPanel.add(scrollPane);
         
@@ -415,6 +416,24 @@ public class GUIAdmin{
         informationBTN.setBounds(23, 590, 300, 50);
         informationBTN.setFocusPainted(false);
         managementPanel.add(informationBTN);
+        
+      //xuất file excel
+        JButton XuatExcelBTN = new JButton("Xuất file danh sách");
+        XuatExcelBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		ExcelCTR excelCTR = new ExcelCTR();
+        		rightPanel.add(excelCTR);
+			}
+        });
+        XuatExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        XuatExcelBTN.setBounds(23, 650, 300, 50);
+        XuatExcelBTN.setFocusPainted(false);
+        managementPanel.add(XuatExcelBTN);
+        
         
         leftPanel.add(footerLeft);
 

@@ -9,7 +9,9 @@ import java.util.*;
 
 import DTO.ChiTietChiTietHoaDon;
 public class ChiTietHoaDon extends JFrame{
-    public ChiTietHoaDon(ArrayList<ChiTietChiTietHoaDon> ds)
+	private static final long serialVersionUID = -9155650294780054658L;
+
+	public ChiTietHoaDon(ArrayList<ChiTietChiTietHoaDon> ds)
     {
         setLayout(null);
         setSize(800,500);

@@ -177,8 +177,8 @@ public class BLLQuanLyDanhSach{
         return dataCoSo.suaThongTinCS(cs);
     }
     //danh sách thiết bị
-    public DSLoaiThietBi layDSLoaiThietBi(){
-        return dataThietBi.layDanhSach();
+    public DSLoaiThietBi layDSLoaiThietBiKhac(){
+        return dataThietBi.layDanhSachKhac();
     }
     public ArrayList<String> layTenCotThietBi(){
         return dataThietBi.layTenCotThietBi();
@@ -193,8 +193,6 @@ public class BLLQuanLyDanhSach{
         return dataThietBi.xoaTB(maTB);
     }
     public String themTB(LoaiThietBi tb){
-        if(Integer.parseInt(tb.getGiaThietBi())<0) return "Sai Giá";
-        if(tb.getNgayBaoHanh()<0) return "Sai số ngày bảo hành";
         tb.setMaThietBi(dataThietBi.layMaChuaTonTai());
 		if(dataThietBi.themTB(tb))
     		return "Thanh cong";

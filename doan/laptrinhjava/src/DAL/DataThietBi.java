@@ -67,17 +67,18 @@ public class DataThietBi {
         return this.tenCot; 
     }
 
-    public DSLoaiThietBi layDanhSach()
+    public DSLoaiThietBi layDanhSachKhac()
     {
         DSLoaiThietBi a = new DSLoaiThietBi();
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String truyVan = "SELECT * FROM LoaiThietBi";
+            String truyVan = "SELECT * FROM HangHoa WHERE Loai = 'Khác'";
             PreparedStatement stmt = con.prepareStatement(truyVan);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                LoaiThietBi thietBi = new LoaiThietBi(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),rs.getString(6));
+                LoaiThietBi thietBi = new LoaiThietBi(rs.getString("MaHangHoa"), rs.getString("TenLoaiHangHoa"), rs.getString("HinhAnh"),rs.getString("Loai"));
+                System.out.println(thietBi.getLoai());
                 a.them(thietBi);
             }
         } catch (Exception e) {
@@ -196,15 +197,12 @@ public class DataThietBi {
     public boolean themTB(LoaiThietBi tb){
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO LoaiThietBi (MaThietBi, TenLoaiThietBi, HinhAnh, GiaThietBi, NgayBaoHanh, Loai) VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO HangHoa (MaHangHoa, TenLoaiHangHoa, HinhAnh, Loai) VALUES(?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1,tb.getMaThietBi());            
             preparedStatement.setString(2,tb.getTenLoaiThietBi());            
-            preparedStatement.setString(3,tb.getHinhAnh());            
-            preparedStatement.setInt(4,Integer.parseInt(tb.getGiaThietBi()));            
-            preparedStatement.setInt(5,tb.getNgayBaoHanh());            
-            preparedStatement.setString(6, tb.getLoai());
-            System.out.println(tb.getLoai());
+            preparedStatement.setString(3,tb.getHinhAnh());               
+            preparedStatement.setString(4, tb.getLoai());
             if (preparedStatement.executeUpdate() > 0)  return true;
         }catch (SQLException e){
             e.printStackTrace();
@@ -283,16 +281,14 @@ public class DataThietBi {
     }
     public boolean suaThongTinTB(LoaiThietBi tb){
         //trả về 1 sửa thành công, 0 thất bại
-        String truyVan = "UPDATE LoaiThietBi SET TenLoaiThietBi = ?, HinhAnh = ?, GiaThietBi = ?, NgayBaoHanh = ?, Loai = ? FROM LoaiThietBi Where MaThietBi = ? ";
+        String truyVan = "UPDATE HangHoa SET TenLoaiHangHoa = ?, HinhAnh = ?, Loai = ? Where MaHangHoa = ? ";
         try {
             con = DriverManager.getConnection(dbUrl, userName, password);
             PreparedStatement statement = con.prepareStatement(truyVan);
             statement.setString(1, tb.getTenLoaiThietBi());
             statement.setString(2, tb.getHinhAnh());
-            statement.setString(3, tb.getGiaThietBi());
-            statement.setInt(4, tb.getNgayBaoHanh());
-            statement.setString(5, tb.getLoai());
-            statement.setString(6, tb.getMaThietBi());
+            statement.setString(3, tb.getLoai());
+            statement.setString(4, tb.getMaThietBi());
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0) return true;
         } catch (Exception e) {

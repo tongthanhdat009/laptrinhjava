@@ -114,6 +114,10 @@ public class DuyetDonHangCTR extends JPanel{
             JLabel tongTien = new JLabel(String.valueOf(ds.get(i).getTongTien()/1000)+"K");
             JButton chitietHoaDon = new JButton("Xem chi tiết");
             JButton duyetBt = new JButton("Duyệt");
+            if(ds.get(i).getTrangThai().equals("Đã duyệt")){
+                duyetBt.setEnabled(false);
+                duyetBt.setText("Đã duyệt");
+            }
             chitietHoaDon.setBackground(Color.white);
             duyetBt.setBackground(Color.white);
             maHoaDon.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));

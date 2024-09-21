@@ -126,7 +126,7 @@ public class QuanLyThietBiKhac extends JPanel {
 				
 				// Lấy danh sách LoaiThietBi và thêm vào bảng
 				BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
-				DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+				DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBiKhac(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
 				for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
 				    modelKhac.addRow(new Object[]{
 				        khac.getMaThietBi(),
@@ -146,8 +146,7 @@ public class QuanLyThietBiKhac extends JPanel {
                 });
                 them.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (goodsNameTF.getText().equals("") || textField_3.getText().equals("") ||
-                            textField_4.getText().equals("") || textField_6.getText().equals("")) 
+                        if (goodsNameTF.getText().equals("") || textField_6.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                             return;
@@ -161,32 +160,26 @@ public class QuanLyThietBiKhac extends JPanel {
                         String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
                         String ten = goodsNameTF.getText();
                         String hinhAnh = textField_6.getText();
-                        String giaThietBi = textField_3.getText();
-                        int ngayBaoHanh = Integer.parseInt(textField_4.getText());
-                        String loai = "Khac"; // Hoặc giá trị mặc định
+                        String loai = "Khác"; // Hoặc giá trị mặc định
 
                         // Thêm thiết bị `ThietBiKhac` vào hệ thống
-                        String kq = ql.themTB(new LoaiThietBi(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai));
+                        String kq = ql.themTB(new LoaiThietBi(maThietBi, ten, hinhAnh, loai));
                         JOptionPane.showMessageDialog(null, kq);
                         BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
                         modelKhac.setRowCount(0);
-                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBiKhac(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
                         for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
                             modelKhac.addRow(new Object[]{
                                 khac.getMaThietBi(),
                                 khac.getTenLoaiThietBi(),
                                 khac.getHinhAnh(),
-                                khac.getGiaThietBi(),
-                                khac.getNgayBaoHanh(),
                             });
                         }
         		}
                 });
                 sua.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (IDGoodTF.getText().equals("") || goodsNameTF.getText().equals("") || 
-                            textField_3.getText().equals("") || textField_4.getText().equals("") || 
-                            textField_6.getText().equals("")) 
+                        if (IDGoodTF.getText().equals("") || goodsNameTF.getText().equals("") || textField_6.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                             return;
@@ -196,24 +189,20 @@ public class QuanLyThietBiKhac extends JPanel {
                             String maThietBi = IDGoodTF.getText();
                             String ten = goodsNameTF.getText();
                             String hinhAnh = textField_6.getText();
-                            String giaThietBi = textField_3.getText();
-                            int ngayBaoHanh = Integer.parseInt(textField_4.getText());
-                            String loai = "Khac"; // Hoặc giá trị mặc định
+                            String loai = "Khác"; // Hoặc giá trị mặc định
                 
                             // Sửa thiết bị `ThietBiKhac`
-                            String kq = ql.suaThongTinTB(new LoaiThietBi(maThietBi, ten, hinhAnh, giaThietBi, ngayBaoHanh, loai));
+                            String kq = ql.suaThongTinTB(new LoaiThietBi(maThietBi, ten, hinhAnh, loai));
                             JOptionPane.showMessageDialog(null, kq);
                         }
                         BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
                         modelKhac.setRowCount(0);
-                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+                        DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBiKhac(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
                         for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
                             modelKhac.addRow(new Object[]{
                                 khac.getMaThietBi(),
                                 khac.getTenLoaiThietBi(),
                                 khac.getHinhAnh(),
-                                khac.getGiaThietBi(),
-                                khac.getNgayBaoHanh(),
                             });
                         }
                     }
@@ -221,7 +210,7 @@ public class QuanLyThietBiKhac extends JPanel {
                                 
                 // Tạo JScrollPane để chứa bảng và cho phép cuộn
                 JScrollPane scrollPaneKhac = new JScrollPane(bangKhac);
-                scrollPaneKhac.setBounds(0, 320, 1183, 450); // Đặt kích thước cho JScrollPane
+                scrollPaneKhac.setBounds(0, 320, 1183, 430); // Đặt kích thước cho JScrollPane
 
                 // Thêm JScrollPane vào JPanel
                 add(scrollPaneKhac);

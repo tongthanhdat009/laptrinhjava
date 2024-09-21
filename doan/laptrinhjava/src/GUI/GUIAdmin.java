@@ -223,7 +223,11 @@ public class GUIAdmin{
         billBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         billBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                rightPanel.add(new DuyetDonHangCTR(coSoHienTai));
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+                DuyetDonHangCTR ddDonHangCTR  = new DuyetDonHangCTR(coSoHienTai);
+                ddDonHangCTR.giaoDien(rightPanel);
         	}
         });
         billBTN.setBounds(23, 103, 300, 50);

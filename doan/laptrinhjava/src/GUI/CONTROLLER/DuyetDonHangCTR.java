@@ -16,32 +16,32 @@ import DTO.HoaDon;
 import DTO.HoaDonVaGia;
 import GUI.ChiTietHoaDon;
 
-public class DuyetDonHangCTR extends JFrame {
+public class DuyetDonHangCTR extends JPanel{
     private String maCoSo;
     private TuanBLL bll = new TuanBLL();
     public DuyetDonHangCTR(String maCoSo)
     {
         setLayout(null);
-        setSize(1200,900);
+//        setSize(1200,900);
         setBackground(new Color(241, 255, 250));
         setMaCoSo(maCoSo);
-        giaoDien();
-        setVisible(true);
+        setBounds(0,0,1200,900);
+//        giaoDien();
     }
     public void setMaCoSo(String maCoSo) {
         this.maCoSo = maCoSo;
     }
-    public void giaoDien()
+    public void giaoDien(JPanel rightPanel)
     {
         JLabel tieude = new JLabel("Duyệt đơn hàng");
         tieude.setBounds(520, 20, 244, 40);
         tieude.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
-        add(tieude);
+        rightPanel.add(tieude);
         ArrayList<HoaDonVaGia> ds = new ArrayList<>();
         ds = bll.layDSHDCuaCoSo(maCoSo, "Chưa duyệt");
-        themDSHoaDon(ds);
+        themDSHoaDon(ds, rightPanel);
     }
-    public void themDSHoaDon(ArrayList<HoaDonVaGia> ds)
+    public void themDSHoaDon(ArrayList<HoaDonVaGia> ds, JPanel rightPanel)
     {
         int soLuongHoaDon = ds.size();
         JPanel dsHoaDonpn = new JPanel(new GridLayout(soLuongHoaDon+1,7,10,10));
@@ -117,7 +117,7 @@ public class DuyetDonHangCTR extends JFrame {
         int cao = 60 * (soLuongHoaDon+1) ;
         if(cao > 750) cao = 750; 
         cuon.setBounds(0,120,1200,cao);
-        add(cuon);
+        rightPanel.add(cuon);
     }
     public static void main(String[] args)
     {

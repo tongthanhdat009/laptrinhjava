@@ -226,6 +226,7 @@ public class GUIAdmin{
         		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
                 rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
                 rightPanel.repaint(); // Vẽ lại JPanel
+                rightPanel.setLayout(null);
                 DuyetDonHangCTR ddDonHangCTR  = new DuyetDonHangCTR(coSoHienTai);
                 ddDonHangCTR.giaoDien(rightPanel);
         	}

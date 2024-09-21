@@ -198,10 +198,19 @@ public class DataHoaDon {
                 Date ngay = rs.getDate("NgayXuatHD");
                 String id = rs.getString("IDTaiKhoan");
                 int tong = rs.getInt("Tong");
-                if(kiemTraDaDuyetOCoSoChua(maHD,maCoSo))
-                ds.add(new HoaDonVaGia(maHD,ngay,id,"Đã duyệt",tong));
-                else 
-                ds.add(new HoaDonVaGia(maHD,ngay,id,"Chưa duyệt",tong));
+//                if(kiemTraDaDuyetOCoSoChua(maHD,maCoSo))
+//                	ds.add(new HoaDonVaGia(maHD,ngay,id,"Đã duyệt",tong));
+//                else 
+//                	ds.add(new HoaDonVaGia(maHD,ngay,id,"Chưa duyệt",tong));
+                if(trangThai.equals("Đã duyệt")) {
+                	if(kiemTraDaDuyetOCoSoChua(maHD,maCoSo)) {
+                		ds.add(new HoaDonVaGia(maHD,ngay,id,"Đã duyệt",tong));
+                	}
+                }
+                else if(kiemTraDaDuyetOCoSoChua(maHD,maCoSo) == false) {
+                	ds.add(new HoaDonVaGia(maHD,ngay,id,"Chưa duyệt",tong));                	
+                }
+                
             }
         } catch (Exception e) {
             System.out.println(e);

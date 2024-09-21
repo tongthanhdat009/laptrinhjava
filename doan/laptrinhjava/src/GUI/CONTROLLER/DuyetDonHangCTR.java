@@ -26,6 +26,8 @@ public class DuyetDonHangCTR extends JPanel{
         setBackground(new Color(241, 255, 250));
         setMaCoSo(maCoSo);
         setBounds(0,0,1200,900);
+        
+        
 //        giaoDien();
     }
     public void setMaCoSo(String maCoSo) {
@@ -36,6 +38,47 @@ public class DuyetDonHangCTR extends JPanel{
         JLabel tieude = new JLabel("Duyệt đơn hàng");
         tieude.setBounds(520, 20, 244, 40);
         tieude.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
+
+     // Tạo JRadioButton cho "Chưa duyệt"
+        JRadioButton chuaDuyetBTN = new JRadioButton("Chưa duyệt");
+        chuaDuyetBTN.setBackground(new Color(241, 255, 250));
+        chuaDuyetBTN.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        chuaDuyetBTN.setBounds(331, 69, 128, 23);
+        chuaDuyetBTN.setSelected(true);
+        chuaDuyetBTN.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(chuaDuyetBTN.isSelected()) {
+					ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+			        ds = bll.layDSHDCuaCoSo(maCoSo, "Chưa duyệt");
+			        themDSHoaDon(ds, rightPanel);
+				}
+			}
+		});
+        rightPanel.add(chuaDuyetBTN);
+
+        // Tạo JRadioButton cho "Đã duyệt"
+        JRadioButton daDuyetBTN = new JRadioButton("Đã duyệt");
+        daDuyetBTN.setBackground(new Color(241, 255, 250));
+        daDuyetBTN.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        daDuyetBTN.setBounds(504, 69, 109, 23);
+        daDuyetBTN.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(daDuyetBTN.isSelected()) {
+					ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+			        ds = bll.layDSHDCuaCoSo(maCoSo, "Đã duyệt");
+			        themDSHoaDon(ds, rightPanel);
+				}
+			}
+		});
+        rightPanel.add(daDuyetBTN);
+
+        // Tạo ButtonGroup và thêm cả hai JRadioButton vào group
+        ButtonGroup group = new ButtonGroup();
+        group.add(chuaDuyetBTN);
+        group.add(daDuyetBTN);
+        
         rightPanel.add(tieude);
         ArrayList<HoaDonVaGia> ds = new ArrayList<>();
         ds = bll.layDSHDCuaCoSo(maCoSo, "Chưa duyệt");
@@ -109,14 +152,17 @@ public class DuyetDonHangCTR extends JPanel{
                         duyetBt.setText("Đã duyệt");
                         duyetBt.setEnabled(false);
                     }
-                    else JOptionPane.showMessageDialog(null, "Thất bại");
+                    else {
+                    	JOptionPane.showMessageDialog(null, "Thất bại");
+                    	return;
+                    }
                 }
             });
         }
         JScrollPane cuon = new JScrollPane(dsHoaDonpn);
         int cao = 60 * (soLuongHoaDon+1) ;
         if(cao > 750) cao = 750; 
-        cuon.setBounds(0,120,1200,cao);
+        cuon.setBounds(0,150,1200,cao);
         rightPanel.add(cuon);
     }
     public static void main(String[] args)

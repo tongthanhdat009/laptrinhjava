@@ -35,57 +35,53 @@ public class DuyetDonHangCTR extends JPanel{
     }
     public void giaoDien(JPanel rightPanel)
     {
-        JLabel tieude = new JLabel("Duyệt đơn hàng");
-        tieude.setBounds(520, 20, 244, 40);
-        tieude.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
-
-     // Tạo JRadioButton cho "Chưa duyệt"
-        JRadioButton chuaDuyetBTN = new JRadioButton("Chưa duyệt");
-        chuaDuyetBTN.setBackground(new Color(241, 255, 250));
-        chuaDuyetBTN.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        chuaDuyetBTN.setBounds(331, 69, 128, 23);
-        chuaDuyetBTN.setSelected(true);
-        chuaDuyetBTN.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(chuaDuyetBTN.isSelected()) {
-					ArrayList<HoaDonVaGia> ds = new ArrayList<>();
-			        ds = bll.layDSHDCuaCoSo(maCoSo, "Chưa duyệt");
-			        themDSHoaDon(ds, rightPanel);
-				}
-			}
-		});
-        rightPanel.add(chuaDuyetBTN);
-
-        // Tạo JRadioButton cho "Đã duyệt"
-        JRadioButton daDuyetBTN = new JRadioButton("Đã duyệt");
-        daDuyetBTN.setBackground(new Color(241, 255, 250));
-        daDuyetBTN.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        daDuyetBTN.setBounds(504, 69, 109, 23);
-        daDuyetBTN.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(daDuyetBTN.isSelected()) {
-					ArrayList<HoaDonVaGia> ds = new ArrayList<>();
-			        ds = bll.layDSHDCuaCoSo(maCoSo, "Đã duyệt");
-			        themDSHoaDon(ds, rightPanel);
-				}
-			}
-		});
-        rightPanel.add(daDuyetBTN);
-
-        // Tạo ButtonGroup và thêm cả hai JRadioButton vào group
-        ButtonGroup group = new ButtonGroup();
-        group.add(chuaDuyetBTN);
-        group.add(daDuyetBTN);
         
-        rightPanel.add(tieude);
         ArrayList<HoaDonVaGia> ds = new ArrayList<>();
         ds = bll.layDSHDCuaCoSo(maCoSo, "Chưa duyệt");
         themDSHoaDon(ds, rightPanel);
     }
     public void themDSHoaDon(ArrayList<HoaDonVaGia> ds, JPanel rightPanel)
     {
+        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        rightPanel.repaint(); // Vẽ lại JPanel
+        JLabel tieude = new JLabel("Duyệt đơn hàng");
+        tieude.setBounds(520, 20, 244, 40);
+        tieude.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 35));
+
+     // Tạo JRadioButton cho "Chưa duyệt"
+        JButton chuaDuyetBTN = new JButton("Chưa duyệt");
+        chuaDuyetBTN.setBackground(new Color(241, 255, 250));
+        chuaDuyetBTN.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        chuaDuyetBTN.setBounds(475, 69, 150, 23);
+        chuaDuyetBTN.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+			        ds = bll.layDSHDCuaCoSo(maCoSo, "Chưa duyệt");
+			        themDSHoaDon(ds, rightPanel);
+			}
+		});
+        rightPanel.add(chuaDuyetBTN);
+
+        // Tạo JRadioButton cho "Đã duyệt"
+        JButton daDuyetBTN = new JButton("Đã duyệt");
+        daDuyetBTN.setBackground(new Color(241, 255, 250));
+        daDuyetBTN.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        daDuyetBTN.setBounds(675, 69, 150, 23);
+        daDuyetBTN.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+			        ds = bll.layDSHDCuaCoSo(maCoSo, "Đã duyệt");
+			        themDSHoaDon(ds, rightPanel);
+			}
+		});
+        rightPanel.add(daDuyetBTN);
+
+        // Tạo ButtonGroup và thêm cả hai JRadioButton vào group
+        
+        rightPanel.add(tieude);
         int soLuongHoaDon = ds.size();
         JPanel dsHoaDonpn = new JPanel(new GridLayout(soLuongHoaDon+1,7,10,10));
         JLabel maHoaDon2 = new JLabel("Mã hóa đơn");

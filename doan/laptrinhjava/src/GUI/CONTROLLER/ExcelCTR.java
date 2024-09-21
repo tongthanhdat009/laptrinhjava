@@ -46,13 +46,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
-public class XuatExcelCTR extends JPanel{
+public class ExcelCTR extends JPanel{
 	private JTextField fileNameTF;
 	private JTextField firstSheetNameTF;
 	private JTextField chosenPathTF;
     private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
-    private DefaultTableModel model = new DefaultTableModel();
+	private DefaultTableModel model = new DefaultTableModel();
     private DefaultTableModel hvList = new DefaultTableModel();
     private ArrayList<String> tenCotHV = new ArrayList<String>();
 
@@ -76,7 +76,7 @@ public class XuatExcelCTR extends JPanel{
             return component;
         }
     };
-		public XuatExcelCTR() {
+		public ExcelCTR() {
 			setBackground(new Color(241, 255, 250));
 			this.setSize(1200,900);
 			this.setLayout(null);
@@ -144,6 +144,7 @@ public class XuatExcelCTR extends JPanel{
 					JComboBox<String> comboBox = (JComboBox<String>) e.getSource(); // Lấy ra JComboBox đã được kích hoạt
 	                String selectedOption = (String) comboBox.getSelectedItem(); // Lấy ra mục đã chọn trong JComboBox
 	                JTable dataTable = new JTable();
+                    JTable bang = new JTable();
 	                JScrollPane scrollPane = new JScrollPane();
 	                
 	                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
@@ -205,8 +206,6 @@ public class XuatExcelCTR extends JPanel{
 		        		ArrayList<DTOQuyen> dsQuyen = bllQuanLyDanhSach.layDSQuyenNV();
 		                dsNV = bllQuanLyDanhSach.getDataNhanVien();
 		                ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
-	                	DefaultTableModel model = new DefaultTableModel();
-	                    JTable bang = new JTable();
 	                    bang.setRowHeight(30);
 	                    model.addColumn("Mã nhân viên");
 	                    model.addColumn("Họ và tên");
@@ -281,7 +280,6 @@ public class XuatExcelCTR extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					ArrayList<String> thongTinMoi = new ArrayList<String>();
 					BLLXuatFileExcel bllXuatFileExcel = new BLLXuatFileExcel();
 					if(firstSheetNameTF.getText().equals("") || chosenPathTF.getText().equals("") || comboBox.getSelectedItem().equals("Danh sách")) {
                     	JOptionPane.showMessageDialog(null, "Thiếu thông tin vui lòng nhập đầy đủ thông tin!","Error",JOptionPane.ERROR_MESSAGE);
@@ -291,17 +289,17 @@ public class XuatExcelCTR extends JPanel{
 						if(bllXuatFileExcel.kiemTraTenFile(fileNameTF.getText().trim()) && bllXuatFileExcel.kiemTraSheetName(firstSheetNameTF.getText().trim())) {
 							int counter = 0;
 							String fileExtension = ".xlsx";
-							File file = new File(chosenPathTF.getText().trim() + fileNameTF.getText().trim() + fileExtension);
+							File file = new File(chosenPathTF.getText().trim() +"\\" + fileNameTF.getText().trim() + fileExtension);
 							while (file.exists()) {
-								file = new File(chosenPathTF.getText().trim()  + fileNameTF.getText().trim() + "(" + counter + ")" + fileExtension);
+								file = new File(chosenPathTF.getText().trim() + "\\" + fileNameTF.getText().trim() + "(" + counter + ")" + fileExtension);
 							    counter++;
 							}
 							if(comboBox.getSelectedItem().equals("Hội viên")) {
-								exportToExcel(model, chosenPathTF.getText().trim());
+								exportToExcel(hvList, file.toString(), firstSheetNameTF.getText());
 						        JOptionPane.showMessageDialog(null, "Xuất file Excel thành công!");
 							}
 							else if(comboBox.getSelectedItem().equals("Nhân viên")) {
-								exportToExcel(model, chosenPathTF.getText().trim());
+								exportToExcel(model, file.toString(), firstSheetNameTF.getText());
 						        JOptionPane.showMessageDialog(null, "Xuất file Excel thành công!");
 							}
 						}
@@ -321,13 +319,14 @@ public class XuatExcelCTR extends JPanel{
 			chosenPathTF.setColumns(10);
 		}
 		
-		public void exportToExcel(TableModel model, String filePath) {
+		public void exportToExcel(TableModel model, String filePath, String sheetName) {
 	        Workbook workbook = new XSSFWorkbook();
-	        Sheet sheet = workbook.createSheet("Sheet1");
+	        Sheet sheet = workbook.createSheet(sheetName);
 
 	        // Ghi header của bảng
 	        Row headerRow = sheet.createRow(0);
 	        for (int i = 0; i < model.getColumnCount(); i++) {
+	        	System.out.println("chay");
 	            Cell cell = headerRow.createCell(i);
 	            cell.setCellValue(model.getColumnName(i));
 	        }

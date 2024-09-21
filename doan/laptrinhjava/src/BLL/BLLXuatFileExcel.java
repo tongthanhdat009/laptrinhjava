@@ -21,7 +21,7 @@ public class BLLXuatFileExcel {
 //		}
 //	}
 	
-	public static boolean kiemTraSheetName(String sheetName) {
+	public boolean kiemTraSheetName(String sheetName) {
         // Kiểm tra độ dài của tên sheet
         if (sheetName.length() > 31) {
             return false;

@@ -100,4 +100,16 @@ public class TuanBLL {
     {
         return dataHoaDon.chiTietHoaDon(IDTaiKhoan,maHD);
     }
+    public ArrayList<HoaDonVaGia> layDSHDCuaCoSo(String maCoSo, String trangThai)
+    {
+        return dataHoaDon.layDSHoaDonCuaCoSo(maCoSo, trangThai);
+    }
+    public ArrayList<ChiTietChiTietHoaDon> layDSChiTietHoaDonCuaCoSo(String IDTaiKhoan, String maHD, String maCoSo)
+    {
+        return dataHoaDon.chiTietHoaDonCuaCoSo(IDTaiKhoan,maHD,maCoSo);
+    }
+    public boolean duyetHoaDonCuaCoSo(String maHoaDon, String maCoSo)
+    {
+        return dataHoaDon.duyetHoaDonCuaCoSo(maHoaDon, maCoSo);
+    }
 }

@@ -137,6 +137,31 @@ public class DataHoaDon {
         }
         return ds;
     }
+    public ArrayList<ChiTietChiTietHoaDon> chiTietHoaDonCuaCoSo(String IDTaiKhoan, String MaHoaDon, String maCoSo)
+    {
+
+        ArrayList<ChiTietChiTietHoaDon> ds = new ArrayList<>();
+        String truyVan = "SELECT * FROM HoaDon HD, ChiTietHoaDon CTHD, HoiVien HV, HangHoa HH WHERE CTHD.MaCoSo = '"+maCoSo+"' AND HD.MaHD = CTHD.MaHD AND HD.IDTaiKhoan = '"+IDTaiKhoan+"' AND HV.IDTaiKhoan = '"+IDTaiKhoan+"' AND CTHD.MaHH = HH.MaHangHoa AND HD.MaHD = '"+MaHoaDon+"'";
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            ds.add(new ChiTietChiTietHoaDon(
+                    rs.getString("MaCoSo"),
+                    rs.getDate("NgayXuatHD"), // Sử dụng java.sql.Date
+                    rs.getString("MaHV"),
+                    rs.getString("HoTenHV"),
+                    rs.getString("TenLoaiHangHoa"),
+                    rs.getInt("SoLuongHang"),
+                    rs.getInt("Gia"),
+                    rs.getString("TrangThai")
+                ));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;
+    }
     public ArrayList<HoaDonVaGia> layDSHoaDon(String trangThai)
     {
         ArrayList<HoaDonVaGia> ds = new ArrayList<>();
@@ -154,5 +179,60 @@ public class DataHoaDon {
             System.out.println(e);
         }
         return ds;  
+    }
+    public ArrayList<HoaDonVaGia> layDSHoaDonCuaCoSo(String maCoSo,String trangThai)
+    {
+        ArrayList<HoaDonVaGia> ds = new ArrayList<>();
+        String truyVan = " SELECT HoaDon.MaHD, HoaDon.NgayXuatHD, IDTaiKhoan, SUM(Gia) AS Tong" + 
+                        "  FROM HoaDon, ChiTietHoaDon" + 
+                        "  WHERE HoaDon.MaHD = ChiTietHoaDon.MaHD AND MaCoSo = '"+maCoSo+"'" + 
+                        "  Group by HoaDon.MaHD, NgayXuatHD, TrangThai, IDTaiKhoan";
+                        System.out.println(truyVan);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            while(rs.next())
+            {
+                String maHD = rs.getString("MaHD").trim();
+                Date ngay = rs.getDate("NgayXuatHD");
+                String id = rs.getString("IDTaiKhoan");
+                int tong = rs.getInt("Tong");
+                if(kiemTraDaDuyetOCoSoChua(maHD,maCoSo))
+                ds.add(new HoaDonVaGia(maHD,ngay,id,"Đã duyệt",tong));
+                else 
+                ds.add(new HoaDonVaGia(maHD,ngay,id,"Chưa duyệt",tong));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ds;  
+    }
+    public boolean kiemTraDaDuyetOCoSoChua(String maHoaDon, String maCoSo)
+    {
+        String truyVan ="SELECT * FROM ChiTietHoaDon WHERE MaHD = '"+maHoaDon+"' AND MaCoSo = '"+maCoSo+"' AND TrangThai = N'Chưa duyệt'";
+        System.out.println(truyVan);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(truyVan);
+            if(rs.next()) return false;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return true;      
+    }
+    public boolean duyetHoaDonCuaCoSo(String maHoaDon, String maCoSo)
+    {
+        String truyVan = "UPDATE ChiTietHoaDon SET TrangThai = N'Đã duyệt' WHERE MaCoSo = '" + maCoSo+"' AND MaHD = '"+maHoaDon+"'";
+        System.out.println(truyVan);
+        try {
+            con = DriverManager.getConnection(dbUrl, userName, password);
+            Statement statement = con.createStatement();
+            if(statement.executeUpdate(truyVan) > 0) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

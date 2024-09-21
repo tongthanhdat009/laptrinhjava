@@ -20,6 +20,7 @@ import DTO.HoiVien;
 import DTO.LoaiThietBi;
 import DTO.NhanVien;
 import DTO.DTOTaiKhoan;
+import GUI.CONTROLLER.DuyetDonHangCTR;
 import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
@@ -221,11 +222,7 @@ public class GUIAdmin{
         billBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         billBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		ArrayList<HoaDon> ds = new ArrayList<>();
-                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-                ds = bllQuanLyDanhSach.layDSHoaDonChuaDuyet();
-                xuLyDDHCTR XLDDDHCtrl = new xuLyDDHCTR();
-                XLDDDHCtrl.XuLyDuyetDonHang(ds,bllQuanLyDanhSach, rightPanel);
+                rightPanel.add(new DuyetDonHangCTR(coSoHienTai));
         	}
         });
         billBTN.setBounds(23, 103, 300, 50);

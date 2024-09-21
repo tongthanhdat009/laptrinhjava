@@ -113,27 +113,27 @@ public class QuanLyThietBiKhac extends JPanel {
                 bangKhac.setFont(new Font("Times New Roman", Font.BOLD, 15));
                 bangKhac.getTableHeader().setReorderingAllowed(false);
 
-bangKhac.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
-
-// Tạo DefaultTableModel và thêm các cột
-DefaultTableModel modelKhac = new DefaultTableModel();
-modelKhac.addColumn("Mã thiết bị");
-modelKhac.addColumn("Tên thiết bị");
-modelKhac.addColumn("Hình ảnh");
-
-// Gán model cho JTable
-bangKhac.setModel(modelKhac);
-
-// Lấy danh sách LoaiThietBi và thêm vào bảng
-BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
-DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
-for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
-    modelKhac.addRow(new Object[]{
-        khac.getMaThietBi(),
-        khac.getTenLoaiThietBi(),
-        khac.getHinhAnh(),
-    });
-}
+				bangKhac.setBounds(10, 600, 1180, 700); // Đặt kích thước cho bảng
+				
+				// Tạo DefaultTableModel và thêm các cột
+				DefaultTableModel modelKhac = new DefaultTableModel();
+				modelKhac.addColumn("Mã thiết bị");
+				modelKhac.addColumn("Tên thiết bị");
+				modelKhac.addColumn("Hình ảnh");
+				
+				// Gán model cho JTable
+				bangKhac.setModel(modelKhac);
+				
+				// Lấy danh sách LoaiThietBi và thêm vào bảng
+				BLLQuanLyDanhSach ql = new BLLQuanLyDanhSach();
+				DSLoaiThietBi danhSachKhac = ql.layDSLoaiThietBi(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
+				for (LoaiThietBi khac : danhSachKhac.dsThietBi) {
+				    modelKhac.addRow(new Object[]{
+				        khac.getMaThietBi(),
+				        khac.getTenLoaiThietBi(),
+				        khac.getHinhAnh(),
+				    });
+				}
                     bangKhac.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         int row = bangKhac.getSelectedRow();

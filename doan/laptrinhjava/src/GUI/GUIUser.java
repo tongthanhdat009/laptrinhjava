@@ -20,6 +20,7 @@ import DTO.DonNhap;
 import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.NhanVien;
+import GUI.CONTROLLER.DuyetDonHangCTR;
 import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
@@ -27,7 +28,6 @@ import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
 import GUI.CONTROLLER.informationCTR;
 import GUI.CONTROLLER.thongKe;
-import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
 import GUI.CONTROLLER.xulyDDNCTR;
 
@@ -65,9 +65,18 @@ public class GUIUser extends JFrame {
     Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
     Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(500, 500,Image.SCALE_DEFAULT);
+    
     //icon chức năng thống kê
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng xem thông tin cá nhân
+    ImageIcon inforIcon = new ImageIcon("src/asset/img/icon/infor-icon.png");
+    Image scaleInforIcon = inforIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
+    //icon chức năng mua hàng
+    ImageIcon cartIcon = new ImageIcon("src/asset/img/icon/cart-icon.png");
+    Image scaleCartIcon = cartIcon.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     
     //icon chức năng quản lý hội viên
     ImageIcon membershipIcon = new ImageIcon("src/asset/img/icon/membership-icon.png");
@@ -156,18 +165,20 @@ public class GUIUser extends JFrame {
 //        managementPanel.add(listBTN);
         
         JButton billBTN = new JButton("Duyệt đơn hàng");
+        billBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         billBTN.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		ArrayList<HoaDon> ds = new ArrayList<>();
-                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-                ds = bllQuanLyDanhSach.layDSHoaDonChuaDuyet();
-                xuLyDDHCTR XLDDDHCtrl = new xuLyDDHCTR();
-                XLDDDHCtrl.XuLyDuyetDonHang(ds,bllQuanLyDanhSach, rightPanel);
+        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+                rightPanel.setLayout(null);
+                DuyetDonHangCTR ddDonHangCTR  = new DuyetDonHangCTR(coSoHienTai);
+                ddDonHangCTR.giaoDien(rightPanel);
         	}
         });
-        billBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        billBTN.setFocusPainted(false);
+        billBTN.setBounds(23, 103, 300, 50);
         billBTN.setIcon(new ImageIcon(scaleBillIcon));
+        billBTN.setFocusPainted(false);
         dsNut.add(billBTN);
 //        billBTN.setBounds(23, 103, 300, 50);
 //        managementPanel.add(billBTN);
@@ -336,6 +347,7 @@ public class GUIUser extends JFrame {
 		});
         showInforBTN.setFont(new Font("Times New Roman", Font.BOLD, 23));
         showInforBTN.setFocusPainted(false);
+        showInforBTN.setIcon(new ImageIcon(scaleInforIcon));
         dsNut.add(showInforBTN);
 //        memberMNG.setBounds(23, 347, 300, 50);
 //        managementPanel.add(memberMNG);
@@ -353,6 +365,7 @@ public class GUIUser extends JFrame {
         });
         buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         buyBTN.setFocusPainted(false);
+        buyBTN.setIcon(new ImageIcon(scaleCartIcon));
         dsNut.add(buyBTN);
         
         JPanel leftPanel = new JPanel();

@@ -30,7 +30,6 @@ import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
 import GUI.CONTROLLER.informationCTR;
 import GUI.CONTROLLER.thongKe;
-import GUI.CONTROLLER.xuLyDDHCTR;
 import GUI.CONTROLLER.xuLyDSCTR;
 import GUI.CONTROLLER.xulyDDNCTR;
 
@@ -53,6 +52,11 @@ public class GUIAdmin{
     Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
     Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(500, 500,Image.SCALE_DEFAULT);
+    
+    //icon chức năng mua hàng
+    ImageIcon cartIcon = new ImageIcon("src/asset/img/icon/cart-icon.png");
+    Image scaleCartIcon = cartIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
     //icon chức năng thống kê
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
@@ -388,6 +392,7 @@ public class GUIAdmin{
         buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
         buyBTN.setBounds(23, 469, 300, 50);
         buyBTN.setFocusPainted(false);
+        buyBTN.setIcon(new ImageIcon(scaleCartIcon));
         managementPanel.add(buyBTN);
         
         JButton purchaseOrderBTN = new JButton("Duyệt phiếu nhập");
@@ -406,21 +411,21 @@ public class GUIAdmin{
         purchaseOrderBTN.setFocusPainted(false);
         managementPanel.add(purchaseOrderBTN);
         
-        JButton informationBTN = new JButton("Thông tin cá nhân");
-        informationBTN.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-                rightPanel.repaint(); // Vẽ lại JPanel
-        		rightPanel.setLayout(null);
-        		informationCTR inforCTR = new informationCTR(new DTOTaiKhoan("TK082", "admin", "admin", "Q0004"));
-        		rightPanel.add(inforCTR);
-			}
-        });
-        informationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        informationBTN.setBounds(23, 590, 300, 50);
-        informationBTN.setFocusPainted(false);
-        managementPanel.add(informationBTN);
+//        JButton informationBTN = new JButton("Thông tin cá nhân");
+//        informationBTN.addActionListener(new ActionListener() {
+//        	public void actionPerformed(ActionEvent e) {
+//				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+//                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+//                rightPanel.repaint(); // Vẽ lại JPanel
+//        		rightPanel.setLayout(null);
+//        		informationCTR inforCTR = new informationCTR(new DTOTaiKhoan("TK082", "admin", "admin", "Q0004"));
+//        		rightPanel.add(inforCTR);
+//			}
+//        });
+//        informationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+//        informationBTN.setBounds(23, 590, 300, 50);
+//        informationBTN.setFocusPainted(false);
+//        managementPanel.add(informationBTN);
         
       //xuất file excel
         JButton XuatExcelBTN = new JButton("Xuất file danh sách");
@@ -435,7 +440,7 @@ public class GUIAdmin{
 			}
         });
         XuatExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        XuatExcelBTN.setBounds(23, 650, 300, 50);
+        XuatExcelBTN.setBounds(23, 590, 300, 50);
         XuatExcelBTN.setFocusPainted(false);
         managementPanel.add(XuatExcelBTN);
         

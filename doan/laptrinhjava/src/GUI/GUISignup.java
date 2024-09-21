@@ -451,10 +451,7 @@ public class GUISignup extends JFrame {
 			            DTOTaiKhoan tKhoan = new DTOTaiKhoan(maTaiKhoan, tk, matkhau, "Q0001");
 			            if(blldk.themTKhoan(tKhoan)&& blldk.KiemTraDangKy(hv)) {
 			            	JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Đăng ký tài khoản",JOptionPane.INFORMATION_MESSAGE);
-			            	return;
-			            }
-			            else {
-			            	JOptionPane.showMessageDialog(GUISignup.this, "Ngu","Đăng ký tài khoản",JOptionPane.INFORMATION_MESSAGE);
+			            	new GUILogin();
 			            	return;
 			            }
 					} catch (Exception e2) {

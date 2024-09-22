@@ -53,6 +53,10 @@ public class GUIAdmin{
     ImageIcon logo1 = new ImageIcon("src/asset/img/label/logo1.png");
     Image scaleLogoIcon1 = logo1.getImage().getScaledInstance(500, 500,Image.SCALE_DEFAULT);
     
+    //logo excel
+    ImageIcon excelIcon = new ImageIcon("src/asset/img/icon/excel-icon.png");
+    Image scaleExcelIcon = excelIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
     //icon chức năng mua hàng
     ImageIcon cartIcon = new ImageIcon("src/asset/img/icon/cart-icon.png");
     Image scaleCartIcon = cartIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
@@ -241,40 +245,40 @@ public class GUIAdmin{
 
         managementPanel.add(billBTN);
         
-        JButton goodsBTN = new JButton("Nhập thiết bị");
-        goodsBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        goodsBTN.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-                DSLoaiThietBi dsLoaiThietBi = new DSLoaiThietBi();
-                dsLoaiThietBi = bllNhapThietBi.layDSLoaiThietBi();
-                int soLuongLoaiThietBi = dsLoaiThietBi.dsThietBi.size();
-                xuLyNhapHang(dsLoaiThietBi,soLuongLoaiThietBi);
-        	}
-        });
-        goodsBTN.setBounds(23, 164, 300, 50);
-        goodsBTN.setFocusPainted(false);
-        goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
+//        JButton goodsBTN = new JButton("Nhập thiết bị");
+//        goodsBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+//        goodsBTN.addActionListener(new ActionListener() {
+//        	public void actionPerformed(ActionEvent e) {
+//        		BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+//                DSLoaiThietBi dsLoaiThietBi = new DSLoaiThietBi();
+//                dsLoaiThietBi = bllNhapThietBi.layDSLoaiThietBi();
+//                int soLuongLoaiThietBi = dsLoaiThietBi.dsThietBi.size();
+//                xuLyNhapHang(dsLoaiThietBi,soLuongLoaiThietBi);
+//        	}
+//        });
+//        goodsBTN.setBounds(23, 164, 300, 50);
+//        goodsBTN.setFocusPainted(false);
+//        goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
 
 //        managementPanel.add(goodsBTN);
         
-        //chức năng thống kê đơn hàng
-        JButton statBTN = new JButton("Thống kê đơn hàng");
-        statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        statBTN.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		BLLThongKeDonHang bllThongKeDonHang = new BLLThongKeDonHang();
-                ArrayList<DTOThongKeDonHang> ds = bllThongKeDonHang.layDSDLoc("NULL", "NULL", "2024-01-01", "2025-01-01");
-                Vector<String> dsTenCoSo = new Vector<>();
-                dsTenCoSo = bllThongKeDonHang.DSMaCoSo();
-                thongKe TK = new thongKe();
-                TK.thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu",rightPanel );
-        	}
-        });
-        statBTN.setBounds(23, 164, 300, 50);
-        statBTN.setFocusPainted(false);
-        statBTN.setIcon(new ImageIcon(scaleChartIcon));
-        managementPanel.add(statBTN);
+//        //chức năng thống kê đơn hàng
+//        JButton statBTN = new JButton("Thống kê đơn hàng");
+//        statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+//        statBTN.addActionListener(new ActionListener() {
+//        	public void actionPerformed(ActionEvent e) {
+//        		BLLThongKeDonHang bllThongKeDonHang = new BLLThongKeDonHang();
+//                ArrayList<DTOThongKeDonHang> ds = bllThongKeDonHang.layDSDLoc("NULL", "NULL", "2024-01-01", "2025-01-01");
+//                Vector<String> dsTenCoSo = new Vector<>();
+//                dsTenCoSo = bllThongKeDonHang.DSMaCoSo();
+//                thongKe TK = new thongKe();
+//                TK.thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu",rightPanel );
+//        	}
+//        });
+//        statBTN.setBounds(23, 164, 300, 50);
+//        statBTN.setFocusPainted(false);
+//        statBTN.setIcon(new ImageIcon(scaleChartIcon));
+//        managementPanel.add(statBTN);
 
         
         JButton QuanLyThietBi = new JButton("Quản lý hàng hóa");
@@ -289,7 +293,7 @@ public class GUIAdmin{
         	}
         });
         QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        QuanLyThietBi.setBounds(23, 347, 300, 50);
+        QuanLyThietBi.setBounds(23,164,300,50);
         QuanLyThietBi.setIcon(new ImageIcon(scaleDevicesIcon));
         QuanLyThietBi.setFocusPainted(false);
         managementPanel.add(QuanLyThietBi);
@@ -306,7 +310,7 @@ public class GUIAdmin{
         	}
         });
         delegationBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        delegationBTN.setBounds(23, 408, 300, 50);
+        delegationBTN.setBounds(23,220,300,50);
         delegationBTN.setIcon(new ImageIcon(scalePermissionIcon));
         delegationBTN.setFocusPainted(false);
         managementPanel.add(delegationBTN);
@@ -329,7 +333,7 @@ public class GUIAdmin{
         	}
         });
         employeeMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        employeeMNG.setBounds(23, 225, 300, 50);
+        employeeMNG.setBounds(23, 280, 300, 50);
         employeeMNG.setIcon(new ImageIcon(scaleEmployeeIcon));
         employeeMNG.setFocusPainted(false);
         managementPanel.add(employeeMNG);
@@ -373,7 +377,7 @@ public class GUIAdmin{
         	}
         });
         memberMNG.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        memberMNG.setBounds(23, 286, 300, 50);
+        memberMNG.setBounds(23, 340, 300, 50);
         memberMNG.setIcon(new ImageIcon(scaleMembershipIcon));
         memberMNG.setFocusPainted(false);
         managementPanel.add(memberMNG);
@@ -390,7 +394,7 @@ public class GUIAdmin{
         	}
         });
         buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        buyBTN.setBounds(23, 469, 300, 50);
+        buyBTN.setBounds(23, 400, 300, 50);
         buyBTN.setFocusPainted(false);
         buyBTN.setIcon(new ImageIcon(scaleCartIcon));
         managementPanel.add(buyBTN);
@@ -440,8 +444,9 @@ public class GUIAdmin{
 			}
         });
         XuatExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        XuatExcelBTN.setBounds(23, 590, 300, 50);
+        XuatExcelBTN.setBounds(23, 460, 300, 50);
         XuatExcelBTN.setFocusPainted(false);
+        XuatExcelBTN.setIcon(new ImageIcon(scaleExcelIcon));
         managementPanel.add(XuatExcelBTN);
         
         

@@ -55,7 +55,7 @@ public class xuLyDSCTR {
     public void xuLyDanhSach(JPanel rightPanel){
         rightPanel.setLayout(null);
         //giới thiệu chức năng xử lý danh sách
-        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ <br>- Hóa đơn <br>- Chi tiết hóa đơn <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
+        JLabel param = new JLabel("<html>Giới thiệu chức năng quản lý danh sách <br> Bao gồm các tác vụ thêm, xóa, sửa thông tin các danh sách: <br>- Cơ sở <br>- Dịch vụ <br>- Hàng hóa cơ sở <br>Chọn danh sách để bắt đầu thao tác</html>"); 
 
         param.setFont(new Font("Times New Roman",1,30));
         JPanel textPN = new JPanel();
@@ -71,7 +71,7 @@ public class xuLyDSCTR {
         
         
         //Chọn bảng cần quản lý
-        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hóa đơn","Chi tiết hóa đơn","Hàng hóa cơ sở"};
+        String[] tenDanhSach = {"Cơ sở", "Dịch vụ", "Hàng hóa cơ sở"};
         @SuppressWarnings("rawtypes")
         JComboBox danhSachBox = new JComboBox<String>(tenDanhSach);
         danhSachBox.setBounds(680,50,130,30);
@@ -163,20 +163,20 @@ public class xuLyDSCTR {
                     QuanLyBangThietBiCoSoCTR qlbtbcsCTR = new QuanLyBangThietBiCoSoCTR();
                     qlbtbcsCTR.QuanLyBangThietBiCoSo(ds,rightPanel);
                 }
-                else if(selectedOption.equals("Hóa đơn")){
-                    ArrayList<HoaDon> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDSHoaDon();
-                    Vector<String> dsCoSo = new Vector<>();
-                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                    hoaDonCTR hdCTR = new hoaDonCTR();
-                    hdCTR.QuanLyHoaDon(ds, dsCoSo, rightPanel);
-                }
-                else if(selectedOption.equals("Chi tiết hóa đơn")){
-                    ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
-                    ds = bllQuanLyDanhSach.layDSChiTietHoaDon();
-                    chiTietHDCTR cthdCTR = new chiTietHDCTR();
-                    cthdCTR.QuanLyChiTietHoaDon(ds,rightPanel);
-                }
+//                else if(selectedOption.equals("Hóa đơn")){
+//                    ArrayList<HoaDon> ds = new ArrayList<>();
+//                    ds = bllQuanLyDanhSach.layDSHoaDon();
+//                    Vector<String> dsCoSo = new Vector<>();
+//                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+//                    hoaDonCTR hdCTR = new hoaDonCTR();
+//                    hdCTR.QuanLyHoaDon(ds, dsCoSo, rightPanel);
+//                }
+//                else if(selectedOption.equals("Chi tiết hóa đơn")){
+//                    ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
+//                    ds = bllQuanLyDanhSach.layDSChiTietHoaDon();
+//                    chiTietHDCTR cthdCTR = new chiTietHDCTR();
+//                    cthdCTR.QuanLyChiTietHoaDon(ds,rightPanel);
+//                }
                 else if(selectedOption.equals("Hàng hóa cơ sở")){
                     ArrayList<hangHoaCoSo> ds = new ArrayList<>();
                     ds = bllQuanLyDanhSach.layDSHangHoaCoSo();

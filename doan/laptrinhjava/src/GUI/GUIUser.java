@@ -21,6 +21,7 @@ import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.NhanVien;
 import GUI.CONTROLLER.DuyetDonHangCTR;
+import GUI.CONTROLLER.ExcelCTR;
 import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
@@ -70,13 +71,17 @@ public class GUIUser extends JFrame {
     ImageIcon analyticsIcon = new ImageIcon("src/asset/img/icon/analytics-icon.png");
     Image scaleAnalyticsIcon = analyticsIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
+    //logo excel
+    ImageIcon excelIcon = new ImageIcon("src/asset/img/icon/excel-icon.png");
+    Image scaleExcelIcon = excelIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
+    
     //icon chức năng xem thông tin cá nhân
     ImageIcon inforIcon = new ImageIcon("src/asset/img/icon/infor-icon.png");
     Image scaleInforIcon = inforIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng mua hàng
     ImageIcon cartIcon = new ImageIcon("src/asset/img/icon/cart-icon.png");
-    Image scaleCartIcon = cartIcon.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
+    Image scaleCartIcon = cartIcon.getImage().getScaledInstance(40, 40,Image.SCALE_DEFAULT);
     
     //icon chức năng quản lý hội viên
     ImageIcon membershipIcon = new ImageIcon("src/asset/img/icon/membership-icon.png");
@@ -215,21 +220,21 @@ public class GUIUser extends JFrame {
 //        goodsBTN.setBounds(23, 164, 300, 50);
 //        managementPanel.add(goodsBTN);
         
-        JButton statBTN = new JButton("Thống kê đơn hàng");
-        statBTN.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		BLLThongKeDonHang bllThongKeDonHang = new BLLThongKeDonHang();
-                ArrayList<DTOThongKeDonHang> ds = bllThongKeDonHang.layDSDLoc("NULL", "NULL", "2024-01-01", "2025-01-01");
-                Vector<String> dsTenCoSo = new Vector<>();
-                dsTenCoSo = bllThongKeDonHang.DSMaCoSo();
-                thongKe TK = new thongKe();
-                TK.thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu",rightPanel );
-        	}
-        });
-        statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        statBTN.setFocusPainted(false);
-        statBTN.setIcon(new ImageIcon(scaleChartIcon));
-        dsNut.add(statBTN);
+//        JButton statBTN = new JButton("Thống kê đơn hàng");
+//        statBTN.addActionListener(new ActionListener() {
+//        	public void actionPerformed(ActionEvent e) {
+//        		BLLThongKeDonHang bllThongKeDonHang = new BLLThongKeDonHang();
+//                ArrayList<DTOThongKeDonHang> ds = bllThongKeDonHang.layDSDLoc("NULL", "NULL", "2024-01-01", "2025-01-01");
+//                Vector<String> dsTenCoSo = new Vector<>();
+//                dsTenCoSo = bllThongKeDonHang.DSMaCoSo();
+//                thongKe TK = new thongKe();
+//                TK.thongKeTheoSoLuong(ds,dsTenCoSo,"Theo doanh thu",rightPanel );
+//        	}
+//        });
+//        statBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+//        statBTN.setFocusPainted(false);
+//        statBTN.setIcon(new ImageIcon(scaleChartIcon));
+//        dsNut.add(statBTN);
 //        statBTN.setBounds(23, 225, 300, 50);
 //        managementPanel.add(statBTN);
         
@@ -367,6 +372,24 @@ public class GUIUser extends JFrame {
         buyBTN.setFocusPainted(false);
         buyBTN.setIcon(new ImageIcon(scaleCartIcon));
         dsNut.add(buyBTN);
+        
+      //xuất file excel
+        JButton XuatExcelBTN = new JButton("Xuất file danh sách");
+        XuatExcelBTN.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		ExcelCTR excelCTR = new ExcelCTR();
+        		rightPanel.add(excelCTR);
+			}
+        });
+        XuatExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        XuatExcelBTN.setBounds(23, 460, 300, 50);
+        XuatExcelBTN.setFocusPainted(false);
+        XuatExcelBTN.setIcon(new ImageIcon(scaleExcelIcon));
+        dsNut.add(XuatExcelBTN);
         
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(new LineBorder(new Color(64, 0, 64), 2));

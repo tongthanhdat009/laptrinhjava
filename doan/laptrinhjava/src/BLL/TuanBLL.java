@@ -33,9 +33,6 @@ public class TuanBLL {
         if(ten.equals("")) ten = "NULL";
         if(maCoSo.equals("")) maCoSo = "NULL";
         if(loai.equals("") || loai.equals("Tất cả")) loai = "NULL";
-        if(loai.equals("Tạ")) loai = "Ta";
-        if(loai.equals("Máy chạy")) loai = "MayChay";
-        if(loai.equals("Xà")) loai = "Xa";
         return dataHangHoa.timDSHangBan(ten, maCoSo, loai);
     }
     public String themVaoGioHang(String maHangHoa, String IDTaiKhoan, String maCoSo, int soLuongMua)

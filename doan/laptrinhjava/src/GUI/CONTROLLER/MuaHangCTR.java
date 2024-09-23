@@ -53,7 +53,7 @@ public class MuaHangCTR extends JPanel {
         dsLoai.add("Tạ");
         dsLoai.add("Máy chạy");
         dsLoai.add("Xà");
-        dsLoai.add("Thực phẩm chức năng");
+        dsLoai.add("Khác");
         removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
         revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
         repaint(); // Vẽ lại JPanel

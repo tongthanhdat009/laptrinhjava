@@ -39,6 +39,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import BLL.BLLDonNhap;
+import BLL.BLLNhapHang;
 import BLL.BLLNhapThietBi;
 import BLL.BLLPhanQuyen;
 import BLL.BLLQuanLyDanhSach;
@@ -390,6 +391,19 @@ public class GUIUser extends JFrame {
         XuatExcelBTN.setFocusPainted(false);
         XuatExcelBTN.setIcon(new ImageIcon(scaleExcelIcon));
         dsNut.add(XuatExcelBTN);
+        
+        JButton importgoods = new JButton("Nhập hàng");
+        importgoods.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e){
+                nhapHang nhapHang=new nhapHang();
+                BLLNhapHang bllNhapHang=new BLLNhapHang();
+                nhapHang.xulyNhapHang(tk, bllNhapHang, rightPanel, coSoHienTai);
+        	}
+        });
+        importgoods.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        importgoods.setIcon(new ImageIcon(scaleEmployeeIcon));
+        importgoods.setFocusPainted(false);
+        dsNut.add(importgoods);
         
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(new LineBorder(new Color(64, 0, 64), 2));

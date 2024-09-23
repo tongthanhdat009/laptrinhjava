@@ -112,13 +112,13 @@ public class xuLyDSCTR {
                 tenCotCS.add("Doanh thu");
                 DSCoSo dsCS =  bllQuanLyDanhSach.layDsCoSo();
 
-                DSLoaiThietBi dsTB = bllQuanLyDanhSach.layDSLoaiThietBi();
-                ArrayList<String> tenCotTB = new ArrayList<String>();
-                tenCotTB.add("Mã thiết bị");
-                tenCotTB.add("Tên loại thiết bị");
-                tenCotTB.add("Hình ảnh");
-                tenCotTB.add("Giá thiết bị");
-                tenCotTB.add("Ngày bảo hành");
+//                DSLoaiThietBi dsTB = bllQuanLyDanhSach.layDSLoaiThietBi();
+//                ArrayList<String> tenCotTB = new ArrayList<String>();
+//                tenCotTB.add("Mã thiết bị");
+//                tenCotTB.add("Tên loại thiết bị");
+//                tenCotTB.add("Hình ảnh");
+//                tenCotTB.add("Giá thiết bị");
+//                tenCotTB.add("Ngày bảo hành");
                 
                 dsHangHoa dsHH = bllQuanLyDanhSach.layDsHangHoa();
                 ArrayList<String> tenCotHH = new ArrayList<String>();

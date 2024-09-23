@@ -162,8 +162,8 @@ public class QuanLyTa extends JPanel {
                 model.addColumn("Tên hàng hóa");
                 model.addColumn("Hình ảnh");
                 model.addColumn("Khối lượng");
-                model.addColumn("Chất liệu");
                 model.addColumn("Màu sắc");
+                model.addColumn("Chất liệu");
 
                 // Gán model cho JTable
                 bang.setModel(model);
@@ -174,12 +174,12 @@ public class QuanLyTa extends JPanel {
                 danhSachTa = ql.layDSTa();
                 for (Ta ta : danhSachTa) {
                     model.addRow(new Object[]{
-                        ta.getMaHangHoa(),
-                        ta.getLoaiHangHoa(),
-                        ta.getHinhAnh(),
-                        ta.getKhoiLuong(),
-                        ta.getChatLieu(),
-                        ta.getMauSac(),
+                    		ta.getMaHangHoa(),
+                            ta.getTenLoaiHangHoa(),
+                            ta.getHinhAnh(),
+                            ta.getKhoiLuong(),
+                            ta.getChatLieu(),
+                            ta.getMauSac(),
                     });
                 }
 
@@ -227,7 +227,7 @@ public class QuanLyTa extends JPanel {
                             String chatLieu = colorTF.getText();
                             String mauSac = materialTF.getText();
 
-                            String kq = ql.themThietBiTa(new Ta(maThietBi, ten, hinhAnh, "Tạ", khoiLuong, chatLieu, mauSac));
+                            String kq = ql.themThietBiTa(new Ta(maThietBi, "Tạ", ten, hinhAnh, khoiLuong, chatLieu, mauSac));
                             JOptionPane.showMessageDialog(null, kq);
                             model.setRowCount(0);
                             ArrayList<Ta> danhSachTa = new ArrayList<>();
@@ -235,7 +235,7 @@ public class QuanLyTa extends JPanel {
                             for (Ta ta : danhSachTa) {
                                 model.addRow(new Object[]{
                                 		ta.getMaHangHoa(),
-                                        ta.getLoaiHangHoa(),
+                                        ta.getTenLoaiHangHoa(),
                                         ta.getHinhAnh(),
                                         ta.getKhoiLuong(),
                                         ta.getChatLieu(),
@@ -267,7 +267,7 @@ public class QuanLyTa extends JPanel {
                             String mauSac = colorTF.getText();
                 
                             // Sửa thiết bị `Ta`
-                            String kq = ql.SuaTa(new Ta(maThietBi, ten, hinhAnh, "Tạ", khoiLuong, chatLieu, mauSac));
+                            String kq = ql.SuaTa(new Ta(maThietBi, "Tạ", ten, hinhAnh, khoiLuong, chatLieu, mauSac));
                             JOptionPane.showMessageDialog(null, kq);
                         }
                         model.setRowCount(0);
@@ -276,7 +276,7 @@ public class QuanLyTa extends JPanel {
                 for (Ta ta : danhSachTa) {
                     model.addRow(new Object[]{
                     		ta.getMaHangHoa(),
-                            ta.getLoaiHangHoa(),
+                            ta.getTenLoaiHangHoa(),
                             ta.getHinhAnh(),
                             ta.getKhoiLuong(),
                             ta.getChatLieu(),

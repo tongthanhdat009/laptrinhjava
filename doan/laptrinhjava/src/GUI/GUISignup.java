@@ -520,7 +520,7 @@ public class GUISignup extends JFrame {
 		lblNewLabel.setBounds(353, -50, 388, 250);
 		panel.add(lblNewLabel);
 		lblNewLabel.setBackground(new Color(204, 252, 203));
-		lblNewLabel.setIcon(new ImageIcon("D:\\github\\laptrinhjava\\doan\\laptrinhjava\\src\\asset\\img\\label\\logo1.png"));
+		lblNewLabel.setIcon(new ImageIcon("src\\asset\\img\\label\\logo1.png"));
 		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 35));
 		

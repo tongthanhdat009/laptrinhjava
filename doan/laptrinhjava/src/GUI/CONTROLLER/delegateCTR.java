@@ -136,7 +136,6 @@ public class delegateCTR extends JPanel {
 		funcContent.removeAll(); // Xóa hết các thành phần trong panel
 		funcContent.revalidate(); // Xác nhận lại bố cục mới (layout)
 		funcContent.repaint(); // Vẽ lại panel
-
 		ArrayList<DTOChucNang> dsChucNangUser = bllPhanQuyen.layDsCNTheoIDQuyen(iDQuyen);
 		ArrayList<DTOChucNang> dsChucNangUserChuCo = bllPhanQuyen.layDsCNChuaCoTheoIDQuyen(iDQuyen);
 		int x = 20;
@@ -154,12 +153,10 @@ public class delegateCTR extends JPanel {
 			tempCheckBox.setSelected(true);
 			tempCheckBox.setName(cNang.getiDChucNang().trim());
 			tempCheckBox.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if(!tempCheckBox.isSelected()) {
-						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn bỏ phân quyền cho chức năng này chứ?");
-
+						int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn thêm phân quyền cho chức năng này chứ?");
 						if (result == JOptionPane.YES_OPTION) {
 							DTOPhanQuyen pQuyen = new DTOPhanQuyen(iDQuyen, tempCheckBox.getName());
 							if(bllPhanQuyen.xoaPhanQuyen(pQuyen)){
@@ -182,8 +179,7 @@ public class delegateCTR extends JPanel {
 						}
 					}
 					else {
-						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn thêm phân quyền cho chức năng này chứ?");
-
+						int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn bỏ phân quyền cho chức năng này chứ?");
 						if (result == JOptionPane.YES_OPTION) {
 							DTOPhanQuyen pQuyen = new DTOPhanQuyen(iDQuyen, tempCheckBox.getName());
 							if(bllPhanQuyen.themPhanQuyen(pQuyen)){
@@ -233,8 +229,18 @@ public class delegateCTR extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if(tempCheckBox.isSelected()) {
-						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn bỏ phân quyền cho chức năng này chứ?");
-
+						if(!(cNang.getTenChucNang().trim().equals("Mua hàng") || cNang.getTenChucNang().trim().equals("Thông tin cá nhân")) && iDQuyen.equals("Q0001")) {
+							JOptionPane.showMessageDialog(funcContent, "Nhóm quyền này chỉ được mua hàng hoặc xem thông tin cá nhân");
+							tempCheckBox.setSelected(false);
+							return;
+						}
+						if (!iDQuyen.equals("Q0001")&& (cNang.getTenChucNang().trim().equals("Mua hàng")|| cNang.getTenChucNang().trim().equals("Thông tin cá nhân"))){
+							JOptionPane.showMessageDialog(funcContent, "Nhóm quyền này không có quyền được mua hàng hoặc xem thông tin cá nhân");
+							tempCheckBox.setSelected(false);
+							return;
+						}
+						
+						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn thêm phân quyền cho chức năng này chứ?");
 						if (result == JOptionPane.YES_OPTION) {
 							DTOPhanQuyen pQuyen = new DTOPhanQuyen(iDQuyen, tempCheckBox.getName());
 							if(bllPhanQuyen.themPhanQuyen(pQuyen)){
@@ -260,7 +266,7 @@ public class delegateCTR extends JPanel {
 						}
 					}
 					else {
-						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn thêm phân quyền cho chức năng này chứ?");
+						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn bỏ phân quyền cho chức năng này chứ?");
 
 						if (result == JOptionPane.YES_OPTION) {
 							DTOPhanQuyen pQuyen = new DTOPhanQuyen(iDQuyen, tempCheckBox.getName());

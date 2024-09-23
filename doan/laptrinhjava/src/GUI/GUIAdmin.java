@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import BLL.BLLDonNhap;
+import BLL.BLLNhapHang;
 import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLThongKeDonHang;
@@ -449,6 +450,21 @@ public class GUIAdmin{
         XuatExcelBTN.setIcon(new ImageIcon(scaleExcelIcon));
         managementPanel.add(XuatExcelBTN);
         
+       
+        //chức năng nhập hàng
+        JButton importgoods = new JButton("Nhập hàng");
+        importgoods.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e){
+                nhapHang nhapHang=new nhapHang();
+                BLLNhapHang bllNhapHang=new BLLNhapHang();
+                nhapHang.xulyNhapHang(tk, bllNhapHang, rightPanel, coSoHienTai);
+        	}
+        });
+        importgoods.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        importgoods.setIcon(new ImageIcon(scaleEmployeeIcon));
+        importgoods.setFocusPainted(false);
+        importgoods.setBounds(23, 590, 300, 50);
+        managementPanel.add(importgoods);
         
         leftPanel.add(footerLeft);
 
@@ -507,208 +523,208 @@ public class GUIAdmin{
 
         adminFrame.setVisible(true);
     }
-    public void xuLyNhapHang(DSLoaiThietBi dsLoaiThietBi, int soLuongLoaiThietBi)
-    {
-            rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-            rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-            rightPanel.repaint(); // Vẽ lại JPanel
-            rightPanel.setLayout(null);
-            
-            JPanel canGiua = new JPanel(new FlowLayout());
-            canGiua.setBounds(5,5,rightPanel.getWidth(),55);
-            canGiua.setBackground(Color.yellow);
-            JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
-            titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
-
-            canGiua.add(titleNhapThietBi);
-            rightPanel.add(canGiua);
-
-            JPanel filter = new JPanel(null);
-            filter.setBounds(5,70,rightPanel.getWidth(),55);
-            filter.setBackground(Color.WHITE);
-            JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên:");
-            timTheoTen.setBounds(10, 15, 160, 30);
-            timTheoTen.setFont(new Font("Times New Roman",1,18));
-            JTextField nhapTen = new JTextField();
-            nhapTen.setBounds(200, 15, 175, 30);
-            JButton timkiem = new JButton(">");
-            timkiem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {
-                    @SuppressWarnings("unused")
-					BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-                    DSLoaiThietBi ds = new DSLoaiThietBi();
-//                    ds = bllNhapThietBi.timKiem(nhapTen.getText());
-                    int soLuongLoaiThietBi = ds.dsThietBi.size();
-                    xuLyNhapHang(ds, soLuongLoaiThietBi);
-                }
-            });
-            timkiem.setBounds(370, 15, 45, 29);
-            filter.add(timTheoTen);
-            filter.add(nhapTen);
-            filter.add(timkiem);
-
-            rightPanel.add(filter);
-
-            int soHangHienThi;
-            if(soLuongLoaiThietBi % 3 == 0) soHangHienThi =  soLuongLoaiThietBi / 3 ;
-            else soHangHienThi = soLuongLoaiThietBi / 3 + 1;
-            JPanel hienThiThietBi = new JPanel(new GridLayout(0,3,100,50));
-            hienThiThietBi.setPreferredSize(new Dimension(rightPanel.getWidth()-50, 400*soHangHienThi));
-            for (LoaiThietBi thietBi : dsLoaiThietBi.dsThietBi)
-            {
-                JPanel thongTinThietBi = new JPanel(null);
-                thongTinThietBi.setBackground(Color.WHITE);
-                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-                thongTinThietBi.setBorder(blackBorder);
-
-                ImageIcon anhThietBi = new ImageIcon(thietBi.getHinhAnh());
-                Image chinhAnhThietBi = anhThietBi.getImage().getScaledInstance(290, 250,Image.SCALE_DEFAULT);
-                anhThietBi = new ImageIcon(chinhAnhThietBi);
-                JLabel labelAnhThietBi = new JLabel(anhThietBi);
-                labelAnhThietBi.setBounds(10, 5, 290, 250);
-                thongTinThietBi.add(labelAnhThietBi);
-
-                JPanel panelTenThietBi = new JPanel(new FlowLayout());
-                JPanel panelGiaThietBi = new JPanel(new FlowLayout());
-                panelTenThietBi.setBounds(10, 280, 290, 30);
-                panelGiaThietBi.setBounds(10, 310, 290, 30);
-                panelTenThietBi.setBackground(Color.WHITE);
-                panelGiaThietBi.setBackground(Color.WHITE);
-                JLabel labelTenThietBi = new JLabel(thietBi.getTenLoaiThietBi().trim());
-                JLabel labelGiaThietBi = new JLabel("Giá: "+thietBi.getGiaThietBi().trim());
-                panelTenThietBi.add(labelTenThietBi);
-                panelGiaThietBi.add(labelGiaThietBi);
-                thongTinThietBi.add(panelTenThietBi);
-                thongTinThietBi.add(panelGiaThietBi);
-
-                thongTinThietBi.addMouseListener(new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        JPanel thongTinChiTiet = new JPanel(new GridLayout(6,1));
-                        thongTinChiTiet.setPreferredSize(new Dimension(300,150));
-                        JLabel ten = new JLabel("Tên: "+thietBi.getTenLoaiThietBi());
-                        JLabel ma = new JLabel("Mã Loại: "+thietBi.getMaThietBi());
-                        JLabel gia = new JLabel("Giá: "+thietBi.getGiaThietBi());
-                        JLabel soNgayBaoHanh = new JLabel("Số ngày bảo hành: "+thietBi.getNgayBaoHanh());
-                        
-                        JPanel chonSoLuong = new JPanel(new GridLayout(1,2));
-                        JLabel labelSoLuong = new JLabel("Số Lượng: ");
-                        JTextField soLuong = new JTextField();
-                        chonSoLuong.add(labelSoLuong);
-                        chonSoLuong.add(soLuong);
-                        thongTinChiTiet.add(ten);
-                        thongTinChiTiet.add(ma);
-                        thongTinChiTiet.add(gia);
-                        thongTinChiTiet.add(soNgayBaoHanh);
-                        thongTinChiTiet.add(chonSoLuong);
-                        boolean flag = false;
-
-                        DataCoSo dataCoSo = new DataCoSo();
-                        DSCoSo dsCS = new DSCoSo();
-                        dsCS = dataCoSo.layDSCoSo();
-                        Vector<String> s = new Vector<>();
-                        for(CoSo a : dsCS.dsCoSo)
-                        {
-                            s.add(a.getMaCoSo());
-                        }
-                        @SuppressWarnings("rawtypes")
-                        JComboBox chonCoSo = new JComboBox<>(s);
-                        JLabel labelCoSo = new JLabel("Chọn cơ sở: ");
-
-                        JPanel panelChonCoSo = new JPanel(new GridLayout(1,2));
-                        panelChonCoSo.add(labelCoSo);
-                        panelChonCoSo.add(chonCoSo);
-
-                        thongTinChiTiet.add(panelChonCoSo);
-
-                        while(flag == false)
-                        {
-                            int qes = JOptionPane.showConfirmDialog(rightPanel, thongTinChiTiet,"Nhập thiết bị",JOptionPane.OK_OPTION);
-                            if(qes == 0)
-                            {
-                                try {
-                                    int sl = Integer.parseInt(soLuong.getText());
-                                    if(sl > 0) 
-                                    {
-                                        BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-                                        bllNhapThietBi.nhapHangVeCoSo(thietBi.getMaThietBi(),chonCoSo.getSelectedItem().toString(),sl,thietBi.getNgayBaoHanh());
-                                        flag = true;
-                                    }
-                                    else JOptionPane.showMessageDialog(rightPanel, "Số lượng phải lớn hơn 0");
-                                } catch (Exception ex) {
-                                    JOptionPane.showMessageDialog(rightPanel, "Số lượng phải là số lớn hơn 0");
-                                }
-                            }
-                            else flag = true;
-                        }
-                    }
-                    
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        // Không cần xử lý
-                    }
-                    
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        // Không cần xử lý
-                    }
-                    
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        // Không cần xử lý
-                    }
-                    
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        // Không cần xử lý
-                    }
-                });  
-                hienThiThietBi.add(thongTinThietBi);
-            }
-            JScrollPane scrollPane = new JScrollPane(hienThiThietBi);
-            if(soHangHienThi == 1) scrollPane.setBounds(5, 150, rightPanel.getWidth()-20,400);
-            else scrollPane.setBounds(5, 150, rightPanel.getWidth()-20,700);
-            rightPanel.add(scrollPane);
-    }
-    public void xuLyNhapHangHoa()
-    {
-        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-        rightPanel.repaint(); // Vẽ lại JPanel
-        rightPanel.setLayout(null);
-
-        JPanel canGiua = new JPanel(new FlowLayout());
-        canGiua.setBounds(5,5,rightPanel.getWidth(),55);
-        canGiua.setBackground(Color.yellow);
-        JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
-        titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
-
-        canGiua.add(titleNhapThietBi);
-        rightPanel.add(canGiua);
-
-        JPanel filter = new JPanel(null);
-        filter.setBounds(5,70,rightPanel.getWidth(),55);
-        JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên");
-        timTheoTen.setBounds(10, 15, 130, 30);
-        JTextField nhapTen = new JTextField();
-        nhapTen.setBounds(145, 15, 175, 30);
-        JButton timkiem = new JButton(">");
-            // timkiem.addActionListener(new ActionListener() {
-            //     public void actionPerformed(ActionEvent e)
-            //     {
-            //         BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-            //         DSLoaiThietBi ds = new DSLoaiThietBi();
-            //         ds = bllNhapThietBi.timKiem(nhapTen.getText());
-            //         int soLuongLoaiThietBi = ds.dsThietBi.size();
-            //         xuLyNhapHang(ds, soLuongLoaiThietBi);
-            //     }
-            // });
-        timkiem.setBounds(320, 15, 45, 29);
-        filter.add(timTheoTen);
-        filter.add(nhapTen);
-        filter.add(timkiem);
-
-        rightPanel.add(filter);
-    }
+//    public void xuLyNhapHang(DSLoaiThietBi dsLoaiThietBi, int soLuongLoaiThietBi)
+//    {
+//            rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+//            rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+//            rightPanel.repaint(); // Vẽ lại JPanel
+//            rightPanel.setLayout(null);
+//            
+//            JPanel canGiua = new JPanel(new FlowLayout());
+//            canGiua.setBounds(5,5,rightPanel.getWidth(),55);
+//            canGiua.setBackground(Color.yellow);
+//            JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
+//            titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
+//
+//            canGiua.add(titleNhapThietBi);
+//            rightPanel.add(canGiua);
+//
+//            JPanel filter = new JPanel(null);
+//            filter.setBounds(5,70,rightPanel.getWidth(),55);
+//            filter.setBackground(Color.WHITE);
+//            JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên:");
+//            timTheoTen.setBounds(10, 15, 160, 30);
+//            timTheoTen.setFont(new Font("Times New Roman",1,18));
+//            JTextField nhapTen = new JTextField();
+//            nhapTen.setBounds(200, 15, 175, 30);
+//            JButton timkiem = new JButton(">");
+//            timkiem.addActionListener(new ActionListener() {
+//                public void actionPerformed(ActionEvent e)
+//                {
+//                    @SuppressWarnings("unused")
+//					BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+//                    DSLoaiThietBi ds = new DSLoaiThietBi();
+////                    ds = bllNhapThietBi.timKiem(nhapTen.getText());
+//                    int soLuongLoaiThietBi = ds.dsThietBi.size();
+//                    xuLyNhapHang(ds, soLuongLoaiThietBi);
+//                }
+//            });
+//            timkiem.setBounds(370, 15, 45, 29);
+//            filter.add(timTheoTen);
+//            filter.add(nhapTen);
+//            filter.add(timkiem);
+//
+//            rightPanel.add(filter);
+//
+//            int soHangHienThi;
+//            if(soLuongLoaiThietBi % 3 == 0) soHangHienThi =  soLuongLoaiThietBi / 3 ;
+//            else soHangHienThi = soLuongLoaiThietBi / 3 + 1;
+//            JPanel hienThiThietBi = new JPanel(new GridLayout(0,3,100,50));
+//            hienThiThietBi.setPreferredSize(new Dimension(rightPanel.getWidth()-50, 400*soHangHienThi));
+//            for (LoaiThietBi thietBi : dsLoaiThietBi.dsThietBi)
+//            {
+//                JPanel thongTinThietBi = new JPanel(null);
+//                thongTinThietBi.setBackground(Color.WHITE);
+//                Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+//                thongTinThietBi.setBorder(blackBorder);
+//
+//                ImageIcon anhThietBi = new ImageIcon(thietBi.getHinhAnh());
+//                Image chinhAnhThietBi = anhThietBi.getImage().getScaledInstance(290, 250,Image.SCALE_DEFAULT);
+//                anhThietBi = new ImageIcon(chinhAnhThietBi);
+//                JLabel labelAnhThietBi = new JLabel(anhThietBi);
+//                labelAnhThietBi.setBounds(10, 5, 290, 250);
+//                thongTinThietBi.add(labelAnhThietBi);
+//
+//                JPanel panelTenThietBi = new JPanel(new FlowLayout());
+//                JPanel panelGiaThietBi = new JPanel(new FlowLayout());
+//                panelTenThietBi.setBounds(10, 280, 290, 30);
+//                panelGiaThietBi.setBounds(10, 310, 290, 30);
+//                panelTenThietBi.setBackground(Color.WHITE);
+//                panelGiaThietBi.setBackground(Color.WHITE);
+//                JLabel labelTenThietBi = new JLabel(thietBi.getTenLoaiThietBi().trim());
+//                JLabel labelGiaThietBi = new JLabel("Giá: "+thietBi.getGiaThietBi().trim());
+//                panelTenThietBi.add(labelTenThietBi);
+//                panelGiaThietBi.add(labelGiaThietBi);
+//                thongTinThietBi.add(panelTenThietBi);
+//                thongTinThietBi.add(panelGiaThietBi);
+//
+//                thongTinThietBi.addMouseListener(new MouseListener() {
+//                    @Override
+//                    public void mouseClicked(MouseEvent e) {
+//                        JPanel thongTinChiTiet = new JPanel(new GridLayout(6,1));
+//                        thongTinChiTiet.setPreferredSize(new Dimension(300,150));
+//                        JLabel ten = new JLabel("Tên: "+thietBi.getTenLoaiThietBi());
+//                        JLabel ma = new JLabel("Mã Loại: "+thietBi.getMaThietBi());
+//                        JLabel gia = new JLabel("Giá: "+thietBi.getGiaThietBi());
+//                        JLabel soNgayBaoHanh = new JLabel("Số ngày bảo hành: "+thietBi.getNgayBaoHanh());
+//                        
+//                        JPanel chonSoLuong = new JPanel(new GridLayout(1,2));
+//                        JLabel labelSoLuong = new JLabel("Số Lượng: ");
+//                        JTextField soLuong = new JTextField();
+//                        chonSoLuong.add(labelSoLuong);
+//                        chonSoLuong.add(soLuong);
+//                        thongTinChiTiet.add(ten);
+//                        thongTinChiTiet.add(ma);
+//                        thongTinChiTiet.add(gia);
+//                        thongTinChiTiet.add(soNgayBaoHanh);
+//                        thongTinChiTiet.add(chonSoLuong);
+//                        boolean flag = false;
+//
+//                        DataCoSo dataCoSo = new DataCoSo();
+//                        DSCoSo dsCS = new DSCoSo();
+//                        dsCS = dataCoSo.layDSCoSo();
+//                        Vector<String> s = new Vector<>();
+//                        for(CoSo a : dsCS.dsCoSo)
+//                        {
+//                            s.add(a.getMaCoSo());
+//                        }
+//                        @SuppressWarnings("rawtypes")
+//                        JComboBox chonCoSo = new JComboBox<>(s);
+//                        JLabel labelCoSo = new JLabel("Chọn cơ sở: ");
+//
+//                        JPanel panelChonCoSo = new JPanel(new GridLayout(1,2));
+//                        panelChonCoSo.add(labelCoSo);
+//                        panelChonCoSo.add(chonCoSo);
+//
+//                        thongTinChiTiet.add(panelChonCoSo);
+//
+//                        while(flag == false)
+//                        {
+//                            int qes = JOptionPane.showConfirmDialog(rightPanel, thongTinChiTiet,"Nhập thiết bị",JOptionPane.OK_OPTION);
+//                            if(qes == 0)
+//                            {
+//                                try {
+//                                    int sl = Integer.parseInt(soLuong.getText());
+//                                    if(sl > 0) 
+//                                    {
+//                                        BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+//                                        bllNhapThietBi.nhapHangVeCoSo(thietBi.getMaThietBi(),chonCoSo.getSelectedItem().toString(),sl,thietBi.getNgayBaoHanh());
+//                                        flag = true;
+//                                    }
+//                                    else JOptionPane.showMessageDialog(rightPanel, "Số lượng phải lớn hơn 0");
+//                                } catch (Exception ex) {
+//                                    JOptionPane.showMessageDialog(rightPanel, "Số lượng phải là số lớn hơn 0");
+//                                }
+//                            }
+//                            else flag = true;
+//                        }
+//                    }
+//                    
+//                    @Override
+//                    public void mousePressed(MouseEvent e) {
+//                        // Không cần xử lý
+//                    }
+//                    
+//                    @Override
+//                    public void mouseReleased(MouseEvent e) {
+//                        // Không cần xử lý
+//                    }
+//                    
+//                    @Override
+//                    public void mouseEntered(MouseEvent e) {
+//                        // Không cần xử lý
+//                    }
+//                    
+//                    @Override
+//                    public void mouseExited(MouseEvent e) {
+//                        // Không cần xử lý
+//                    }
+//                });  
+//                hienThiThietBi.add(thongTinThietBi);
+//            }
+//            JScrollPane scrollPane = new JScrollPane(hienThiThietBi);
+//            if(soHangHienThi == 1) scrollPane.setBounds(5, 150, rightPanel.getWidth()-20,400);
+//            else scrollPane.setBounds(5, 150, rightPanel.getWidth()-20,700);
+//            rightPanel.add(scrollPane);
+//    }
+//    public void xuLyNhapHangHoa()
+//    {
+//        rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+//        rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+//        rightPanel.repaint(); // Vẽ lại JPanel
+//        rightPanel.setLayout(null);
+//
+//        JPanel canGiua = new JPanel(new FlowLayout());
+//        canGiua.setBounds(5,5,rightPanel.getWidth(),55);
+//        canGiua.setBackground(Color.yellow);
+//        JLabel titleNhapThietBi = new JLabel("Nhập thiết bị");
+//        titleNhapThietBi.setFont(new Font("Times New Roman",1,40));
+//
+//        canGiua.add(titleNhapThietBi);
+//        rightPanel.add(canGiua);
+//
+//        JPanel filter = new JPanel(null);
+//        filter.setBounds(5,70,rightPanel.getWidth(),55);
+//        JLabel timTheoTen = new JLabel("Tìm kiếm bằng tên");
+//        timTheoTen.setBounds(10, 15, 130, 30);
+//        JTextField nhapTen = new JTextField();
+//        nhapTen.setBounds(145, 15, 175, 30);
+//        JButton timkiem = new JButton(">");
+//            // timkiem.addActionListener(new ActionListener() {
+//            //     public void actionPerformed(ActionEvent e)
+//            //     {
+//            //         BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+//            //         DSLoaiThietBi ds = new DSLoaiThietBi();
+//            //         ds = bllNhapThietBi.timKiem(nhapTen.getText());
+//            //         int soLuongLoaiThietBi = ds.dsThietBi.size();
+//            //         xuLyNhapHang(ds, soLuongLoaiThietBi);
+//            //     }
+//            // });
+//        timkiem.setBounds(320, 15, 45, 29);
+//        filter.add(timTheoTen);
+//        filter.add(nhapTen);
+//        filter.add(timkiem);
+//
+//        rightPanel.add(filter);
+//    }
 }

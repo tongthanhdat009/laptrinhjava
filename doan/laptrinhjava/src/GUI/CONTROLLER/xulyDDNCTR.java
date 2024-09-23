@@ -190,13 +190,13 @@ public class xulyDDNCTR {
             JButton btDuyet;
     
             // Kiểm tra trạng thái và thay đổi màu sắc, nút bấm
-            if (ds.get(i).getTrangThai().trim().equals("Chưa Duyệt")) {
-                pnDonNhap.setBackground(new Color(237, 27, 36));
+            if (ds.get(i).getTrangThai().trim().equals("Chưa duyệt")) {
+            	pnDonNhap.setBackground(new Color(237, 27, 36));
                 btDuyet = new JButton("Duyệt");
-            } else {
-                pnDonNhap.setBackground(new Color(35, 177, 77));
+            } 
+            else {
+            	pnDonNhap.setBackground(new Color(35, 177, 77));
                 btDuyet = new JButton("Đã Duyệt");
-                btDuyet.setEnabled(false);
             }
     
             // Các thành phần trong mỗi đơn nhập

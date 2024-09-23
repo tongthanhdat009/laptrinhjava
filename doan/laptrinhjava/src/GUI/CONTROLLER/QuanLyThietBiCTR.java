@@ -75,7 +75,7 @@ public class QuanLyThietBiCTR extends JPanel {
         mayChay.add(lblNewLabel);
         
         JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon("D:\\github\\laptrinhjava\\doan\\laptrinhjava\\src\\asset\\img\\icon\\MayChay-logo.png"));
+        lblNewLabel_1.setIcon(new ImageIcon("src\\asset\\img\\icon\\MayChay-logo.png"));
         lblNewLabel_1.setBounds(118, 0, 407, 300);
         mayChay.add(lblNewLabel_1);
 
@@ -110,7 +110,7 @@ public class QuanLyThietBiCTR extends JPanel {
         khac.setLayout(null);
         
         JLabel khacLogoLB = new JLabel("");
-        khacLogoLB.setIcon(new ImageIcon("D:\\github\\laptrinhjava\\doan\\laptrinhjava\\src\\asset\\img\\icon\\khac-logo.png"));
+        khacLogoLB.setIcon(new ImageIcon("src\\asset\\img\\icon\\khac-logo.png"));
         khacLogoLB.setBounds(258, 0, 267, 300);
         khac.add(khacLogoLB);
         

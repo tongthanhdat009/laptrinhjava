@@ -182,15 +182,6 @@ public class QuanLyXa extends JPanel {
         chieuCaoLB.setBounds(607, 80, 110, 27);
         thongTin.add(chieuCaoLB);
         
-        loaiTF = new JTextField();
-        loaiTF.setBounds(1041, 30, 79, 36);
-        thongTin.add(loaiTF);
-        loaiTF.setColumns(10);
-        
-        JLabel loaiLB = new JLabel("Loại hàng hóa:");
-        loaiLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        loaiLB.setBounds(897, 28, 156, 36);
-        thongTin.add(loaiLB);
         // Initialize JTable and DefaultTableModel
         // Trong phương thức giaoDien
 		// Initialize JTable và DefaultTableModel
@@ -201,7 +192,6 @@ public class QuanLyXa extends JPanel {
 		DefaultTableModel modelXa = new DefaultTableModel();
 		modelXa.addColumn("Mã hàng hóa");
 		modelXa.addColumn("Tên hàng hóa");
-		modelXa.addColumn("Loại");
 		modelXa.addColumn("Loại xà");
 		modelXa.addColumn("Chất liệu");
 		modelXa.addColumn("Chiều dài");
@@ -220,7 +210,6 @@ public class QuanLyXa extends JPanel {
 		    modelXa.addRow(new Object[]{
 		        xa.getMaHangHoa(),
 		        xa.getTenLoaiHangHoa(),
-		        xa.getLoaiHangHoa(),
 		        xa.getLoaiXa(),
 		        xa.getChatLieu(),
 		        xa.getChieuDai(),
@@ -239,13 +228,12 @@ public class QuanLyXa extends JPanel {
                     IDGoodsTF.setText(modelXa.getValueAt(row, 0).toString().trim());
                     goodsNameTF.setText(modelXa.getValueAt(row, 1).toString().trim());
                     loaiXaTF.setText(modelXa.getValueAt(row, 2).toString().trim());
-                    loaiTF.setText(modelXa.getValueAt(row, 3).toString().trim());
-                    materialTF.setText(modelXa.getValueAt(row, 4).toString().trim());
-                    lengthTF.setText(modelXa.getValueAt(row, 5).toString().trim());
-                    duongKinhTF.setText(modelXa.getValueAt(row, 6).toString().trim());
-                    chieuCaoTF.setText(modelXa.getValueAt(row, 7).toString().trim());
-                    taiTrongTF.setText(modelXa.getValueAt(row, 8).toString().trim());
-                    picTF.setText(modelXa.getValueAt(row, 9).toString().trim());
+                    materialTF.setText(modelXa.getValueAt(row, 3).toString().trim());
+                    lengthTF.setText(modelXa.getValueAt(row, 4).toString().trim());
+                    duongKinhTF.setText(modelXa.getValueAt(row, 5).toString().trim());
+                    chieuCaoTF.setText(modelXa.getValueAt(row, 6).toString().trim());
+                    taiTrongTF.setText(modelXa.getValueAt(row, 7).toString().trim());
+                    picTF.setText(modelXa.getValueAt(row, 8).toString().trim());
                 }
             }
         });
@@ -280,7 +268,6 @@ public class QuanLyXa extends JPanel {
                     modelXa.addRow(new Object[]{
                     		xa.getMaHangHoa(),
             		        xa.getTenLoaiHangHoa(),
-            		        xa.getLoaiHangHoa(),
             		        xa.getLoaiXa(),
             		        xa.getChatLieu(),
             		        xa.getChieuDai(),
@@ -320,7 +307,6 @@ public class QuanLyXa extends JPanel {
                         modelXa.addRow(new Object[]{
                         		xa.getMaHangHoa(),
                 		        xa.getTenLoaiHangHoa(),
-                		        xa.getLoaiHangHoa(),
                 		        xa.getLoaiXa(),
                 		        xa.getChatLieu(),
                 		        xa.getChieuDai(),

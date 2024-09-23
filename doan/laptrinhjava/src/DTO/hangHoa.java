@@ -15,12 +15,12 @@ public class hangHoa {
         setHinhAnh(hinhAnh);
     }
     
-    public hangHoa(){
-        this.maHangHoa = "none";
-        this.loaiHangHoa = "none";
-        this.tenLoaiHangHoa = "none";
-        this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
-    }
+//    public hangHoa(){
+//        this.maHangHoa = "none";
+//        this.loaiHangHoa = "none";
+//        this.tenLoaiHangHoa = "none";
+//        this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
+//    }
 
     //hàm get&set
     public void setMaHangHoa(String maHangHoa){
@@ -46,9 +46,9 @@ public class hangHoa {
 
     public void setHinhAnh(String hinhAnh){
 //        if(hinhAnh.equals(""))
-            this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
+//            this.hinhAnh = "src/asset/img/hanghoa/default-product.png";
 //        else
-//            this.hinhAnh = hinhAnh;
+            this.hinhAnh = hinhAnh;
     }
 
 

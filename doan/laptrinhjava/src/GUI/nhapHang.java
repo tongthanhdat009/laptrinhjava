@@ -134,7 +134,7 @@ public class nhapHang {
             // Tạo panel cho mỗi đơn nhập
             JPanel pnDonNhap = new JPanel(null);
             pnDonNhap.setBackground(new Color(194, 232, 245));
-            pnDonNhap.setBounds(0, yPosition, rightPanel.getWidth() - 80, rowHeight);
+            pnDonNhap.setBounds(0, yPosition, rightPanel.getWidth() - 40, rowHeight);
             yPosition += rowHeight;
     
             // Các thành phần trong mỗi đơn nhập
@@ -432,7 +432,7 @@ public class nhapHang {
             // Tạo panel cho mỗi chi tiết đơn nhập
             JPanel pnDonNhap = new JPanel(null);
             pnDonNhap.setBackground(new Color(194, 232, 245));
-            pnDonNhap.setBounds(0, yPosition, rightPanel.getWidth() - 80, rowHeight);
+            pnDonNhap.setBounds(0, yPosition, rightPanel.getWidth() - 40, rowHeight);
             yPosition += rowHeight;
         
             // Các thành phần trong mỗi chi tiết đơn nhập

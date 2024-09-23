@@ -195,9 +195,9 @@ public class BLLQuanLyDanhSach{
     public String themTB(LoaiThietBi tb){
         tb.setMaThietBi(dataThietBi.layMaChuaTonTai());
 		if(dataThietBi.themTB(tb))
-    		return "Thanh cong";
+    		return "Thành công";
 		else {
-			return "That bai";
+			return "Thất bại";
 		}
     }
     public int kiemTraMaThietBi(){
@@ -307,94 +307,94 @@ public class BLLQuanLyDanhSach{
         return a;
     }
 
-    //danh sách hóa đơn
-    public ArrayList<HoaDon> layDSHoaDon()
-    {
-        return dataHoaDon.layDSHoaDon();
-    }
-    public ArrayList<ChiTietHoaDon> layDSChiTietHoaDon()
-    {
-        return dataHoaDonChiTiet.layDSHoaDon();
-    }
-    public String layMaHoaDon()
-    {
-        return dataHoaDon.layMa();
-    }
-    public String themHoaDon(Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
-    {
-        String maHoaDon = layMaHoaDon();
-        if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
-        HoaDon hoaDon = new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai);
-        if(dataHoaDon.them(hoaDon) == true) return "Thành công";
-        return "Lỗi";
-    }
-    public String xoaHoaDon(String maHoaDon)
-    {
-        if(dataHoaDon.xoa(maHoaDon) == true) return "Thành công";
-        return "Mã hóa đơn không tồn tại";
-    }
-    public ArrayList<HoaDon> timKiemHoaDon(String maHoaDon)
-    {
-        return dataHoaDon.timKiem(maHoaDon);
-    }
-    public String suaHoaDon(String maHoaDon, Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
-    {
-        if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
-        if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai)) == true) return "Thành công";
-        return "Mã hóa đơn không tồn tại";
-    }
-
-    //danh sách chi tiết hóa đơn
-    public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
-    {
-        if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
-        if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
-        if(soLuong <= 0) return "Số lượng không hợp lệ";
-        if (dataHoaDonChiTiet.them(new ChiTietHoaDon(soLuong, maHoaDon, maHangHoa)) == false) return "Thất bại";
-        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
-        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
-        return "Lỗi";
-    }
-    public String xoaChiTietHoaDon(String maHoaDon, String maHangHoa)
-    {
-        if(dataHoaDonChiTiet.xoa(maHoaDon, maHangHoa) == false) return "Thất bại";
-        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
-        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
-        return "Lỗi";
-    }
-    public String suaChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
-    {
-        if(soLuong <= 0 ) return "Sai số lượng";
-        if(dataHoaDonChiTiet.sua(maHoaDon, maHangHoa, soLuong) == false) return "Thất bại";
-        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
-        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
-        return "Lỗi";
-    }
-    public ArrayList<ChiTietHoaDon> timKiemChiTietHoaDon(String maHoaDon, String maHangHoa)
-    {
-        if(maHoaDon.equals("")) maHoaDon = "NULL";
-        if(maHangHoa.equals("")) maHangHoa = "NULL";
-        return dataHoaDonChiTiet.timKiem(maHoaDon, maHangHoa);
-    }
-    public ArrayList<HoaDon> timKiemHoaDon2(String maHoaDon, String maCoSo, String maHoiVien)
-    {
-        if(maHoaDon.equals("")) maHoaDon ="NULL";
-        if(maCoSo.equals("Chọn cơ sở")) maCoSo ="NULL";
-        if(maHoiVien.equals("")) maHoiVien ="NULL";
-        return dataHoaDon.timKiem2(maHoaDon, maCoSo, maHoiVien);
-    }
-    public ArrayList<HoaDon> layDSHoaDonChuaDuyet()
-    {
-        return dataHoaDon.layHoaDonChuaDuyet();
-    }
-    public ArrayList<DTODuyetDonHang> dsDTODuyetDonHang(String maHoaDon)
-    {
-        return dataHoaDonChiTiet.timDSChiTietHoaDon(maHoaDon);
-    }
-    public boolean duyetHoaDon(String maHoaDon)
-    {
-        return dataHoaDon.duyetHoaDon(maHoaDon);
-    }
+//    //danh sách hóa đơn
+//    public ArrayList<HoaDon> layDSHoaDon()
+//    {
+//        return dataHoaDon.layDSHoaDon();
+//    }
+//    public ArrayList<ChiTietHoaDon> layDSChiTietHoaDon()
+//    {
+//        return dataHoaDonChiTiet.layDSHoaDon();
+//    }
+//    public String layMaHoaDon()
+//    {
+//        return dataHoaDon.layMa();
+//    }
+//    public String themHoaDon(Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
+//    {
+//        String maHoaDon = layMaHoaDon();
+//        if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
+//        HoaDon hoaDon = new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai);
+//        if(dataHoaDon.them(hoaDon) == true) return "Thành công";
+//        return "Lỗi";
+//    }
+//    public String xoaHoaDon(String maHoaDon)
+//    {
+//        if(dataHoaDon.xoa(maHoaDon) == true) return "Thành công";
+//        return "Mã hóa đơn không tồn tại";
+//    }
+//    public ArrayList<HoaDon> timKiemHoaDon(String maHoaDon)
+//    {
+//        return dataHoaDon.timKiem(maHoaDon);
+//    }
+//    public String suaHoaDon(String maHoaDon, Date ngayXuatHoaDon, String maHV, String maCoSo, String trangThai)
+//    {
+//        if(dataHoiVien.timKiemHV(maHV) == false) return "Hội Viên không tồn tại";
+//        if(dataHoaDon.sua(new HoaDon(maHoaDon, ngayXuatHoaDon,0, maHV, maCoSo, trangThai)) == true) return "Thành công";
+//        return "Mã hóa đơn không tồn tại";
+//    }
+//
+//    //danh sách chi tiết hóa đơn
+//    public String themChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
+//    {
+//        if(dataHoaDon.kiemTraTonTai(maHoaDon) == false) return "Mã hóa đơn không tồn tại";
+//        if(dataHangHoa.timKiemHH(maHangHoa) == false) return "Mã hàng hóa không tồn tại";
+//        if(soLuong <= 0) return "Số lượng không hợp lệ";
+//        if (dataHoaDonChiTiet.them(new ChiTietHoaDon(soLuong, maHoaDon, maHangHoa)) == false) return "Thất bại";
+//        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
+//        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
+//        return "Lỗi";
+//    }
+//    public String xoaChiTietHoaDon(String maHoaDon, String maHangHoa)
+//    {
+//        if(dataHoaDonChiTiet.xoa(maHoaDon, maHangHoa) == false) return "Thất bại";
+//        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
+//        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
+//        return "Lỗi";
+//    }
+//    public String suaChiTietHoaDon(String maHoaDon, String maHangHoa, int soLuong)
+//    {
+//        if(soLuong <= 0 ) return "Sai số lượng";
+//        if(dataHoaDonChiTiet.sua(maHoaDon, maHangHoa, soLuong) == false) return "Thất bại";
+//        int tong = dataTinhDonGiaHoaDon.tinhDonGia(maHoaDon);
+//        if(dataHoaDon.suaTongTien(maHoaDon, tong) == true) return "Thành công";
+//        return "Lỗi";
+//    }
+//    public ArrayList<ChiTietHoaDon> timKiemChiTietHoaDon(String maHoaDon, String maHangHoa)
+//    {
+//        if(maHoaDon.equals("")) maHoaDon = "NULL";
+//        if(maHangHoa.equals("")) maHangHoa = "NULL";
+//        return dataHoaDonChiTiet.timKiem(maHoaDon, maHangHoa);
+//    }
+//    public ArrayList<HoaDon> timKiemHoaDon2(String maHoaDon, String maCoSo, String maHoiVien)
+//    {
+//        if(maHoaDon.equals("")) maHoaDon ="NULL";
+//        if(maCoSo.equals("Chọn cơ sở")) maCoSo ="NULL";
+//        if(maHoiVien.equals("")) maHoiVien ="NULL";
+//        return dataHoaDon.timKiem2(maHoaDon, maCoSo, maHoiVien);
+//    }
+//    public ArrayList<HoaDon> layDSHoaDonChuaDuyet()
+//    {
+//        return dataHoaDon.layHoaDonChuaDuyet();
+//    }
+//    public ArrayList<DTODuyetDonHang> dsDTODuyetDonHang(String maHoaDon)
+//    {
+//        return dataHoaDonChiTiet.timDSChiTietHoaDon(maHoaDon);
+//    }
+//    public boolean duyetHoaDon(String maHoaDon)
+//    {
+//        return dataHoaDon.duyetHoaDon(maHoaDon);
+//    }
     //danh sách hàng hóa
     public dsHangHoa layDsHangHoa(){
         return dataHangHoa.layDanhSachHangHoa();

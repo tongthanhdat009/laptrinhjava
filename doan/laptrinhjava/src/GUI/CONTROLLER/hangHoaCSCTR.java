@@ -113,8 +113,8 @@ public class hangHoaCSCTR {
         cbMaCoSo.setBackground(Color.WHITE);
         JComboBox<String> cbTrangThai = new JComboBox<String>();
         cbTrangThai.addItem("Chọn trạng thái");
+        cbTrangThai.addItem("Khóa");
         cbTrangThai.addItem("Đang bán");
-        cbTrangThai.addItem("Ngừng bán");
         cbTrangThai.setBackground(Color.white);
         
         JTextField tfSoLuong = new JTextField();
@@ -226,10 +226,20 @@ public class hangHoaCSCTR {
                     JOptionPane.showMessageDialog(rightPanel, s);
                     if(s.equals("Thành công"))
                     {
-                        for(int i=0;i<model.getRowCount();i++)
-	                        if(model.getValueAt(i, 0).toString().equals(tfMaHangHoa.getText()) && model.getValueAt(i, 1).toString().equals(cbMaCoSo.getSelectedItem().toString())) {
-	                        	model.setValueAt(cbTrangThai.getSelectedItem().toString(), i, 2);
-	                        }
+                    	model.setRowCount(0);
+                    	ArrayList<hangHoaCoSo> ds = new ArrayList<>();
+                        ds = bllQuanLyDanhSach.layDSHangHoaCoSo();
+                        Vector<String> dsMaCoSo = new Vector<>();
+                        dsMaCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+                        for(int i=0;i<ds.size();i++)
+                            model.addRow(new Object[]{ds.get(i).getMaHangHoa(),
+                            		ds.get(i).getMaCoSo(),
+                            		ds.get(i).getTrangThai(),
+                            		ds.get(i).getSoLuong(),
+                            		ds.get(i).getGiaBan(),
+                            		ds.get(i).getLoaiHangHoa(),
+                            		ds.get(i).getTenLoaiHangHoa(),
+                            		ds.get(i).getHinhAnh()});
                     }
                 }
             }

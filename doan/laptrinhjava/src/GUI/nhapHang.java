@@ -463,7 +463,7 @@ public class nhapHang {
             btnXoa.setBounds(980, 10, 80, 30);
             btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 20));
             btnXoa.setBackground(Color.WHITE);
-        
+            
             btnXoa.addActionListener(e -> {
                 int response = JOptionPane.showConfirmDialog(null, 
                     "Bạn có chắc chắn muốn xóa chi tiết phiếu nhập này?", 
@@ -471,16 +471,14 @@ public class nhapHang {
                     JOptionPane.YES_NO_OPTION);
                 
                 if (response == JOptionPane.YES_OPTION) {
-                    // Nếu người dùng chọn "Có", thực hiện xóa
                     NhapHang.deleteChiTietPhieuNhap(donNhapItem.getMaPhieuNhap(), donNhapItem.getMaHangHoa());
-                    ds.remove(donNhapItem);
-                    addChiTietDonNhapToPanel(ds, NhapHang, rightPanel);
+                    addChiTietDonNhapToPanel(chiTietDonNhap.getChiTietPhieuNhap(ds.get(0).getMaPhieuNhap()), NhapHang, rightPanel);
                 }
             });
         
             // Tạo button Cập nhật
             JButton btnCapNhat = new JButton("Cập nhật");
-            btnCapNhat.setBounds(825, 10, 130, 30); // Đặt bên cạnh nút Xóa
+            btnCapNhat.setBounds(825, 10, 130, 30);
             btnCapNhat.setFont(new Font("Times New Roman", Font.BOLD, 20));
             btnCapNhat.setBackground(Color.WHITE);
         

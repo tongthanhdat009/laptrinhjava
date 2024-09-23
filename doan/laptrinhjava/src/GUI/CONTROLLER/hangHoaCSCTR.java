@@ -28,8 +28,6 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.poi.ss.formula.functions.IfFunc;
-
 import BLL.BLLQuanLyDanhSach;
 import DTO.hangHoaCoSo;
 
@@ -229,6 +227,7 @@ public class hangHoaCSCTR {
                     	model.setRowCount(0);
                     	ArrayList<hangHoaCoSo> ds = new ArrayList<>();
                         ds = bllQuanLyDanhSach.layDSHangHoaCoSo();
+                        @SuppressWarnings("unused")
                         Vector<String> dsMaCoSo = new Vector<>();
                         dsMaCoSo = bllQuanLyDanhSach.layDSMaCoSo();
                         for(int i=0;i<ds.size();i++)

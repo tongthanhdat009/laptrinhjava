@@ -7,20 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import DTO.CoSo;
 import DTO.DSCoSo;
-import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.NhanVien;
-import DTO.dsHoiVien;
-import GUI.renderer;
 
 public class DataTaiKhoan {
 	private Connection con;

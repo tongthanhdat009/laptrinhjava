@@ -5,36 +5,25 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import BLL.BLLInformation;
-import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.awt.FlowLayout;
 import java.awt.Color;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.commons.collections4.functors.AndPredicate;
-import org.apache.xmlbeans.impl.xb.xsdownload.DownloadedSchemaEntry;
 
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
 public class informationCTR extends JPanel{

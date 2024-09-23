@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import DTO.GioHang;
-import DTO.LoaiThietBi;
 import DTO.MayChay;
 import DTO.Ta;
 import DTO.ThongTinChiTietHangHoa;

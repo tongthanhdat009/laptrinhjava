@@ -2,7 +2,6 @@ package DAL;
 import java.sql.*;
 import java.util.ArrayList;
 
-import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.dsHoiVien;
 public class DataHoiVien {

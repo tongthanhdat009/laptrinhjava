@@ -20,6 +20,7 @@ import DTO.MayChay;
 import javax.swing.border.LineBorder;
 
 
+@SuppressWarnings("unused")
 public class QuanLyThietBiCTR extends JPanel {
     public QuanLyThietBiCTR() {
         setLayout(null);

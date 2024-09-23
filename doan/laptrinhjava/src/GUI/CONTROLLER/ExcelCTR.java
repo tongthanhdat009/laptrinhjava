@@ -1,12 +1,10 @@
 package GUI.CONTROLLER;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.w3c.dom.css.Counter;
 
 import BLL.BLLQuanLyDanhSach;
 import BLL.BLLXuatFileExcel;
@@ -17,7 +15,6 @@ import DTO.NhanVien;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -25,7 +22,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -34,15 +30,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import javax.swing.ListCellRenderer;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.JComboBox;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -50,7 +41,6 @@ public class ExcelCTR extends JPanel{
 	private JTextField fileNameTF;
 	private JTextField firstSheetNameTF;
 	private JTextField chosenPathTF;
-    private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
 
 	private DefaultTableModel model = new DefaultTableModel();
     private DefaultTableModel hvList = new DefaultTableModel();
@@ -76,6 +66,7 @@ public class ExcelCTR extends JPanel{
             return component;
         }
     };
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public ExcelCTR() {
 			setBackground(new Color(241, 255, 250));
 			this.setSize(1200,900);
@@ -132,7 +123,6 @@ public class ExcelCTR extends JPanel{
 			acceptBTN.setBounds(1015, 101, 130, 50);
 			fileInforPN.add(acceptBTN);
 			
-			@SuppressWarnings("rawtypes")
 			JComboBox comboBox = new JComboBox();
 			comboBox.setFont(new Font("Times New Roman", Font.BOLD, 25));
 			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Danh sách", "Hội viên", "Nhân viên"}));

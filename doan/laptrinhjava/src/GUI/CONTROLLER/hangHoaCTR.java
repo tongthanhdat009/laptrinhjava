@@ -28,8 +28,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLQuanLyDanhSach;
-import DTO.CoSo;
-import DTO.DSCoSo;
 import DTO.dsHangHoa;
 import DTO.hangHoa;
 import GUI.renderer;
@@ -330,7 +328,8 @@ public class hangHoaCTR {
                                         }
                                     }
                                     else if(smallComponent instanceof JComboBox) {
-                                    	JComboBox cbb = (JComboBox) smallComponent;
+                                    	@SuppressWarnings("rawtypes")
+                                        JComboBox cbb = (JComboBox) smallComponent;
                                     	thongTin.add(cbb.getSelectedItem().toString());
                                     }
                                     
@@ -351,12 +350,6 @@ public class hangHoaCTR {
                                 		dsHH2.dsHangHoa.get(i).getLoaiHangHoa().trim(),
                                 		dsHH2.dsHangHoa.get(i).getTenLoaiHangHoa().trim(),
                                 		dsHH.dsHangHoa.get(i).getHinhAnh().trim()});
-                            }
-                            for(Component component : components) {
-                                if(component instanceof JPanel){
-                                    JPanel panel = (JPanel) component;
-                                    Component[] smallComponents = panel.getComponents();
-                                }
                             }
                         }
                         else{

@@ -31,7 +31,6 @@ import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOQuanLyThietBiCoSo;
-import DTO.ThietBiCoSo;
 
 public class QuanLyBangThietBiCoSoCTR {
     private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm

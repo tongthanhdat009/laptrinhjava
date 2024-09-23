@@ -1,11 +1,9 @@
 package GUI.CONTROLLER;
 
-import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -15,16 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import javax.swing.JComboBox;
-import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
-import DAL.DataCoSo;
-import DTO.CoSo;
-import DTO.DSCoSo;
 import DTO.DSLoaiThietBi;
 import DTO.LoaiThietBi;
-import DTO.Xa;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -51,6 +42,7 @@ public class QuanLyThietBiKhac extends JPanel {
                 them.setHorizontalAlignment(SwingConstants.CENTER);
                 them.setBorder(null);
                 ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
+                @SuppressWarnings("unused")
                 Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
 
                 JButton sua = new JButton();

@@ -185,7 +185,7 @@ public class xulyDDNCTR {
         for (int i = 0; i < ds.size(); i++) {
             // Tạo panel cho mỗi đơn nhập
             JPanel pnDonNhap = new JPanel(null);
-            pnDonNhap.setBounds(0, yPosition, rightPanel.getWidth() - 80, rowHeight); // Set vị trí của panel
+            pnDonNhap.setBounds(0, yPosition, rightPanel.getWidth() - 40, rowHeight); // Set vị trí của panel
             yPosition += rowHeight + 5; // Cập nhật vị trí y cho dòng tiếp theo
             JButton btDuyet;
     
@@ -218,6 +218,7 @@ public class xulyDDNCTR {
 
             BLLChiTietDonNhap bllChiTietDonNhap=new BLLChiTietDonNhap();
             int tongTien=bllChiTietDonNhap.getTongTien(ds.get(i).getMaNhap());
+            @SuppressWarnings("deprecation")
             NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
             String formattedTongTien = currencyFormatter.format(tongTien);
 

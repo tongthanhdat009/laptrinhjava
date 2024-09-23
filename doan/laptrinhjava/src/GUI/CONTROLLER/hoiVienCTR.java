@@ -30,8 +30,6 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.math3.analysis.function.Atanh;
-
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
@@ -42,7 +40,9 @@ public class hoiVienCTR {
 	private JPanel rightPanel;
 	private ArrayList<String> tenCotHV;
 	private JComboBox<Integer> dayCBB = new  JComboBox<>();
+    @SuppressWarnings("unused")
     private JComboBox<Integer> monthCBB = new JComboBox<>();
+    @SuppressWarnings("unused")
     private JComboBox<Integer> yearCBB = new JComboBox<>();
     private final int width = 1600;
     private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
@@ -617,7 +617,7 @@ public class hoiVienCTR {
                                         dsHV2.dsHV.get(i).getNgaysinh().trim(),
                                         dsTK2.get(i).getTaiKhoan().trim(),
                                         dsTK2.get(i).getMatKhau().trim(),
-                                        dsHV.get(i).getAnh()});
+                                        dsHV2.dsHV.get(i).getAnh()});
                                 }
                             }
                             else{

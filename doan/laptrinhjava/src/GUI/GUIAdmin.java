@@ -5,20 +5,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import BLL.BLLDonNhap;
-import BLL.BLLNhapHang;
-import BLL.BLLNhapThietBi;
 import BLL.BLLQuanLyDanhSach;
-import BLL.BLLThongKeDonHang;
-import DAL.DataCoSo;
-import DTO.CoSo;
-import DTO.DSCoSo;
-import DTO.DSLoaiThietBi;
 import DTO.DTOQuyen;
-import DTO.DTOThongKeDonHang;
 import DTO.DonNhap;
-import DTO.HoaDon;
 import DTO.HoiVien;
-import DTO.LoaiThietBi;
 import DTO.NhanVien;
 import DTO.DTOTaiKhoan;
 import GUI.CONTROLLER.DuyetDonHangCTR;
@@ -29,15 +19,10 @@ import GUI.CONTROLLER.QuanLyThietBiCTR;
 //import GUI.CONTROLLER.XuatExcelCTR;
 import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
-import GUI.CONTROLLER.informationCTR;
-import GUI.CONTROLLER.thongKe;
 import GUI.CONTROLLER.xuLyDSCTR;
 import GUI.CONTROLLER.xulyDDNCTR;
 
 import java.util.ArrayList;
-import java.util.Vector;
-
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.LineBorder;
@@ -411,7 +396,7 @@ public class GUIAdmin{
             }
         });
         purchaseOrderBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        purchaseOrderBTN.setBounds(23, 530, 300, 50);
+        purchaseOrderBTN.setBounds(23, 520, 300, 50);
         purchaseOrderBTN.setIcon(new ImageIcon(scaleBillIcon));
         purchaseOrderBTN.setFocusPainted(false);
         managementPanel.add(purchaseOrderBTN);
@@ -452,19 +437,19 @@ public class GUIAdmin{
         
        
         //chức năng nhập hàng
-        JButton importgoods = new JButton("Nhập hàng");
-        importgoods.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e){
-                nhapHang nhapHang=new nhapHang();
-                BLLNhapHang bllNhapHang=new BLLNhapHang();
-                nhapHang.xulyNhapHang(tk, bllNhapHang, rightPanel, coSoHienTai);
-        	}
-        });
-        importgoods.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        importgoods.setIcon(new ImageIcon(scaleEmployeeIcon));
-        importgoods.setFocusPainted(false);
-        importgoods.setBounds(23, 590, 300, 50);
-        managementPanel.add(importgoods);
+        // JButton importgoods = new JButton("Nhập hàng");
+        // importgoods.addActionListener(new ActionListener() {
+        // 	public void actionPerformed(ActionEvent e){
+        //         nhapHang nhapHang=new nhapHang();
+        //         BLLNhapHang bllNhapHang=new BLLNhapHang();
+        //         nhapHang.xulyNhapHang(tk, bllNhapHang, rightPanel, coSoHienTai);
+        // 	}
+        // });
+        // importgoods.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        // importgoods.setIcon(new ImageIcon(scaleEmployeeIcon));
+        // importgoods.setFocusPainted(false);
+        // importgoods.setBounds(23, 590, 300, 50);
+        // managementPanel.add(importgoods);
         
         leftPanel.add(footerLeft);
 

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Label;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -75,9 +74,11 @@ public class MuaHangCTR extends JPanel {
         JTextField textTenHangHoa = new JTextField(); textTenHangHoa.setBounds(x, 20, 150, 20); x+=200;
         JLabel loailb = new JLabel("Loại hàng hóa: "); loailb.setBounds(x,20,150,20); x+=120;
         loailb.setFont(new Font("Arial", Font.BOLD, 17));
+        @SuppressWarnings("rawtypes")
         JComboBox cbLoai = new JComboBox<>(dsLoai); cbLoai.setBounds(x, 20, 100, 20); x+=150;
         JLabel coSo = new JLabel("Tên cơ sở"); coSo.setBounds(x, 20, 100, 20); x+=110;
         coSo.setFont(new Font("Arial", Font.BOLD, 17));
+        @SuppressWarnings("rawtypes")
         JComboBox cbCoSo = new JComboBox<>(dsMaCoSo); cbCoSo.setBounds(x,20,100,20);x+=150;
         cbCoSo.removeItemAt(0);
         

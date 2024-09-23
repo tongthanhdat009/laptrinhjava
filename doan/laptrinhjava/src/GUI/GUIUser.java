@@ -4,20 +4,16 @@ import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import DTO.DSLoaiThietBi;
 import DTO.DTOChucNang;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
-import DTO.DTOThongKeDonHang;
 import DTO.DonNhap;
-import DTO.HoaDon;
 import DTO.HoiVien;
 import DTO.NhanVien;
 import GUI.CONTROLLER.DuyetDonHangCTR;
@@ -28,35 +24,26 @@ import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
 import GUI.CONTROLLER.informationCTR;
-import GUI.CONTROLLER.thongKe;
 import GUI.CONTROLLER.xuLyDSCTR;
 import GUI.CONTROLLER.xulyDDNCTR;
 
 import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import BLL.BLLDonNhap;
 import BLL.BLLNhapHang;
-import BLL.BLLNhapThietBi;
 import BLL.BLLPhanQuyen;
 import BLL.BLLQuanLyDanhSach;
-import BLL.BLLThongKeDonHang;
-
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.Font;
-import java.awt.Graphics;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 
@@ -204,20 +191,20 @@ public class GUIUser extends JFrame {
         purchaseOrderBTN.setIcon(new ImageIcon(scaleBillIcon));
         dsNut.add(purchaseOrderBTN);
 
-        JButton goodsBTN = new JButton("Nhập thiết bị");
-        goodsBTN.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
-                DSLoaiThietBi dsLoaiThietBi = new DSLoaiThietBi();
-                dsLoaiThietBi = bllNhapThietBi.layDSLoaiThietBi();
-                int soLuongLoaiThietBi = dsLoaiThietBi.dsThietBi.size();
-//                xuLyNhapHang(dsLoaiThietBi,soLuongLoaiThietBi);
-        	}
-        });
-        goodsBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        goodsBTN.setFocusPainted(false);
-        goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
-        dsNut.add(goodsBTN);
+//         JButton goodsBTN = new JButton("Nhập thiết bị");
+//         goodsBTN.addActionListener(new ActionListener() {
+//         	public void actionPerformed(ActionEvent e) {
+//         		BLLNhapThietBi bllNhapThietBi = new BLLNhapThietBi();
+//                 DSLoaiThietBi dsLoaiThietBi = new DSLoaiThietBi();
+//                 dsLoaiThietBi = bllNhapThietBi.layDSLoaiThietBi();
+//                 int soLuongLoaiThietBi = dsLoaiThietBi.dsThietBi.size();
+// //                xuLyNhapHang(dsLoaiThietBi,soLuongLoaiThietBi);
+//         	}
+//         });
+//         goodsBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+//         goodsBTN.setFocusPainted(false);
+//         goodsBTN.setIcon(new ImageIcon(scaleGoodsIcon));
+//         dsNut.add(goodsBTN);
 //        goodsBTN.setBounds(23, 164, 300, 50);
 //        managementPanel.add(goodsBTN);
         

@@ -1,7 +1,5 @@
 package BLL;
 
-import java.io.File;
-
 public class BLLXuatFileExcel {
 	//kiểm tra tên file hợp lệ
 	public boolean kiemTraTenFile(String tenFile) {

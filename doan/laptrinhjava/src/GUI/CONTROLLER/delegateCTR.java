@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class delegateCTR extends JPanel {
@@ -22,8 +21,6 @@ public class delegateCTR extends JPanel {
 	private JPanel panelContainUser;
 	private JPanel userPN;
 	private JPanel functionPN;
-	private JLabel userLB;
-	private JLabel titleLB;
 	private JLabel funtionLB;
 	private JScrollPane scrollPane; // Add JScrollPane
 	private JPanel funcContent;

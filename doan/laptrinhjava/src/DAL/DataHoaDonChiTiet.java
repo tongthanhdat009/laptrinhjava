@@ -16,20 +16,20 @@ public class DataHoaDonChiTiet {
             System.out.println(e);   
         }
     }
-    public ArrayList<ChiTietHoaDon> layDSHoaDon()
-    {
-        ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
-        String truyVan = "SELECT * FROM ChiTietHoaDon";
-        try {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(truyVan);
-            while(rs.next()) ds.add(new ChiTietHoaDon(rs.getInt(1), rs.getString(2), rs.getString(3)));
-        } catch (Exception e) {
-            System.out.println(e);   
-        }
-        return ds;
-    }
+    // public ArrayList<ChiTietHoaDon> layDSHoaDon()
+    // {
+    //     ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
+    //     String truyVan = "SELECT * FROM ChiTietHoaDon";
+    //     try {
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         Statement stmt = con.createStatement();
+    //         ResultSet rs = stmt.executeQuery(truyVan);
+    //         while(rs.next()) ds.add(new ChiTietHoaDon(rs.getInt(1), rs.getString(2), rs.getString(3)));
+    //     } catch (Exception e) {
+    //         System.out.println(e);   
+    //     }
+    //     return ds;
+    // }
     public boolean them(ChiTietHoaDon chiTietHoaDon)
     {
         System.out.println(chiTietHoaDon.getSoLuong());
@@ -68,37 +68,37 @@ public class DataHoaDonChiTiet {
         }
         return false;
     }
-    public ArrayList<ChiTietHoaDon> timKiem(String maHoaDon, String maHangHoa)
-    {
-        String truyVan = "SELECT * FROM ChiTietHoaDon WHERE ";
-        ArrayList<String> s = new ArrayList<>();
-        ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
-        if(!maHoaDon.equals("NULL"))
-        {
-            truyVan+="MaHD = ? AND ";
-            s.add(maHoaDon);
-        }
-        if(!maHangHoa.equals("NULL"))
-        {
-            truyVan+="MaHangHoa = ? ";
-            s.add(maHangHoa);
-        }
-        if (truyVan.endsWith("AND ")) {
-            truyVan = truyVan.substring(0, truyVan.length() - 4);
-        }
-        try {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement stmt = con.prepareStatement(truyVan);
-            for(int i=1;i<=s.size();i++)
-            stmt.setString(i,s.get(i-1));
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next())
-            ds.add(new ChiTietHoaDon(rs.getInt(1), rs.getString(2), rs.getString(3)));
-        } catch (Exception e) {
-            System.out.println(e);   
-        }
-        return ds;
-    }
+    // public ArrayList<ChiTietHoaDon> timKiem(String maHoaDon, String maHangHoa)
+    // {
+    //     String truyVan = "SELECT * FROM ChiTietHoaDon WHERE ";
+    //     ArrayList<String> s = new ArrayList<>();
+    //     ArrayList<ChiTietHoaDon> ds = new ArrayList<>();
+    //     if(!maHoaDon.equals("NULL"))
+    //     {
+    //         truyVan+="MaHD = ? AND ";
+    //         s.add(maHoaDon);
+    //     }
+    //     if(!maHangHoa.equals("NULL"))
+    //     {
+    //         truyVan+="MaHangHoa = ? ";
+    //         s.add(maHangHoa);
+    //     }
+    //     if (truyVan.endsWith("AND ")) {
+    //         truyVan = truyVan.substring(0, truyVan.length() - 4);
+    //     }
+    //     try {
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         PreparedStatement stmt = con.prepareStatement(truyVan);
+    //         for(int i=1;i<=s.size();i++)
+    //         stmt.setString(i,s.get(i-1));
+    //         ResultSet rs = stmt.executeQuery();
+    //         while(rs.next())
+    //         ds.add(new ChiTietHoaDon(rs.getInt(1), rs.getString(2), rs.getString(3)));
+    //     } catch (Exception e) {
+    //         System.out.println(e);   
+    //     }
+    //     return ds;
+    // }
     public boolean sua(String maHoaDon, String maHangHoa, int soLuong)
     {
         String truyVan = "UPDATE ChiTietHoaDon SET SoLuongHang = ? WHERE MaHD = ? AND MaHangHoa = ?";

@@ -9,7 +9,6 @@ import DTO.LoaiThietBi;
 import DTO.MayChay;
 import DTO.Ta;
 import DTO.Xa;
-import DTO.hangHoa;
 public class DataThietBi {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";

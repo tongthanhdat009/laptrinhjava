@@ -154,6 +154,7 @@ public class nhapHang {
             lbNgay.setFont(new Font("Times New Roman", Font.BOLD, 20));
             lbNgay.setBounds(490, 10, 120, 30);
 
+            @SuppressWarnings("deprecation")
             NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
             String formattedTongTien = currencyFormatter.format(donNhapItem.getTongTien());
 

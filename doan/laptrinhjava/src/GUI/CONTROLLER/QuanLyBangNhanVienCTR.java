@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
-import java.time.Year;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -32,8 +31,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.BLLQuanLyDanhSach;
-import DTO.CoSo;
-import DTO.DSCoSo;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
 import DTO.NhanVien;
@@ -364,7 +361,6 @@ public class QuanLyBangNhanVienCTR {
 					}else {
 						female.setSelected(true);
 					}
-					 @SuppressWarnings("rawtypes")
                      String dateString = model.getValueAt(i,3).toString();
                      String[] parts = dateString.split("-");
                      int year = Integer.parseInt(parts[0]);
@@ -395,6 +391,7 @@ public class QuanLyBangNhanVienCTR {
 		});
 //        thêm nhân viên
         them.addActionListener(new ActionListener() {
+            @SuppressWarnings("deprecation")
             @Override
             public void actionPerformed(ActionEvent e) {
                     if (jtf_password.getText().trim().isEmpty()
@@ -415,7 +412,6 @@ public class QuanLyBangNhanVienCTR {
                     	try {
                     		// Xử lý thêm nhân viên vào cơ sở dữ liệu
                             
-                            @SuppressWarnings("deprecation")
                             BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
                             Date date = new Date(2000,1,1);
                             String ma = bllqlds.layMaNVchuaTonTai();
@@ -500,7 +496,8 @@ public class QuanLyBangNhanVienCTR {
 		});
         //sửa thông tin nhân viên
         sua.addActionListener(new ActionListener() {
-			@Override
+			@SuppressWarnings("deprecation")
+            @Override
 			public void actionPerformed(ActionEvent e) {
 				int i = bang.getSelectedRow();
 				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
@@ -601,7 +598,8 @@ public class QuanLyBangNhanVienCTR {
 				int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
 				int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
 				int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
-				Date date = new Date(year - 1900, month, day - 1);
+				@SuppressWarnings("deprecation")
+                Date date = new Date(year - 1900, month, day - 1);
 				String ma = jtf_manv.getText().trim();
 				String ten = jtf_hoten.getText().trim();
 				String sdt = jtf_sdt.getText().trim();
@@ -615,8 +613,10 @@ public class QuanLyBangNhanVienCTR {
 					gioitinh = female.getText();
 				}
 				String vaitro = cbb_vaiTro.getSelectedItem().toString();
-				String matKhau = jtf_password.getText().trim();
-				String taiKhoan = jtf_account.getText().trim();
+				@SuppressWarnings("unused")
+                String matKhau = jtf_password.getText().trim();
+				@SuppressWarnings("unused")
+                String taiKhoan = jtf_account.getText().trim();
 				String IDTaiKhoan = jtf_idAccount.getText().trim();
                 String luong = (String)jtf_luong.getText();
                 int newLuong = 0;

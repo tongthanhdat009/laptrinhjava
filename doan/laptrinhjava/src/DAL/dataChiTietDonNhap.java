@@ -170,7 +170,7 @@ public class dataChiTietDonNhap {
                 } else {
                     // Nếu số lượng cũ khác 0, cộng thêm số lượng và tính giá mới
                     int tongSoLuongMoi = soLuongCu + soLuongNhap;
-                    double giaMoi = (giaBanCu + giaNhap * 1.10) / 2;
+                    double giaMoi = (giaBanCu*soLuongCu + giaNhap * 1.10 *soLuongNhap) / tongSoLuongMoi;
                     PreparedStatement updateStmt = con.prepareStatement(updateQuery);
                     updateStmt.setInt(1, tongSoLuongMoi);
                     updateStmt.setDouble(2, giaMoi);

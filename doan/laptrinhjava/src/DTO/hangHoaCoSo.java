@@ -7,13 +7,13 @@ public class hangHoaCoSo extends hangHoa{
     private int soLuong;
     private int giaBan;
     //hàm khởi tạo
-    hangHoaCoSo(){
-        this.soLuong = 0;
-        this.maHangHoa = "";
-        this.maCoSo = "";
-        this.giaBan = 0;
-        this.trangThai ="";
-    }
+    // hangHoaCoSo(){
+    //     this.soLuong = 0;
+    //     this.maHangHoa = "";
+    //     this.maCoSo = "";
+    //     this.giaBan = 0;
+    //     this.trangThai ="";
+    // }
     public hangHoaCoSo(String maHangHoa, String maCoSo, String trangThai, Integer soLuong, Integer giaBan, String loai, String tenLoaiHangHoa, String hinhAnh){
     	super(maHangHoa, loai, tenLoaiHangHoa, hinhAnh);
         setMaHangHoa(maHangHoa);

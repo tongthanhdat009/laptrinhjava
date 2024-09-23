@@ -18,14 +18,9 @@ import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 
 import BLL.BLLQuanLyDanhSach;
-import DTO.ChiTietHoaDon;
 import DTO.DSCoSo;
-import DTO.DSLoaiThietBi;
 import DTO.DTOQuanLyThietBiCoSo;
-import DTO.HoaDon;
 import DTO.HoiVien;
-import DTO.HoiVienCoSo;
-import DTO.ThietBiCoSo;
 import DTO.dichVu;
 import DTO.dsHangHoa;
 import DTO.hangHoaCoSo;
@@ -92,6 +87,7 @@ public class xuLyDSCTR {
                 BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
 
                 ArrayList<String> tenCotHV = new ArrayList<String>();
+                @SuppressWarnings("unused")
                 ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
                 tenCotHV.add("Mã hội viên");
                 tenCotHV.add("Họ tên hội viên");
@@ -120,6 +116,7 @@ public class xuLyDSCTR {
 //                tenCotTB.add("Giá thiết bị");
 //                tenCotTB.add("Ngày bảo hành");
                 
+                @SuppressWarnings("unused")
                 dsHangHoa dsHH = bllQuanLyDanhSach.layDsHangHoa();
                 ArrayList<String> tenCotHH = new ArrayList<String>();
                 tenCotHH.add("Mã hàng hóa");
@@ -137,16 +134,16 @@ public class xuLyDSCTR {
                     QuanLyBangDichVuCTR qlbdvCTR = new QuanLyBangDichVuCTR();
                     qlbdvCTR.QuanLyBangDichVu(ds, rightPanel);
                 }
-                else if (selectedOption.equals("Hội viên cơ sở")) {
-            		bllQuanLyDanhSach = new BLLQuanLyDanhSach();
-            		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
-                    Vector<String> dsCoSo = new Vector<>();
-                    dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
-                    ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
-                    QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
-                    qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+                // else if (selectedOption.equals("Hội viên cơ sở")) {
+            	// 	bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+            	// 	ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+                //     Vector<String> dsCoSo = new Vector<>();
+                //     dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+                //     ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+                //     QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
+                //     qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
               
-                }
+                // }
 //                else if (selectedOption.equals("Nhân viên")){
 //                    ArrayList<NhanVien> ds = new ArrayList<>();
 //                    ds = bllQuanLyDanhSach.getDataNhanVien();

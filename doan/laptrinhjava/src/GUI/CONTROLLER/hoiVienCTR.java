@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -276,8 +278,15 @@ public class hoiVienCTR {
                                         }
                                         else if (i==7) {
                                         	String tenTK = textField.getText().trim();
+                                        	String regex_account = "^[a-zA-Z0-9]{5,20}$";
+                            				Pattern p_account = Pattern.compile(regex_account);
+                            				Matcher m_account = p_account.matcher(tenTK);
                                         	if(!bllQuanLyDanhSach.kiemTraTenTK(tenTK)){
                                         		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                                return;
+                                        	}
+                                        	else if(!m_account.matches()) {
+                                        		JOptionPane.showMessageDialog(null, "Tài khoản không được chứa kí tự đặc biệt và phải dài từ 5 đến 20 kí tự!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
                                                 return;
                                         	}
                                         	else {
@@ -286,8 +295,11 @@ public class hoiVienCTR {
                                         }
                                         else if(i==8) {
                                         	String matKhau = text;
-                                        	if(matKhau.length() < 6) {
-                                                JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 6 kí tự trở lên", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                            				String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
+                                        	Pattern p_pass = Pattern.compile(regex_pass);
+                            				Matcher m_pass = p_pass.matcher(matKhau);
+                                        	if(!m_pass.matches()) {
+                                                JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự bao gồm cả chữ và số!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
                                                 return;
                                         	}
                                         	else{
@@ -438,8 +450,8 @@ public class hoiVienCTR {
                         if (i>=0){
                         	maGoc = hvList.getValueAt(i, 0).toString();
                         	tenGoc = hvList.getValueAt(i, 1).toString();
-                        	taiKhoanGoc = hvList.getValueAt(i, 5).toString().trim();
-                        	
+                        	taiKhoanGoc = hvList.getValueAt(i, 7).toString().trim();
+                        	System.out.println(taiKhoanGoc);
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
                             for (Component component : components) {
@@ -486,12 +498,16 @@ public class hoiVienCTR {
                                     }
                                 }
                             }
+                            String matKhau = thongTinMoi.get(8);
+                            String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
+                            Pattern p_pass = Pattern.compile(regex_pass);
+                            Matcher m_pass = p_pass.matcher(matKhau);
                             if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(5))){
                                 JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            if(thongTinMoi.get(8).length()<6){
-                                JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                            if(!m_pass.matches()){
+                                JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự bao gồm cả chữ và số!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
                             if(!thongTinMoi.get(1).equals(tenGoc)) {
@@ -502,11 +518,6 @@ public class hoiVienCTR {
                             	JOptionPane.showMessageDialog(null, "Không được sửa đổi tên tài khoản!!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                        	String tenTK = thongTinMoi.get(7).trim();
-                        	if(!bllQuanLyDanhSach.kiemTraTenTK(tenTK)){
-                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
-                                return;
-                        	}
                             if(!thongTinMoi.get(0).equals("") && thongTinMoi.get(0).equals(maGoc)) {
                                 date = new Date(year - 1900, month - 1, day);
                                 HoiVien tempHV = new HoiVien(thongTinMoi.get(0),

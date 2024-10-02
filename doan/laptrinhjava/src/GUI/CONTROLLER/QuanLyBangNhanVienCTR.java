@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -419,11 +421,24 @@ public class QuanLyBangNhanVienCTR {
                             String sdt = jtf_sdt.getText().trim();
                             String cccd = jtf_cccd.getText().trim();
                             String gioitinh = male.isSelected() ? "Nam" : "Nữ";
-                            String matKhau = jtf_password.getText().trim();
                             String taiKhoan = jtf_account.getText().trim();
                             String IDTaiKhoan = bllqlds.kiemTraMaTK().trim();
                             String vaitro = cbb_vaiTro.getSelectedItem().toString().trim();
-                            if(!bllQuanLyDanhSach.kiemTraTenTK(taiKhoan)){
+                            String matKhau = jtf_password.getText().trim();
+
+                            String regex_account = "^[a-zA-Z0-9]{5,20}$";
+            				Pattern p_account = Pattern.compile(regex_account);
+            				Matcher m_account = p_account.matcher(taiKhoan);
+                        	if(!bllQuanLyDanhSach.kiemTraTenTK(taiKhoan)){
+                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                        	}
+                        	else if(!m_account.matches()) {
+                        		JOptionPane.showMessageDialog(null, "Tài khoản không được chứa kí tự đặc biệt và phải dài từ 5 đến 20 kí tự!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                        	}
+
+                        	if(!bllQuanLyDanhSach.kiemTraTenTK(taiKhoan)){
                         		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                         	}
@@ -434,6 +449,13 @@ public class QuanLyBangNhanVienCTR {
                             String macoso = cbb_CoSo.getSelectedItem().toString().trim();
                             if(macoso.equals("Cơ sở")) {
                                 JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn cơ sở làm việc của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+                            Pattern p_pass = Pattern.compile(regex_pass);
+                            Matcher m_pass = p_pass.matcher(matKhau);
+                            if(!m_pass.matches()) {
+                            	JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 6 kí tự và bao gồm chữ và số !", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
                         	int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
@@ -541,16 +563,19 @@ public class QuanLyBangNhanVienCTR {
 						JOptionPane.showMessageDialog(rightPanel, "Số điện thoại không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					if(matKhau.length() < 6) {
-						JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự trở lên","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
-						return;
-					}
+					String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+                    Pattern p_pass = Pattern.compile(regex_pass);
+                    Matcher m_pass = p_pass.matcher(matKhau);
+                    if(!m_pass.matches()) {
+                    	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự và bao gồm chữ và số !", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
 					if(!ten.equals(tenGoc)) {
 						JOptionPane.showMessageDialog(rightPanel, "Không được sửa tên nhân viên!","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					if(!taiKhoan.equals(taiKhoanGoc)){
-                		JOptionPane.showMessageDialog(null, "Không được sửa đổi tên tài khoản!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                		JOptionPane.showMessageDialog(rightPanel, "Không được sửa đổi tên tài khoản!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                         return;
                 	}
 					if(bllqlds.kiemTraLuong(luong)==-1) {

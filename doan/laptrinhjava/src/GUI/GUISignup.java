@@ -93,28 +93,6 @@ public class GUISignup extends JFrame {
 		}
 		return day >= 1 && day <= maxDayinMonth;
 	}
-//	public int layMaHoiVienChuaTonTai()
-//    {
-//        try {
-//        	String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=main";
-//            String username = "sa";	
-//            String password = "1234";
-//            con = DriverManager.getConnection(dbUrl, username, password);
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM HoiVien");
-//            int max = 0;
-//            while(rs.next())
-//            {
-//                String ma = rs.getString("MaHV");
-//                ma = ma.substring(2);
-//                if(max < Integer.parseInt(ma)) max = Integer.parseInt(ma);
-//            }
-//            return max;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return -1;
-//    }
 	public GUISignup() {
 		setResizable(false);
 		getContentPane().setBackground(new Color(241, 255, 250));
@@ -230,6 +208,8 @@ public class GUISignup extends JFrame {
 		
 		String[] yearOptions = new String[1000];
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentDay = Calendar.getInstance().get(Calendar.DATE);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
 		for (int i = 0; i < 1000; i++) {
 		    yearOptions[i] = String.valueOf(currentYear - i);
 		}
@@ -358,7 +338,7 @@ public class GUISignup extends JFrame {
 				Pattern p_phone = Pattern.compile(regex_phone);
 				Matcher m_phone = p_phone.matcher(phoneNumberTF.getText());
 				//regex password
-				String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+				String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
 				char[] pass = passwordTF.getPassword();
 				String passString = new String(pass);
 				Pattern p_pass = Pattern.compile(regex_pass);
@@ -367,8 +347,33 @@ public class GUISignup extends JFrame {
 				char[] confirmPass = confirmPassTF.getPassword();
 				String confirmPassString = new String(confirmPass);
 				int dk = JOptionPane.showConfirmDialog(GUISignup.this,"Bạn có muốn đăng kí","Comfirm", JOptionPane.YES_NO_OPTION);
+
+//				regex account
+				String regex_account = "^[a-zA-Z0-9]{5,20}$";
+				Pattern p_account = Pattern.compile(regex_account);
+				Matcher m_account = p_account.matcher(accountNameTF.getText());
+				
+//		        regex họ tên người dùng
+				String regex_userName = "^[\\p{L}\\p{M}']+(?:[\\s][\\p{L}\\p{M}']+)*$";
+		        Pattern p_userName = Pattern.compile(regex_userName);
+	            Matcher m_userName = p_userName.matcher(userNameTF.getText());
+
 				if(dk != JOptionPane.YES_OPTION) {
 					return;
+				}
+				//Kiểm tra 18 tuổi
+		    	System.out.println((currentMonth) + " " + selectedMonth);				    
+				if (currentYear - selectedYear < 18) {
+				    JOptionPane.showMessageDialog(GUISignup.this, "Tuổi của bạn chưa đủ 18, vui lòng không đăng ký!", "Error", JOptionPane.ERROR_MESSAGE);
+				    return;
+				} 
+				else if (currentYear - selectedYear == 18) {
+				    // Kiểm tra tháng và ngày
+				    if (currentMonth < selectedMonth || (currentMonth == selectedMonth && currentDay < selectedDay)) {
+				    	System.out.println((currentDay) + " " + selectedDay);				    
+				        JOptionPane.showMessageDialog(GUISignup.this, "Tuổi của bạn chưa đủ 18, vui lòng không đăng ký!", "Error", JOptionPane.ERROR_MESSAGE);
+				        return;
+				    }
 				}
 				
 				//Kiểm tra thông tin bị trống hay không
@@ -385,21 +390,16 @@ public class GUISignup extends JFrame {
 					JOptionPane.showMessageDialog(GUISignup.this, "Tên tài khoản đã được sử dụng vui lòng thử lại!","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				//regex username
-//				String regex_username = "^(?=.*[a-zA-Z])(?=.*[0-9]).{5,}$";
-//				Pattern p_username = Pattern.compile(regex_username);
-//				Matcher m_username = p_email.matcher(jtf_user.getText());
-//				if(!m_username.matches()) {
-//					JOptionPane.showMessageDialog(GUISignup.this, "Tên đăng nhập không hợp lệ(phải trên 5 kí tự)", "Error",JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
+				else if(!m_account.matches()) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Tên đăng nhập không được chứa kí tự đặc biệt và dài từ 5 đến 20 kí tự", "Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				else if(!m_phone.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Số điện thoại không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				else if(!m_pass.matches()) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Mật khẩu phải từ 6 kí tự trở lên(có kí "
-							+ "tự số và chữ)","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUISignup.this, "Mật khẩu phải từ 6 kí tự trở lên bao gồm kí tự số và chữ!","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				//xác thực mật khẩu
@@ -412,12 +412,12 @@ public class GUISignup extends JFrame {
 					JOptionPane.showMessageDialog(GUISignup.this, "Ngày sinh của bạn không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				else if(currentYear - selectedYear < 18) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Bạn chưa đủ 18 tuổi vui lòng không đăng ký!","Error",JOptionPane.ERROR_MESSAGE);
+				else if(btn_grp.getSelection() == null) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giới tính","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				else if(btn_grp.getSelection() == null) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giớ tính","Error",JOptionPane.ERROR_MESSAGE);
+				else if(!m_userName.matches() && userNameTF.getText().length() > 0 &&userNameTF.getText().length()<=50) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Tên hội viên không bao gồm số và dài từ 0 đến 50 kí tự!","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				else {
@@ -438,6 +438,7 @@ public class GUISignup extends JFrame {
 			            if(blldk.themTKhoan(tKhoan)&& blldk.KiemTraDangKy(hv)) {
 			            	JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Đăng ký tài khoản",JOptionPane.INFORMATION_MESSAGE);
 			            	new GUILogin();
+			            	dispose();
 			            	return;
 			            }
 					} catch (Exception e2) {

@@ -469,6 +469,19 @@ public class QuanLyBangNhanVienCTR {
                                 return;
                             }
                             
+                            //regex họ tên có chứa kí tự unicode
+                        	String regex_userName = "^[\\p{L}\\p{M}']+(?:[\\s][\\p{L}\\p{M}']+)*$";
+            		        Pattern p_userName = Pattern.compile(regex_userName);
+            	            Matcher m_userName = p_userName.matcher(ten);
+            	            if(!(ten.length() > 0 && ten.length()<=50)) {
+            	            	JOptionPane.showMessageDialog(null, "Tên nhân viên dài từ 1 đến 50 kí tự", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
+            	            	return;
+            	            }
+            	            else if(!m_userName.matches()) {
+            	            	JOptionPane.showMessageDialog(null, "Tên nhân viên không được chứa kí tự đặc biệt và số", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
+            	            	return;
+            	            }
+            	            
                             //regex căn cước công dân
                             String regex_cccd = "^[0-9]{12}$";
                             Pattern p_cccd = Pattern.compile(regex_cccd);
@@ -626,10 +639,12 @@ public class QuanLyBangNhanVienCTR {
                     Pattern p_cccd = Pattern.compile(regex_cccd);
                     Matcher m_cccd = p_cccd.matcher(cccd);
                     if(!m_cccd.matches() || cccd.length() > 12) {
-                    	JOptionPane.showMessageDialog(null, "Căn cước công dân không hợp lệ!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
+                    	JOptionPane.showMessageDialog(null, "Căn cước công dân của nhân viên không hợp lệ!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     
+                    
+    	            
 					//kiểm tra số điện thoại
 					if(!bllqlds.kiemTraSDT(sdt)) {
 						JOptionPane.showMessageDialog(rightPanel, "Số điện thoại không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);

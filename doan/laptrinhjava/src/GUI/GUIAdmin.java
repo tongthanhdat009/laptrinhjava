@@ -205,7 +205,7 @@ public class GUIAdmin{
                 XLDSCtrl.xuLyDanhSach(rightPanel);
         	}
         });
-        listBTN.setBounds(23, 42, 300, 50);
+        listBTN.setBounds(23, 40, 300, 50);
         listBTN.setFocusPainted(false);
         listBTN.setIcon(new ImageIcon(scaleCheckListIcon));
 
@@ -224,7 +224,7 @@ public class GUIAdmin{
                 ddDonHangCTR.giaoDien(rightPanel);
         	}
         });
-        billBTN.setBounds(23, 103, 300, 50);
+        billBTN.setBounds(23, 100, 300, 50);
         billBTN.setIcon(new ImageIcon(scaleBillIcon));
         billBTN.setFocusPainted(false);
 
@@ -278,7 +278,7 @@ public class GUIAdmin{
         	}
         });
         QuanLyThietBi.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        QuanLyThietBi.setBounds(23,164,300,50);
+        QuanLyThietBi.setBounds(23,160,300,50);
         QuanLyThietBi.setIcon(new ImageIcon(scaleDevicesIcon));
         QuanLyThietBi.setFocusPainted(false);
         managementPanel.add(QuanLyThietBi);

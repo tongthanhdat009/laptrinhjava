@@ -342,7 +342,7 @@ public class xulyDDNCTR {
         }
     
         // Cập nhật kích thước của main để phù hợp với số lượng đơn nhập
-        main.setPreferredSize(new Dimension(rightPanel.getWidth() - 80, yPosition));
+        main.setPreferredSize(new Dimension(rightPanel.getWidth() - 40, yPosition));
     
         // Cập nhật lại giao diện sau khi thay đổi
         main.revalidate();

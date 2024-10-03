@@ -220,7 +220,7 @@ public class nhapHang {
             main.add(pnDonNhap);
         }
         // Cập nhật kích thước của main để phù hợp với số lượng đơn nhập
-        main.setPreferredSize(new Dimension(rightPanel.getWidth() - 80, yPosition));
+        main.setPreferredSize(new Dimension(rightPanel.getWidth() - 40, yPosition));
         // Cập nhật lại giao diện sau khi thay đổi
         main.revalidate();
         main.repaint();
@@ -516,7 +516,7 @@ public class nhapHang {
         }
         
         // Cập nhật chiều rộng của panel để khớp với tổng chiều rộng các thành phần
-        main.setPreferredSize(new Dimension(rightPanel.getWidth() - 80, yPosition));
+        main.setPreferredSize(new Dimension(rightPanel.getWidth() - 40, yPosition));
         main.revalidate();
         main.repaint();
     }

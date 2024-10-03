@@ -333,20 +333,23 @@ public class GUISignup extends JFrame {
 				String regex_email = "^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+.)+[a-zA-Z]{2,7}$";
 				Pattern p_email = Pattern.compile(regex_email);
 				Matcher m_email = p_email.matcher(emailTF.getText());
+				
 				//regex số điện thoại
 				String regex_phone = "(0[3|5|7|8|9])+([0-9]{8})\\b";
 				Pattern p_phone = Pattern.compile(regex_phone);
 				Matcher m_phone = p_phone.matcher(phoneNumberTF.getText());
+				
 				//regex password
 				String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
 				char[] pass = passwordTF.getPassword();
 				String passString = new String(pass);
 				Pattern p_pass = Pattern.compile(regex_pass);
 				Matcher m_pass = p_pass.matcher(passString);
-				
+
 				char[] confirmPass = confirmPassTF.getPassword();
 				String confirmPassString = new String(confirmPass);
-				int dk = JOptionPane.showConfirmDialog(GUISignup.this,"Bạn có muốn đăng kí","Comfirm", JOptionPane.YES_NO_OPTION);
+
+				
 
 //				regex account
 				String regex_account = "^[a-zA-Z0-9]{5,20}$";
@@ -358,9 +361,12 @@ public class GUISignup extends JFrame {
 		        Pattern p_userName = Pattern.compile(regex_userName);
 	            Matcher m_userName = p_userName.matcher(userNameTF.getText());
 
+	            //xác nhận đăng ký
+	            int dk = JOptionPane.showConfirmDialog(GUISignup.this,"Bạn có muốn đăng kí","Comfirm", JOptionPane.YES_NO_OPTION);
 				if(dk != JOptionPane.YES_OPTION) {
 					return;
 				}
+				
 				//Kiểm tra 18 tuổi
 		    	System.out.println((currentMonth) + " " + selectedMonth);				    
 				if (currentYear - selectedYear < 18) {
@@ -416,8 +422,12 @@ public class GUISignup extends JFrame {
 					JOptionPane.showMessageDialog(GUISignup.this, "Vui lòng chọn giới tính","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				else if(!m_userName.matches() && userNameTF.getText().length() > 0 &&userNameTF.getText().length()<=50) {
-					JOptionPane.showMessageDialog(GUISignup.this, "Tên hội viên không bao gồm số và dài từ 0 đến 50 kí tự!","Error",JOptionPane.ERROR_MESSAGE);
+				else if(!(userNameTF.getText().length() > 0 && userNameTF.getText().length()<=50)) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Tên hội viên dài từ 1 đến 50 kí tự!","Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else if(!m_userName.matches()) {
+					JOptionPane.showMessageDialog(GUISignup.this, "Tên hội viên không bao gồm số, kí tự đặc biệt!","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				else {

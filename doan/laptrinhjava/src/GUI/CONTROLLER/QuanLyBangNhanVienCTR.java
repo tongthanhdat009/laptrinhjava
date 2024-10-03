@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -425,7 +426,9 @@ public class QuanLyBangNhanVienCTR {
                             String IDTaiKhoan = bllqlds.kiemTraMaTK().trim();
                             String vaitro = cbb_vaiTro.getSelectedItem().toString().trim();
                             String matKhau = jtf_password.getText().trim();
+                            String luong = jtf_luong.getText().trim();
 
+                            //regex tài khoản
                             String regex_account = "^[a-zA-Z0-9]{5,20}$";
             				Pattern p_account = Pattern.compile(regex_account);
             				Matcher m_account = p_account.matcher(taiKhoan);
@@ -437,33 +440,76 @@ public class QuanLyBangNhanVienCTR {
                         		JOptionPane.showMessageDialog(null, "Tài khoản không được chứa kí tự đặc biệt và phải dài từ 5 đến 20 kí tự!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                         	}
-
+                        	
+                        	//kiểm tra trùng lặp tài khoản
                         	if(!bllQuanLyDanhSach.kiemTraTenTK(taiKhoan)){
                         		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                         	}
+                        	
+                        	//kiểm tra vai trò nếu không chọn khi thêm
                             if(vaitro.equals("Vai trò")) {
                                 JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn vai trò của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
+                            
+                            //kiểm tra cơ sở nếu không chọn khi thêm
                             String macoso = cbb_CoSo.getSelectedItem().toString().trim();
                             if(macoso.equals("Cơ sở")) {
                                 JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn cơ sở làm việc của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+                            
+                            //kiểm tra cơ sở nếu không chọn khi thêm
+                            String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
                             Pattern p_pass = Pattern.compile(regex_pass);
                             Matcher m_pass = p_pass.matcher(matKhau);
                             if(!m_pass.matches()) {
                             	JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 6 kí tự và bao gồm chữ và số !", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
+                            
+                            //regex căn cước công dân
+                            String regex_cccd = "^[0-9]{12}$";
+                            Pattern p_cccd = Pattern.compile(regex_cccd);
+                            Matcher m_cccd = p_cccd.matcher(cccd);
+                            if(!m_cccd.matches() || cccd.length() > 12) {
+                            	JOptionPane.showMessageDialog(null, "Căn cước công dân không hợp lệ!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            
+                            //kiểm tra tuổi của nhân viên
                         	int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
                             int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
                             int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
+                            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                    		int currentDay = Calendar.getInstance().get(Calendar.DATE);
+                    		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+            				if (currentYear - year < 18) {
+            				    JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+            				    return;
+            				} 
+            				else if (currentYear - year == 18) {
+            				    // Kiểm tra tháng và ngày
+            				    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
+            				    	System.out.println((currentDay) + " " + day);				    
+            				        JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+            				        return;
+            				    }
+            				}
                             date = new Date(year-1900,month-1,day);
-                            int luong = Integer.parseInt(jtf_luong.getText());
-                            NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, luong);
+                            
+                            //kiểm tra lương
+                            int newLuong = 0;
+        					if(bllqlds.kiemTraLuong(luong)==-1) {
+        						JOptionPane.showMessageDialog(rightPanel, "Lương không được chứa kí tự đặc biệt hoặc chữ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+        						return;
+        					}
+        					else {
+        						newLuong = Integer.parseInt(luong); 
+        					}
+        					
+                            NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
                             String IDQuyen = new String();
                             if(vaitro.equals("Nhân viên")) {
                             	IDQuyen = "Q0002";
@@ -491,31 +537,32 @@ public class QuanLyBangNhanVienCTR {
             }
         });
         //xóa nhân viên
-        xoa.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-				int i = bang.getSelectedRow();
-				if(i>=0) {
-					if(bllqlds.xoaNV(jtf_manv.getText()) && bllqlds.xoaTK(jtf_idAccount.getText())) {
-						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên thành công","Success",JOptionPane.INFORMATION_MESSAGE);
-						jtf_manv.setText("");jtf_hoten.setText("");jtf_sdt.setText("");jtf_cccd.setText("");
-                        cbb_CoSo.setSelectedItem("Cơ sở");;btngr.clearSelection();cbb_vaiTro.setSelectedItem("Nhân viên");jtf_luong.setText("");
-                        jtf_account.setText("");jtf_password.setText("");jtf_idAccount.setText("");dayCBB.setSelectedItem(1);monthCBB.setSelectedItem(1);yearCBB.setSelectedItem(2000);
-                        model.removeRow(i);
-						return;
-					}
-					else {
-						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên không thành công","Error",JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-				}
-				else {
-					JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn 1 dòng dữ liệu muốn xóa","Error",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-			}
-		});
+//        xoa.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
+//				int i = bang.getSelectedRow();
+//				if(i>=0) {
+//					if(bllqlds.xoaNV(jtf_manv.getText()) && bllqlds.xoaTK(jtf_idAccount.getText())) {
+//						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+//						jtf_manv.setText("");jtf_hoten.setText("");jtf_sdt.setText("");jtf_cccd.setText("");
+//                        cbb_CoSo.setSelectedItem("Cơ sở");;btngr.clearSelection();cbb_vaiTro.setSelectedItem("Nhân viên");jtf_luong.setText("");
+//                        jtf_account.setText("");jtf_password.setText("");jtf_idAccount.setText("");dayCBB.setSelectedItem(1);monthCBB.setSelectedItem(1);yearCBB.setSelectedItem(2000);
+//                        model.removeRow(i);
+//						return;
+//					}
+//					else {
+//						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên không thành công","Error",JOptionPane.ERROR_MESSAGE);
+//						return;
+//					}
+//				}
+//				else {
+//					JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn 1 dòng dữ liệu muốn xóa","Error",JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//			}
+//		});
+        
         //sửa thông tin nhân viên
         sua.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
@@ -555,29 +602,62 @@ public class QuanLyBangNhanVienCTR {
                     else {
                     	IDQuyen = "Q0003";
                     }
+                    
+                    //kiểm tra không cho sửa mã nhân viên
 					if(!maGoc.equals(jtf_manv.getText())) {
 						JOptionPane.showMessageDialog(rightPanel, "Không được sửa mã nhân viên","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
+					//kiểm tra vai trò nếu không chọn khi thêm
+                    if(vaitro.equals("Vai trò")) {
+                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn vai trò của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
+                    //kiểm tra cơ sở nếu không chọn khi thêm
+                    if(macoso.equals("Cơ sở")) {
+                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn cơ sở làm việc của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
+					//regex căn cước công dân
+                    String regex_cccd = "^[0-9]{12}$";
+                    Pattern p_cccd = Pattern.compile(regex_cccd);
+                    Matcher m_cccd = p_cccd.matcher(cccd);
+                    if(!m_cccd.matches() || cccd.length() > 12) {
+                    	JOptionPane.showMessageDialog(null, "Căn cước công dân không hợp lệ!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
+					//kiểm tra số điện thoại
 					if(!bllqlds.kiemTraSDT(sdt)) {
 						JOptionPane.showMessageDialog(rightPanel, "Số điện thoại không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+					
+					//regex pass
+					String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
                     Pattern p_pass = Pattern.compile(regex_pass);
                     Matcher m_pass = p_pass.matcher(matKhau);
                     if(!m_pass.matches()) {
                     	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự và bao gồm chữ và số !", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
+                    
+                    //kiểm tra không cho sửa tên nhân viên
 					if(!ten.equals(tenGoc)) {
 						JOptionPane.showMessageDialog(rightPanel, "Không được sửa tên nhân viên!","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
+					//kiểm tra không cho sửa tài khoản nhân viên
 					if(!taiKhoan.equals(taiKhoanGoc)){
                 		JOptionPane.showMessageDialog(rightPanel, "Không được sửa đổi tên tài khoản!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                         return;
                 	}
+					
+					//kiểm tra lương
 					if(bllqlds.kiemTraLuong(luong)==-1) {
 						JOptionPane.showMessageDialog(rightPanel, "Lương không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
 						return;
@@ -585,6 +665,25 @@ public class QuanLyBangNhanVienCTR {
 					else {
 						newLuong = Integer.parseInt(luong); 
 					}
+					
+					//kiểm tra tuổi của nhân viên
+                    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            		int currentDay = Calendar.getInstance().get(Calendar.DATE);
+            		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+    				if (currentYear - year < 18) {
+    				    JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+    				    return;
+    				} 
+    				else if (currentYear - year == 18) {
+    				    // Kiểm tra tháng và ngày
+    				    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
+    				    	System.out.println((currentDay) + " " + day);				    
+    				        JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+    				        return;
+    				    }
+    				}
+                    date = new Date(year-1900,month-1,day);
+                    
                     DTOTaiKhoan tknv = new DTOTaiKhoan(IDTaiKhoan,taiKhoan,matKhau,IDQuyen);
                     NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
                     if(bllqlds.suaThongTinTK(tknv) && bllqlds.suaThongTinNV(nv) && bllqlds.ganLaiQuyenTK(IDTaiKhoan, IDQuyen) ) {

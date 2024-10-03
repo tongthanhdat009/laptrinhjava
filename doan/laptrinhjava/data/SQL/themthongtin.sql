@@ -1,990 +1,678 @@
---thêm thông tin dịch vụ
-INSERT INTO DichVu(MaDV, TenDV, GiaDV, ThoiGian, MoTa, HinhAnh)
-VALUES
-    ('DV001',N'Thiết bị luyện tập','300000','30',N'Bao gồm máy chạy bộ, máy đạp xe, máy leo dốc, máy tập cơ, và các thiết bị tập luyện khác để phát triển sức mạnh, sức bền và linh hoạt.',''),
-    ('DV002',N'Khu vực thể dục ngoài trời','350000','30',N'Bao gồm máy chạy bộ ngoài trời, máy đạp xe ngoài trời, yoga và pilates, cardio,...',''),
-    ('DV003',N'Bơi lội','250000','30',N'Bao gồm cung cấp khăn tắm, xà phồng và các dịch vụ khác trong hồ bơi',''),
-    ('DV004',N'Dịch vụ khác','200000','30',N'Bao gồm tư vấn dinh dưỡng, hướng dẫn tập luyện các nhân,...',''),
-    ('DV005',N'Spa và Massage','300000','30',N'Bao gồm massage, xông hơi, và jacuzzi để giúp khách hàng thư giãn và phục hồi sau khi tập luyện,...','');
---cập nhật link ảnh dịch vụ
-UPDATE [dbo].[DichVu]
-    SET HinhAnh = 'doan/src/laptrinhjava/src/asset/img/dichvu/DV001.png'
-    WHERE MaDV = 'DV001'
-UPDATE [dbo].[DichVu]
-    SET HinhAnh = 'doan/src/laptrinhjava/src/asset/img/dichvu/DV002.png'
-    WHERE MaDV = 'DV002'
-UPDATE [dbo].[DichVu]
-    SET HinhAnh = 'doan/src/laptrinhjava/src/asset/img/dichvu/DV003.png'
-    WHERE MaDV = 'DV003'
-UPDATE [dbo].[DichVu]
-    SET HinhAnh = 'doan/src/laptrinhjava/src/asset/img/dichvu/DV004.png'
-    WHERE MaDV = 'DV004'
-UPDATE [dbo].[DichVu]
-    SET HinhAnh = 'doan/src/laptrinhjava/src/asset/img/dichvu/DV005.png'
-    WHERE MaDV = 'DV005'
-UPDATE DichVu
-SET HinhAnh = REPLACE(HinhAnh, 'laptrinhjava/src/asset/img/dichvu/', 'src/asset/img/dichvu/')
-WHERE HinhAnh LIKE 'laptrinhjava/src/asset/img/dichvu/%';
-
---thêm thông tin hội viên
-INSERT INTO HoiVien(MaHV, HoTenHV, GioiTinh, Gmail, SoCCCD, TaiKhoan, MatKhau, MaDV, NgaySinh, SoDienThoai)
-VALUES 
-    ('HV001', N'Nguyễn Văn Đếu', N'Nam', 'HV001@gmail.com', '0123456789', 'tkhv001', 'mkhv001', 'DV001', '1990-01-01','0123456789'),
-    ('HV002', N'Trần Thị Bàng', N'Nữ', 'HV002@gmail.com', '0987654321', 'tkhv002', 'mkhv001', 'DV002', '1995-05-10','0987654321'),
-    ('HV003', N'Lê Đình Huy', N'Nam', 'HV003@gmail.com', '0456789123', 'tkhv003', 'mkhv001', 'DV004', '1988-03-15','0456789123'),
-    ('HV004', N'Phạm Thị Duyên', N'Nữ', 'HV004@gmail.com', '0654321987', 'tkhv004', 'mkhv001', 'DV002', '1992-11-20','0654321987'),
-    ('HV005', N'Hoàng Văn Thắng', N'Nam', 'HV005@gmail.com', '0789456123', 'tkhv005', 'mkhv001', 'DV001', '1987-09-25','0789456123'),
-    ('HV006', N'Mai Thị Bánh', N'Nữ', 'HV006@gmail.com', '0321654987', 'tkhv006', 'mkhv001', 'DV004', '1998-07-30','0321654987'),
-    ('HV007', N'Vũ Đức Khang', N'Nam', 'HV007@gmail.com', '0159487263', 'tkhv007', 'mkhv001', 'DV004', '1991-04-05','0159487263'),
-    ('HV008', N'Trần Văn Hào', N'Nam', 'HV008@gmail.com', '0369852147', 'tkhv008', 'mkhv001', 'DV002', '1989-02-12','0369852147'),
-    ('HV009', N'Nguyễn Thị Nô', N'Nữ', 'HV009@gmail.com', '0852741963', 'tkhv009', 'mkhv001', 'DV003', '1994-06-18','0852741963'),
-    ('HV010', N'Lê Văn Kiến Vinh', N'Nam', 'HV010@gmail.com', '0741852963', 'tkhv010', 'mkhv001', 'DV001', '1993-08-22','0741852963'),
-    ('HV011', N'Trần Thanh Phúc', N'Nam', 'HV011@gmail.com', '0951753852', 'tkhv011', 'mkhv001', 'DV004', '1986-12-28','0951753852'),
-    ('HV012', N'Hoàng Thị Duy', N'Nữ', 'HV012@gmail.com', '0258369147', 'tkhv012', 'mkhv001', 'DV005', '1997-10-15','0258369147'),
-    ('HV013', N'Phạm Văn Lâm', N'Nam', 'HV013@gmail.com', '0147258369', 'tkhv013', 'mkhv001', 'DV005', '1996-02-09','0147258369'),
-    ('HV014', N'Mai Thanh Kiên', N'Nam', 'HV014@gmail.com', '0369147258', 'tkhv014', 'mkhv001', 'DV004', '1985-05-03','0369147258'),
-    ('HV015', N'Nguyễn Thị Phát', N'Nữ', 'HV015@gmail.com', '0852963147', 'tkhv015', 'mkhv001', 'DV005', '1999-11-08','0852963147'),
-    ('HV016', N'Lê Văn Quang', N'Nam', 'HV016@gmail.com', '0963852741', 'tkhv016', 'mkhv001', 'DV001', '1990-07-12','0963852741'),
-    ('HV017', N'Trần Thị Rành', N'Nữ', 'HV017@gmail.com', '0753951852', 'tkhv017', 'mkhv001', 'DV002', '1995-03-20','0753951852'),
-    ('HV018', N'Hoàng Văn Sao', N'Nam', 'HV018@gmail.com', '0852369147', 'tkhv018', 'mkhv001', 'DV004', '1988-09-18','0852369147'),
-    ('HV019', N'Phạm Thị Tồng', N'Nữ', 'HV019@gmail.com', '0369852147', 'tkhv019', 'mkhv001', 'DV005', '1992-01-25','0369852147'),
-    ('HV020', N'Nguyễn Văn Un', N'Nam', 'HV020@gmail.com', '0147852369', 'tkhv020', 'mkhv001', 'DV004', '1991-06-03','0147852369'),
-    ('HV021', N'Mai Thị Vinh', N'Nữ', 'HV021@gmail.com', '0369147852', 'tkhv021', 'mkhv001', 'DV004', '1989-04-28','0369147852'),
-    ('HV022', N'Trần Văn Xầu', N'Nam', 'HV022@gmail.com', '0852963741', 'tkhv022', 'mkhv001', 'DV005', '1994-12-05','0852963741'),
-    ('HV023', N'Lê Thị Mỹ', N'Nữ', 'HV023@gmail.com', '0753951852', 'tkhv023', 'mkhv001', 'DV004', '1993-02-17','0753951852'),
-    ('HV024', N'Hoàng Văn Trương', N'Nam', 'HV024@gmail.com', '0963852741', 'tkhv024', 'mkhv005', 'DV003', '1996-08-30','0963852741'),
-    ('HV025', N'Nguyễn Văn Tèo', N'Nam', 'HV025@gmail.com', '0123456789', 'tkhv025', 'mkhv005', 'DV001', '1995-10-28','0123456789'),
-    ('HV026', N'Trần Thị Mai', N'Nữ', 'HV026@gmail.com', '0987654321', 'tkhv026', 'mkhv001', 'DV002', '1994-09-15','0987654321'),
-    ('HV027', N'Lê Văn Đôi', N'Nam', 'HV027@gmail.com', '0456789123', 'tkhv027', 'mkhv001', 'DV003', '1993-07-22','0456789123'),
-    ('HV028', N'Phạm Thị Đan', N'Nữ', 'HV028@gmail.com', '0654321987', 'tkhv028', 'mkhv001', 'DV001', '1992-04-05','0654321987'),
-    ('HV029', N'Mai Thanh Hoàng', N'Nam', 'HV029@gmail.com', '0789456123', 'tkhv029', 'mkhv001', 'DV002', '1991-01-18','0789456123'),
-    ('HV030', N'Vũ Đình Đại', N'Nam', 'HV030@gmail.com', '0321654987', 'tkhv030', 'mkhv001', 'DV003', '1990-11-10','0321654987'),
-    ('HV031', N'Trần Thị Mai', N'Nữ', 'HV031@gmail.com', '0159487263', 'tkhv031', 'mkhv001', 'DV001', '1989-08-22','0159487263'),
-    ('HV032', N'Lê Văn Tám', N'Nam', 'HV032@gmail.com', '0369852147', 'tkhv032', 'mkhv001', 'DV002', '1988-05-03','0369852147'),
-    ('HV033', N'Nguyễn Thị Bảy', N'Nữ', 'HV033@gmail.com', '0852741963', 'tkhv033', 'mkhv001', 'DV003', '1987-02-15','0852741963'),
-    ('HV034', N'Phạm Văn Sáu', N'Nam', 'HV034@gmail.com', '0147258369', 'tkhv034', 'mkhv001', 'DV001', '1996-12-08','0147258369'),
-    ('HV035', N'Mai Thị Năm', N'Nữ', 'HV035@gmail.com', '0369147258', 'tkhv035', 'mkhv001', 'DV002', '1995-10-30','0369147258'),
-    ('HV036', N'Trần Văn Bốn', N'Nam', 'HV036@gmail.com', '0951753852', 'tkhv036', 'mkhv001', 'DV003', '1994-09-18','0951753852'),
-    ('HV037', N'Hoàng Thị Là', N'Nữ', 'HV037@gmail.com', '0258369147', 'tkhv037', 'mkhv001', 'DV001', '1993-07-25','0258369147'),
-    ('HV038', N'Phạm Văn Đồng', N'Nam', 'HV038@gmail.com', '0741852963', 'tkhv038', 'mkhv001', 'DV002', '1992-04-08','0741852963'),
-    ('HV039', N'Mai Quốc Khánh', N'Nam', 'HV039@gmail.com', '0963852741', 'tkhv039', 'mkhv001', 'DV003', '1991-01-20','0963852741'),
-    ('HV040', N'Nguyễn Thị Thập', N'Nữ', 'HV040@gmail.com', '0852963147', 'tkhv040', 'mkhv001', 'DV001', '1990-11-05','0852963147'),
-    ('HV041', N'Trần Văn Cường', N'Nam', 'HV041@gmail.com', '0147852369', 'tkhv041', 'mkhv001', 'DV002', '1989-08-18','0147852369'),
-    ('HV042', N'Lê Thị Định', N'Nữ', 'HV042@gmail.com', '0369147852', 'tkhv042', 'mkhv001', 'DV003', '1988-06-23','0369147852'),
-    ('HV043', N'Hoàng Văn Thụ', N'Nam', 'HV043@gmail.com', '0852963741', 'tkhv043', 'mkhv001', 'DV001', '1987-03-30','0852963741'),
-    ('HV044', N'Phạm Thị Thanh', N'Nữ', 'HV044@gmail.com', '0963852741', 'tkhv044', 'mkhv001', 'DV002', '1986-12-15','0963852741'),
-    ('HV045', N'Mai Thị Nở', N'Nữ', 'HV045@gmail.com', '0852369147', 'tkhv045', 'mkhv001', 'DV003', '1985-09-10','0852369147'),
-    ('HV046', N'Nguyễn Văn Hai', N'Nam', 'HV046@gmail.com', '0741852963', 'tkhv046', 'mkhv001', 'DV001', '1984-06-25','0741852963'),
-    ('HV047', N'Trần Thị Bé', N'Nữ', 'HV047@gmail.com', '0963741852', 'tkhv047', 'mkhv001', 'DV002', '1983-05-13','0963741852'),
-    ('HV048', N'Lê Văn Đạt', N'Nam', 'HV048@gmail.com', '0852369147', 'tkhv048', 'mkhv001', 'DV003', '1982-02-08','0852369147'),
-    ('HV049', N'Phạm Thị Thùy', N'Nữ', 'HV049@gmail.com', '0741258963', 'tkhv049', 'mkhv001', 'DV001', '1981-10-03','0741258963'),
-    ('HV050', N'Mai Văn Tuấn', N'Nam', 'HV050@gmail.com', '0369852147', 'tkhv050', 'mkhv001', 'DV002', '1980-07-20','0369852147');
---update mật khẩu hội viên
-
---thêm thông tin cơ sở
-INSERT INTO CoSo(MaCoSo, TenCoSo, DiaChi, ThoiGianHoatDong, SoDienThoai, DoanhThu)
-VALUES 
-    ('1', 'GYM SGU 1', N'Thành Phố Hồ Chí Minh', N'6:00 - 24:00 hàng ngày', '0123456789', 0),
-    ('2', 'GYM SGU 2', N'Thành Phố Đà Nẵng', N'6:00 - 24:00 hàng ngày', '0123456789', 0),
-    ('3', 'GYM SGU 3', N'Thủ Đô Hà Nội', N'6:00 - 24:00 hàng ngày', '0123456789', 0);
---cập nhật doanh thu cơ sở
-    UPDATE [dbo].[CoSo]
-    SET [DoanhThu] = HoaDon.TongTien + CoSo.DoanhThu
-    FROM CoSo
-    JOIN HoaDon ON CoSo.MaCoSo = HoaDon.MaCoSo
-    GO
---thêm thông tin nhân viên
-INSERT INTO NhanVien(MaNV, HoTenNV, GioiTinh, NgaySinh, SoDienThoai, SoCCCD, MaCoSo, VaiTro, Luong)
-VALUES
-    ('NV001', N'Nguyễn Văn An', 'Nam', '1990-01-01', '0123456789', '123222456789', 'CS001', N'Nhân viên', 15000000),
-    ('NV002', N'Trần Thị Bảo', N'Nữ', '1995-02-15', '0987654321', '987654321231', 'CS001', N'Nhân viên', 14000000),
-    ('NV003', N'Phạm Văn Chí', 'Nam', '1987-05-20', '0369852147', '654782219321', 'CS002', N'Nhân viên', 16000000),
-    ('NV004', N'Lê Thị Dung', N'Nữ', '1988-10-10', '0123456789', '987654225321', 'CS002', N'Nhân viên', 14500000),
-    ('NV005', N'Hoàng Văn Em', 'Nam', '1992-12-30', '0987654321', '123454446789', 'CS003', N'Nhân viên', 15500000),
-    ('NV006', N'Trần Văn Tới', 'Nam', '1985-06-25', '0369852147', '654781129321', 'CS003', N'Nhân viên', 16500000),
-    ('NV007', N'Nguyễn Thị Giang', N'Nữ', '1989-03-05', '0123456789', '987656664321', 'CS003', N'Nhân viên', 14500000),
-    ('NV008', N'Lê Văn Họ', 'Nam', '1993-08-20', '0987654321', '123455786789', 'CS003', N'Nhân viên', 16000000),
-    ('NV009', N'Phạm Thị In', N'Nữ', '1994-04-17', '0369852147', '654789463321', 'CS002', N'Nhân viên', 15000000),
-    ('NV010', N'Hoàng Thị Kim', N'Nữ', '1990-11-03', '0123456789', '987652414321', 'CS002', N'Nhân viên', 14000000),
-    ('NV011', N'Lê Văn Liêm', 'Nam', '1986-07-07', '0987654321', '123454236789', 'CS001', N'Nhân viên', 15500000),
-    ('NV012', N'Nguyễn Văn Mang', 'Nam', '1984-09-12', '0369852147', '654712489321', 'CS002', N'Nhân viên', 16000000),
-    ('NV013', N'Trần Thị Nặng', N'Nữ', '1988-02-28', '0123456789', '987654354521', 'CS001', N'Nhân viên', 15000000),
-    ('NV014', N'Phạm Văn Phượng', 'Nam', '1991-06-15', '0987654321', '123455436789', 'CS003', N'Nhân viên', 14500000),
-    ('NV015', N'Hoàng Thị Quang', N'Nữ', '1997-04-22', '0369852147', '658674789321', 'CS002', N'Nhân viên', 15500000),
-    ('NV016', N'Lê Văn Rồi', 'Nam', '1998-09-09', '0123456789', '987654343221', 'CS001', N'Nhân viên', 16000000),
-    ('NV017', N'Nguyễn Văn Sao', 'Nam', '1983-11-11', '0987654321', '123747456789', 'CS001', N'Nhân viên', 15000000),
-    ('NV018', N'Trần Thị Tân', N'Nữ', '1982-08-08', '0369852147', '654783219321', 'CS003', N'Nhân viên', 14500000),
-    ('NV019', N'Phạm Văn Un', 'Nam', '1989-10-05', '0123456789', '987654346221', 'CS002', N'Nhân viên', 15500000),
-    ('NV020', N'Hoàng Thị Vi', N'Nữ', '1986-03-03', '0987654321', '123456852789', 'CS002', N'Nhân viên', 16000000),
-    ('NV021', N'Nguyễn Thị Hương', N'Nữ', '1996-05-25', '0987654321', '456782479012', 'CS001', N'Nhân viên', 16000000),
-    ('NV022', N'Trần Văn Minh', 'Nam', '1995-07-30', '0123456789', '123456362789', 'CS002', N'Nhân viên', 15500000),
-    ('NV023', N'Lê Thị Lan', N'Nữ', '1987-12-20', '0369852147', '987654214321', 'CS003', N'Nhân viên', 15000000),
-    ('NV024', N'Phạm Văn Tuấn', 'Nam', '1984-04-03', '0987654321', '789578012345', 'CS003', N'Nhân viên', 14500000),
-    ('NV025', N'Hoàng Thị Mai', N'Nữ', '1993-01-02', '0123456789', '654312321789', 'CS003', N'Nhân viên', 14000000),
-    ('NV026', N'Nguyễn Văn Nam', 'Nam', '1981-02-10', '0369852147', '321756789012', 'CS003', N'Nhân viên', 16500000),
-    ('NV027', N'Trần Thị Thảo', N'Nữ', '1992-09-18', '0987654321', '012323445678', 'CS001', N'Nhân viên', 15500000),
-    ('NV028', N'Lê Văn Hùng', 'Nam', '1985-11-22', '0123456789', '678905671234', 'CS002', N'Nhân viên', 16000000),
-    ('NV029', N'Phạm Thị Hạnh', N'Nữ', '1990-07-07', '0369852147', '345672345890', 'CS001', N'Nhân viên', 15000000),
-    ('NV030', N'Hoàng Văn Đức', 'Nam', '1988-03-15', '0987654321', '901234534567', 'CS002', N'Nhân viên', 14500000),
-    ('NV031', N'Nguyễn Minh Tuấn', 'Nam', '1979-04-28', '0123456789', '123222456789', 'CS001', N'Quản lý', 150000000),
-    ('NV032', N'Tống Thành Đạt', 'Nam', '1980-12-12', '0123456789', '123222456789', 'CS002', N'Quản lý', 150000000),
-    ('NV033', N'Đào Nhị Khang', 'Nam', '1975-10-01', '0123456789', '123222456789', 'CS003', N'Quản lý', 150000000);
-
---thêm thông tin quản lý
-INSERT INTO QuanLy(MaNV,NgayNhanChuc)
-VALUES
-	('NV031','2024-4-14'),
-	('NV032','2024-4-15'),
-	('NV033','2024-4-16');
-
---thêm thông tin hàng hóa
-INSERT INTO HangHoa(MaHangHoa, LoaiHangHoa, TenLoaiHangHoa, HinhAnh, GiaNhap)
-VALUES
-    ('HH001', N'Dụng cụ', N'Xà đơn', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH001.jpg', 5000000),
-    ('HH002', N'Dụng cụ', N'Bàn đạp', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH002.jpg', 8000000),
-    ('HH003', N'Dụng cụ', N'Dumbbell 5kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH003.jpg', 1000000),
-    ('HH004', N'Dụng cụ', N'Dumbbell 10kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH004.jpg', 1500000),
-    ('HH005', N'Dụng cụ', N'Dumbbell 15kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH005.jpg', 2000000),
-    ('HH006', N'Dụng cụ', N'Dumbbell 20kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH006.jpg', 2500000),
-    ('HH007', N'Dụng cụ', N'Dumbbell 25kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH007.jpg', 3000000),
-    ('HH008', N'Dụng cụ', N'Tạ đơn 5kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH008.jpg', 1500000),
-    ('HH009', N'Dụng cụ', N'Tạ đơn 10kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH009.jpg', 2500000),
-    ('HH010', N'Dụng cụ', N'Tạ đơn 15kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH010.jpg', 3500000),
-    ('HH011', N'Dụng cụ', N'Tạ đơn 20kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH011.jpg', 4500000),
-    ('HH012', N'Dụng cụ', N'Tạ đơn 25kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH012.jpg', 5500000),
-    ('HH013', N'Dụng cụ', N'Tạ đơn 30kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH013.jpg', 6500000),
-    ('HH014', N'Dụng cụ', N'Ghế tập bụng', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH014.jpg', 10000000),
-    ('HH015', N'Dụng cụ', N'Máy chạy bộ', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH015.jpg', 20000000),
-    ('HH016', N'Dụng cụ', N'Máy đạp xe', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH016.jpg', 15000000),
-    ('HH017', N'Dụng cụ', N'Máy tập cơ ngực', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH017.jpg', 12000000),
-    ('HH018', N'Dụng cụ', N'Máy tập cơ chân', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH018.jpg', 13000000),
-    ('HH019', N'Dụng cụ', N'Máy tập cơ vai', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH019.jpg', 14000000),
-    ('HH020', N'Dụng cụ', N'Máy tập cơ lưng', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH020.jpg', 16000000),
-    ('HH021', N'Dụng cụ', N'Máy tập cơ bắp tay', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH021.jpg', 11000000),
-    ('HH022', N'Dụng cụ', N'Máy tập cơ bắp chân', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH022.jpg', 10000000),
-    ('HH023', N'Dụng cụ', N'Máy tập cơ thân dưới', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH023.jpg', 18000000),
-    ('HH024', N'Dụng cụ', N'Máy tập cơ thân trên', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH024.jpg', 20000000),
-    ('HH025', N'Dụng cụ', N'Máy tập cơ toàn thân', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH025.jpg', 25000000),
-    ('HH026', N'Dụng cụ', N'Máy tập cơ đa năng', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH026.jpg', 30000000),
-    ('HH027', N'Dụng cụ', N'Bóng tập cơ', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH027.jpg', 500000),
-    ('HH028', N'Dụng cụ', N'Dụng cụ tập cơ bụng', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH028.jpg', 1000000),
-    ('HH029', N'Dụng cụ', N'Tạ đôi 10kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH029.jpg', 5000000),
-    ('HH030', N'Dụng cụ', N'Tạ đôi 15kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH030.jpg', 7000000),
-    ('HH031', N'Dụng cụ', N'Tạ đôi 20kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH031.jpg', 10000000),
-    ('HH032', N'Dụng cụ', N'Tạ đôi 25kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH032.jpg', 12000000),
-    ('HH033', N'Dụng cụ', N'Tạ đôi 30kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH033.jpg', 15000000),
-    ('HH034', N'Dụng cụ', N'Tạ đôi 35kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH034.jpg', 18000000),
-    ('HH035', N'Dụng cụ', N'Tạ đôi 40kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH035.jpg', 20000000),
-    ('HH036', N'Dụng cụ', N'Tạ đôi 45kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH036.jpg', 23000000),
-    ('HH037', N'Dụng cụ', N'Tạ đôi 50kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH037.jpg', 25000000),
-    ('HH038', N'Dụng cụ', N'Tạ đôi 55kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH038.jpg', 28000000),
-    ('HH039', N'Dụng cụ', N'Tạ đôi 60kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH039.jpg', 30000000),
-    ('HH040', N'Dụng cụ', N'Tạ đôi 65kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH040.jpg', 33000000),
-    ('HH041', N'Dụng cụ', N'Tạ đôi 70kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH041.jpg', 35000000),
-    ('HH042', N'Dụng cụ', N'Tạ đôi 75kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH042.jpg', 38000000),
-    ('HH043', N'Dụng cụ', N'Tạ đôi 80kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH043.jpg', 40000000),
-    ('HH044', N'Dụng cụ', N'Tạ đôi 85kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH044.jpg', 43000000),
-    ('HH045', N'Dụng cụ', N'Tạ đôi 90kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH045.jpg', 45000000),
-    ('HH046', N'Dụng cụ', N'Tạ đôi 95kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH046.jpg', 48000000),
-    ('HH047', N'Dụng cụ', N'Tạ đôi 100kg', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH047.jpg', 50000000),
-    ('HH048', N'Dụng cụ', N'Vật liệu tập luyện', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH048.jpg', 500000),
-    ('HH049', N'Dụng cụ', N'Găng tay tập gym', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH049.jpg', 500000),
-    ('HH050', N'Dụng cụ', N'Áo thun tập gym', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH050.jpg', 500000),
-    ('HH051', N'Thực phẩm chức năng', N'Protein bổ sung', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH051.jpg', 200000),
-    ('HH052', N'Thực phẩm chức năng', N'Bổ sung Creatine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH052.jpg', 300000),
-    ('HH053', N'Thực phẩm chức năng', N'Glutamine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH053.jpg', 250000),
-    ('HH054', N'Thực phẩm chức năng', N'Bổ sung BCAA', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH054.jpg', 150000),
-    ('HH055', N'Thực phẩm chức năng', N'Pre-workout', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH055.jpg', 350000),
-    ('HH056', N'Thực phẩm chức năng', N'Post-workout', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH056.jpg', 250000),
-    ('HH057', N'Thực phẩm chức năng', N'Mass gainer', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH057.jpg', 400000),
-    ('HH058', N'Thực phẩm chức năng', N'Fat burner', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH058.jpg', 200000),
-    ('HH059', N'Thực phẩm chức năng', N'Tăng cường sức đề kháng', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH059.jpg', 300000),
-    ('HH060', N'Thực phẩm chức năng', N'Bổ sung Omega-3', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH060.jpg', 250000),
-    ('HH061', N'Thực phẩm chức năng', N'Protein hòa tan', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH061.jpg', 180000),
-    ('HH062', N'Thực phẩm chức năng', N'BCAA hòa tan', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH062.jpg', 120000),
-    ('HH063', N'Thực phẩm chức năng', N'Glutamine hòa tan', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH063.jpg', 150000),
-    ('HH064', N'Thực phẩm chức năng', N'Protein bar', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH064.jpg', 25000),
-    ('HH065', N'Thực phẩm chức năng', N'Nước uống repleshment', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH065.jpg', 30000),
-    ('HH066', N'Thực phẩm chức năng', N'Protein nhanh hấp thụ', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH066.jpg', 200000),
-    ('HH067', N'Thực phẩm chức năng', N'Bột protein Whey', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH067.jpg', 220000),
-    ('HH068', N'Thực phẩm chức năng', N'Bột protein Casein', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH068.jpg', 230000),
-    ('HH069', N'Thực phẩm chức năng', N'Bột protein Vegan', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH069.jpg', 250000),
-    ('HH070', N'Thực phẩm chức năng', N'Bổ sung Collagen', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH070.jpg', 200000),
-    ('HH071', N'Thực phẩm chức năng', N'Bổ sung Vitamin C', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH071.jpg', 50000),
-    ('HH072', N'Thực phẩm chức năng', N'Bổ sung Vitamin D', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH072.jpg', 60000),
-    ('HH073', N'Thực phẩm chức năng', N'Bổ sung Vitamin E', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH073.jpg', 70000),
-    ('HH074', N'Thực phẩm chức năng', N'Bổ sung Vitamin K', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH074.jpg', 80000),
-    ('HH075', N'Thực phẩm chức năng', N'Bổ sung Vitamin B12', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH075.jpg', 90000),
-    ('HH076', N'Thực phẩm chức năng', N'Bổ sung Vitamin B6', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH076.jpg', 100000),
-    ('HH077', N'Thực phẩm chức năng', N'Bổ sung Vitamin A', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH077.jpg', 55000),
-    ('HH078', N'Thực phẩm chức năng', N'Bổ sung Vitamin B3', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH078.jpg', 45000),
-    ('HH079', N'Thực phẩm chức năng', N'Bổ sung Omega-6', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH079.jpg', 70000),
-    ('HH080', N'Thực phẩm chức năng', N'Bổ sung Acid folic', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH080.jpg', 80000),
-    ('HH081', N'Thực phẩm chức năng', N'Bổ sung Acid amin', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH081.jpg', 90000),
-    ('HH082', N'Thực phẩm chức năng', N'Bổ sung Acid linoleic', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH082.jpg', 100000),
-    ('HH083', N'Thực phẩm chức năng', N'Bổ sung Acid linolenic', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH083.jpg', 110000),
-    ('HH084', N'Thực phẩm chức năng', N'Bổ sung Acid glutamic', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH084.jpg', 120000),
-    ('HH085', N'Thực phẩm chức năng', N'Bổ sung Acid aspartic', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH085.jpg', 130000),
-    ('HH086', N'Thực phẩm chức năng', N'Bổ sung Acid threonine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH086.jpg', 140000),
-    ('HH087', N'Thực phẩm chức năng', N'Bổ sung Acid arginine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH087.jpg', 150000),
-    ('HH088', N'Thực phẩm chức năng', N'Bổ sung Acid alanine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH088.jpg', 160000),
-    ('HH089', N'Thực phẩm chức năng', N'Bổ sung Acid cysteine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH089.jpg', 170000),
-    ('HH090', N'Thực phẩm chức năng', N'Bổ sung Acid glycine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH090.jpg', 180000),
-    ('HH091', N'Thực phẩm chức năng', N'Bổ sung Acid histidine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH091.jpg', 190000),
-    ('HH092', N'Thực phẩm chức năng', N'Bổ sung Acid isoleucine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH092.jpg', 200000),
-    ('HH093', N'Thực phẩm chức năng', N'Bổ sung Acid leucine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH093.jpg', 210000),
-    ('HH094', N'Thực phẩm chức năng', N'Bổ sung Acid lysine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH094.jpg', 220000),
-    ('HH095', N'Thực phẩm chức năng', N'Bổ sung Acid methionine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH095.jpg', 230000),
-    ('HH096', N'Thực phẩm chức năng', N'Bổ sung Acid phenylalanine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH096.jpg', 240000),
-    ('HH097', N'Thực phẩm chức năng', N'Bổ sung Acid proline', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH097.jpg', 250000),
-    ('HH098', N'Thực phẩm chức năng', N'Bổ sung Acid serine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH098.jpg', 260000),
-    ('HH099', N'Thực phẩm chức năng', N'Bổ sung Acid tyrosine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH099.jpg', 270000),
-    ('HH100', N'Thực phẩm chức năng', N'Bổ sung Acid valine', 'doan/src/laptrinhjava/src/asset/img/hanghoa/HH100.jpg', 280000);
-
---chỉnh sửa link ảnh loại hàng hóa
-UPDATE HangHoa
-SET HinhAnh = REPLACE(HinhAnh, 'laptrinhjava/src/asset/img/hanghoa/', 'src/asset/img/hanghoa/')
-WHERE HinhAnh LIKE 'laptrinhjava/src/asset/img/hanghoa/%';
-
---thêm thông tin hàng hóa cơ sở tiền lời 100000
-INSERT INTO HangHoaOCoSo (MaCoSo, SoLuong, MaHangHoa, GiaBan)
-VALUES
-    ('CS001',200,'HH001', 5000000 + 100000),
-    ('CS001',200,'HH002', 8000000 + 100000),
-    ('CS001',200,'HH003', 1000000 + 100000),
-    ('CS001',200,'HH004', 1500000 + 100000),
-    ('CS001',200,'HH005', 2000000 + 100000),
-    ('CS001',200,'HH006', 2500000 + 100000),
-    ('CS001',200,'HH007', 3000000 + 100000),
-    ('CS001',200,'HH008', 1500000 + 100000),
-    ('CS001',200,'HH009', 2500000 + 100000),
-    ('CS001',200,'HH010', 3500000 + 100000),
-    ('CS001',200,'HH050', 500000 + 100000),
-    ('CS001',200,'HH051', 200000 + 100000),
-    ('CS001',200,'HH052', 300000 + 100000),
-    ('CS001',200,'HH053', 250000 + 100000),
-    ('CS001',200,'HH054', 150000 + 100000),
-    ('CS001',200,'HH055', 350000 + 100000),
-    ('CS001',200,'HH056', 250000 + 100000),
-    ('CS001',200,'HH057', 400000 + 100000),
-    ('CS001',200,'HH058', 200000 + 100000),
-    ('CS001',200,'HH059', 300000 + 100000),
-    ('CS001',200,'HH060', 250000 + 100000),
-    ('CS001',200,'HH040', 33000000 + 100000),
-    ('CS001',200,'HH041', 35000000 + 100000),
-    ('CS001',200,'HH042', 38000000 + 100000),
-    ('CS001',200,'HH043', 40000000 + 100000),
-    ('CS001',200,'HH044', 43000000 + 100000),
-    ('CS001',200,'HH045', 45000000 + 100000),
-    ('CS001',200,'HH046', 48000000 + 100000),
-    ('CS001',200,'HH047', 50000000 + 100000),
-    ('CS001',200,'HH048', 500000 + 100000),
-    ('CS001',200,'HH049', 500000 + 100000),
-    ('CS002',150,'HH020', 16000000 + 100000),
-    ('CS002',150,'HH021', 11000000 + 100000),
-    ('CS002',150,'HH022', 10000000 + 100000),
-    ('CS002',150,'HH023', 18000000 + 100000),
-    ('CS002',150,'HH024', 20000000 + 100000),
-    ('CS002',150,'HH025', 25000000 + 100000),
-    ('CS002',150,'HH026', 30000000 + 100000),
-    ('CS002',150,'HH027', 500000 + 100000),
-    ('CS002',150,'HH028', 1000000 + 100000),
-    ('CS002',150,'HH029', 5000000 + 100000),
-    ('CS002',150,'HH030', 7000000 + 100000),
-    ('CS002',150,'HH061', 180000 + 100000),
-    ('CS002',150,'HH062', 120000 + 100000),
-    ('CS002',150,'HH063', 150000 + 100000),
-    ('CS002',150,'HH064', 25000 + 100000),
-    ('CS002',150,'HH065', 30000 + 100000),
-    ('CS002',150,'HH066', 200000 + 100000),
-    ('CS002',150,'HH067', 220000 + 100000),
-    ('CS002',150,'HH068', 230000 + 100000),
-    ('CS002',150,'HH069', 250000 + 100000),
-    ('CS002',150,'HH070', 200000 + 100000),
-    ('CS002',150,'HH081', 90000 + 100000),
-    ('CS002',150,'HH082', 100000 + 100000),
-    ('CS002',150,'HH083', 110000 + 100000),
-    ('CS002',150,'HH084', 120000 + 100000),
-    ('CS002',150,'HH085', 130000 + 100000),
-    ('CS002',150,'HH086', 140000 + 100000),
-    ('CS002',150,'HH087', 150000 + 100000),
-    ('CS002',150,'HH088', 160000 + 100000),
-    ('CS002',150,'HH089', 170000 + 100000),
-    ('CS002',150,'HH090', 180000 + 100000),
-    ('CS003',175,'HH030', 7000000 + 100000),
-    ('CS003',175,'HH031', 10000000 + 100000),
-    ('CS003',175,'HH032', 12000000 + 100000),
-    ('CS003',175,'HH033', 15000000 + 100000),
-    ('CS003',175,'HH034', 18000000 + 100000),
-    ('CS003',175,'HH035', 20000000 + 100000),
-    ('CS003',175,'HH036', 23000000 + 100000),
-    ('CS003',175,'HH037', 25000000 + 100000),
-    ('CS003',175,'HH038', 28000000 + 100000),
-    ('CS003',175,'HH039', 30000000 + 100000),
-    ('CS003',175,'HH040', 33000000 + 100000),
-    ('CS003',175,'HH071', 50000 + 100000),
-    ('CS003',175,'HH072', 60000 + 100000),
-    ('CS003',175,'HH073', 70000 + 100000),
-    ('CS003',175,'HH074', 80000 + 100000),
-    ('CS003',175,'HH075', 90000 + 100000),
-    ('CS003',175,'HH076', 100000 + 100000),
-    ('CS003',175,'HH077', 55000 + 100000),
-    ('CS003',175,'HH078', 45000 + 100000),
-    ('CS003',175,'HH079', 70000 + 100000),
-    ('CS003',175,'HH080', 80000 + 100000),
-    ('CS003',175,'HH091', 190000 + 100000),
-    ('CS003',175,'HH092', 200000 + 100000),
-    ('CS003',175,'HH093', 210000 + 100000),
-    ('CS003',175,'HH094', 220000 + 100000),
-    ('CS003',175,'HH095', 230000 + 100000),
-    ('CS003',175,'HH096', 240000 + 100000),
-    ('CS003',175,'HH097', 250000 + 100000),
-    ('CS003',175,'HH098', 260000 + 100000),
-    ('CS003',175,'HH099', 270000 + 100000),
-    ('CS003',175,'HH100', 280000 + 100000);
---thêm hội viên ở một cơ sở
-INSERT INTO HoiVienOCoSo(ThoiGianBatDau, ThoiGianKetThuc, MaHV, MaCoSo)
-VALUES
-    (NULL,NULL,'HV001','CS001'),
-    (NULL,NULL,'HV002','CS001'),
-    (NULL,NULL,'HV003','CS001'),
-    (NULL,NULL,'HV004','CS001'),
-    (NULL,NULL,'HV005','CS001'),
-    (NULL,NULL,'HV006','CS001'),
-    (NULL,NULL,'HV007','CS001'),
-    (NULL,NULL,'HV008','CS001'),
-    (NULL,NULL,'HV009','CS001'),
-    (NULL,NULL,'HV010','CS001'),
-    (NULL,NULL,'HV011','CS001'),
-    (NULL,NULL,'HV012','CS001'),
-    (NULL,NULL,'HV013','CS001'),
-    (NULL,NULL,'HV014','CS001'),
-    (NULL,NULL,'HV015','CS001'),
-    (NULL,NULL,'HV016','CS001'),
-    (NULL,NULL,'HV017','CS001'),
-    (NULL,NULL,'HV018','CS001'),
-    (NULL,NULL,'HV019','CS001'),
-    (NULL,NULL,'HV020','CS001'),
-    (NULL,NULL,'HV021','CS002'),
-    (NULL,NULL,'HV022','CS002'),
-    (NULL,NULL,'HV023','CS002'),
-    (NULL,NULL,'HV024','CS002'),
-    (NULL,NULL,'HV025','CS002'),
-    (NULL,NULL,'HV026','CS002'),
-    (NULL,NULL,'HV027','CS002'),
-    (NULL,NULL,'HV028','CS002'),
-    (NULL,NULL,'HV029','CS002'),
-    (NULL,NULL,'HV030','CS002'),
-    (NULL,NULL,'HV031','CS002'),
-    (NULL,NULL,'HV032','CS002'),
-    (NULL,NULL,'HV033','CS002'),
-    (NULL,NULL,'HV034','CS002'),
-    (NULL,NULL,'HV035','CS002'),
-    (NULL,NULL,'HV036','CS002'),
-    (NULL,NULL,'HV036','CS003'),
-    (NULL,NULL,'HV037','CS003'),
-    (NULL,NULL,'HV038','CS003'),
-    (NULL,NULL,'HV039','CS003'),
-    (NULL,NULL,'HV040','CS003'),
-    (NULL,NULL,'HV041','CS003'),
-    (NULL,NULL,'HV042','CS003'),
-    (NULL,NULL,'HV043','CS003'),
-    (NULL,NULL,'HV044','CS003'),
-    (NULL,NULL,'HV045','CS003'),
-    (NULL,NULL,'HV046','CS003'),
-    (NULL,NULL,'HV047','CS003'),
-    (NULL,NULL,'HV048','CS003'),
-    (NULL,NULL,'HV049','CS003'),
-    (NULL,NULL,'HV050','CS003');
-
---thêm thông tin loại thiết bị
-INSERT INTO LoaiThietBi(MaThietBi, TenLoaiThietBi, HinhAnh,GiaThietBi,NgayBaoHanh)
-VALUES
-    ('TB001', N'Xà đơn gắn tường', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 5000000, 90),
-    ('TB002', N'Xà đa năng', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB002.jpg', 8000000, 90),
-    ('TB003', N'Xà tay', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB003.jpg', 4000000, 90),
-    ('TB004', N'Xà đơn đứng', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB004.jpg', 5000000, 90),
-    ('TB005', N'Bàn xoay eo', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB005.jpg', 11000000, 90),
-    ('TB006', N'Bộ tạ tay', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB006.jpg', 39000000, 90),
-    ('TB007', N'Máy tập cơ bụng', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 6000000, 90),
-    ('TB008', N'Máy đạp', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB008.jpg', 7000000, 90),
-    ('TB009', N'Máy tập vai', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB009.jpg', 5500000, 90),
-    ('TB010', N'Cây đòn 2m2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB010.jpg', 2100000, 90),
-    ('TB011', N'Máy tập bụng 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 7500000, 90),
-    ('TB012', N'Máy tập lưng 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB012.jpg', 8000000, 90),
-    ('TB013', N'Ghế tập bụng 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB013.jpg', 5500000, 90),
-    ('TB014', N'Máy chạy bộ', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB014.jpg', 10000000, 90),
-    ('TB015', N'Xà đơn gắn tường 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 5000000, 90),
-    ('TB016', N'Xà đa năng 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 8000000, 90),
-    ('TB017', N'Xà tay 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB003.jpg', 4000000, 90),
-    ('TB018', N'Bàn xoay eo 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB005.jpg', 11000000, 90),
-    ('TB019', N'Bộ tạ tay 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB006.jpg', 39000000, 90),
-    ('TB020', N'Máy tập cơ bụng 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 6000000, 90),
-    ('TB021', N'Máy đạp 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB008.jpg', 7000000, 90),
-    ('TB022', N'Máy tập vai 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB009.jpg', 5500000, 90),
-    ('TB023', N'Cây đòn 2m2 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB010.jpg', 2100000, 90),
-    ('TB024', N'Máy chạy bộ 1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB014.jpg', 10000000, 90),
-    ('TB025', N'Máy tập bụng 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 7500000, 90),
-    ('TB026', N'Máy tập lưng 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB012.jpg', 8000000, 90),
-    ('TB027', N'Ghế tập bụng 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB013.jpg', 5500000, 90),
-    ('TB028', N'Xà đơn 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 5000000, 90),
-    ('TB029', N'Xà đa năng 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 8000000, 90),
-    ('TB030', N'Xà tay 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB003.jpg', 4000000, 90),
-    ('TB031', N'Bàn xoay eo 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB005.jpg', 11000000, 90),
-    ('TB032', N'Bộ tạ tay 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB006.jpg', 39000000, 90),
-    ('TB033', N'Máy tập cơ bụng 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 6000000, 90),
-    ('TB034', N'Máy đạp 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB008.jpg', 7000000, 90),
-    ('TB035', N'Máy tập vai 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB009.jpg', 5500000, 90),
-    ('TB036', N'Cây đòn 2m2 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB010.jpg', 2100000, 90),
-    ('TB037', N'Máy chạy bộ 2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB014.jpg', 10000000, 90),
-    ('TB038', N'Máy tập bụng 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 7500000, 90),
-    ('TB039', N'Máy tập lưng 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB012.jpg', 8000000, 90),
-    ('TB040', N'Ghế tập bụng 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB013.jpg', 5500000, 90),
-    ('TB041', N'Xà đơn 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 5000000, 90),
-    ('TB042', N'Xà đa năng 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 8000000, 90),
-    ('TB043', N'Xà tay 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB003.jpg', 4000000, 90),
-    ('TB044', N'Bàn xoay eo 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB005.jpg', 11000000, 90),
-    ('TB045', N'Bộ tạ tay 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB006.jpg', 39000000, 90),
-    ('TB046', N'Máy tập cơ bụng 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 6000000, 90),
-    ('TB047', N'Máy đạp 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB008.jpg', 7000000, 90),
-    ('TB048', N'Máy tập vai 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB009.jpg', 5500000, 90),
-    ('TB049', N'Cây đòn 2m2 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB010.jpg', 2100000, 90),
-    ('TB050', N'Máy chạy bộ 3', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB014.jpg', 10000000, 90),
-    ('TB051', N'Máy tập bụng 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 7500000, 90),
-    ('TB052', N'Máy tập lưng 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB012.jpg', 8000000, 90),
-    ('TB053', N'Ghế tập bụng 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB013.jpg', 5500000, 90),
-    ('TB054', N'Xà đơn 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 5000000, 90),
-    ('TB055', N'Xà đa năng 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB001.jpg', 8000000, 90),
-    ('TB056', N'Xà tay 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB003.jpg', 4000000, 90),
-    ('TB057', N'Bàn xoay eo 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB005.jpg', 11000000, 90),
-    ('TB058', N'Bộ tạ tay 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB006.jpg', 39000000, 90),
-    ('TB059', N'Máy tập cơ bụng 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB007.jpg', 6000000, 90),
-    ('TB060', N'Máy đạp 4', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB008.jpg', 7000000, 90),
-    ('TB061', N'Tạ 1kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB061.jpg', 100000, 90),
-    ('TB062', N'Tạ 2kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB062.jpg', 200000, 90),
-    ('TB063', N'Tạ 5kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB063.jpg', 500000, 90),
-    ('TB064', N'Tạ 10kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB064.jpg', 1000000, 90),
-    ('TB065', N'Tạ 15kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB065.jpg', 1500000, 90),
-    ('TB066', N'Tạ 20kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB066.jpg', 2000000, 90),
-    ('TB067', N'Tạ 25kg', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB067.jpg', 2500000, 90),
-    ('TB073', N'Tạ 1kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB061.jpg', 100000, 90),
-    ('TB074', N'Tạ 2kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB062.jpg', 200000, 90),
-    ('TB075', N'Tạ 5kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB063.jpg', 500000, 90),
-    ('TB076', N'Tạ 10kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB064.jpg', 1000000, 90),
-    ('TB077', N'Tạ 15kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB065.jpg', 1500000, 90),
-    ('TB078', N'Tạ 20kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB066.jpg', 2000000, 90),
-    ('TB079', N'Tạ 25kg1', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB067.jpg', 2500000, 90),
-    ('TB085', N'Tạ 1kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB061.jpg', 100000, 90),
-    ('TB086', N'Tạ 2kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB062.jpg', 200000, 90),
-    ('TB087', N'Tạ 5kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB063.jpg', 500000, 90),
-    ('TB088', N'Tạ 10kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB064.jpg', 1000000, 90),
-    ('TB089', N'Tạ 15kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB065.jpg', 1500000, 90),
-    ('TB090', N'Tạ 20kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB066.jpg', 2000000, 90),
-    ('TB091', N'Tạ 25kg2', 'doan/src/laptrinhjava/src/asset/img/thietbi/TB067.jpg', 2500000, 90),
-
---chỉnh sửa link ảnh loại thiết bị
-UPDATE LoaiThietBi
-SET HinhAnh = REPLACE(HinhAnh, 'laptrinhjava/src/asset/img/thietbi/', 'src/asset/img/thietbi/')
-WHERE HinhAnh LIKE 'laptrinhjava/src/asset/img/thietbi/%';
-
---thêm thông tin thiết bị cơ sở
-INSERT INTO ThietBiOMotCoSo(MaThietBiOCoSo, MaCoSo, MaThietBi, NgayNhap, HanBaoHanh)    
-VALUES
-    ('TBCS001','CS001','TB001','2024-4-15',NULL),
-    ('TBCS002','CS001','TB002','2024-4-15',NULL),
-    ('TBCS003','CS001','TB003','2024-4-15',NULL),
-    ('TBCS004','CS001','TB004','2024-4-15',NULL),
-    ('TBCS005','CS001','TB005','2024-4-15',NULL),
-    ('TBCS006','CS001','TB006','2024-4-15',NULL),
-    ('TBCS007','CS001','TB007','2024-4-15',NULL),
-    ('TBCS008','CS001','TB008','2024-4-15',NULL),
-    ('TBCS009','CS001','TB009','2024-4-15',NULL),
-    ('TBCS010','CS001','TB010','2024-4-15',NULL),
-    ('TBCS011','CS001','TB011','2024-4-15',NULL),
-    ('TBCS012','CS001','TB012','2024-4-15',NULL),
-    ('TBCS013','CS001','TB013','2024-4-15',NULL),
-    ('TBCS014','CS001','TB014','2024-4-15',NULL),
-    ('TBCS015','CS001','TB015','2024-4-15',NULL),
-    ('TBCS016','CS001','TB016','2024-4-15',NULL),
-    ('TBCS017','CS001','TB017','2024-4-15',NULL),
-    ('TBCS018','CS001','TB018','2024-4-15',NULL),
-    ('TBCS019','CS001','TB019','2024-4-15',NULL),
-    ('TBCS020','CS001','TB020','2024-4-15',NULL),
-    ('TBCS021','CS002','TB021','2024-3-15',NULL),
-    ('TBCS022','CS002','TB022','2024-3-15',NULL),
-    ('TBCS023','CS002','TB023','2024-3-15',NULL),
-    ('TBCS024','CS002','TB024','2024-3-15',NULL),
-    ('TBCS025','CS002','TB025','2024-3-15',NULL),
-    ('TBCS026','CS002','TB026','2024-3-15',NULL),
-    ('TBCS027','CS002','TB027','2024-3-15',NULL),
-    ('TBCS028','CS002','TB028','2024-3-15',NULL),
-    ('TBCS029','CS002','TB029','2024-3-15',NULL),
-    ('TBCS030','CS002','TB030','2024-3-15',NULL),
-    ('TBCS031','CS002','TB031','2024-3-15',NULL),
-    ('TBCS032','CS002','TB032','2024-3-15',NULL),
-    ('TBCS033','CS002','TB033','2024-3-15',NULL),
-    ('TBCS034','CS002','TB034','2024-3-15',NULL),
-    ('TBCS035','CS002','TB035','2024-3-15',NULL),
-    ('TBCS036','CS002','TB036','2024-3-15',NULL),
-    ('TBCS037','CS002','TB037','2024-3-15',NULL),
-    ('TBCS038','CS002','TB038','2024-3-15',NULL),
-    ('TBCS039','CS002','TB039','2024-3-15',NULL),
-    ('TBCS040','CS002','TB040','2024-3-15',NULL),
-    ('TBCS041','CS003','TB041','2024-2-15',NULL),
-    ('TBCS042','CS003','TB042','2024-2-15',NULL),
-    ('TBCS043','CS003','TB043','2024-2-15',NULL),
-    ('TBCS044','CS003','TB044','2024-2-15',NULL),
-    ('TBCS045','CS003','TB045','2024-2-15',NULL),
-    ('TBCS046','CS003','TB046','2024-2-15',NULL),
-    ('TBCS047','CS003','TB047','2024-2-15',NULL),
-    ('TBCS048','CS003','TB048','2024-2-15',NULL),
-    ('TBCS049','CS003','TB049','2024-2-15',NULL),
-    ('TBCS050','CS003','TB050','2024-2-15',NULL),
-    ('TBCS051','CS003','TB051','2024-2-15',NULL),
-    ('TBCS052','CS003','TB052','2024-2-15',NULL),
-    ('TBCS053','CS003','TB053','2024-2-15',NULL),
-    ('TBCS054','CS003','TB054','2024-2-15',NULL),
-    ('TBCS055','CS003','TB055','2024-2-15',NULL),
-    ('TBCS056','CS003','TB056','2024-2-15',NULL),
-    ('TBCS057','CS003','TB057','2024-2-15',NULL),
-    ('TBCS058','CS003','TB058','2024-2-15',NULL),
-    ('TBCS059','CS003','TB059','2024-2-15',NULL),
-    ('TBCS060','CS003','TB060','2024-2-15',NULL),
-    ('TBCS061','CS001','TB061','2024-2-15',NULL),
-    ('TBCS062','CS001','TB062','2024-2-15',NULL),
-    ('TBCS063','CS001','TB063','2024-2-15',NULL),
-    ('TBCS064','CS001','TB064','2024-2-15',NULL),
-    ('TBCS065','CS001','TB065','2024-2-15',NULL),
-    ('TBCS066','CS001','TB066','2024-2-15',NULL),
-    ('TBCS067','CS001','TB067','2024-2-15',NULL),
-    ('TBCS073','CS002','TB073','2024-2-15',NULL),
-    ('TBCS074','CS002','TB074','2024-2-15',NULL),
-    ('TBCS075','CS002','TB075','2024-2-15',NULL),
-    ('TBCS076','CS002','TB076','2024-2-15',NULL),
-    ('TBCS077','CS002','TB077','2024-2-15',NULL),
-    ('TBCS078','CS002','TB078','2024-2-15',NULL),
-    ('TBCS079','CS002','TB079','2024-2-15',NULL),
-    ('TBCS085','CS003','TB085','2024-2-15',NULL),
-    ('TBCS086','CS003','TB086','2024-2-15',NULL),
-    ('TBCS087','CS003','TB087','2024-2-15',NULL),
-    ('TBCS088','CS003','TB088','2024-2-15',NULL),
-    ('TBCS089','CS003','TB089','2024-2-15',NULL),
-    ('TBCS090','CS003','TB090','2024-2-15',NULL),
-    ('TBCS091','CS003','TB091','2024-2-15',NULL),
-    
---CẬP NHẬT NGÀY BẢO HÀNH
-    USE [main]
-    GO
-    UPDATE [dbo].[ThietBiOMotCoSo]
-    SET [HanBaoHanh] = DATEADD(DAY, LT.NgayBaoHanh, TOC.NgayNhap)
-    FROM LoaiThietBi LT
-    JOIN ThietBiOMotCoSo TOC ON LT.MaThietBi = TOC.MaThietBi
-    GO
---thêm thông tin hóa đơn
-INSERT INTO HoaDon(MaHD, NgayXuatHD, TongTien, MaHV, MaCoSo, TrangThai)
-VALUES
-    ('HD001', '2024-04-15', 0, 'HV001',  'CS001', 1),
-    ('HD002', '2024-04-15', 0, 'HV002',  'CS002', 1),
-    ('HD003', '2024-04-15', 0, 'HV003',  'CS003', 1),
-    ('HD004', '2024-04-15', 0, 'HV004',  'CS001', 1),
-    ('HD005', '2024-04-15', 0, 'HV005',  'CS002', 1),
-    ('HD006', '2024-04-15', 0, 'HV006',  'CS003', 1),
-    ('HD007', '2024-04-15', 0, 'HV007',  'CS001', 1),
-    ('HD008', '2024-04-15', 0, 'HV008',  'CS002', 1),
-    ('HD009', '2024-04-15', 0, 'HV009',  'CS003', 1),
-    ('HD010', '2024-04-15', 0, 'HV010',  'CS001', 1),
-    ('HD011', '2024-04-15', 0, 'HV011',  'CS002', 1),
-    ('HD012', '2024-04-15', 0, 'HV012',  'CS003', 1),
-    ('HD013', '2024-04-15', 0, 'HV013',  'CS002', 1),
-    ('HD014', '2024-04-15', 0, 'HV014',  'CS001', 1),
-    ('HD015', '2024-04-15', 0, 'HV015',  'CS002', 1),
-    ('HD016', '2024-04-15', 0, 'HV016',  'CS003', 1),
-    ('HD017', '2024-04-15', 0, 'HV017',  'CS001', 1),
-    ('HD018', '2024-04-15', 0, 'HV018',  'CS002', 1),
-    ('HD019', '2024-04-15', 0, 'HV019',  'CS003', 1),
-    ('HD020', '2024-04-15', 0, 'HV020',  'CS002', 1),
-    ('HD021', '2024-04-15', 0, 'HV021',  'CS001', 1),
-    ('HD022', '2024-04-15', 0, 'HV022',  'CS002', 1),
-    ('HD023', '2024-04-15', 0, 'HV023',  'CS003', 1),
-    ('HD024', '2024-04-15', 0, 'HV024',  'CS002', 1),
-    ('HD025', '2024-04-15', 0, 'HV025',  'CS001', 1),
-    ('HD026', '2024-04-15', 0, 'HV026',  'CS002', 1),
-    ('HD027', '2024-04-15', 0, 'HV027',  'CS003', 1),
-    ('HD028', '2024-04-15', 0, 'HV028',  'CS002', 1),
-    ('HD029', '2024-04-15', 0, 'HV029',  'CS001', 1),
-    ('HD030', '2024-04-15', 0, 'HV030',  'CS002', 1),
-    ('HD031', '2024-04-15', 0, 'HV031',  'CS002', 1),
-    ('HD032', '2024-04-15', 0, 'HV032',  'CS003', 1),
-    ('HD033', '2024-04-15', 0, 'HV033',  'CS001', 1),
-    ('HD034', '2024-04-15', 0, 'HV034',  'CS001', 1),
-    ('HD035', '2024-04-15', 0, 'HV035',  'CS002', 1),
-    ('HD036', '2024-04-15', 0, 'HV036',  'CS002', 1),
-    ('HD037', '2024-04-15', 0, 'HV037',  'CS001', 1),
-    ('HD038', '2024-04-15', 0, 'HV038',  'CS002', 1),
-    ('HD039', '2024-04-15', 0, 'HV039',  'CS002', 1),
-    ('HD040', '2024-04-15', 0, 'HV040',  'CS001', 1),
-    ('HD041', '2024-04-15', 0, 'HV041',  'CS002', 1),
-    ('HD042', '2024-04-15', 0, 'HV042',  'CS003', 1),
-    ('HD043', '2024-04-15', 0, 'HV043',  'CS001', 1),
-    ('HD044', '2024-04-15', 0, 'HV044',  'CS002', 1),
-    ('HD045', '2024-04-15', 0, 'HV045',  'CS001', 1),
-    ('HD046', '2024-04-15', 0, 'HV046',  'CS002', 1),
-    ('HD047', '2024-04-15', 0, 'HV047',  'CS001', 1),
-    ('HD048', '2024-04-15', 0, 'HV048',  'CS003', 1),
-    ('HD049', '2024-04-15', 0, 'HV049',  'CS003', 1),
-    ('HD050', '2024-04-15', 0, 'HV050',  'CS001', 1),
-    ('HD051', '2024-04-15', 0, 'HV050',  'CS002', 1),
-    ('HD052', '2024-04-15', 0, 'HV002',  'CS001', 1),
-    ('HD053', '2024-04-15', 0, 'HV003',  'CS001', 1),
-    ('HD054', '2024-04-15', 0, 'HV004',  'CS002', 1),
-    ('HD055', '2024-04-15', 0, 'HV005',  'CS003', 1),
-    ('HD056', '2024-04-15', 0, 'HV050',  'CS001', 1),
-    ('HD057', '2024-04-15', 0, 'HV047',  'CS002', 1),
-    ('HD058', '2024-04-15', 0, 'HV048',  'CS003', 1),
-    ('HD059', '2024-04-15', 0, 'HV029',  'CS002', 1),
-    ('HD060', '2024-04-15', 0, 'HV039',  'CS001', 1),
-    ('HD061', '2024-04-15', 0, 'HV030',  'CS002', 1),
-    ('HD062', '2024-04-15', 0, 'HV020',  'CS003', 1),
-    ('HD063', '2024-04-15', 0, 'HV019',  'CS001', 1),
-    ('HD064', '2024-04-15', 0, 'HV028',  'CS003', 1),
-    ('HD065', '2024-04-15', 0, 'HV027',  'CS003', 1),
-    ('HD066', '2024-04-15', 0, 'HV015',  'CS002', 1),
-    ('HD067', '2024-04-15', 0, 'HV023',  'CS001', 1),
-    ('HD068', '2024-04-15', 0, 'HV012',  'CS002', 1),
-    ('HD069', '2024-04-15', 0, 'HV043',  'CS001', 1),
-    ('HD070', '2024-04-15', 0, 'HV032',  'CS002', 1),
-    ('HD071', '2024-04-15', 0, 'HV012',  'CS001', 1),
-    ('HD072', '2024-04-15', 0, 'HV012',  'CS002', 1),
-    ('HD073', '2024-04-15', 0, 'HV034',  'CS001', 1),
-    ('HD074', '2024-04-15', 0, 'HV032',  'CS003', 1),
-    ('HD075', '2024-04-15', 0, 'HV044',  'CS002', 1),
-    ('HD076', '2024-04-15', 0, 'HV043',  'CS001', 1),
-    ('HD077', '2024-04-15', 0, 'HV033',  'CS003', 1),
-    ('HD078', '2024-04-15', 0, 'HV022',  'CS002', 1),
-    ('HD079', '2024-04-15', 0, 'HV011',  'CS003', 1),
-    ('HD080', '2024-04-15', 0, 'HV022',  'CS002', 1),
-    ('HD081', '2024-04-15', 0, 'HV044',  'CS001', 1),
-    ('HD082', '2024-04-15', 0, 'HV033',  'CS002', 1),
-    ('HD083', '2024-04-15', 0, 'HV012',  'CS001', 1),
-    ('HD084', '2024-04-15', 0, 'HV023',  'CS002', 1),
-    ('HD085', '2024-04-15', 0, 'HV035',  'CS003', 1),
-    ('HD086', '2024-04-15', 0, 'HV036',  'CS002', 1),
-    ('HD087', '2024-04-15', 0, 'HV023',  'CS002', 1),
-    ('HD088', '2024-04-15', 0, 'HV048',  'CS002', 1),
-    ('HD089', '2024-04-15', 0, 'HV012',  'CS002', 1),
-    ('HD090', '2024-04-15', 0, 'HV024',  'CS002', 1),
-    ('HD091', '2024-04-15', 0, 'HV019',  'CS002', 1),
-    ('HD092', '2024-04-15', 0, 'HV018',  'CS002', 1),
-    ('HD093', '2024-04-15', 0, 'HV029',  'CS001', 1),
-    ('HD094', '2024-04-15', 0, 'HV020',  'CS001', 1),
-    ('HD095', '2024-04-15', 0, 'HV021',  'CS003', 1),
-    ('HD096', '2024-04-15', 0, 'HV025',  'CS003', 1),
-    ('HD097', '2024-04-15', 0, 'HV026',  'CS003', 1),
-    ('HD098', '2024-04-15', 0, 'HV027',  'CS002', 1),
-    ('HD099', '2024-04-15', 0, 'HV018',  'CS001', 1),
-    ('HD100', '2024-04-15', 0, 'HV013',  'CS003', 1);
-UPDATE HoaDon
-SET TongTien = CAST(RAND(CHECKSUM(NEWID()))*(50000000-1000000+1)+1000000 AS INT);
---thêm thông tin cho chi tiết hóaa đơn
-INSERT INTO ChiTietHoaDon(SoLuongHang, MaHD, MaHangHoa)
-VALUES
-    (3,'HD001','HH001'),
-    (3,'HD001','HH002'),    
-    (3,'HD001','HH003'),
-    (3,'HD002','HH004'),
-    (3,'HD002','HH005'),    
-    (3,'HD002','HH006'),
-    (3,'HD003','HH007'),
-    (3,'HD003','HH008'),    
-    (3,'HD003','HH009'),
-    (3,'HD004','HH010'),
-    (3,'HD004','HH011'),    
-    (3,'HD004','HH012'),
-    (3,'HD005','HH013'),
-    (3,'HD005','HH014'),    
-    (3,'HD005','HH015'),
-    (3,'HD006','HH016'),
-    (3,'HD006','HH017'),    
-    (3,'HD006','HH018'),
-    (3,'HD007','HH019'),
-    (3,'HD007','HH020'),    
-    (3,'HD007','HH021'),
-    (3,'HD008','HH022'),
-    (3,'HD008','HH023'),    
-    (3,'HD008','HH024'),
-    (3,'HD009','HH025'),
-    (3,'HD009','HH026'),    
-    (3,'HD009','HH027'),
-    (3,'HD010','HH028'),
-    (3,'HD010','HH029'),    
-    (3,'HD010','HH030'),
-    (3,'HD011','HH031'),
-    (3,'HD011','HH032'),    
-    (3,'HD011','HH033'),
-    (3,'HD012','HH034'),
-    (3,'HD012','HH035'),    
-    (3,'HD012','HH036'),
-    (3,'HD013','HH037'),
-    (3,'HD013','HH038'),    
-    (3,'HD013','HH039'),
-    (3,'HD014','HH040'),
-    (3,'HD014','HH041'),    
-    (3,'HD014','HH042'),
-    (3,'HD015','HH043'),
-    (3,'HD015','HH044'),    
-    (3,'HD015','HH045'),
-    (3,'HD016','HH046'),
-    (3,'HD016','HH047'),    
-    (3,'HD016','HH048'),
-    (3,'HD017','HH049'),
-    (3,'HD017','HH050'),    
-    (3,'HD017','HH051'),
-    (3,'HD018','HH052'),
-    (3,'HD018','HH053'),    
-    (3,'HD018','HH054'),
-    (3,'HD019','HH055'),
-    (3,'HD019','HH056'),    
-    (3,'HD019','HH057'),
-    (3,'HD020','HH058'),
-    (3,'HD020','HH059'),    
-    (3,'HD020','HH060'),
-    (3,'HD021','HH061'),
-    (3,'HD021','HH062'),    
-    (3,'HD021','HH063'),
-    (3,'HD022','HH064'),
-    (3,'HD022','HH065'),    
-    (3,'HD022','HH066'),
-    (3,'HD023','HH067'),
-    (3,'HD023','HH068'),    
-    (3,'HD023','HH069'),
-    (3,'HD024','HH070'),
-    (3,'HD024','HH071'),    
-    (3,'HD024','HH072'),
-    (3,'HD025','HH073'),
-    (3,'HD025','HH074'),    
-    (3,'HD025','HH075'),
-    (3,'HD026','HH076'),
-    (3,'HD026','HH077'),    
-    (3,'HD026','HH078'),
-    (3,'HD027','HH079'),
-    (3,'HD027','HH080'),    
-    (3,'HD027','HH081'),
-    (3,'HD028','HH082'),
-    (3,'HD028','HH083'),    
-    (3,'HD028','HH084'),
-    (3,'HD029','HH085'),
-    (3,'HD029','HH086'),    
-    (3,'HD029','HH087'),
-    (3,'HD030','HH088'),
-    (3,'HD030','HH089'),    
-    (3,'HD030','HH090'),
-    (3,'HD031','HH091'),
-    (3,'HD031','HH092'),    
-    (3,'HD031','HH093'),
-    (3,'HD032','HH094'),
-    (3,'HD032','HH095'),    
-    (3,'HD032','HH096'),
-    (3,'HD033','HH097'),
-    (3,'HD033','HH098'),    
-    (3,'HD033','HH099'),
-    (3,'HD034','HH100'),
-    (3,'HD034','HH001'),    
-    (3,'HD034','HH002'),
-    (3,'HD035','HH003'),
-    (3,'HD035','HH004'),    
-    (3,'HD035','HH005'),
-    (3,'HD036','HH006'),
-    (3,'HD036','HH007'),    
-    (3,'HD036','HH008'),
-    (3,'HD037','HH009'),
-    (3,'HD037','HH010'),    
-    (3,'HD037','HH011'),
-    (3,'HD038','HH012'),
-    (3,'HD038','HH013'),    
-    (3,'HD038','HH014'),
-    (3,'HD039','HH015'),
-    (3,'HD039','HH016'),    
-    (3,'HD039','HH017'),
-    (3,'HD040','HH018'),
-    (3,'HD040','HH019'),    
-    (3,'HD040','HH020'),
-    (3,'HD041','HH021'),
-    (3,'HD041','HH022'),    
-    (3,'HD041','HH023'),
-    (3,'HD042','HH024'),
-    (3,'HD042','HH025'),    
-    (3,'HD042','HH026'),
-    (3,'HD043','HH027'),
-    (3,'HD043','HH028'),    
-    (3,'HD043','HH029'),
-    (3,'HD044','HH030'),
-    (3,'HD044','HH031'),    
-    (3,'HD044','HH032'),
-    (3,'HD045','HH033'),
-    (3,'HD045','HH034'),    
-    (3,'HD045','HH035'),
-    (3,'HD046','HH036'),
-    (3,'HD046','HH037'),    
-    (3,'HD046','HH038'),
-    (3,'HD047','HH039'),
-    (3,'HD047','HH040'),    
-    (3,'HD047','HH041'),
-    (3,'HD048','HH042'),
-    (3,'HD048','HH043'),    
-    (3,'HD048','HH044'),
-    (3,'HD049','HH045'),
-    (3,'HD049','HH046'),    
-    (3,'HD049','HH047'),
-    (3,'HD050','HH048'),
-    (3,'HD050','HH049'),    
-    (3,'HD050','HH050'),
-    (3,'HD051','HH051'),
-    (3,'HD051','HH052'),    
-    (3,'HD051','HH053'),
-    (3,'HD052','HH054'),
-    (3,'HD052','HH055'),    
-    (3,'HD052','HH056'),
-    (3,'HD053','HH057'),
-    (3,'HD053','HH058'),    
-    (3,'HD053','HH059'),
-    (3,'HD054','HH060'),
-    (3,'HD054','HH061'),    
-    (3,'HD054','HH062'),
-    (3,'HD055','HH063'),
-    (3,'HD055','HH064'),    
-    (3,'HD055','HH065'),
-    (3,'HD056','HH066'),
-    (3,'HD056','HH067'),    
-    (3,'HD056','HH068'),
-    (3,'HD057','HH069'),
-    (3,'HD057','HH070'),    
-    (3,'HD057','HH071'),
-    (3,'HD058','HH072'),
-    (3,'HD058','HH073'),    
-    (3,'HD058','HH074'),
-    (3,'HD059','HH075'),
-    (3,'HD059','HH076'),    
-    (3,'HD059','HH077'),
-    (3,'HD060','HH078'),
-    (3,'HD060','HH079'),    
-    (3,'HD060','HH080'),
-    (3,'HD061','HH081'),
-    (3,'HD061','HH082'),    
-    (3,'HD061','HH083'),
-    (3,'HD062','HH084'),
-    (3,'HD062','HH085'),    
-    (3,'HD062','HH086'),
-    (3,'HD063','HH087'),
-    (3,'HD063','HH088'),    
-    (3,'HD063','HH089'),
-    (3,'HD064','HH090'),
-    (3,'HD064','HH091'),    
-    (3,'HD064','HH092'),
-    (3,'HD065','HH093'),
-    (3,'HD065','HH094'),    
-    (3,'HD065','HH095'),
-    (3,'HD066','HH096'),
-    (3,'HD066','HH097'),    
-    (3,'HD066','HH098'),
-    (3,'HD067','HH099'),
-    (3,'HD067','HH100'),    
-    (3,'HD067','HH001'),
-    (3,'HD068','HH002'),
-    (3,'HD068','HH003'),    
-    (3,'HD068','HH004'),
-    (3,'HD069','HH005'),
-    (3,'HD069','HH006'),    
-    (3,'HD069','HH007'),
-    (3,'HD070','HH008'),
-    (3,'HD070','HH009'),    
-    (3,'HD070','HH010'),
-    (3,'HD071','HH011'),
-    (3,'HD071','HH012'),    
-    (3,'HD071','HH013'),
-    (3,'HD072','HH014'),
-    (3,'HD072','HH015'),    
-    (3,'HD072','HH016'),
-    (3,'HD073','HH017'),
-    (3,'HD073','HH018'),    
-    (3,'HD073','HH019'),
-    (3,'HD074','HH020'),
-    (3,'HD074','HH021'),    
-    (3,'HD074','HH022'),
-    (3,'HD075','HH023'),
-    (3,'HD075','HH024'),    
-    (3,'HD075','HH025'),
-    (3,'HD076','HH026'),
-    (3,'HD076','HH027'),    
-    (3,'HD076','HH028'),
-    (3,'HD077','HH029'),
-    (3,'HD077','HH030'),    
-    (3,'HD077','HH031'),
-    (3,'HD078','HH032'),
-    (3,'HD078','HH033'),    
-    (3,'HD078','HH034'),
-    (3,'HD079','HH035'),
-    (3,'HD079','HH036'),    
-    (3,'HD079','HH037'),
-    (3,'HD080','HH038'),
-    (3,'HD080','HH039'),    
-    (3,'HD080','HH040'),
-    (3,'HD081','HH041'),
-    (3,'HD081','HH042'),    
-    (3,'HD081','HH043'),
-    (3,'HD082','HH044'),
-    (3,'HD082','HH045'),    
-    (3,'HD082','HH046'),
-    (3,'HD083','HH047'),
-    (3,'HD083','HH048'),    
-    (3,'HD083','HH049'),
-    (3,'HD084','HH050'),
-    (3,'HD084','HH051'),    
-    (3,'HD084','HH052'),
-    (3,'HD085','HH053'),
-    (3,'HD085','HH054'),    
-    (3,'HD085','HH055'),
-    (3,'HD086','HH056'),
-    (3,'HD086','HH057'),    
-    (3,'HD086','HH058'),
-    (3,'HD087','HH059'),
-    (3,'HD087','HH060'),    
-    (3,'HD087','HH061'),
-    (3,'HD088','HH062'),
-    (3,'HD088','HH063'),    
-    (3,'HD088','HH064'),
-    (3,'HD089','HH065'),
-    (3,'HD089','HH066'),    
-    (3,'HD089','HH067'),
-    (3,'HD090','HH068'),
-    (3,'HD090','HH069'),    
-    (3,'HD090','HH070'),
-    (3,'HD091','HH071'),
-    (3,'HD091','HH072'),    
-    (3,'HD091','HH073'),
-    (3,'HD092','HH074'),
-    (3,'HD092','HH075'),    
-    (3,'HD092','HH076'),
-    (3,'HD093','HH077'),
-    (3,'HD093','HH078'),    
-    (3,'HD093','HH079'),
-    (3,'HD094','HH080'),
-    (3,'HD094','HH081'),    
-    (3,'HD094','HH082'),
-    (3,'HD095','HH083'),
-    (3,'HD095','HH084'),    
-    (3,'HD095','HH085'),
-    (3,'HD096','HH086'),
-    (3,'HD096','HH087'),    
-    (3,'HD096','HH088'),
-    (3,'HD097','HH089'),
-    (3,'HD097','HH090'),    
-    (3,'HD097','HH091'),
-    (3,'HD098','HH092'),
-    (3,'HD098','HH093'),    
-    (3,'HD098','HH094'),
-    (3,'HD099','HH095'),
-    (3,'HD099','HH096'),    
-    (3,'HD099','HH097'),
-    (3,'HD100','HH098'),
-    (3,'HD100','HH099'),    
-    (3,'HD100','HH100');
+USE [main]
+GO
+/****** Object:  Table [dbo].[ChiTietHoaDon]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChiTietHoaDon](
+	[SoLuongHang] [int] NULL,
+	[MaHD] [char](5) NULL,
+	[MaHH] [char](5) NULL,
+	[Gia] [int] NULL,
+	[MaCoSo] [char](5) NULL,
+	[TrangThai] [nchar](20) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChiTietPhieuNhap]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChiTietPhieuNhap](
+	[MaPhieuNhap] [char](5) NULL,
+	[MaHangHoa] [char](5) NULL,
+	[SoLuong] [int] NULL,
+	[GiaNhap] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChucNang]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChucNang](
+	[IDChucNang] [char](5) NOT NULL,
+	[TenChucNang] [nchar](40) NULL,
+ CONSTRAINT [PK_ChucNang] PRIMARY KEY CLUSTERED 
+(
+	[IDChucNang] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CoSo]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CoSo](
+	[MaCoSo] [char](5) NOT NULL,
+	[TenCoSo] [nvarchar](20) NOT NULL,
+	[DiaChi] [nvarchar](40) NULL,
+	[ThoiGianHoatDong] [nvarchar](30) NULL,
+	[SoDienThoai] [char](10) NULL,
+	[DoanhThu] [numeric](18, 0) NOT NULL,
+ CONSTRAINT [PK_CoSo] PRIMARY KEY CLUSTERED 
+(
+	[MaCoSo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DichVu]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DichVu](
+	[MaDV] [char](5) NOT NULL,
+	[TenDV] [nchar](30) NULL,
+	[GiaDV] [numeric](18, 0) NULL,
+	[ThoiGian] [int] NULL,
+	[MoTa] [nvarchar](300) NULL,
+	[HinhAnh] [char](200) NULL,
+ CONSTRAINT [PK_DichVu] PRIMARY KEY CLUSTERED 
+(
+	[MaDV] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GioHang]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GioHang](
+	[IDTaiKhoan] [char](5) NOT NULL,
+	[MaHangHoa] [char](5) NOT NULL,
+	[SoLuongHangHoa] [int] NULL,
+	[MaCoSo] [char](5) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HangHoa]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HangHoa](
+	[MaHangHoa] [char](5) NOT NULL,
+	[Loai] [nvarchar](20) NULL,
+	[TenLoaiHangHoa] [nvarchar](50) NULL,
+	[HinhAnh] [char](100) NULL,
+ CONSTRAINT [PK_HangHoa] PRIMARY KEY CLUSTERED 
+(
+	[MaHangHoa] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HangHoaOCoSo]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HangHoaOCoSo](
+	[MaCoSo] [char](5) NOT NULL,
+	[MaHangHoa] [char](5) NOT NULL,
+	[TrangThai] [nchar](20) NULL,
+	[SoLuong] [int] NULL,
+	[GiaBan] [int] NULL,
+ CONSTRAINT [PK_HangHoaOCoSo] PRIMARY KEY CLUSTERED 
+(
+	[MaCoSo] ASC,
+	[MaHangHoa] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HoaDon]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HoaDon](
+	[MaHD] [char](5) NOT NULL,
+	[NgayXuatHD] [date] NULL,
+	[IDTaiKhoan] [char](5) NULL,
+ CONSTRAINT [PK_HoaDon_1] PRIMARY KEY CLUSTERED 
+(
+	[MaHD] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HoiVien]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HoiVien](
+	[MaHV] [char](5) NOT NULL,
+	[HoTenHV] [nvarchar](50) NULL,
+	[GioiTinh] [nvarchar](3) NULL,
+	[Gmail] [char](500) NULL,
+	[NgaySinh] [date] NULL,
+	[SoDienThoai] [char](10) NULL,
+	[IDTaiKhoan] [char](5) NULL,
+	[Anh] [nvarchar](50) NULL,
+ CONSTRAINT [PK_HoiVien] PRIMARY KEY CLUSTERED 
+(
+	[MaHV] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MayChay]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MayChay](
+	[CongSuat] [decimal](6, 2) NULL,
+	[TocDoToiDa] [decimal](6, 2) NULL,
+	[NhaSanXuat] [nvarchar](50) NULL,
+	[KichThuoc] [nvarchar](20) NULL,
+	[MaHangHoa] [char](5) NOT NULL,
+ CONSTRAINT [PK_MayChay] PRIMARY KEY CLUSTERED 
+(
+	[MaHangHoa] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NhanVien]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NhanVien](
+	[MaNV] [char](5) NOT NULL,
+	[HoTenNV] [nchar](50) NULL,
+	[GioiTinh] [nchar](3) NULL,
+	[NgaySinh] [date] NULL,
+	[SoDienThoai] [char](10) NULL,
+	[SoCCCD] [char](12) NULL,
+	[MaCoSo] [char](5) NULL,
+	[VaiTro] [nchar](30) NULL,
+	[Luong] [numeric](18, 0) NULL,
+	[IDTaiKhoan] [char](5) NULL,
+ CONSTRAINT [PK_NhanVien] PRIMARY KEY CLUSTERED 
+(
+	[MaNV] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PhanQuyen]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PhanQuyen](
+	[IDChucNang] [char](5) NOT NULL,
+	[IDQuyen] [char](5) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PhieuNhap]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PhieuNhap](
+	[MaPhieuNhap] [char](5) NOT NULL,
+	[TrangThai] [nchar](20) NULL,
+	[MaNV] [char](5) NULL,
+	[NgayNhap] [date] NULL,
+ CONSTRAINT [PK_PhieuNhap] PRIMARY KEY CLUSTERED 
+(
+	[MaPhieuNhap] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Quyen]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Quyen](
+	[IDQuyen] [char](5) NOT NULL,
+	[TenQuyen] [nchar](30) NULL,
+ CONSTRAINT [PK_Quyen] PRIMARY KEY CLUSTERED 
+(
+	[IDQuyen] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Ta]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Ta](
+	[MaHangHoa] [char](5) NOT NULL,
+	[KhoiLuong] [int] NULL,
+	[ChatLieu] [nvarchar](50) NULL,
+	[MauSac] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Ta] PRIMARY KEY CLUSTERED 
+(
+	[MaHangHoa] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TaiKhoan]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TaiKhoan](
+	[IDTaiKhoan] [char](5) NOT NULL,
+	[TaiKhoan] [char](20) NULL,
+	[MatKhau] [char](20) NULL,
+	[IDQuyen] [char](5) NULL,
+ CONSTRAINT [PK_TaiKhoan] PRIMARY KEY CLUSTERED 
+(
+	[IDTaiKhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Xa]    Script Date: 9/23/2024 7:52:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Xa](
+	[LoaiXa] [nvarchar](20) NULL,
+	[ChatLieu] [nvarchar](20) NULL,
+	[ChieuDai] [decimal](5, 2) NULL,
+	[DuongKinh] [decimal](5, 2) NULL,
+	[ChieuCao] [decimal](5, 2) NULL,
+	[TaiTrong] [decimal](7, 2) NULL,
+	[MaHangHoa] [char](5) NOT NULL,
+ CONSTRAINT [PK_Xa] PRIMARY KEY CLUSTERED 
+(
+	[MaHangHoa] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[ChiTietHoaDon] ([SoLuongHang], [MaHD], [MaHH], [Gia], [MaCoSo], [TrangThai]) VALUES (30, N'HD1  ', N'HH003', 165000000, N'CS001', N'Đã duyệt            ')
+INSERT [dbo].[ChiTietHoaDon] ([SoLuongHang], [MaHD], [MaHH], [Gia], [MaCoSo], [TrangThai]) VALUES (5, N'HD2  ', N'HH012', 1100000, N'CS003', N'Chưa duyệt          ')
+INSERT [dbo].[ChiTietHoaDon] ([SoLuongHang], [MaHD], [MaHH], [Gia], [MaCoSo], [TrangThai]) VALUES (20, N'HD2  ', N'HH015', 44000000, N'CS003', N'Chưa duyệt          ')
+INSERT [dbo].[ChiTietHoaDon] ([SoLuongHang], [MaHD], [MaHH], [Gia], [MaCoSo], [TrangThai]) VALUES (5, N'HD2  ', N'HH009', 13750300, N'CS001', N'Đã duyệt            ')
+INSERT [dbo].[ChiTietHoaDon] ([SoLuongHang], [MaHD], [MaHH], [Gia], [MaCoSo], [TrangThai]) VALUES (5, N'HD3  ', N'HH012', 1100000, N'CS003', N'Đã duyệt            ')
+INSERT [dbo].[ChiTietHoaDon] ([SoLuongHang], [MaHD], [MaHH], [Gia], [MaCoSo], [TrangThai]) VALUES (5, N'HD3  ', N'HH001', 6187500, N'CS001', N'Đã duyệt            ')
+GO
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN001', N'HH003', 30, 5000000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN001', N'HH007', 25, 2000000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN003', N'HH001', 20, 2000000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN003', N'HH009', 15, 2500055)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN004', N'HH012', 10, 200000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN005', N'HH002', 1, 20000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN001', N'HH001', 10, 250000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN003', N'HH010', 10, 2000000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN004', N'HH015', 100, 2000000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN006', N'HH001', 1, 20000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN007', N'HH002', 1, 20000)
+INSERT [dbo].[ChiTietPhieuNhap] ([MaPhieuNhap], [MaHangHoa], [SoLuong], [GiaNhap]) VALUES (N'PN008', N'HH016', 200, 2000000)
+GO
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN001', N'Quản lý danh sách                       ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN002', N'Duyệt đơn hàng                          ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN003', N'Xuất file danh sách                     ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN004', N'Nhập hàng                               ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN005', N'Quản lý nhân viên                       ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN006', N'Quản lý hội viên                        ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN007', N'Quản lý hàng hóa                        ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN008', N'Duyệt phiếu nhập                        ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN009', N'Mua hàng                                ')
+INSERT [dbo].[ChucNang] ([IDChucNang], [TenChucNang]) VALUES (N'CN010', N'Thông tin cá nhân                       ')
+GO
+INSERT [dbo].[CoSo] ([MaCoSo], [TenCoSo], [DiaChi], [ThoiGianHoatDong], [SoDienThoai], [DoanhThu]) VALUES (N'CS001', N'GYM SGU 1', N'Thành Phố Hồ Chí Minh', N'6:00 - 24:00 hàng ngày', N'0123456789', CAST(49778224 AS Numeric(18, 0)))
+INSERT [dbo].[CoSo] ([MaCoSo], [TenCoSo], [DiaChi], [ThoiGianHoatDong], [SoDienThoai], [DoanhThu]) VALUES (N'CS002', N'GYM SGU 2', N'Thành Phố Đà Nẵng', N'6:00 - 24:00 hàng ngày', N'0123456789', CAST(25243400 AS Numeric(18, 0)))
+INSERT [dbo].[CoSo] ([MaCoSo], [TenCoSo], [DiaChi], [ThoiGianHoatDong], [SoDienThoai], [DoanhThu]) VALUES (N'CS003', N'GYM SGU 3', N'Thủ Đô Hà Nội', N'6:00 - 24:00 hàng ngày', N'0123456789', CAST(24219619 AS Numeric(18, 0)))
+GO
+INSERT [dbo].[DichVu] ([MaDV], [TenDV], [GiaDV], [ThoiGian], [MoTa], [HinhAnh]) VALUES (N'DV001', N'Thiết bị luyện tập            ', CAST(300000 AS Numeric(18, 0)), 30, N'Bao gồm máy chạy bộ, máy đạp xe, máy leo dốc, máy tập cơ, và các thiết bị tập luyện khác để phát triển sức mạnh, sức bền và linh hoạt.', N'src/asset/img/dichvu/DV001.png                                                                                                                                                                          ')
+INSERT [dbo].[DichVu] ([MaDV], [TenDV], [GiaDV], [ThoiGian], [MoTa], [HinhAnh]) VALUES (N'DV002', N'Khu vực thể dục ngoài trời    ', CAST(350000 AS Numeric(18, 0)), 30, N'Bao gồm máy chạy bộ ngoài trời, máy đạp xe ngoài trời, yoga và pilates, cardio,...', N'src/asset/img/dichvu/DV002.png                                                                                                                                                                          ')
+INSERT [dbo].[DichVu] ([MaDV], [TenDV], [GiaDV], [ThoiGian], [MoTa], [HinhAnh]) VALUES (N'DV003', N'Bơi lội                       ', CAST(250000 AS Numeric(18, 0)), 30, N'Bao gồm cung cấp khăn tắm, xà phồng và các dịch vụ khác trong hồ bơi', N'src/asset/img/dichvu/DV003.png                                                                                                                                                                          ')
+INSERT [dbo].[DichVu] ([MaDV], [TenDV], [GiaDV], [ThoiGian], [MoTa], [HinhAnh]) VALUES (N'DV004', N'Dịch vụ khác                  ', CAST(200000 AS Numeric(18, 0)), 30, N'Bao gồm tư vấn dinh dưỡng, hướng dẫn tập luyện các nhân,...', N'src/asset/img/dichvu/DV004.png                                                                                                                                                                          ')
+INSERT [dbo].[DichVu] ([MaDV], [TenDV], [GiaDV], [ThoiGian], [MoTa], [HinhAnh]) VALUES (N'DV005', N'Spa và Massage                ', CAST(30 AS Numeric(18, 0)), 30, N'Bao gồm massage, xông hơi, và jacuzzi để giúp khách hàng thư giãn và phục hồi sau khi tập luyện,...', N'src/asset/img/dichvu/DV005.png                                                                                                                                                                          ')
+INSERT [dbo].[DichVu] ([MaDV], [TenDV], [GiaDV], [ThoiGian], [MoTa], [HinhAnh]) VALUES (N'DV006', N'Spa và Massage                ', CAST(300000 AS Numeric(18, 0)), 30, N'Bao gồm massage, xông hơi, và jacuzzi để giúp khách hàng thư giãn và phục hồi sau khi tập luyện,...', N'src/asset/img/dichvu/DV005.png                                                                                                                                                                          ')
+GO
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH001', N'Tạ', N'Tạ 5kg', N'src/asset/img/hanghoa/HH003.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH002', N'Tạ', N'Tạ 10kg', N'src/asset/img/hanghoa/HH004.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH003', N'Tạ', N'Tạ 15kg', N'src/asset/img/hanghoa/HH005.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH004', N'Tạ', N'Tạ 20kg', N'src/asset/img/hanghoa/HH006.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH005', N'Tạ', N'Tạ 25kg', N'src/asset/img/hanghoa/HH007.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH006', N'Tạ', N'Tạ 1kg', N'src/asset/img/hanghoa/HH008.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH007', N'Máy chạy', N'Máy chạy', N'src/asset/img/hanghoa/HH015.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH008', N'Máy chạy', N'Máy chạy bộ', N'src/asset/img/hanghoa/HH016.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH009', N'Xà', N'Xà đơn gắn tường', N'src/asset/img/hanghoa/HH001.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH010', N'Xà', N'Xà đơn gắn tường 2015', N'src/asset/img/hanghoa/HH095.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH011', N'Khác', N'Băng cổ chân thể thao Pseudois', N'src/asset/img/hanghoa/HH090.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH012', N'Khác', N'Đai quấn gối hỗ trợ AOLIKES A-1516', N'src/asset/img/hanghoa/HH091.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH013', N'Khác', N'Dây kéo tay lò xo đa năng K1016', N'src/asset/img/hanghoa/HH093.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH014', N'Khác', N'Ghế Tập Tạ Zasami SVT-8310', N'src/asset/img/hanghoa/HH096.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH015', N'Khác', N'Ghế cong tập bụng Zasami SGC-8511', N'src/asset/img/hanghoa/HH096.jpg                                                                     ')
+INSERT [dbo].[HangHoa] ([MaHangHoa], [Loai], [TenLoaiHangHoa], [HinhAnh]) VALUES (N'HH016', N'Tạ', N'Tạ đòn', N'src/asset/img/hanghoa/HH032.jpg                                                                     ')
+GO
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH001', N'Đang bán            ', 25, 1237500)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH002', N'Khóa                ', 1, 22000)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH003', N'Đang bán            ', 0, 5500000)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH007', N'Đang bán            ', 25, 2200000)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH009', N'Đang bán            ', 10, 2750060)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH010', N'Đang bán            ', 10, 2200000)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS001', N'HH016', N'Đang bán            ', 200, 2200000)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS003', N'HH012', N'Đang bán            ', 0, 220000)
+INSERT [dbo].[HangHoaOCoSo] ([MaCoSo], [MaHangHoa], [TrangThai], [SoLuong], [GiaBan]) VALUES (N'CS003', N'HH015', N'Đang bán            ', 80, 2200000)
+GO
+INSERT [dbo].[HoaDon] ([MaHD], [NgayXuatHD], [IDTaiKhoan]) VALUES (N'HD1  ', CAST(N'2024-09-22' AS Date), N'TK002')
+INSERT [dbo].[HoaDon] ([MaHD], [NgayXuatHD], [IDTaiKhoan]) VALUES (N'HD2  ', CAST(N'2024-09-22' AS Date), N'TK002')
+INSERT [dbo].[HoaDon] ([MaHD], [NgayXuatHD], [IDTaiKhoan]) VALUES (N'HD3  ', CAST(N'2024-09-22' AS Date), N'TK084')
+GO
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV001', N'Trịnh Trần Phương Tuấn', N'Nam', N'HV001@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1997-04-12' AS Date), N'0395632027', N'TK001', N'src\asset\img\avatar\jack_3.jpg')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV002', N'Trần Thị Bàng', N'Nữ', N'HV002@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1995-05-10' AS Date), N'0987654321', N'TK002', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV003', N'Lê Đình Huy', N'Nam', N'HV003@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1988-03-15' AS Date), N'0456789123', N'TK003', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV004', N'Phạm Thị Duyên', N'Nữ', N'HV004@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1992-11-20' AS Date), N'0654321987', N'TK004', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV005', N'Hoàng Văn Thắng', N'Nam', N'HV005@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1987-09-25' AS Date), N'0789456123', N'TK005', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV006', N'Mai Thị Bánh', N'Nữ', N'HV006@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1998-07-30' AS Date), N'0321654987', N'TK006', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV007', N'Vũ Đức Khang', N'Nam', N'HV007@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1984-04-09' AS Date), N'0395632027', N'TK007', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV008', N'Trần Văn Hào', N'Nam', N'HV008@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1989-02-12' AS Date), N'0369852147', N'TK008', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV009', N'Nguyễn Thị Nô', N'Nữ', N'HV009@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1994-06-18' AS Date), N'0852741963', N'TK009', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV010', N'Lê Văn Kiến Vinh', N'Nam', N'HV010@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1993-08-22' AS Date), N'0741852963', N'TK010', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV011', N'Trần Thanh Phúc', N'Nam', N'HV011@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1986-12-28' AS Date), N'0951753852', N'TK011', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV012', N'Hoàng Thị Duy', N'Nữ', N'HV012@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1997-10-15' AS Date), N'0258369147', N'TK012', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV013', N'Phạm Văn Lâm', N'Nam', N'HV013@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1996-02-09' AS Date), N'0147258369', N'TK013', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV014', N'Mai Thanh Kiên', N'Nam', N'HV014@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1985-05-03' AS Date), N'0369147258', N'TK014', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV015', N'Nguyễn Thị Phát', N'Nữ', N'HV015@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1999-11-08' AS Date), N'0852963147', N'TK015', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV016', N'Lê Văn Quang', N'Nam', N'HV016@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1990-07-12' AS Date), N'0963852741', N'TK016', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV017', N'Trần Thị Rành', N'Nữ', N'HV017@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1995-03-20' AS Date), N'0753951852', N'TK017', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV018', N'Hoàng Văn Sao', N'Nam', N'HV018@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1988-09-18' AS Date), N'0852369147', N'TK018', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV019', N'Phạm Thị Tồng', N'Nữ', N'HV019@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1992-01-25' AS Date), N'0369852147', N'TK019', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV020', N'Nguyễn Văn Un', N'Nam', N'HV020@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1991-06-03' AS Date), N'0147852369', N'TK020', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV021', N'Mai Thị Vinh', N'Nữ', N'HV021@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1989-04-28' AS Date), N'0369147852', N'TK021', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV022', N'Trần Văn Xầu', N'Nam', N'HV022@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1994-12-05' AS Date), N'0852963741', N'TK022', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV023', N'Lê Thị Mỹ', N'Nữ', N'HV023@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1993-02-17' AS Date), N'0753951852', N'TK023', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV024', N'Hoàng Văn Trương', N'Nam', N'HV024@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1996-08-30' AS Date), N'0963852741', N'TK024', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV025', N'Nguyễn Văn Tèo', N'Nam', N'HV025@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1995-10-28' AS Date), N'0123456789', N'TK025', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV026', N'Trần Thị Mai', N'Nữ', N'HV026@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1994-09-15' AS Date), N'0987654321', N'TK026', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV027', N'Lê Văn Đôi', N'Nam', N'HV027@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1993-07-22' AS Date), N'0456789123', N'TK027', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV028', N'Phạm Thị Đan', N'Nữ', N'HV028@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1992-04-05' AS Date), N'0654321987', N'TK028', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV029', N'Mai Thanh Hoàng', N'Nam', N'HV029@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1991-01-18' AS Date), N'0789456123', N'TK029', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV030', N'Vũ Đình Đại', N'Nam', N'HV030@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1990-11-10' AS Date), N'0321654987', N'TK030', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV031', N'Trần Thị Mai', N'Nữ', N'HV031@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1989-08-22' AS Date), N'0159487263', N'TK031', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV032', N'Lê Văn Tám', N'Nam', N'HV032@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1988-05-03' AS Date), N'0369852147', N'TK032', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV033', N'Nguyễn Thị Bảy', N'Nữ', N'HV033@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1987-02-15' AS Date), N'0852741963', N'TK033', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV034', N'Phạm Văn Sáu', N'Nam', N'HV034@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1996-12-08' AS Date), N'0147258369', N'TK034', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV035', N'Mai Thị Năm', N'Nữ', N'HV035@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1995-10-30' AS Date), N'0369147258', N'TK035', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV036', N'Trần Văn Bốn', N'Nam', N'HV036@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1994-09-18' AS Date), N'0951753852', N'TK036', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV037', N'Hoàng Thị Là', N'Nữ', N'HV037@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1993-07-25' AS Date), N'0258369147', N'TK037', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV038', N'Phạm Văn Đồng', N'Nam', N'HV038@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1992-04-08' AS Date), N'0741852963', N'TK038', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV039', N'Mai Quốc Khánh', N'Nam', N'HV039@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1991-01-20' AS Date), N'0963852741', N'TK039', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV040', N'Nguyễn Thị Thập', N'Nữ', N'HV040@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1990-11-05' AS Date), N'0852963147', N'TK040', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV041', N'Trần Văn Cường', N'Nam', N'HV041@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1989-08-18' AS Date), N'0147852369', N'TK041', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV042', N'Lê Thị Định', N'Nữ', N'HV042@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1988-06-23' AS Date), N'0369147852', N'TK042', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV043', N'Hoàng Văn Thụ', N'Nam', N'HV043@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1987-03-30' AS Date), N'0852963741', N'TK043', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV044', N'Phạm Thị Thanh', N'Nữ', N'HV044@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1986-12-15' AS Date), N'0963852741', N'TK044', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV045', N'Mai Thị Nở', N'Nữ', N'HV045@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1985-09-10' AS Date), N'0852369147', N'TK045', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV046', N'Nguyễn Văn Hai', N'Nam', N'HV046@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', CAST(N'1984-06-25' AS Date), N'0741852963', N'TK046', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV047', N'Tống Thành Đạt', N'Nam', N'gamingthanhdat@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ', CAST(N'2004-05-14' AS Date), N'0395632027', N'TK047', N'src/asset/img/avatar/user.png')
+INSERT [dbo].[HoiVien] ([MaHV], [HoTenHV], [GioiTinh], [Gmail], [NgaySinh], [SoDienThoai], [IDTaiKhoan], [Anh]) VALUES (N'HV048', N'Hội Viên', N'Nam', N'a@gmail.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ', CAST(N'2004-05-03' AS Date), N'0395632027', N'TK084', N'src\asset\img\avatar\large_1588936738888_1.jpg')
+GO
+INSERT [dbo].[MayChay] ([CongSuat], [TocDoToiDa], [NhaSanXuat], [KichThuoc], [MaHangHoa]) VALUES (CAST(1000.00 AS Decimal(6, 2)), CAST(15.00 AS Decimal(6, 2)), N'LifeSport', N'200x90', N'HH007')
+INSERT [dbo].[MayChay] ([CongSuat], [TocDoToiDa], [NhaSanXuat], [KichThuoc], [MaHangHoa]) VALUES (CAST(1500.00 AS Decimal(6, 2)), CAST(15.00 AS Decimal(6, 2)), N'LifeSport', N'200x90', N'HH008')
+GO
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV001', N'Nguyễn Văn An                                     ', N'Nam', CAST(N'1990-01-31' AS Date), N'0123456789', N'123222456789', N'CS001', N'Nhân viên                     ', CAST(15000000 AS Numeric(18, 0)), N'TK048')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV002', N'Trần Thị Bảo                                      ', N'Nữ ', CAST(N'1995-02-15' AS Date), N'0987654321', N'987654321231', N'CS001', N'Nhân viên                     ', CAST(14000000 AS Numeric(18, 0)), N'TK049')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV003', N'Phạm Văn Chí                                      ', N'Nam', CAST(N'1987-05-20' AS Date), N'0369852147', N'654782219321', N'CS002', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK050')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV004', N'Lê Thị Dung                                       ', N'Nữ ', CAST(N'1988-10-10' AS Date), N'0123456789', N'987654225321', N'CS002', N'Nhân viên                     ', CAST(14500000 AS Numeric(18, 0)), N'TK051')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV005', N'Hoàng Văn Em                                      ', N'Nam', CAST(N'1992-12-30' AS Date), N'0987654321', N'123454446789', N'CS003', N'Nhân viên                     ', CAST(15500000 AS Numeric(18, 0)), N'TK052')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV006', N'Trần Văn Tới                                      ', N'Nam', CAST(N'1985-06-25' AS Date), N'0369852147', N'654781129321', N'CS003', N'Nhân viên                     ', CAST(16500000 AS Numeric(18, 0)), N'TK053')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV007', N'Nguyễn Thị Giang                                  ', N'Nữ ', CAST(N'1989-03-05' AS Date), N'0123456789', N'987656664321', N'CS003', N'Nhân viên                     ', CAST(14500000 AS Numeric(18, 0)), N'TK054')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV008', N'Lê Văn Họ                                         ', N'Nam', CAST(N'1993-08-20' AS Date), N'0987654321', N'123455786789', N'CS003', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK055')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV009', N'Phạm Thị In                                       ', N'Nữ ', CAST(N'1994-04-17' AS Date), N'0369852147', N'654789463321', N'CS002', N'Nhân viên                     ', CAST(15000000 AS Numeric(18, 0)), N'TK056')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV010', N'Hoàng Thị Kim                                     ', N'Nữ ', CAST(N'1990-11-03' AS Date), N'0123456789', N'987652414321', N'CS002', N'Nhân viên                     ', CAST(14000000 AS Numeric(18, 0)), N'TK057')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV011', N'Lê Văn Liêm                                       ', N'Nam', CAST(N'1986-07-07' AS Date), N'0987654321', N'123454236789', N'CS001', N'Nhân viên                     ', CAST(15500000 AS Numeric(18, 0)), N'TK058')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV012', N'Nguyễn Văn Mang                                   ', N'Nam', CAST(N'1984-09-12' AS Date), N'0369852147', N'654712489321', N'CS002', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK059')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV013', N'Trần Thị Nặng                                     ', N'Nữ ', CAST(N'1988-02-28' AS Date), N'0123456789', N'987654354521', N'CS001', N'Nhân viên                     ', CAST(15000000 AS Numeric(18, 0)), N'TK060')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV014', N'Phạm Văn Phượng                                   ', N'Nam', CAST(N'1991-06-15' AS Date), N'0987654321', N'123455436789', N'CS003', N'Nhân viên                     ', CAST(14500000 AS Numeric(18, 0)), N'TK061')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV015', N'Hoàng Thị Quang                                   ', N'Nữ ', CAST(N'1997-04-22' AS Date), N'0369852147', N'658674789321', N'CS002', N'Nhân viên                     ', CAST(15500000 AS Numeric(18, 0)), N'TK062')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV016', N'Lê Văn Rồi                                        ', N'Nam', CAST(N'1998-09-09' AS Date), N'0123456789', N'987654343221', N'CS001', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK063')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV017', N'Đào Nhị Khang                                     ', N'Nam', CAST(N'2004-01-01' AS Date), N'0129494949', N'122345678909', N'CS003', N'Nhân viên                     ', CAST(11500000 AS Numeric(18, 0)), N'TK064')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV018', N'Trần Thị Tân                                      ', N'Nữ ', CAST(N'1982-08-08' AS Date), N'0369852147', N'654783219321', N'CS003', N'Nhân viên                     ', CAST(14500000 AS Numeric(18, 0)), N'TK065')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV019', N'Phạm Văn Un                                       ', N'Nam', CAST(N'1989-10-05' AS Date), N'0123456789', N'987654346221', N'CS002', N'Nhân viên                     ', CAST(15500000 AS Numeric(18, 0)), N'TK066')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV020', N'Hoàng Thị Vi                                      ', N'Nữ ', CAST(N'1986-03-03' AS Date), N'0987654321', N'123456852789', N'CS002', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK067')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV021', N'Nguyễn Thị Hương                                  ', N'Nữ ', CAST(N'1996-05-25' AS Date), N'0987654321', N'456782479012', N'CS001', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK068')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV022', N'Trần Văn Minh                                     ', N'Nam', CAST(N'1995-07-30' AS Date), N'0123456789', N'123456362789', N'CS002', N'Nhân viên                     ', CAST(15500000 AS Numeric(18, 0)), N'TK069')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV023', N'Lê Thị Lan                                        ', N'Nữ ', CAST(N'1987-12-20' AS Date), N'0369852147', N'987654214321', N'CS003', N'Nhân viên                     ', CAST(15000000 AS Numeric(18, 0)), N'TK070')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV024', N'Phạm Văn Tuấn                                     ', N'Nam', CAST(N'1984-04-03' AS Date), N'0987654321', N'789578012345', N'CS003', N'Nhân viên                     ', CAST(14500000 AS Numeric(18, 0)), N'TK071')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV025', N'Hoàng Thị Mai                                     ', N'Nữ ', CAST(N'1993-01-02' AS Date), N'0123456789', N'654312321789', N'CS003', N'Nhân viên                     ', CAST(14000000 AS Numeric(18, 0)), N'TK072')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV026', N'Nguyễn Văn Nam                                    ', N'Nam', CAST(N'1981-02-10' AS Date), N'0369852147', N'321756789012', N'CS003', N'Nhân viên                     ', CAST(16500000 AS Numeric(18, 0)), N'TK073')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV027', N'Trần Thị Thảo                                     ', N'Nữ ', CAST(N'1992-09-18' AS Date), N'0987654321', N'012323445678', N'CS001', N'Nhân viên                     ', CAST(15500000 AS Numeric(18, 0)), N'TK074')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV028', N'Lê Văn Hùng                                       ', N'Nam', CAST(N'1985-11-22' AS Date), N'0123456789', N'678905671234', N'CS002', N'Nhân viên                     ', CAST(16000000 AS Numeric(18, 0)), N'TK075')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV029', N'Phạm Thị Hạnh                                     ', N'Nữ ', CAST(N'1990-07-07' AS Date), N'0369852147', N'345672345890', N'CS001', N'Nhân viên                     ', CAST(15000000 AS Numeric(18, 0)), N'TK076')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV030', N'Hoàng Văn Đức                                     ', N'Nam', CAST(N'1988-03-15' AS Date), N'0987654321', N'901234534567', N'CS002', N'Nhân viên                     ', CAST(14500000 AS Numeric(18, 0)), N'TK077')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV031', N'Nguyễn Minh Tuấn                                  ', N'Nam', CAST(N'1979-04-28' AS Date), N'0123456789', N'123222456789', N'CS001', N'Quản lý                       ', CAST(150000000 AS Numeric(18, 0)), N'TK078')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV033', N'Tống Thành Đạt                                    ', N'Nam', CAST(N'1975-10-12' AS Date), N'0123456789', N'123222456789', N'CS003', N'Quản lý                       ', CAST(150000000 AS Numeric(18, 0)), N'TK079')
+INSERT [dbo].[NhanVien] ([MaNV], [HoTenNV], [GioiTinh], [NgaySinh], [SoDienThoai], [SoCCCD], [MaCoSo], [VaiTro], [Luong], [IDTaiKhoan]) VALUES (N'NV034', N'Nguyễn Trọng Đạt                                  ', N'Nam', CAST(N'1979-04-05' AS Date), N'0395632027', N'123222456789', N'CS002', N'Quản lý                       ', CAST(150000000 AS Numeric(18, 0)), N'TK080')
+GO
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN001', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN003', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN003', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN006', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN001', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN004', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN002', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN007', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN009', N'Q0001')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN004', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN007', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN005', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN008', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN005', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN002', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN008', N'Q0002')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN006', N'Q0003')
+INSERT [dbo].[PhanQuyen] ([IDChucNang], [IDQuyen]) VALUES (N'CN010', N'Q0001')
+GO
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN001', N'Đã Duyệt            ', N'NV001', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN002', N'Đã Duyệt            ', N'NV001', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN003', N'Đã Duyệt            ', N'NV002', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN004', N'Đã Duyệt            ', N'NV018', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN005', N'Đã Duyệt            ', N'NV001', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN006', N'Chưa duyệt          ', N'NV001', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN007', N'Chưa duyệt          ', N'NV001', CAST(N'2024-09-22' AS Date))
+INSERT [dbo].[PhieuNhap] ([MaPhieuNhap], [TrangThai], [MaNV], [NgayNhap]) VALUES (N'PN008', N'Đã Duyệt            ', N'NV001', CAST(N'2024-09-22' AS Date))
+GO
+INSERT [dbo].[Quyen] ([IDQuyen], [TenQuyen]) VALUES (N'Q0001', N'Hội viên                      ')
+INSERT [dbo].[Quyen] ([IDQuyen], [TenQuyen]) VALUES (N'Q0002', N'Nhân viên                     ')
+INSERT [dbo].[Quyen] ([IDQuyen], [TenQuyen]) VALUES (N'Q0003', N'Quản lý                       ')
+INSERT [dbo].[Quyen] ([IDQuyen], [TenQuyen]) VALUES (N'Q0004', N'Admin                         ')
+INSERT [dbo].[Quyen] ([IDQuyen], [TenQuyen]) VALUES (N'Q0005', N'Nhân viên nhập hàng           ')
+GO
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH001', 5, N'Đen', N'Thép')
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH002', 10, N'Đen', N'Thép')
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH003', 15, N'Đen', N'Thép')
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH004', 20, N'Đen', N'Thép')
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH005', 25, N'Đen', N'Thép')
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH006', 1, N'Tím', N'Thép')
+INSERT [dbo].[Ta] ([MaHangHoa], [KhoiLuong], [ChatLieu], [MauSac]) VALUES (N'HH016', 25, N'Thép', N'Đen')
+GO
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK001', N'jack97              ', N'123456              ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK002', N'TKHV002             ', N'MKHV002             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK003', N'TKHV003             ', N'MKHV003             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK004', N'TKHV004             ', N'MKHV004             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK005', N'TKHV005             ', N'MKHV005             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK006', N'TKHV006             ', N'MKHV006             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK007', N'TKHV007             ', N'MKHV007             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK008', N'TKHV008             ', N'MKHV008             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK009', N'TKHV009             ', N'MKHV009             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK010', N'TKHV010             ', N'MKHV010             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK011', N'TKHV011             ', N'MKHV011             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK012', N'TKHV012             ', N'MKHV012             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK013', N'TKHV013             ', N'MKHV013             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK014', N'TKHV014             ', N'MKHV014             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK015', N'TKHV015             ', N'MKHV015             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK016', N'TKHV016             ', N'MKHV016             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK017', N'TKHV017             ', N'MKHV017             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK018', N'TKHV018             ', N'MKHV018             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK019', N'TKHV019             ', N'MKHV019             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK020', N'TKHV020             ', N'MKHV020             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK021', N'TKHV021             ', N'MKHV021             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK022', N'TKHV022             ', N'MKHV022             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK023', N'TKHV023             ', N'MKHV023             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK024', N'TKHV024             ', N'MKHV024             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK025', N'TKHV025             ', N'MKHV025             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK026', N'TKHV026             ', N'MKHV026             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK027', N'TKHV027             ', N'MKHV027             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK028', N'TKHV028             ', N'MKHV028             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK029', N'TKHV029             ', N'MKHV029             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK030', N'TKHV030             ', N'MKHV030             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK031', N'TKHV031             ', N'MKHV031             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK032', N'TKHV032             ', N'MKHV032             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK033', N'TKHV033             ', N'MKHV033             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK034', N'TKHV034             ', N'MKHV034             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK035', N'TKHV035             ', N'MKHV035             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK036', N'TKHV036             ', N'MKHV036             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK037', N'TKHV037             ', N'MKHV037             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK038', N'TKHV038             ', N'MKHV038             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK039', N'TKHV039             ', N'MKHV039             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK040', N'TKHV040             ', N'MKHV040             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK041', N'TKHV041             ', N'MKHV041             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK042', N'TKHV042             ', N'MKHV042             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK043', N'TKHV043             ', N'MKHV043             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK044', N'TKHV044             ', N'MKHV044             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK045', N'TKHV045             ', N'MKHV045             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK046', N'TKHV046             ', N'MKHV046             ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK047', N'thanhdat1405        ', N'dat12345            ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK048', N'TKNV001             ', N'MKNV001             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK049', N'TKNV002             ', N'MKNV002             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK050', N'TKNV003             ', N'MKNV003             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK051', N'TKNV004             ', N'MKNV004             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK052', N'TKNV005             ', N'MKNV005             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK053', N'TKNV006             ', N'MKNV006             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK054', N'TKNV007             ', N'MKNV007             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK055', N'TKNV008             ', N'MKNV008             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK056', N'TKNV009             ', N'MKNV009             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK057', N'TKNV010             ', N'MKNV010             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK058', N'TKNV011             ', N'MKNV011             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK059', N'TKNV012             ', N'MKNV012             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK060', N'TKNV013             ', N'MKNV013             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK061', N'TKNV014             ', N'MKNV014             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK062', N'TKNV015             ', N'MKNV015             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK063', N'TKNV016             ', N'MKNV016             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK064', N'TKNV017             ', N'MKNV017             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK065', N'TKNV018             ', N'MKNV018             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK066', N'TKNV019             ', N'MKNV019             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK067', N'TKNV020             ', N'MKNV020             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK068', N'TKNV021             ', N'MKNV021             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK069', N'TKNV022             ', N'MKNV022             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK070', N'TKNV023             ', N'MKNV023             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK071', N'TKNV024             ', N'MKNV024             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK072', N'TKNV025             ', N'MKNV025             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK073', N'TKNV026             ', N'MKNV026             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK074', N'TKNV027             ', N'MKNV027             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK075', N'TKNV028             ', N'MKNV028             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK076', N'TKNV029             ', N'MKNV029             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK077', N'TKNV030             ', N'MKNV030             ', N'Q0002')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK078', N'TKQL001             ', N'MKQL001             ', N'Q0003')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK079', N'TKQL002             ', N'MKQL002             ', N'Q0003')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK080', N'TKQL003             ', N'MKQL003             ', N'Q0003')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK081', N'TKHV011             ', N'123456              ', N'Q0001')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK082', N'admin               ', N'admin               ', N'Q0004')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK083', N'tongthanhdat009     ', N'dat12345            ', N'Q0004')
+INSERT [dbo].[TaiKhoan] ([IDTaiKhoan], [TaiKhoan], [MatKhau], [IDQuyen]) VALUES (N'TK084', N'taikhoan            ', N'123456              ', N'Q0001')
+GO
+INSERT [dbo].[Xa] ([LoaiXa], [ChatLieu], [ChieuDai], [DuongKinh], [ChieuCao], [TaiTrong], [MaHangHoa]) VALUES (N'Xà đơn', N'Thép', CAST(1.50 AS Decimal(5, 2)), CAST(0.05 AS Decimal(5, 2)), CAST(2.00 AS Decimal(5, 2)), CAST(150.00 AS Decimal(7, 2)), N'HH009')
+INSERT [dbo].[Xa] ([LoaiXa], [ChatLieu], [ChieuDai], [DuongKinh], [ChieuCao], [TaiTrong], [MaHangHoa]) VALUES (N'Xà đơn', N'Thép carbon', CAST(0.80 AS Decimal(5, 2)), CAST(0.04 AS Decimal(5, 2)), CAST(1.80 AS Decimal(5, 2)), CAST(100.00 AS Decimal(7, 2)), N'HH010')
+GO
+ALTER TABLE [dbo].[ChiTietHoaDon]  WITH CHECK ADD  CONSTRAINT [FK_ChiTietHoaDon_CoSo] FOREIGN KEY([MaCoSo])
+REFERENCES [dbo].[CoSo] ([MaCoSo])
+GO
+ALTER TABLE [dbo].[ChiTietHoaDon] CHECK CONSTRAINT [FK_ChiTietHoaDon_CoSo]
+GO
+ALTER TABLE [dbo].[ChiTietHoaDon]  WITH CHECK ADD  CONSTRAINT [FK_ChiTietHoaDon_HangHoa] FOREIGN KEY([MaHH])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[ChiTietHoaDon] CHECK CONSTRAINT [FK_ChiTietHoaDon_HangHoa]
+GO
+ALTER TABLE [dbo].[ChiTietHoaDon]  WITH CHECK ADD  CONSTRAINT [FK_ChiTietHoaDon_HoaDon1] FOREIGN KEY([MaHD])
+REFERENCES [dbo].[HoaDon] ([MaHD])
+GO
+ALTER TABLE [dbo].[ChiTietHoaDon] CHECK CONSTRAINT [FK_ChiTietHoaDon_HoaDon1]
+GO
+ALTER TABLE [dbo].[ChiTietPhieuNhap]  WITH CHECK ADD  CONSTRAINT [FK_ChiTietPhieuNhap_HangHoa] FOREIGN KEY([MaHangHoa])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[ChiTietPhieuNhap] CHECK CONSTRAINT [FK_ChiTietPhieuNhap_HangHoa]
+GO
+ALTER TABLE [dbo].[ChiTietPhieuNhap]  WITH CHECK ADD  CONSTRAINT [FK_ChiTietPhieuNhap_PhieuNhap] FOREIGN KEY([MaPhieuNhap])
+REFERENCES [dbo].[PhieuNhap] ([MaPhieuNhap])
+GO
+ALTER TABLE [dbo].[ChiTietPhieuNhap] CHECK CONSTRAINT [FK_ChiTietPhieuNhap_PhieuNhap]
+GO
+ALTER TABLE [dbo].[GioHang]  WITH CHECK ADD  CONSTRAINT [FK_GioHang_HangHoa] FOREIGN KEY([MaHangHoa])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[GioHang] CHECK CONSTRAINT [FK_GioHang_HangHoa]
+GO
+ALTER TABLE [dbo].[GioHang]  WITH CHECK ADD  CONSTRAINT [FK_GioHang_TaiKhoan] FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+GO
+ALTER TABLE [dbo].[GioHang] CHECK CONSTRAINT [FK_GioHang_TaiKhoan]
+GO
+ALTER TABLE [dbo].[HangHoaOCoSo]  WITH CHECK ADD  CONSTRAINT [FK_HangHoaOCoSo_CoSo] FOREIGN KEY([MaCoSo])
+REFERENCES [dbo].[CoSo] ([MaCoSo])
+GO
+ALTER TABLE [dbo].[HangHoaOCoSo] CHECK CONSTRAINT [FK_HangHoaOCoSo_CoSo]
+GO
+ALTER TABLE [dbo].[HangHoaOCoSo]  WITH CHECK ADD  CONSTRAINT [FK_HangHoaOCoSo_HangHoa] FOREIGN KEY([MaHangHoa])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[HangHoaOCoSo] CHECK CONSTRAINT [FK_HangHoaOCoSo_HangHoa]
+GO
+ALTER TABLE [dbo].[HoaDon]  WITH CHECK ADD  CONSTRAINT [FK_HoaDon_TaiKhoan] FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+GO
+ALTER TABLE [dbo].[HoaDon] CHECK CONSTRAINT [FK_HoaDon_TaiKhoan]
+GO
+ALTER TABLE [dbo].[HoiVien]  WITH CHECK ADD  CONSTRAINT [FK_HoiVien_TaiKhoan1] FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+GO
+ALTER TABLE [dbo].[HoiVien] CHECK CONSTRAINT [FK_HoiVien_TaiKhoan1]
+GO
+ALTER TABLE [dbo].[MayChay]  WITH CHECK ADD  CONSTRAINT [FK_MayChay_HangHoa] FOREIGN KEY([MaHangHoa])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[MayChay] CHECK CONSTRAINT [FK_MayChay_HangHoa]
+GO
+ALTER TABLE [dbo].[NhanVien]  WITH CHECK ADD  CONSTRAINT [FK_NhanVien_TaiKhoan] FOREIGN KEY([MaCoSo])
+REFERENCES [dbo].[CoSo] ([MaCoSo])
+GO
+ALTER TABLE [dbo].[NhanVien] CHECK CONSTRAINT [FK_NhanVien_TaiKhoan]
+GO
+ALTER TABLE [dbo].[NhanVien]  WITH CHECK ADD  CONSTRAINT [FK_NhanVien_TaiKhoan1] FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+GO
+ALTER TABLE [dbo].[NhanVien] CHECK CONSTRAINT [FK_NhanVien_TaiKhoan1]
+GO
+ALTER TABLE [dbo].[PhanQuyen]  WITH CHECK ADD  CONSTRAINT [FK_PhanQuyen_Quyen] FOREIGN KEY([IDChucNang])
+REFERENCES [dbo].[ChucNang] ([IDChucNang])
+GO
+ALTER TABLE [dbo].[PhanQuyen] CHECK CONSTRAINT [FK_PhanQuyen_Quyen]
+GO
+ALTER TABLE [dbo].[PhanQuyen]  WITH CHECK ADD  CONSTRAINT [FK_PhanQuyen_Quyen1] FOREIGN KEY([IDQuyen])
+REFERENCES [dbo].[Quyen] ([IDQuyen])
+GO
+ALTER TABLE [dbo].[PhanQuyen] CHECK CONSTRAINT [FK_PhanQuyen_Quyen1]
+GO
+ALTER TABLE [dbo].[PhieuNhap]  WITH CHECK ADD  CONSTRAINT [FK_PhieuNhap_NhanVien] FOREIGN KEY([MaNV])
+REFERENCES [dbo].[NhanVien] ([MaNV])
+GO
+ALTER TABLE [dbo].[PhieuNhap] CHECK CONSTRAINT [FK_PhieuNhap_NhanVien]
+GO
+ALTER TABLE [dbo].[Ta]  WITH CHECK ADD  CONSTRAINT [FK_Ta_HangHoa] FOREIGN KEY([MaHangHoa])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[Ta] CHECK CONSTRAINT [FK_Ta_HangHoa]
+GO
+ALTER TABLE [dbo].[TaiKhoan]  WITH CHECK ADD  CONSTRAINT [FK_TaiKhoan_Quyen] FOREIGN KEY([IDQuyen])
+REFERENCES [dbo].[Quyen] ([IDQuyen])
+GO
+ALTER TABLE [dbo].[TaiKhoan] CHECK CONSTRAINT [FK_TaiKhoan_Quyen]
+GO
+ALTER TABLE [dbo].[Xa]  WITH CHECK ADD  CONSTRAINT [FK_Xa_HangHoa] FOREIGN KEY([MaHangHoa])
+REFERENCES [dbo].[HangHoa] ([MaHangHoa])
+GO
+ALTER TABLE [dbo].[Xa] CHECK CONSTRAINT [FK_Xa_HangHoa]
+GO

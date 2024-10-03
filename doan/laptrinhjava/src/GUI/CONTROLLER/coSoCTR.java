@@ -199,43 +199,43 @@ public class coSoCTR {
                             JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                    else if(tempBtn.getActionCommand().equals(cmtNut[1])){ //xóa cơ sở
-                        int i=dataTable.getSelectedRow();
-                        if(i>=0){
-                            Component[] components = bangChinhSua.getComponents();
-                            csList.removeRow(i);
-                            for (Component component : components) {
-                                if (component instanceof JPanel) {
-                                    JPanel tempPanel = (JPanel) component;
-                                    Component[] smallComponents = tempPanel.getComponents();
-                                    for (Component smallComponent : smallComponents) {
-                                        if(smallComponent instanceof JTextField){
-                                            JTextField textField = (JTextField) smallComponent;
-                                            if(bllQuanLyDanhSach.xoaCS(textField.getText())){
-                                                textField.setText("");
-                                                JOptionPane.showMessageDialog(null, "Xóa thành công!", "Xóa cơ sở", JOptionPane.INFORMATION_MESSAGE);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            for (Component component : components) {
-                                if (component instanceof JPanel) {
-                                    JPanel tempPanel = (JPanel) component;
-                                    Component[] smallComponents = tempPanel.getComponents();
-                                    for (Component smallComponent : smallComponents) {
-                                        if(smallComponent instanceof JTextField){
-                                            JTextField textField = (JTextField) smallComponent;
-                                                textField.setText("");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if(tempBtn.getActionCommand().equals(cmtNut[2])){ // sửa thông tin cơ sở
+                    // else if(tempBtn.getActionCommand().equals(cmtNut[1])){ //xóa cơ sở
+                    //     int i=dataTable.getSelectedRow();
+                    //     if(i>=0){
+                    //         Component[] components = bangChinhSua.getComponents();
+                    //         csList.removeRow(i);
+                    //         for (Component component : components) {
+                    //             if (component instanceof JPanel) {
+                    //                 JPanel tempPanel = (JPanel) component;
+                    //                 Component[] smallComponents = tempPanel.getComponents();
+                    //                 for (Component smallComponent : smallComponents) {
+                    //                     if(smallComponent instanceof JTextField){
+                    //                         JTextField textField = (JTextField) smallComponent;
+                    //                         if(bllQuanLyDanhSach.xoaCS(textField.getText())){
+                    //                             textField.setText("");
+                    //                             JOptionPane.showMessageDialog(null, "Xóa thành công!", "Xóa cơ sở", JOptionPane.INFORMATION_MESSAGE);
+                    //                             break;
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             }
+                    //             break;
+                    //         }
+                    //         for (Component component : components) {
+                    //             if (component instanceof JPanel) {
+                    //                 JPanel tempPanel = (JPanel) component;
+                    //                 Component[] smallComponents = tempPanel.getComponents();
+                    //                 for (Component smallComponent : smallComponents) {
+                    //                     if(smallComponent instanceof JTextField){
+                    //                         JTextField textField = (JTextField) smallComponent;
+                    //                             textField.setText("");
+                    //                     }
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    else if(tempBtn.getActionCommand().equals(cmtNut[1])){ // sửa thông tin cơ sở
                         int i= dataTable.getSelectedRow();
                         ArrayList<String> thongTinMoi = new ArrayList<String>();
                         if (i>=0){
@@ -291,7 +291,7 @@ public class coSoCTR {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin vui lòng chọn 1 dòng để sửa", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                    else if(tempBtn.getActionCommand().equals(cmtNut[3])){//tìm kiếm cơ sở
+                    else if(tempBtn.getActionCommand().equals(cmtNut[2])){//tìm kiếm cơ sở
                     	ArrayList<String> thongTin = new ArrayList<String>();
                         Component[] components = bangChinhSua.getComponents();
                         for(Component component : components) {

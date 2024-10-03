@@ -13,7 +13,6 @@ import DTO.NhanVien;
 import DTO.DTOTaiKhoan;
 import GUI.CONTROLLER.DuyetDonHangCTR;
 import GUI.CONTROLLER.ExcelCTR;
-import GUI.CONTROLLER.MuaHangCTR;
 import GUI.CONTROLLER.QuanLyBangNhanVienCTR;
 import GUI.CONTROLLER.QuanLyThietBiCTR;
 //import GUI.CONTROLLER.XuatExcelCTR;
@@ -368,22 +367,22 @@ public class GUIAdmin{
         memberMNG.setFocusPainted(false);
         managementPanel.add(memberMNG);
         
-        //chức năng mua hàng
-        JButton buyBTN = new JButton("Mua Hàng");
-        buyBTN.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
-                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
-                rightPanel.repaint(); // Vẽ lại JPanel
-        		rightPanel.setLayout(null);
-                rightPanel.add(new MuaHangCTR("TK082")); //id tài khoản admin
-        	}
-        });
-        buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        buyBTN.setBounds(23, 400, 300, 50);
-        buyBTN.setFocusPainted(false);
-        buyBTN.setIcon(new ImageIcon(scaleCartIcon));
-        managementPanel.add(buyBTN);
+        // //chức năng mua hàng
+        // JButton buyBTN = new JButton("Mua Hàng");
+        // buyBTN.addActionListener(new ActionListener() {
+        // 	public void actionPerformed(ActionEvent e) {
+        // 		rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+        //         rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+        //         rightPanel.repaint(); // Vẽ lại JPanel
+        // 		rightPanel.setLayout(null);
+        //         rightPanel.add(new MuaHangCTR("TK082")); //id tài khoản admin
+        // 	}
+        // });
+        // buyBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
+        // buyBTN.setBounds(23, 400, 300, 50);
+        // buyBTN.setFocusPainted(false);
+        // buyBTN.setIcon(new ImageIcon(scaleCartIcon));
+        // managementPanel.add(buyBTN);
         
         JButton purchaseOrderBTN = new JButton("Duyệt phiếu nhập");
         purchaseOrderBTN.addActionListener(new ActionListener() {
@@ -396,7 +395,7 @@ public class GUIAdmin{
             }
         });
         purchaseOrderBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        purchaseOrderBTN.setBounds(23, 520, 300, 50);
+        purchaseOrderBTN.setBounds(23, 460, 300, 50);
         purchaseOrderBTN.setIcon(new ImageIcon(scaleBillIcon));
         purchaseOrderBTN.setFocusPainted(false);
         managementPanel.add(purchaseOrderBTN);
@@ -430,7 +429,7 @@ public class GUIAdmin{
 			}
         });
         XuatExcelBTN.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 23));
-        XuatExcelBTN.setBounds(23, 460, 300, 50);
+        XuatExcelBTN.setBounds(23, 400, 300, 50);
         XuatExcelBTN.setFocusPainted(false);
         XuatExcelBTN.setIcon(new ImageIcon(scaleExcelIcon));
         managementPanel.add(XuatExcelBTN);

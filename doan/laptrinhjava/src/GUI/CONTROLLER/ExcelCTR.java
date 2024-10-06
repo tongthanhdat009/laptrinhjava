@@ -123,6 +123,33 @@ public class ExcelCTR extends JPanel{
 			acceptBTN.setBounds(1015, 101, 130, 50);
 			fileInforPN.add(acceptBTN);
 			
+			// lấy danh sách mã tài khoản
+    		tenCotHV.add("Mã hội viên");
+            tenCotHV.add("Họ tên hội viên");
+            tenCotHV.add("Giới tính");
+            tenCotHV.add("Gmail");
+            tenCotHV.add("Mã Tài khoản");
+            tenCotHV.add("Số điện thoại");
+            tenCotHV.add("Ngày sinh");
+            tenCotHV.add("Tài khoản");
+            tenCotHV.add("Mật khẩu");
+            for (int i = 0; i < tenCotHV.size(); i++) {
+                hvList.addColumn(tenCotHV.get(i));
+            }
+            
+            model.addColumn("Mã nhân viên");
+            model.addColumn("Họ và tên");
+            model.addColumn("Giới tính");
+            model.addColumn("Ngày sinh");
+            model.addColumn("Số điện thoại");
+            model.addColumn("Số căn cước");
+            model.addColumn("Mã cơ sở");
+            model.addColumn("Vai trò");
+            model.addColumn("Lương");
+            model.addColumn("Tài khoản");
+            model.addColumn("Mật khẩu");
+            model.addColumn("ID Tài Khoản");
+            
 			JComboBox comboBox = new JComboBox();
 			comboBox.setFont(new Font("Times New Roman", Font.BOLD, 25));
 			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Danh sách", "Hội viên", "Nhân viên"}));
@@ -139,30 +166,18 @@ public class ExcelCTR extends JPanel{
 	                
 	                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
 	                
-	                
 	                ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
-	                tenCotHV.add("Mã hội viên");
-	                tenCotHV.add("Họ tên hội viên");
-	                tenCotHV.add("Giới tính");
-	                tenCotHV.add("Gmail");
-	                tenCotHV.add("Mã Tài khoản");
-	                tenCotHV.add("Số điện thoại");
-	                tenCotHV.add("Ngày sinh");
-	                tenCotHV.add("Tài khoản");
-	                tenCotHV.add("Mật khẩu");
+	                ArrayList<DTOTaiKhoan> dsTK = bllQuanLyDanhSach.layDSTKHV(); 
 	                
 	                switch (selectedOption) {
 	                case "Hội viên":
+	                	hvList.setRowCount(0);
 	                	dataPanel.removeAll();
 	                	dataPanel.revalidate();
 	                    dataPanel.repaint();
-	                	// lấy danh sách mã tài khoản
-	            		ArrayList<DTOTaiKhoan> dsTK = bllQuanLyDanhSach.layDSTKHV(); 
-	            		
+		                
 	                    // tạo model bảng
-	                    for (int i = 0; i < tenCotHV.size(); i++) {
-	                        hvList.addColumn(tenCotHV.get(i));
-	                    }
+	                    
 	                    System.out.println(dsTK.size() +" "+dsHV.size() );
 	                    // Thêm dữ liệu vào bảng
 	                    for (int i = 0; i < dsHV.size(); i++) {
@@ -183,12 +198,13 @@ public class ExcelCTR extends JPanel{
 	                    dataTable.setFont(new Font("Times New Roman", 1, 15));
 	                    dataTable.setRowHeight(20);
 	                    scrollPane = new JScrollPane(dataTable);
-	                    scrollPane.setBounds(3, 0, 1200-20, 900-250);
+	                    scrollPane.setBounds(3, 0, 1200-20, 900-290);
 	                    dataPanel.add(scrollPane);
 	                    
 	                    //sự kiện cho nút xác nhận
 	                	break;
 	                case "Nhân viên":
+	                	model.setRowCount(0);
 	                	dataPanel.removeAll();
 	                	dataPanel.revalidate();
 	                    dataPanel.repaint();
@@ -197,20 +213,7 @@ public class ExcelCTR extends JPanel{
 		                dsNV = bllQuanLyDanhSach.getDataNhanVien();
 		                ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
 	                    bang.setRowHeight(30);
-	                    model.addColumn("Mã nhân viên");
-	                    model.addColumn("Họ và tên");
-	                    model.addColumn("Giới tính");
-	                    model.addColumn("Ngày sinh");
-	                    model.addColumn("Số điện thoại");
-	                    model.addColumn("Số căn cước");
-	                    model.addColumn("Mã cơ sở");
-	                    model.addColumn("Vai trò");
-	                    model.addColumn("Lương");
-	                    model.addColumn("Tài khoản");
-	                    model.addColumn("Mật khẩu");
-	                    model.addColumn("ID Tài Khoản");
 	                    
-	                    model.setRowCount(0);
 	                    System.out.println(dsNV.size() +" "+ dsQuyen.size());
 	                    
 	                    for(int i = 0; i < dsNV.size();i++) {
@@ -225,7 +228,7 @@ public class ExcelCTR extends JPanel{
 	                    bang.setFont(new Font("Times New Roman", 1, 15));
 	                    bang.setRowHeight(20);
 	                    JScrollPane scrollPane1 = new JScrollPane(bang);
-	                    scrollPane1.setBounds(3, 0, 1200-20, 900-250);
+	                    scrollPane1.setBounds(3, 0, 1200-20, 900-290);
 	                    dataPanel.add(scrollPane1);
 	                    
 	                default:

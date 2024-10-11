@@ -349,8 +349,6 @@ public class GUISignup extends JFrame {
 				char[] confirmPass = confirmPassTF.getPassword();
 				String confirmPassString = new String(confirmPass);
 
-				
-
 //				regex account
 				String regex_account = "^[a-zA-Z0-9]{5,20}$";
 				Pattern p_account = Pattern.compile(regex_account);
@@ -388,6 +386,16 @@ public class GUISignup extends JFrame {
 	            	JOptionPane.showMessageDialog(GUISignup.this, "Thông tin không được để trống","Error",JOptionPane.ERROR_MESSAGE);
 	            	return;
 	            }
+				//kiểm tra tồn tại Mail
+				else if(bllDangKy.kiemTraTonTaiMail(emailTF.getText().trim())){
+					JOptionPane.showMessageDialog(null, "Mail đã tồn tại vui lòng thử lại.","Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				//kiểm tra tồn tại số điện thoại
+				else if(bllDangKy.kiemTraTonTaiSoDienThoai(phoneNumberTF.getText().trim())){
+					JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại vui lòng thử lại.","Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				else if(!m_email.matches()) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Email không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);
 					return;
@@ -408,11 +416,13 @@ public class GUISignup extends JFrame {
 					JOptionPane.showMessageDialog(GUISignup.this, "Mật khẩu phải từ 6 kí tự trở lên bao gồm kí tự số và chữ!","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+
 				//xác thực mật khẩu
 				else if(!passString.trim().equals(confirmPassString)) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Xác thực mật khẩu không chính xác","Error",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+
 				//Kiểm tra ngày sinh hợp lệ
 				else if(!isValidDate(selectedDay, selectedMonth, selectedYear)) {
 					JOptionPane.showMessageDialog(GUISignup.this, "Ngày sinh của bạn không hợp lệ","Error",JOptionPane.ERROR_MESSAGE);

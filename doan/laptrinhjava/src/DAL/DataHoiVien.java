@@ -295,4 +295,33 @@ public class DataHoiVien {
     	return false;
     }
     
+    public boolean kiemTraMailTonTai(String mail) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM HoiVien WHERE Gmail = ?");
+            ps.setString(1, mail);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean kiemTraSDTTonTai(String sdt){
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM HoiVien WHERE SoDienThoai = ?");
+            ps.setString(1, sdt);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

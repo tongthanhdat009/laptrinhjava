@@ -37,7 +37,6 @@ import BLL.BLLQuanLyDanhSach;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
 import DTO.dsHoiVien;
-import GUI.GUISignup;
 import GUI.renderer;
 
 public class hoiVienCTR {
@@ -419,7 +418,7 @@ public class hoiVienCTR {
                             DTOTaiKhoan tempTK = new DTOTaiKhoan(thongTinMoi.get(4),
                             		thongTinMoi.get(7),
                             		thongTinMoi.get(8),
-                            		"Q0001");
+                            		"Q0001","OFF");
                             if(bllQuanLyDanhSach.themTK(tempTK)&&bllQuanLyDanhSach.themHV(tempHV)){
                                 JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công hội viên và tài khoản thành công!");
                                 hvList.addRow(thongTinMoi.toArray());
@@ -622,7 +621,7 @@ public class hoiVienCTR {
                                 DTOTaiKhoan tempTK = new DTOTaiKhoan(thongTinMoi.get(4),
                                 		thongTinMoi.get(7),
                                 		thongTinMoi.get(8),
-                                		"Q0001");
+                                		"Q0001","OFF");
                                 if (bllQuanLyDanhSach.suaThongTinTK(tempTK)&&bllQuanLyDanhSach.suaThongTinHV(tempHV)) {
                                     JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin", JOptionPane.DEFAULT_OPTION);
                                     for (int j=0;j<thongTinMoi.size();j++) {

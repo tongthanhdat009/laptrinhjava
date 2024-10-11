@@ -24,8 +24,13 @@ public class BLLDangKy {
 	public boolean themTKhoan(DTOTaiKhoan tk) {
 		return dataTaiKhoan.themTK(tk);
 	}
-	
 	public boolean kiemTraTenTK(String tenTaiKhoan) {
 		return dataTaiKhoan.kiemTraTrungLapTK(tenTaiKhoan);
+	}
+	public boolean kiemTraTonTaiMail(String mail){
+		return datahoivien.kiemTraMailTonTai(mail);
+	}
+	public boolean kiemTraTonTaiSoDienThoai(String sdt){
+		return datahoivien.kiemTraSDTTonTai(sdt);
 	}
 }

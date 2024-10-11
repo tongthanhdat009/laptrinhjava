@@ -8,6 +8,7 @@ import DTO.DTOTaiKhoan;
 public class BLLDangNhap {
     private DataTaiKhoan data;
     private DataCoSo dataCoSo;
+    private DataTaiKhoan dataTaiKhoan;
     public BLLDangNhap()
     {
     	dataCoSo = new DataCoSo();
@@ -23,4 +24,9 @@ public class BLLDangNhap {
     public ArrayList<String> dsMaCS(){
     	return dataCoSo.DSMaCoSoARR();
     }
+    // public boolean kiemTraPhienDangNhap(DTOTaiKhoan tk){
+    //     if(dataTaiKhoan.kiemTraPhienDangNhap(tk)){
+
+    //     }
+    // }
 }

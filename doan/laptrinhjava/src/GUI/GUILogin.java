@@ -7,6 +7,7 @@ import DTO.DTOTaiKhoan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class GUILogin extends JFrame implements ActionListener{
@@ -14,6 +15,8 @@ public class GUILogin extends JFrame implements ActionListener{
     JPasswordField pass = new JPasswordField();
     BLLDangNhap dangNhap = new BLLDangNhap();
     JButton go;
+    private int gioiHan = 5;
+    private int demSoLanDangNhap = 0;
     //logo
     ImageIcon logo = new ImageIcon("src/asset/img/label/logo.png");
     Image scaleLogoIcon = logo.getImage().getScaledInstance(300, 300,Image.SCALE_DEFAULT);
@@ -79,7 +82,7 @@ public class GUILogin extends JFrame implements ActionListener{
             dangNhapKieuKhac.add(xb);
     
             dangNhap.add(nhapLieu);
-            dangNhap.add(dangNhapKieuKhac);
+            // dangNhap.add(dangNhapKieuKhac);
     
             JButton dangKy = new JButton("ĐĂNG KÝ TÀI KHOẢN");
             dangKy.setBackground(Color.white);
@@ -137,19 +140,46 @@ public class GUILogin extends JFrame implements ActionListener{
         {
             if(username.getText().isEmpty()||new String(pass.getPassword()).isEmpty()) JOptionPane.showMessageDialog(this, "Thiếu thông tin đăng nhập");
             else 
-            {
+            {    
+                
+                
                 String trangThaiDangNhap;
                 trangThaiDangNhap = dangNhap.KiemTraDangNhap(username.getText(), new String(pass.getPassword()));
-                if( trangThaiDangNhap.equals("Sai mật khẩu") ||
-                    trangThaiDangNhap.equals("Tài khoản không tồn tại") ||
+                if( trangThaiDangNhap.equals("Tài khoản không tồn tại") ||
                     trangThaiDangNhap.equals("Lỗi mở database"))
                 	{
                 		JOptionPane.showMessageDialog(this,trangThaiDangNhap);
                 		return;
                 	}
+                else if(trangThaiDangNhap.equals("Sai mật khẩu")){
+                    demSoLanDangNhap++;
+                    JOptionPane.showMessageDialog(null, "Sai mật khẩu, số lần đăng nhập của bạn còn "+(gioiHan - demSoLanDangNhap)+".","Đăng nhập", JOptionPane.ERROR_MESSAGE);
+                    if(demSoLanDangNhap==gioiHan){
+                        demSoLanDangNhap=0;
+                        final int timeLeft[] = {60};
+                        Timer timer = new Timer(1000, new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e){
+                                if(timeLeft[0]>0){
+                                    timeLeft[0]--;
+                                    System.out.println(timeLeft[0]);
+                                    go.setEnabled(false);
+                                }
+                                else{
+                                    ((Timer)e.getSource()).stop();
+                                    JOptionPane.showMessageDialog(null,"Bạn có thể đăng nhập trở lại!");
+                                    go.setEnabled( true);
+                                }
+                                // Hiển thị dialog và chờ cho đến khi người dùng bấm "OK" hoặc hết giờ
+                            } 
+                        });
+                        timer.start();
+                        JOptionPane.showMessageDialog(null, "Vui lòng chờ 1 phút để có thể đăng nhập lại!.","Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
                 else {
                     String[] parts = trangThaiDangNhap.split(":");
-                    DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim());
+                    DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim(), "ON");
                     if(parts[3].trim().equals("Q0004")) { //mã quyền admin
                     	ArrayList<String> options = dangNhap.dsMaCS();
                         JComboBox<String> comboBox = new JComboBox<String>(options.toArray(new String[0]));

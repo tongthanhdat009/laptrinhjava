@@ -5,11 +5,21 @@ public class DTOTaiKhoan {
 	private String taiKhoan;
 	private String matKhau;
 	private String IDQuyen;
-	public DTOTaiKhoan(String IDTaiKhoan, String taiKhoan, String matKhau, String IDQuyen) {
+	private String Status;//trạng thái hoạt động
+	
+	public DTOTaiKhoan(String IDTaiKhoan, String taiKhoan, String matKhau, String IDQuyen, String Status) {
 		setIDTaiKhoan(IDTaiKhoan);
 		setTaiKhoan(taiKhoan);
 		setMatKhau(matKhau);
 		setIDQuyen(IDQuyen);
+		setStatus("OFF");
+		
+	}
+	public String getStatus() {
+		return Status;
+	}
+	public void setStatus(String status) {
+		Status = status;
 	}
 	public String getIDTaiKhoan() {
 		return IDTaiKhoan;

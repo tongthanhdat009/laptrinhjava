@@ -110,7 +110,7 @@ public class QuanLyMayChay extends JPanel {
                 JLabel IDGoodsLB = new JLabel("Mã hàng hóa:");
                 IDGoodsLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
                 IDGoodsLB.setBounds(10, 39, 166, 27);
-                thongTin.add(IDGoodsLB);
+                // thongTin.add(IDGoodsLB);
                 
                 JLabel goodsNameLB = new JLabel("Tên hàng hóa:");
                 goodsNameLB.setLabelFor(goodsNameTF);

@@ -178,6 +178,7 @@ public class GUIAdmin{
                     JOptionPane.showMessageDialog(null,"Trạng thái tài khoản chưa được thay đổi","Error",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                adminFrame.dispose();
             }
         });
         mainPanel.setLocation(0, 0);

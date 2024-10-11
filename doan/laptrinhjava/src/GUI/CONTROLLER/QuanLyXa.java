@@ -28,7 +28,7 @@ import java.awt.Font;
 
 
 public class QuanLyXa extends JPanel {
-    private JTextField IDGoodsTF;
+    private String maXa;
     private JTextField goodsNameTF;
     private JTextField picTF;
     private JTextField loaiXaTF;
@@ -81,10 +81,6 @@ public class QuanLyXa extends JPanel {
         thongTin.setLayout(null);
 
         // Initialize JTextFields
-        IDGoodsTF = new JTextField();
-        IDGoodsTF.setBounds(145, 30, 149, 36);
-        thongTin.add(IDGoodsTF);
-        IDGoodsTF.setColumns(10);
 
         goodsNameTF = new JTextField();
         goodsNameTF.setBounds(145, 77, 149, 36);
@@ -127,11 +123,6 @@ public class QuanLyXa extends JPanel {
         thongTin.add(taiTrongTF);
 
         // Initialize JLabel
-        JLabel IDGoodsLB = new JLabel("Mã hàng hóa:");
-        IDGoodsLB.setLabelFor(IDGoodsTF);
-        IDGoodsLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-        IDGoodsLB.setBounds(10, 39, 147, 27);
-        thongTin.add(IDGoodsLB);
 
         JLabel goodsNameLB = new JLabel("Tên hàng hóa:");
         goodsNameLB.setLabelFor(goodsNameTF);
@@ -217,7 +208,7 @@ public class QuanLyXa extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 int row = bangXa.getSelectedRow();
                 if (row >= 0) {
-                    IDGoodsTF.setText(modelXa.getValueAt(row, 0).toString().trim());
+                    maXa = modelXa.getValueAt(row, 0).toString().trim();
                     goodsNameTF.setText(modelXa.getValueAt(row, 1).toString().trim());
                     loaiXaTF.setText(modelXa.getValueAt(row, 2).toString().trim());
                     materialTF.setText(modelXa.getValueAt(row, 3).toString().trim());
@@ -231,18 +222,47 @@ public class QuanLyXa extends JPanel {
         });
         them.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                if(goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||
-                goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||goodsNameTF.getText().equals("")||
-                goodsNameTF.getText().equals("")) 
+                if(goodsNameTF.getText().equals("")||loaiXaTF.getText().equals("")||materialTF.getText().equals("")||
+                lengthTF.getText().equals("")||duongKinhTF.getText().equals("")||chieuCaoTF.getText().equals("")||taiTrongTF.getText().equals("")||
+                picTF.getText().equals("")) 
                 {
                     JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                     return;
                 }
-                if(!IDGoodsTF.getText().equals("")) {
-                	JOptionPane.showMessageDialog(null, "Không cần nhập mã");
-                	return;
+                String regexDecimal = "^-?\\d{1,3}(\\.\\d{1,2})?$";
+                if(!lengthTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Chiều dài không hợp lệ");
+                    return;
                 }
-                String maThietBi = "null";
+                if(!duongKinhTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Đường kính không hợp lệ");
+                    return;
+                }
+                if(!chieuCaoTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Chiều cao không hợp lệ");
+                    return;
+                }
+                if(!taiTrongTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Tải trọng không hợp lệ");
+                    return;
+                }
+                if(!(picTF.getText().substring(picTF.getText().length() - 4).equals(".png")||picTF.getText().substring(picTF.getText().length() - 4).equals(".jpg")))
+                {
+                    JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                    return;
+                }
+                if(goodsNameTF.getText().length()>50) {
+                    JOptionPane.showMessageDialog(null, "Tên phải < 50 ký tự");
+                    return;
+                }
+                if(loaiXaTF.getText().length()>20) {
+                    JOptionPane.showMessageDialog(null, "Tên phải < 20 ký tự");
+                    return;
+                }
+                if(materialTF.getText().length()>20) {
+                    JOptionPane.showMessageDialog(null, "Tên phải < 50 ký tự");
+                    return;
+                }
                 String ten = goodsNameTF.getText().trim();
                 String hinhAnh = picTF.getText().trim();
                 String loai = "Xà";
@@ -252,7 +272,7 @@ public class QuanLyXa extends JPanel {
                 float duongKinh = Float.parseFloat(duongKinhTF.getText());
                 float chieuCao = Float.parseFloat(chieuCaoTF.getText());
                 float taiTrong = Float.parseFloat(taiTrongTF.getText());
-                String kq = ql.themThietBiXa(new Xa(maThietBi, ten, hinhAnh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                String kq = ql.themThietBiXa(new Xa(maXa, ten, hinhAnh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
                 JOptionPane.showMessageDialog(null,kq);
                 modelXa.setRowCount(0);
                 ArrayList<Xa> danhSachXa = ql.layDSXa(); // Giả sử bạn có lớp dataThietBi để lấy dữ liệu
@@ -279,9 +299,42 @@ public class QuanLyXa extends JPanel {
                 	JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                 	return;
                 }
+                String regexDecimal = "^-?\\d{1,3}(\\.\\d{1,2})?$";
+                if(!lengthTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Chiều dài không hợp lệ");
+                    return;
+                }
+                if(!duongKinhTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Đường kính không hợp lệ");
+                    return;
+                }
+                if(!chieuCaoTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Chiều cao không hợp lệ");
+                    return;
+                }
+                if(!taiTrongTF.getText().matches(regexDecimal)) {
+                    JOptionPane.showMessageDialog(null, "Tải trọng không hợp lệ");
+                    return;
+                }
+                if(!(picTF.getText().substring(picTF.getText().length() - 4).equals(".png")||picTF.getText().substring(picTF.getText().length() - 4).equals(".jpg")))
+                {
+                    JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                    return;
+                }
+                if(goodsNameTF.getText().length()>50) {
+                    JOptionPane.showMessageDialog(null, "Tên phải <= 50 ký tự");
+                    return;
+                }
+                if(loaiXaTF.getText().length()>20) {
+                    JOptionPane.showMessageDialog(null, "Tên loại phải <= 20 ký tự");
+                    return;
+                }
+                if(materialTF.getText().length()>20) {
+                    JOptionPane.showMessageDialog(null, "Chất liệu phải <= 20 ký tự");
+                    return;
+                }
                 else 
                 {
-                    String maThietBi = IDGoodsTF.getText();
                     String ten = goodsNameTF.getText();
                     String hinhAnh = picTF.getText();
                     String loai = "Xà";
@@ -291,7 +344,7 @@ public class QuanLyXa extends JPanel {
                     float duongKinh = Float.parseFloat(duongKinhTF.getText());
                     float chieuCao = Float.parseFloat(chieuCaoTF.getText());
                     float taiTrong = Float.parseFloat(taiTrongTF.getText());
-                    String kq = ql.SuaXa(new Xa(maThietBi, ten, hinhAnh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
+                    String kq = ql.SuaXa(new Xa(maXa, ten, hinhAnh, loai, loaiXa, chatLieu, chieuDai, duongKinh, chieuCao, taiTrong));
                     JOptionPane.showMessageDialog(null, kq);
                     modelXa.setRowCount(0);
                     ArrayList<Xa> danhSachXa = ql.layDSXa();

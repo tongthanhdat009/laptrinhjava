@@ -28,7 +28,7 @@ import java.awt.Font;
 import javax.swing.border.LineBorder;
 
 public class QuanLyTa extends JPanel {
-	private JTextField IDGoodsTF;
+	private String maThietBi;
 	private JTextField goodsNameTF;
 	private JTextField picTF;
 	private JTextField weightTF;
@@ -78,11 +78,7 @@ public class QuanLyTa extends JPanel {
                 thongTin.setBounds(0, 100, 1200, 213);
                 add(thongTin);
                 thongTin.setLayout(null);
-                
-                IDGoodsTF = new JTextField();
-                IDGoodsTF.setBounds(244, 30, 160, 36);
-                thongTin.add(IDGoodsTF);
-                IDGoodsTF.setColumns(10);
+
                 
                 goodsNameTF = new JTextField();
                 goodsNameTF.setBounds(244, 77, 160, 36);
@@ -108,12 +104,6 @@ public class QuanLyTa extends JPanel {
                 colorTF.setBounds(568, 80, 190, 36);
                 thongTin.add(colorTF);
                 colorTF.setColumns(10);
-                
-                JLabel IDGoodsLB = new JLabel("Mã hàng hóa:");
-                IDGoodsLB.setLabelFor(IDGoodsTF);
-                IDGoodsLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
-                IDGoodsLB.setBounds(10, 39, 160, 27);
-                thongTin.add(IDGoodsLB);
                 
                 JLabel goodsNameLB = new JLabel("Tên hàng hóa:");
                 goodsNameLB.setLabelFor(goodsNameTF);
@@ -175,12 +165,11 @@ public class QuanLyTa extends JPanel {
                             ta.getMauSac(),
                     });
                 }
-
                 bang.addMouseListener(new MouseAdapter() {
                      public void mouseClicked(MouseEvent e) {
                         int row = bang.getSelectedRow();
                         if (row >= 0) {
-                            IDGoodsTF.setText(model.getValueAt(row, 0).toString().trim());
+                            maThietBi = model.getValueAt(row, 0).toString().trim();
                             goodsNameTF.setText(model.getValueAt(row, 1).toString().trim());
                             picTF.setText(model.getValueAt(row, 2).toString().trim());
                             weightTF.setText(model.getValueAt(row, 3).toString().trim());
@@ -205,14 +194,30 @@ public class QuanLyTa extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                                 return;
                             } 
-                       
-                            // Kiểm tra nếu người dùng nhập mã thì cảnh báo
-                            if (!IDGoodsTF.getText().equals("")) {
-                                JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                            String regexInt = "^-?\\d+$";
+                            if(!weightTF.getText().matches(regexInt)) {
+                                JOptionPane.showMessageDialog(null, "Khối lượng phải là số");
                                 return;
                             }
-
-
+                            if(!(picTF.getText().substring(picTF.getText().length() - 4).equals(".png")||picTF.getText().substring(picTF.getText().length() - 4).equals(".jpg")))
+                            {
+                                JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                                return;
+                            }
+                            if(goodsNameTF.getText().length()>50) {
+                                JOptionPane.showMessageDialog(null, "Tên phải < 50 ký tự");
+                                return;
+                            }
+                            if(materialTF.getText().length()>50) {
+                                JOptionPane.showMessageDialog(null, "Chất liệu phải < 50 ký tự");
+                                return;
+                            }
+                            if(colorTF.getText().length()>50) {
+                                JOptionPane.showMessageDialog(null, "Màu sắc phải < 50 ký tự");
+                                return;
+                            }
+                       
+                            // Kiểm tra nếu người dùng nhập mã thì cảnh báo
                             String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
                             String ten = goodsNameTF.getText();
                             String hinhAnh = picTF.getText();
@@ -239,8 +244,7 @@ public class QuanLyTa extends JPanel {
                 });
                 sua.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                    	System.out.println("a");
-                        if (IDGoodsTF.getText().equals("") || goodsNameTF.getText().equals("") || 
+                        if (goodsNameTF.getText().equals("") || 
                             picTF.getText().equals("") ||
                             weightTF.getText().equals("") || 
                             materialTF.getText().equals("") || colorTF.getText().equals("")) 
@@ -248,18 +252,37 @@ public class QuanLyTa extends JPanel {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                             return;
                         } 
+                        String regexInt = "^-?\\d+$";
+                        System.out.println(weightTF.getText());
+                        if(!weightTF.getText().matches(regexInt)) {
+                            JOptionPane.showMessageDialog(null, "Khối lượng phải là số");
+                            return;
+                        }
+                        if(!(picTF.getText().substring(picTF.getText().length() - 4).equals(".png")||picTF.getText().substring(picTF.getText().length() - 4).equals(".jpg")))
+                        {
+                            JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                            return;
+                        }
+                        if(goodsNameTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Tên phải < 50 ký tự");
+                            return;
+                        }
+                        if(materialTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Chất liệu phải < 50 ký tự");
+                            return;
+                        }
+                        if(colorTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Màu sắc phải < 50 ký tự");
+                            return;
+                        }
                         else 
                         {
-                            String maThietBi = IDGoodsTF.getText();
+                            System.out.print(maThietBi);
                             String ten = goodsNameTF.getText();
                             String hinhAnh = picTF.getText();
-//                            String giaThietBi = textField_3.getText();
-//                            int ngayBaoHanh = Integer.parseInt(textField_4.getText());
                             int khoiLuong = Integer.parseInt(weightTF.getText());
                             String chatLieu = materialTF.getText();
                             String mauSac = colorTF.getText();
-                
-                            // Sửa thiết bị `Ta`
                             String kq = ql.SuaTa(new Ta(maThietBi, "Tạ", ten, hinhAnh, khoiLuong, chatLieu, mauSac));
                             JOptionPane.showMessageDialog(null, kq);
                         }

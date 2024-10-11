@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 
 public class QuanLyThietBiKhac extends JPanel {
-	private JTextField IDGoodTF;
+	private String maThietBi;
 	private JTextField goodsNameTF;
 	private JTextField textField_6;
     public QuanLyThietBiKhac()
@@ -69,11 +69,6 @@ public class QuanLyThietBiKhac extends JPanel {
                 add(thongTin);
                 thongTin.setLayout(null);
                 
-                IDGoodTF = new JTextField();
-                IDGoodTF.setBounds(119, 117, 190, 36);
-                thongTin.add(IDGoodTF);
-                IDGoodTF.setColumns(10);
-                
                 goodsNameTF = new JTextField();
                 goodsNameTF.setBounds(477, 117, 190, 36);
                 thongTin.add(goodsNameTF);
@@ -83,12 +78,6 @@ public class QuanLyThietBiKhac extends JPanel {
                 textField_6.setBounds(764, 117, 190, 36);
                 thongTin.add(textField_6);
                 textField_6.setColumns(10);
-                
-                JLabel IDGoodsLB = new JLabel("Mã thiết bị:");
-                IDGoodsLB.setLabelFor(IDGoodTF);
-                IDGoodsLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
-                IDGoodsLB.setBounds(119, 79, 177, 27);
-                thongTin.add(IDGoodsLB);
                 
                 JLabel goodsNameLB = new JLabel("Tên thiết bị:");
                 goodsNameLB.setLabelFor(goodsNameTF);
@@ -130,7 +119,7 @@ public class QuanLyThietBiKhac extends JPanel {
                     public void mouseClicked(MouseEvent e) {
                         int row = bangKhac.getSelectedRow();
                         if (row >= 0) {
-                            IDGoodTF.setText(modelKhac.getValueAt(row, 0).toString().trim());
+                            maThietBi = modelKhac.getValueAt(row, 0).toString().trim();
                             goodsNameTF.setText(modelKhac.getValueAt(row, 1).toString().trim());
                             textField_6.setText(modelKhac.getValueAt(row, 2).toString().trim());
                         }
@@ -143,13 +132,16 @@ public class QuanLyThietBiKhac extends JPanel {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                             return;
                         } 
-                            // Kiểm tra nếu người dùng nhập mã thì cảnh báo
-                        if (!IDGoodTF.getText().equals("")) {
-                            JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                        if(goodsNameTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Tên phải <= 50 ký tự");
                             return;
                         }
-
-                        String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
+                        if(!(textField_6.getText().substring(textField_6.getText().length() - 4).equals(".png")||textField_6.getText().substring(textField_6.getText().length() - 4).equals(".jpg")))
+                        {
+                            JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                            return;
+                        }
+                            // Kiểm tra nếu người dùng nhập mã thì cảnh báo
                         String ten = goodsNameTF.getText();
                         String hinhAnh = textField_6.getText();
                         String loai = "Khác"; // Hoặc giá trị mặc định
@@ -171,14 +163,22 @@ public class QuanLyThietBiKhac extends JPanel {
                 });
                 sua.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (IDGoodTF.getText().equals("") || goodsNameTF.getText().equals("") || textField_6.getText().equals("")) 
+                        if (goodsNameTF.getText().equals("") || textField_6.getText().equals("")) 
                         {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                             return;
                         } 
                         else 
                         {
-                            String maThietBi = IDGoodTF.getText();
+                            if(goodsNameTF.getText().length()>50) {
+                                JOptionPane.showMessageDialog(null, "Tên phải <= 50 ký tự");
+                                return;
+                            }
+                            if(!(textField_6.getText().substring(textField_6.getText().length() - 4).equals(".png")||textField_6.getText().substring(textField_6.getText().length() - 4).equals(".jpg")))
+                            {
+                                JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                                return;
+                            }
                             String ten = goodsNameTF.getText();
                             String hinhAnh = textField_6.getText();
                             String loai = "Khác"; // Hoặc giá trị mặc định

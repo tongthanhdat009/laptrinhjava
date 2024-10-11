@@ -516,6 +516,7 @@ public class BLLQuanLyDanhSach{
     }
     public String themThietBiTa(Ta ta)
     {
+        
         if(ta.getKhoiLuong()<=0) return "Sai khối lượng";
         String ma = dataThietBi.layMaChuaTonTai();
         if(dataHangHoa.themHangHoa(new hangHoa(ma, ta.getLoaiHangHoa(), ta.getTenLoaiHangHoa(), ta.getHinhAnh()))) 

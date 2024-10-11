@@ -29,7 +29,7 @@ import java.awt.Font;
 import javax.swing.border.LineBorder;
 
 public class QuanLyMayChay extends JPanel {
-	private JTextField IDGoodsTF;
+	private String maThietBi;
 	private JTextField goodsNameTF;
 	private JTextField picTF;
 	private JTextField congSuatTF;
@@ -81,11 +81,6 @@ public class QuanLyMayChay extends JPanel {
                 add(thongTin);
                 thongTin.setLayout(null);
                 
-                IDGoodsTF = new JTextField();
-                IDGoodsTF.setBounds(186, 33, 144, 36);
-                thongTin.add(IDGoodsTF);
-                IDGoodsTF.setColumns(10);
-                
                 goodsNameTF = new JTextField();
                 goodsNameTF.setBounds(186, 80, 144, 36);
                 thongTin.add(goodsNameTF);
@@ -113,7 +108,6 @@ public class QuanLyMayChay extends JPanel {
                 nsxTF.setColumns(10);
                 
                 JLabel IDGoodsLB = new JLabel("Mã hàng hóa:");
-                IDGoodsLB.setLabelFor(IDGoodsTF);
                 IDGoodsLB.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
                 IDGoodsLB.setBounds(10, 39, 166, 27);
                 thongTin.add(IDGoodsLB);
@@ -194,7 +188,7 @@ public class QuanLyMayChay extends JPanel {
                     public void mouseClicked(MouseEvent e) {
                         int row = bangMayChay.getSelectedRow();
                         if (row >= 0) {
-                            IDGoodsTF.setText(modelMayChay.getValueAt(row, 0).toString().trim());
+                            maThietBi = modelMayChay.getValueAt(row, 0).toString().trim();
                             goodsNameTF.setText(modelMayChay.getValueAt(row, 1).toString().trim());
                             picTF.setText(modelMayChay.getValueAt(row, 2).toString().trim());
                             congSuatTF.setText(modelMayChay.getValueAt(row, 3).toString().trim());
@@ -206,7 +200,6 @@ public class QuanLyMayChay extends JPanel {
                 });
                 them.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                    	System.out.print("aaaa");
                         if (goodsNameTF.getText().equals("") || picTF.getText().equals("") ||
                             congSuatTF.getText().equals("") || speedMaxTF.getText().equals("") ||
                             nsxTF.getText().equals("") || kichThuocTF.getText().equals("")) 
@@ -214,13 +207,39 @@ public class QuanLyMayChay extends JPanel {
                             JOptionPane.showMessageDialog(null, "Thiếu thông tin");
                             return;
                         } 
-                        else 
-                        {
-                            // Kiểm tra nếu người dùng nhập mã thì cảnh báo
-                            if (!IDGoodsTF.getText().equals("")) {
-                                JOptionPane.showMessageDialog(null, "Không cần nhập mã");
+                        String regexInt = "^-?\\d+$";
+                            if(!congSuatTF.getText().matches(regexInt)) {
+                                JOptionPane.showMessageDialog(null, "Công suất phải là số");
                                 return;
                             }
+                            if(!speedMaxTF.getText().matches(regexInt)) {
+                                JOptionPane.showMessageDialog(null, "Tốc độ tối đa phải là số");
+                                return;
+                            }
+                        String regex = "\\d+x\\d+";
+                        if(!kichThuocTF.getText().matches(regex)) {
+                            JOptionPane.showMessageDialog(null, "Kích thước phải đúng định dạng [dài]x[rộng]");
+                            return;
+                        }
+                        if(goodsNameTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Tên phải <= 50 ký tự");
+                            return;
+                        }
+                        if(nsxTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Nhà sản xuất <= 50 ký tự");
+                            return;
+                        }
+                        if(nsxTF.getText().length()>20) {
+                            JOptionPane.showMessageDialog(null, "Kích thước <= 20 ký tự");
+                            return;
+                        }
+                        if(!(picTF.getText().substring(picTF.getText().length() - 4).equals(".png")||picTF.getText().substring(picTF.getText().length() - 4).equals(".jpg")))
+                        {
+                            JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                            return;
+                        }
+                        else 
+                        {
                 
                             String maThietBi = "null";  // Đặt là null hoặc bỏ qua mã thiết bị
                             String ten = goodsNameTF.getText();
@@ -251,7 +270,7 @@ public class QuanLyMayChay extends JPanel {
                 });
                 sua.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (IDGoodsTF.getText().equals("") || goodsNameTF.getText().equals("") || 
+                        if (goodsNameTF.getText().equals("") || 
                             picTF.getText().equals("") ||  congSuatTF.getText().equals("") || 
                             speedMaxTF.getText().equals("") || nsxTF.getText().equals("") || kichThuocTF.getText().equals("")) 
                         {
@@ -260,7 +279,37 @@ public class QuanLyMayChay extends JPanel {
                         } 
                         else 
                         {
-                            String maThietBi = IDGoodsTF.getText();
+                            String regexInt = "^-?\\d+$";
+                            if(!congSuatTF.getText().matches(regexInt)) {
+                                JOptionPane.showMessageDialog(null, "Công suất phải là số");
+                                return;
+                            }
+                            if(!speedMaxTF.getText().matches(regexInt)) {
+                                JOptionPane.showMessageDialog(null, "Tốc độ tối đa phải là số");
+                                return;
+                            }
+                        String regex = "\\d+x\\d+";
+                        if(!kichThuocTF.getText().matches(regex)) {
+                            JOptionPane.showMessageDialog(null, "Kích thước phải đúng định dạng [dài]x[rộng]");
+                            return;
+                        }
+                        if(goodsNameTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Tên phải <= 50 ký tự");
+                            return;
+                        }
+                        if(nsxTF.getText().length()>50) {
+                            JOptionPane.showMessageDialog(null, "Nhà sản xuất <= 50 ký tự");
+                            return;
+                        }
+                        if(nsxTF.getText().length()>20) {
+                            JOptionPane.showMessageDialog(null, "Kích thước <= 20 ký tự");
+                            return;
+                        }
+                        if(!(picTF.getText().substring(picTF.getText().length() - 4).equals(".png")||picTF.getText().substring(picTF.getText().length() - 4).equals(".jpg")))
+                        {
+                            JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+                            return;
+                        }
                             String ten = goodsNameTF.getText();
                             String hinhAnh = picTF.getText();
                             int congSuat = Integer.parseInt(congSuatTF.getText());

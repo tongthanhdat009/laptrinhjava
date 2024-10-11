@@ -13,6 +13,7 @@ public class BLLDangNhap {
     {
     	dataCoSo = new DataCoSo();
         data = new DataTaiKhoan();
+        dataTaiKhoan = new DataTaiKhoan();
     }
     public String KiemTraDangNhap(String taiKhoan, String matKhau)
     {
@@ -25,9 +26,9 @@ public class BLLDangNhap {
     	return dataCoSo.DSMaCoSoARR();
     }
     public boolean kiemTraPhienDangNhap(DTOTaiKhoan tk){
-        if(dataTaiKhoan.phienDangNhapTK(tk)){
-            return true; //có thể đăng nhập
-        }
-        return false;//tài khoản đã được đăng nhập ở một nơi khác
+        return dataTaiKhoan.phienDangNhapTK(tk);
+    }
+    public boolean suaTrangThaiTK(DTOTaiKhoan tk){
+        return dataTaiKhoan.suaTrangThaiTK(tk);
     }
 }

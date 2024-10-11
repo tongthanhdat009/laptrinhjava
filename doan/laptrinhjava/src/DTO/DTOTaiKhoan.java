@@ -12,7 +12,7 @@ public class DTOTaiKhoan {
 		setTaiKhoan(taiKhoan);
 		setMatKhau(matKhau);
 		setIDQuyen(IDQuyen);
-		setStatus("OFF");
+		setStatus(Status);
 		
 	}
 	public String getStatus() {

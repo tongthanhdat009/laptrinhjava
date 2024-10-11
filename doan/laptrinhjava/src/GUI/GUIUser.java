@@ -31,6 +31,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import BLL.BLLDangNhap;
 import BLL.BLLDonNhap;
 import BLL.BLLNhapHang;
 import BLL.BLLPhanQuyen;
@@ -43,6 +44,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
@@ -119,13 +122,32 @@ public class GUIUser extends JFrame {
     //tạo viền cho panel
     Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
     
+    public BLLDangNhap bllDangNhap = new BLLDangNhap();
+
     public GUIUser(DTOTaiKhoan tk, String coSoHienTai) {
 		this.setSize(1600, 900);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(null);
-        
+        // Thêm WindowListener để theo dõi sự kiện đóng cửa sổ
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Xử lý khi JFrame đang được đóng
+                tk.setStatus("OFF");
+                if(bllDangNhap.suaTrangThaiTK(tk)){
+                    dispose();
+                    new GUILogin();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Trạng thái tài khoản chưa được thay đổi","Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                dispose();
+            }
+        });
+
         BLLPhanQuyen bllPhanQuyen = new BLLPhanQuyen();    
         
         //danh sách các nút chức năng
@@ -414,9 +436,15 @@ public class GUIUser extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		int result = JOptionPane.showConfirmDialog(null, "Bạn muốn đăng xuất chứ?");
         		if(result == 0) {
-        			System.out.println("Bạn đã đăng xuất");
-        			dispose();
-        			new GUILogin();
+                    tk.setStatus("OFF");
+                    if(bllDangNhap.suaTrangThaiTK(tk)){
+                        dispose();
+                        new GUILogin();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Đăng xuất không thành công!","Error",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
         		}
         		else {
         			return;

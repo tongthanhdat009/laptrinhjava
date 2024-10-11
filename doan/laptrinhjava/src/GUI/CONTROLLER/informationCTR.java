@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.Color;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -257,16 +259,39 @@ public class informationCTR extends JPanel{
         		char[] confirmPass = confirmNewPassTF.getPassword();
         		String confirmPass1 = new String(confirmPass);
         		
+				if(oldPass1.equals("")){
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập mật khẩu cũ!","Thiếu mật khẩu cũ",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(newPass1.equals("")){
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập mật khẩu mới!","Thiếu mật khẩu mới",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(confirmPass1.equals("")){
+					JOptionPane.showMessageDialog(null, "Vui lòng xác nhận mật khẩu mới!","Chưa xác nhận mật khẩu",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
         		if(tk.getMatKhau().trim().equals(oldPass1)) {
+					if(newPass1.equals(tk.getMatKhau())){
+						JOptionPane.showMessageDialog(null, "Mật khẩu mới không được giống mật khẩu cũ!","Giống mật khẩu cũ",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
         			if(newPass1.equals(confirmPass1)) {
-        				if(newPass1.length()<6) {
-        					JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 6 kí tự trở lên!","Sai điều kiện mật khẩu", JOptionPane.ERROR_MESSAGE);
+						String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
+						Pattern p_pass = Pattern.compile(regex_pass);
+						Matcher m_pass = p_pass.matcher(newPass1);
+        				if(!m_pass.matches()) {
+        					JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 6 đến 20 kí tự, chỉ chứa chữ và số!","Sai điều kiện mật khẩu", JOptionPane.ERROR_MESSAGE);
         					return;
         				}
         				else if(bllInformation.doiMatKhauHoiVien(tk,newPass1)) {
         					JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!","Đổi mật khẩu thành công", JOptionPane.INFORMATION_MESSAGE);
         					changePassPanel.setVisible(false);
                     		showPassPanel.setVisible(true);
+							tk.setMatKhau(confirmPass1);
+							confirmOldPassTF.setText("");
+							newPassInputTF.setText("");
+							confirmNewPassTF.setText("");
         					return;
         				}
         			}
@@ -293,6 +318,9 @@ public class informationCTR extends JPanel{
         		if(choose == JOptionPane.YES_OPTION) {
         			changePassPanel.setVisible(false);
             		showPassPanel.setVisible(true);
+					confirmOldPassTF.setText("");
+					newPassInputTF.setText("");
+					confirmNewPassTF.setText("");
         		}
         		else {
         			return;

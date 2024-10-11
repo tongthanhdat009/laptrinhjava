@@ -188,18 +188,31 @@ public class GUILogin extends JFrame implements ActionListener{
                                 "Vui lòng chọn cơ sở", JOptionPane.OK_CANCEL_OPTION);
 
                         if (result == JOptionPane.OK_OPTION) {
-                            String coSoDaChon = (String) comboBox.getSelectedItem();
-                        	JOptionPane.showMessageDialog(null, "Đăng nhập thành công!" + coSoDaChon);
-                        	new GUIAdmin(tk, coSoDaChon);
-                        	dispose();
-                        	return;
+                            // System.out.println(dangNhap.kiemTraPhienDangNhap(tk) +" "+ dangNhap.suaTrangThaiTK(tk));
+                            if(dangNhap.kiemTraPhienDangNhap(tk) && dangNhap.suaTrangThaiTK(tk)) { 
+                                String coSoDaChon = (String) comboBox.getSelectedItem();
+                                JOptionPane.showMessageDialog(null, "Đăng nhập thành công!" + coSoDaChon);
+                                new GUIAdmin(tk, coSoDaChon);
+                                dispose();
+                                return;
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Tài khoản đã được đăng nhập ở một nơi khác!","Error",JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
                         }
                     }
                     else if (parts[3].trim().equals("Q0001")){
 //                    	tạo giao diện hội viên
                     	System.out.println("Đăng nhập thành công");
-                    	new GUIUser(tk,"");
-                    	dispose();
+                        if(dangNhap.kiemTraPhienDangNhap(tk) && dangNhap.suaTrangThaiTK(tk)){
+                            new GUIUser(tk,"");
+                            dispose();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Tài khoản đã được đăng nhập ở một nơi khác!","Error",JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     }
                     else {
 //                    	if(dangNhap.kiemTraTaiKhoanCoSo(tk, trangThaiDangNhap))

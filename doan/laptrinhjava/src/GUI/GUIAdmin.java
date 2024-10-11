@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import BLL.BLLDangNhap;
 import BLL.BLLDonNhap;
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOQuyen;
@@ -148,6 +149,8 @@ public class GUIAdmin{
     
     public String curr_user = new String();
     
+    public BLLDangNhap bllDangNhap = new BLLDangNhap();
+
     public GUIAdmin(DTOTaiKhoan tk, String coSoHienTai){    
 //    	người dùng hiện tại
     	this.curr_user = "Admin";
@@ -158,6 +161,25 @@ public class GUIAdmin{
         adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adminFrame.getContentPane().setLayout(null);
         adminFrame.setIconImage(logo.getImage());
+         // Thêm WindowListener để theo dõi sự kiện đóng cửa sổ
+        adminFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Xử lý khi JFrame đang được đóng
+                System.out.println("JFrame đã bị đóng!");
+                // Có thể hỏi người dùng trước khi đóng
+                    // Thực sự đóng JFrame
+                tk.setStatus("OFF");
+                if(bllDangNhap.suaTrangThaiTK(tk)){
+                    adminFrame.dispose();
+                    new GUILogin();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Trạng thái tài khoản chưa được thay đổi","Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        });
         mainPanel.setLocation(0, 0);
 
         //main
@@ -477,8 +499,15 @@ public class GUIAdmin{
         		int result = JOptionPane.showConfirmDialog(mainPanel, "Bạn muốn đăng xuất chứ?");
         		if(result == 0) {
         			System.out.println("Bạn đã đăng xuất");
-        			adminFrame.dispose();
-        			new GUILogin();
+                    tk.setStatus("OFF");
+                    if(bllDangNhap.suaTrangThaiTK(tk)){
+                        adminFrame.dispose();
+                        new GUILogin();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Đăng xuất không thành công!","Error",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
         		}
         		else {
         			return;

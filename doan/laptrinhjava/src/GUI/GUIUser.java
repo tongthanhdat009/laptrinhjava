@@ -475,8 +475,4 @@ public class GUIUser extends JFrame {
         managementPanel.setPreferredSize(new Dimension(300,y));
         leftPanel.add(scrollPane);
     }
-	public static void main(String[] args) {
-		DTOTaiKhoan tKhoan = new DTOTaiKhoan("TK048", "TKHV001", "MKHV001", "Q0002");
-        new GUIUser(tKhoan, "CS001");
-    }
 }

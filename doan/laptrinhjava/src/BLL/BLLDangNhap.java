@@ -24,9 +24,10 @@ public class BLLDangNhap {
     public ArrayList<String> dsMaCS(){
     	return dataCoSo.DSMaCoSoARR();
     }
-    // public boolean kiemTraPhienDangNhap(DTOTaiKhoan tk){
-    //     if(dataTaiKhoan.kiemTraPhienDangNhap(tk)){
-
-    //     }
-    // }
+    public boolean kiemTraPhienDangNhap(DTOTaiKhoan tk){
+        if(dataTaiKhoan.phienDangNhapTK(tk)){
+            return true; //có thể đăng nhập
+        }
+        return false;//tài khoản đã được đăng nhập ở một nơi khác
+    }
 }

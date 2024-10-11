@@ -530,7 +530,7 @@ public class QuanLyBangNhanVienCTR {
                             else {
                             	IDQuyen = "Q0003";
                             }
-                            DTOTaiKhoan tknv = new DTOTaiKhoan(bllqlds.kiemTraMaTK(),taiKhoan,matKhau,IDQuyen);
+                            DTOTaiKhoan tknv = new DTOTaiKhoan(bllqlds.kiemTraMaTK(),taiKhoan,matKhau,IDQuyen,"OFF");
                             if (bllqlds.themTK(tknv) && bllqlds.themNV(nv) == true) {
                             	JOptionPane.showMessageDialog(rightPanel, "Thêm nhân viên thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                 model.addRow(new Object[]{ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, luong, taiKhoan, matKhau, IDTaiKhoan});
@@ -699,7 +699,7 @@ public class QuanLyBangNhanVienCTR {
     				}
                     date = new Date(year-1900,month-1,day);
                     
-                    DTOTaiKhoan tknv = new DTOTaiKhoan(IDTaiKhoan,taiKhoan,matKhau,IDQuyen);
+                    DTOTaiKhoan tknv = new DTOTaiKhoan(IDTaiKhoan,taiKhoan,matKhau,IDQuyen,"OFF");
                     NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
                     if(bllqlds.suaThongTinTK(tknv) && bllqlds.suaThongTinNV(nv) && bllqlds.ganLaiQuyenTK(IDTaiKhoan, IDQuyen) ) {
 						JOptionPane.showMessageDialog(rightPanel, "Sửa thông tin thành công!","Sửa thông tin",JOptionPane.INFORMATION_MESSAGE);

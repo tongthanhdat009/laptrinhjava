@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-
 import DTO.dichVu;
 
 public class DataDichVu {
@@ -53,7 +52,20 @@ public class DataDichVu {
         }
         return dsDichVu;
     }
-    public boolean themDV(dichVu dv) {
+    public boolean kiemTraTonTaiTenDichVu(String ten)
+    {
+        String truyVan = "SELECT * FROM DichVu WHERE TenDV = ?";
+        try {
+            PreparedStatement ps_check = con.prepareStatement(truyVan);
+    		ps_check.setString(1, ten);
+            ResultSet rs = ps_check.executeQuery();
+            if(rs.next()) return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public String themDV(dichVu dv) {
     	String check_madv = "SELECT * FROM DichVu WHERE MaDV = ?";
     	String query= "INSERT INTO DichVu (MaDV, TenDV, GiaDV, ThoiGian, MoTa, HinhAnh) VALUES (?,?,?,?,?,?) ";
     	try {
@@ -62,7 +74,7 @@ public class DataDichVu {
     		ResultSet rs = ps_check.executeQuery();
     		while(rs.next()) {
     			JOptionPane.showMessageDialog(GUIAdmin,"Mã dịch vụ đã tồn tại","Error",JOptionPane.ERROR_MESSAGE );
-    			return false;
+    			return "Mã dịch vụ đã tồn tại";
     		}
     		
 			PreparedStatement ps = con.prepareStatement(query);
@@ -74,12 +86,12 @@ public class DataDichVu {
 			ps.setString(6, dv.getHinhAnh());
 			int n = ps.executeUpdate();
 			if(n != 0) {
-				return true;
+				return "Thành công";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-    	return false;
+    	return "Thất bại";
     }
     public boolean xoaDV(String madv) {
     	String query = "DELETE FROM DichVu WHERE MaDV = ?";
@@ -95,7 +107,7 @@ public class DataDichVu {
 		}
     	return false;
     }
-    public boolean suaDV(dichVu dv) {
+    public String suaDV(dichVu dv) {
     	String query = "UPDATE DichVu SET TenDV = ?, GiaDV = ?, ThoiGian = ?, MoTa = ?, HinhAnh = ? WHERE MaDV = ?";
     	
     	try {
@@ -108,19 +120,33 @@ public class DataDichVu {
 			ps.setString(6, dv.getMaDichVu());
 			int check = ps.executeUpdate();
 			if(check > 0) {
-				return true;
+				return "Thành công";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-    	return false;
+    	return "Thất bại";
     }
-    public ArrayList<dichVu> timkiemDV(String madv){
+    public ArrayList<dichVu> timkiemDV(String tenDV, String gia){
     	ArrayList<dichVu> result = new ArrayList<>();
-    	String query = "SELECT * FROM DichVu WHERE MaDV = ?";
+        ArrayList<String> s = new ArrayList<>();
+        String query = "SELECT * FROM DichVu WHERE";
+        if(!tenDV.equals("")) {
+            s.add(tenDV);
+            query+= " TenDV = ? AND";
+        }
+        if(!gia.equals("")) {
+            s.add(gia);
+            query+= " GiaDV = ? AND";
+        }
+        if (query.endsWith("AND")) {
+            query = query.substring(0, query.length() - 4);  // Xóa 4 ký tự cuối
+        }
+        System.out.println(query);
     	try {
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, madv);
+			for(int i=0;i<s.size();i++)
+            ps.setString(i+1, s.get(i));
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				dichVu dv = new dichVu(

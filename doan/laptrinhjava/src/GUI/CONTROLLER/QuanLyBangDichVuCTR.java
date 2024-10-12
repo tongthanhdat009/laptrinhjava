@@ -16,7 +16,7 @@ import java.awt.event.*;
 
 public class QuanLyBangDichVuCTR {
     private Font italicBoldFont = new Font("Times New Roman", Font.ITALIC | Font.BOLD, 30); //vừa nghiêng vừa in đậm
-
+	String jtf_madv;
 	public QuanLyBangDichVuCTR() {
 		
 	}
@@ -80,7 +80,6 @@ public class QuanLyBangDichVuCTR {
         rightPanel.add(chucnang);
         
         JLabel jlb_madv = new JLabel("Mã dịch vụ: ");
-        JTextField jtf_madv = new JTextField();
         jlb_madv.setFont(f);
         
         JLabel jlb_tendv = new JLabel("Tên dịch vụ: ");
@@ -112,7 +111,6 @@ public class QuanLyBangDichVuCTR {
         nhapLieu.setBackground(new Color(119, 230, 163));
 
         jlb_madv.setBounds(10, 40, 120, 30);
-        jtf_madv.setBounds(150, 40, 150, 30);
         jlb_tendv.setBounds(410,40,120,30);
         jtf_tendv.setBounds(550,40,150,30);
         jlb_giadv.setBounds(810,40,120,30);
@@ -125,8 +123,6 @@ public class QuanLyBangDichVuCTR {
         jlb_img.setBounds(810,120,150,30);
         jtf_img.setBounds(950,120,150,30);
         
-        nhapLieu.add(jlb_madv);
-        nhapLieu.add(jtf_madv);
         nhapLieu.add(jlb_tendv);
         nhapLieu.add(jtf_tendv);
         nhapLieu.add(jlb_giadv);
@@ -194,12 +190,12 @@ public class QuanLyBangDichVuCTR {
 			public void mouseClicked(MouseEvent e) {
 				int i = bang.getSelectedRow();
 				if(i >= 0) {
-					jtf_madv.setText(model.getValueAt(i, 0).toString());
-					jtf_tendv.setText(model.getValueAt(i, 1).toString());
-					jtf_giadv.setText(model.getValueAt(i, 2).toString());
-					jtf_thoigian.setText(model.getValueAt(i, 3).toString());
-					jtf_mota.setText(model.getValueAt(i, 4).toString());
-					jtf_img.setText(model.getValueAt(i, 5).toString());
+					jtf_madv = model.getValueAt(i, 0).toString().trim();
+					jtf_tendv.setText(model.getValueAt(i, 1).toString().trim());
+					jtf_giadv.setText(model.getValueAt(i, 2).toString().trim());
+					jtf_thoigian.setText(model.getValueAt(i, 3).toString().trim());
+					jtf_mota.setText(model.getValueAt(i, 4).toString().trim());
+					jtf_img.setText(model.getValueAt(i, 5).toString().trim());
 				}
 			}
 		});
@@ -240,6 +236,34 @@ public class QuanLyBangDichVuCTR {
 					return;
 				}
 				else {
+					if(!(jtf_img.getText().substring(jtf_img.getText().length() - 4).equals(".png")||jtf_img.getText().substring(jtf_img.getText().length() - 4).equals(".jpg")))
+					{
+						JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+						return;
+					}
+					if(jtf_tendv.getText().length()>20) {
+						JOptionPane.showMessageDialog(null, "Tên dịch vụ phải <= 30 ký tự");
+						return;
+					}
+					String regexInt = "^[1-9]\\d*$";
+                    if(!jtf_giadv.getText().matches(regexInt)) {
+                        JOptionPane.showMessageDialog(null, "Giá phải là số dương");
+                        return;
+                    }
+					if(!jtf_thoigian.getText().matches(regexInt)) {
+                        JOptionPane.showMessageDialog(null, "Thời gian phải là số dương");
+                        return;
+                    }
+					if(jtf_thoigian.getText().length() > 5)
+					{
+						JOptionPane.showMessageDialog(null, "Thời gian phải < 100000 ngày");
+                        return;
+					}
+					if(jtf_mota.getText().length()>300) {
+						JOptionPane.showMessageDialog(null, "Tên dịch vụ phải <= 300 ký tự");
+						return;
+					}
+					
 					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
 					String madv = bllqlds.layMaDichVuchuaTonTai();
 					String tendv = jtf_tendv.getText().trim();
@@ -248,14 +272,13 @@ public class QuanLyBangDichVuCTR {
 					String mota = jtf_mota.getText().trim();
 					String hinhanh = jtf_img.getText().trim();
 					dichVu dv = new dichVu(madv, tendv, giadv, thoigian, mota, hinhanh);
-					if(bllqlds.themDV(dv) == true) {
+					String s = bllqlds.themDV(dv);
+					if(s.equals("Thành công")) {
 						model.addRow(new Object[] {madv, tendv, giadv, thoigian, mota, hinhanh});
 						JOptionPane.showMessageDialog(rightPanel, "Thêm dịch vụ thành công","Success",JOptionPane.INFORMATION_MESSAGE);
 						
 					}
-					
-					jtf_madv.setText("");jtf_tendv.setText("");jtf_giadv.setText("");
-					jtf_thoigian.setText("");jtf_mota.setText("");jtf_img.setText("");
+					else JOptionPane.showMessageDialog(rightPanel,s,"Error",JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}
@@ -263,15 +286,10 @@ public class QuanLyBangDichVuCTR {
         xoa.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(jtf_madv.getText().equals("")) {
-					JOptionPane.showMessageDialog(rightPanel, "Vui lòng nhập mã dịch vụ cần xóa","Error",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				else {
 					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-					if(bllqlds.xoaDV(jtf_madv.getText())) {
+					if(bllqlds.xoaDV(jtf_madv)) {
 						for(int i = 0;i < model.getRowCount(); i++) {
-							if(model.getValueAt(i, 0).equals(jtf_madv.getText())) {
+							if(model.getValueAt(i, 0).equals(jtf_madv)) {
 								model.removeRow(i);
 								JOptionPane.showMessageDialog(rightPanel, "Xóa dịch vụ thành công","Success",JOptionPane.INFORMATION_MESSAGE);
 								return;
@@ -282,31 +300,57 @@ public class QuanLyBangDichVuCTR {
 						JOptionPane.showMessageDialog(rightPanel, "Mã dịch vụ không tồn tại","Error",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-				}
 			}
 		});
         sua.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(jtf_madv.getText().trim().equals("") || jtf_tendv.getText().trim().equals("") || jtf_giadv.getText().trim().equals("") ||
+				if(jtf_tendv.getText().trim().equals("") || jtf_giadv.getText().trim().equals("") ||
 						jtf_thoigian.getText().trim().equals("") || jtf_mota.getText().trim().equals("") || jtf_img.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(rightPanel, "Thông tin không được để trống","Error",JOptionPane.ERROR_MESSAGE);
 						return;
 				}
 				else {
+					if(!(jtf_img.getText().substring(jtf_img.getText().length() - 4).equals(".png")||jtf_img.getText().substring(jtf_img.getText().length() - 4).equals(".jpg")))
+					{
+						JOptionPane.showMessageDialog(null, "Sai định dạng ảnh");
+						return;
+					}
+					if(jtf_tendv.getText().length()>20) {
+						JOptionPane.showMessageDialog(null, "Tên dịch vụ phải <= 30 ký tự");
+						return;
+					}
+					String regexInt = "^[1-9]\\d*$";
+                    if(!jtf_giadv.getText().matches(regexInt)) {
+                        JOptionPane.showMessageDialog(null, "Giá phải là số dương");
+                        return;
+                    }
+					if(!jtf_thoigian.getText().matches(regexInt)) {
+                        JOptionPane.showMessageDialog(null, "Thời gian phải là số dương");
+                        return;
+                    }
+					if(jtf_thoigian.getText().length() > 5)
+					{
+						JOptionPane.showMessageDialog(null, "Thời gian phải < 100000 ngày");
+                        return;
+					}
+					if(jtf_mota.getText().length()>300) {
+						JOptionPane.showMessageDialog(null, "Tên dịch vụ phải <= 300 ký tự");
+						return;
+					}
 					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-					String madv = jtf_madv.getText().trim();
 					String tendv = jtf_tendv.getText().trim();
 					long giadv = Long.parseLong(jtf_giadv.getText().trim());
 					int thoigian = Integer.parseInt(jtf_thoigian.getText().trim());
 					String mota = jtf_mota.getText().trim();
 					String hinhanh = jtf_img.getText().trim();
-					dichVu dv = new dichVu(madv, tendv, giadv, thoigian, mota, hinhanh);
-					if(bllqlds.suaDV(dv)==true) {
+					dichVu dv = new dichVu(jtf_madv, tendv, giadv, thoigian, mota, hinhanh);
+					String s = bllqlds.suaDV(dv);
+					if(s.equals("Thành công")) {
 						JOptionPane.showMessageDialog(rightPanel, "Sửa dịch vụ thành công","Success",JOptionPane.INFORMATION_MESSAGE);
 						for(int i = 0;i < model.getRowCount();i++) {
-							if(model.getValueAt(i,0).equals(madv)) {
+							if(model.getValueAt(i,0).equals(jtf_madv)) {
 								model.setValueAt(tendv, i, 1);
 								model.setValueAt(giadv, i, 2);
 								model.setValueAt(thoigian, i, 3);
@@ -317,7 +361,7 @@ public class QuanLyBangDichVuCTR {
 						}
 					}
 					else {
-						JOptionPane.showMessageDialog(rightPanel, "Sửa dịch vụ thất bại","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(rightPanel, s,"Error",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
@@ -328,8 +372,9 @@ public class QuanLyBangDichVuCTR {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.setRowCount(0);
-				String madv = jtf_madv.getText().trim();
-				if(madv.isEmpty()) {
+				String ten = jtf_tendv.getText();
+				String gia = jtf_giadv.getText();
+				if(ten.equals("")&&gia.equals("")) {
 					for(int i = 0; i < ds.size();i++) {
 						model.addRow(new Object[] {
 							ds.get(i).getMaDichVu(),ds.get(i).getTenDichVu(),ds.get(i).getGiaDichVu(),
@@ -339,7 +384,7 @@ public class QuanLyBangDichVuCTR {
 				}
 				else {
 					BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-					ArrayList<dichVu> ds = bllqlds.timKiemDV(madv);
+					ArrayList<dichVu> ds = bllqlds.timKiemDV(ten,gia);
 					for(dichVu dv : ds) {
 						model.addRow(new Object[] {
 							dv.getMaDichVu(),dv.getTenDichVu(),dv.getGiaDichVu(),

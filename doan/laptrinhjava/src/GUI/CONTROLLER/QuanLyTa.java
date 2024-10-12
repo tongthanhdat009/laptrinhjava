@@ -277,7 +277,6 @@ public class QuanLyTa extends JPanel {
                         }
                         else 
                         {
-                            System.out.print(maThietBi);
                             String ten = goodsNameTF.getText();
                             String hinhAnh = picTF.getText();
                             int khoiLuong = Integer.parseInt(weightTF.getText());

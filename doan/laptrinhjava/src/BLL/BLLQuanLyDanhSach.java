@@ -473,17 +473,22 @@ public class BLLQuanLyDanhSach{
     public String layMaDichVuchuaTonTai() {
     	return dataDichVu.taoMaDichvuMoi();
     }
-    public boolean themDV(dichVu dv) {
+    public String themDV(dichVu dv) {
+        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu())) return "Tên dịch vụ đã tồn tại";
     	return dataDichVu.themDV(dv);
     }
     public boolean xoaDV(String madv) {
     	return dataDichVu.xoaDV(madv);
     }
-    public boolean suaDV(dichVu dv) {
+    public String suaDV(dichVu dv) {
+        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu())) return "Tên dịch vụ đã tồn tại";
     	return dataDichVu.suaDV(dv);
     }
-    public ArrayList<dichVu> timKiemDV (String madv){
-    	return dataDichVu.timkiemDV(madv);
+    public ArrayList<dichVu> timKiemDV (String tenDV, String gia){
+    	return dataDichVu.timkiemDV(tenDV,gia);
+    }
+    public boolean kiemTraTonTaiTenDichVu(String tenDv){
+        return dataDichVu.kiemTraTonTaiTenDichVu(tenDv);
     }
     public ArrayList<hangHoaCoSo> layDSHangHoaCoSo()
     {

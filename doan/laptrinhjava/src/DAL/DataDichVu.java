@@ -61,10 +61,26 @@ public class DataDichVu {
             ResultSet rs = ps_check.executeQuery();
             if(rs.next()){
                 if(!ma.equals(rs.getString("MaDV"))){
-                    return false;   
+                    return true;   
                 }
+                return false;
             }
-            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean kiemTraTonTaiKhiThemTenDichVu(String ten)
+    {
+        String truyVan = "SELECT * FROM DichVu WHERE TenDV = ? ";
+        try {
+            PreparedStatement ps_check = con.prepareStatement(truyVan);
+    		ps_check.setString(1, ten);
+            ResultSet rs = ps_check.executeQuery();
+            if(rs.next()) 
+            {
+                return true;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

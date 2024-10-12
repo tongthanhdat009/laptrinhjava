@@ -474,7 +474,7 @@ public class BLLQuanLyDanhSach{
     	return dataDichVu.taoMaDichvuMoi();
     }
     public String themDV(dichVu dv) {
-        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu(),dv.getMaDichVu())) return "Tên dịch vụ đã tồn tại";
+        if(dataDichVu.kiemTraTonTaiKhiThemTenDichVu(dv.getTenDichVu())) return "Tên dịch vụ đã tồn tại";
     	return dataDichVu.themDV(dv);
     }
     public boolean xoaDV(String madv) {

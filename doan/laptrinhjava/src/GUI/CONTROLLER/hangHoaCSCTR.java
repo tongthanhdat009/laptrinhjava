@@ -210,18 +210,37 @@ public class hangHoaCSCTR {
         sua.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals("")) {
-                	JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
-                	return;
+                String maCSGoc = new String();
+                String maHHGoc = new String();
+                int row = bang.getSelectedRow();
+                System.out.println(row);
+                if(row==-1){
+                    // if(tfMaHangHoa.getText().equals("")||cbMaCoSo.getSelectedIndex() == 0||tfSoLuong.getText().equals("")) {
+                    //     JOptionPane.showMessageDialog(rightPanel, "Thiếu thông tin");
+                    // 	return;
+                    // }
+                    JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn 1 dòng để sửa","Sửa thông tin",JOptionPane.INFORMATION_MESSAGE);
+                    return;
                 }
                 else
                 {	
-                	if(cbTrangThai.getSelectedItem().toString().equals("Chọn trạng thái:")){
-                		JOptionPane.showMessageDialog(null, "Vui lòng chọn trạng thái để sửa");
+                    maCSGoc = bang.getValueAt(row, 0).toString().trim();
+                    maHHGoc = bang.getValueAt(row, 1).toString().trim();
+                    if(!maCSGoc.equals(cbMaCoSo.getSelectedItem().toString())){
+                        JOptionPane.showMessageDialog(null, "Không được sửa mã cơ sở!","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if(!maHHGoc.equals(cbMaCoSo.getSelectedItem().toString())){
+                        JOptionPane.showMessageDialog(null, "Không được sửa mã hàng hóa!","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if(cbTrangThai.getSelectedItem().toString().equals("Chọn trạng thái")){
+                        JOptionPane.showMessageDialog(null, "Vui lòng chọn trạng thái để sửa");
                 		return;
                 	}
+                    
                     String s = bllQuanLyDanhSach.suaHangHoaCoSo(cbMaCoSo.getSelectedItem().toString(), tfMaHangHoa.getText(), cbTrangThai.getSelectedItem().toString());
-                    JOptionPane.showMessageDialog(rightPanel, s);
+                    JOptionPane.showMessageDialog(rightPanel, s,"Sửa thông tin",JOptionPane.INFORMATION_MESSAGE);
                     if(s.equals("Thành công"))
                     {
                     	model.setRowCount(0);
@@ -231,14 +250,14 @@ public class hangHoaCSCTR {
                         Vector<String> dsMaCoSo = new Vector<>();
                         dsMaCoSo = bllQuanLyDanhSach.layDSMaCoSo();
                         for(int i=0;i<ds.size();i++)
-                            model.addRow(new Object[]{ds.get(i).getMaHangHoa(),
-                            		ds.get(i).getMaCoSo(),
-                            		ds.get(i).getTrangThai(),
-                            		ds.get(i).getSoLuong(),
-                            		ds.get(i).getGiaBan(),
-                            		ds.get(i).getLoaiHangHoa(),
-                            		ds.get(i).getTenLoaiHangHoa(),
-                            		ds.get(i).getHinhAnh()});
+                        model.addRow(new Object[]{ds.get(i).getMaHangHoa(),
+                            ds.get(i).getMaCoSo(),
+                            ds.get(i).getTrangThai(),
+                            ds.get(i).getSoLuong(),
+                            ds.get(i).getGiaBan(),
+                            ds.get(i).getLoaiHangHoa(),
+                            ds.get(i).getTenLoaiHangHoa(),
+                            ds.get(i).getHinhAnh()});
                     }
                 }
             }

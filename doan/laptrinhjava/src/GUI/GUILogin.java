@@ -7,7 +7,6 @@ import DTO.DTOTaiKhoan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class GUILogin extends JFrame implements ActionListener{

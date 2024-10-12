@@ -128,7 +128,7 @@ public class GUIUser extends JFrame {
 		this.setSize(1600, 900);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.getContentPane().setLayout(null);
         // Thêm WindowListener để theo dõi sự kiện đóng cửa sổ
         this.addWindowListener(new WindowAdapter() {
@@ -137,6 +137,7 @@ public class GUIUser extends JFrame {
                 // Xử lý khi JFrame đang được đóng
                 tk.setStatus("OFF");
                 if(bllDangNhap.suaTrangThaiTK(tk)){
+                    System.out.println("JFrame da dong");
                     dispose();
                     new GUILogin();
                 }

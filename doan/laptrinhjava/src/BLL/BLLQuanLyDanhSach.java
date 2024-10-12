@@ -511,8 +511,8 @@ public class BLLQuanLyDanhSach{
     public String suaHangHoaCoSo(String maCoSo, String maHangHoa, String trangThai)
     {
         if(dataHangHoaCoSo.sua(maCoSo,  maHangHoa, trangThai)) 
-        	return "Thành công";
-        return "Bộ không tồn tại";
+        	return "Sửa thông tin thành công";
+        return "Sửa thông tin không thành công";
     }
     public String themThietBiTa(Ta ta)
     {

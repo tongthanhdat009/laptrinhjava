@@ -158,19 +158,19 @@ public class GUIAdmin{
         adminFrame.setSize(width, height);
         adminFrame.setLocationRelativeTo(null);
         adminFrame.setResizable(false);
-        adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         adminFrame.getContentPane().setLayout(null);
         adminFrame.setIconImage(logo.getImage());
          // Thêm WindowListener để theo dõi sự kiện đóng cửa sổ
         adminFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // Xử lý khi JFrame đang được đóng
-                System.out.println("JFrame đã bị đóng!");
-                // Có thể hỏi người dùng trước khi đóng
-                    // Thực sự đóng JFrame
                 tk.setStatus("OFF");
+                // Xử lý khi JFrame đang được đóng
+                // Có thể hỏi người dùng trước khi đóng
+                // Thực sự đóng JFrame
                 if(bllDangNhap.suaTrangThaiTK(tk)){
+                    System.out.println("JFrame đã bị đóng!");
                     adminFrame.dispose();
                     new GUILogin();
                 }

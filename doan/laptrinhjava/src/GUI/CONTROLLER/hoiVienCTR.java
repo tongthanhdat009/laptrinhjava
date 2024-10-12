@@ -290,7 +290,7 @@ public class hoiVienCTR {
                             	            	return;
 											}
                             				else if (!m_email.matches()) {
-                            					JOptionPane.showMessageDialog(null, "Email không hợp lệ", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
+                            					JOptionPane.showMessageDialog(null, "Email không đúng định dạng", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
                             	            	return;
                             				}
                             				else {
@@ -499,10 +499,14 @@ public class hoiVienCTR {
                         String maGoc = new String();
                         String tenGoc = new String();
                         String taiKhoanGoc = new String();
+                        String ngaySinhGoc = new String();
+                        String gioiTinhGoc = new String();
                         if (i>=0){
-                        	maGoc = hvList.getValueAt(i, 0).toString();
+                        	maGoc = hvList.getValueAt(i, 0).toString().trim();
                         	tenGoc = hvList.getValueAt(i, 1).toString();
                         	taiKhoanGoc = hvList.getValueAt(i, 7).toString().trim();
+                        	ngaySinhGoc = hvList.getValueAt(i, 6).toString().trim();
+                        	gioiTinhGoc = hvList.getValueAt(i, 2).toString().trim();
                         	System.out.println(taiKhoanGoc);
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
@@ -534,23 +538,23 @@ public class hoiVienCTR {
                                                 countDate++;
                                             }
                                             if(countDate == 3){
-                                            	//Kiểm tra 18 tuổi
-                                                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-                                        		int currentDay = Calendar.getInstance().get(Calendar.DATE);
-                                        		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-                                				if (currentYear - year < 18) {
-                                				    JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
-                                				    return;
-                                				} 
-                                				else if (currentYear - year == 18) {
-                                				    // Kiểm tra tháng và ngày
-                                				    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
-                                				    	System.out.println((currentDay) + " " + day);				    
-                                				        JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
-                                				        return;
-                                				    }
-                                				}
-                            					thongTinMoi.add(year+"-"+month+"-"+day);
+//                                            	//Kiểm tra 18 tuổi
+//                                                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+//                                        		int currentDay = Calendar.getInstance().get(Calendar.DATE);
+//                                        		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+//                                				if (currentYear - year < 18) {
+//                                				    JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+//                                				    return;
+//                                				} 
+//                                				else if (currentYear - year == 18) {
+//                                				    // Kiểm tra tháng và ngày
+//                                				    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
+//                                				    	System.out.println((currentDay) + " " + day);				    
+//                                				        JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+//                                				        return;
+//                                				    }
+//                                				}
+                            					thongTinMoi.add(String.format("%d-%d-%d",year,month,day));
                                 				countDate=0;
                                             }
                                         }
@@ -566,14 +570,25 @@ public class hoiVienCTR {
                                     }
                                 }
                             }
+                            System.out.println(thongTinMoi +" "+ gioiTinhGoc);
+                            if(!thongTinMoi.get(2).equals(gioiTinhGoc)) {
+                            	JOptionPane.showMessageDialog(null, "Không được sửa giới tính hội viên","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            //thông báo không cho chỉnh ngày sinh hội viên
+                            if(!ngaySinhGoc.equals(thongTinMoi.get(6))) {
+                            	JOptionPane.showMessageDialog(null, "Không được sửa ngày sinh của hội viên vui lòng chỉnh lại đúng ngày!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
                             
-                            String matKhau = thongTinMoi.get(8);
+                            String matKhau = thongTinMoi.get(8).trim();
                             //regex mật khẩu
                             String regex_pass = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$";
                             Pattern p_pass = Pattern.compile(regex_pass);
                             Matcher m_pass = p_pass.matcher(matKhau);
+                            System.out.println(matKhau);
                             if(!m_pass.matches()){
-                            	JOptionPane.showMessageDialog(null, "Mật khẩu phải dài hơn 6 kí tự bao gồm cả chữ và số!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                            	JOptionPane.showMessageDialog(null, "Mật khẩu phải dài từ 6 đến 20 kí tự bao gồm cả chữ và số!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
                             
@@ -586,7 +601,7 @@ public class hoiVienCTR {
             	            	return;
 							}
             				else if (!m_email.matches()) {
-            					JOptionPane.showMessageDialog(null, "Email không hợp lệ", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
+            					JOptionPane.showMessageDialog(null, "Email không đúng định dạng", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
             	            	return;
             				}
 

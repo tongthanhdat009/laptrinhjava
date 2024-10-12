@@ -114,7 +114,7 @@ public class BLLQuanLyDanhSach{
     }
 
     public boolean kiemTraSDT(String a){
-        if(a.matches("(0[3|5|7|8|9])+([0-9]{8})\\b")){
+        if(a.matches("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$")){
             return true;
         }
         return false;
@@ -474,21 +474,21 @@ public class BLLQuanLyDanhSach{
     	return dataDichVu.taoMaDichvuMoi();
     }
     public String themDV(dichVu dv) {
-        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu())) return "Tên dịch vụ đã tồn tại";
+        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu(),dv.getMaDichVu())) return "Tên dịch vụ đã tồn tại";
     	return dataDichVu.themDV(dv);
     }
     public boolean xoaDV(String madv) {
     	return dataDichVu.xoaDV(madv);
     }
     public String suaDV(dichVu dv) {
-        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu())) return "Tên dịch vụ đã tồn tại";
+        if(kiemTraTonTaiTenDichVu(dv.getTenDichVu(),dv.getMaDichVu())) return "Tên dịch vụ đã tồn tại";
     	return dataDichVu.suaDV(dv);
     }
     public ArrayList<dichVu> timKiemDV (String tenDV, String gia){
     	return dataDichVu.timkiemDV(tenDV,gia);
     }
-    public boolean kiemTraTonTaiTenDichVu(String tenDv){
-        return dataDichVu.kiemTraTonTaiTenDichVu(tenDv);
+    public boolean kiemTraTonTaiTenDichVu(String tenDv, String ma){
+        return dataDichVu.kiemTraTonTaiTenDichVu(tenDv, ma);
     }
     public ArrayList<hangHoaCoSo> layDSHangHoaCoSo()
     {

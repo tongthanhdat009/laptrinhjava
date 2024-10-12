@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.jar.Attributes.Name;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -427,17 +428,22 @@ public class QuanLyBangNhanVienCTR {
                             String vaitro = cbb_vaiTro.getSelectedItem().toString().trim();
                             String matKhau = jtf_password.getText().trim();
                             String luong = jtf_luong.getText().trim();
-
+                            
+                            //kiểm tra số điện thoại
+                            if(!bllQuanLyDanhSach.kiemTraSDT(sdt)) {
+                            	JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Thêm nhân viên",JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
                             //regex tài khoản
                             String regex_account = "^[a-zA-Z0-9]{5,20}$";
             				Pattern p_account = Pattern.compile(regex_account);
             				Matcher m_account = p_account.matcher(taiKhoan);
                         	if(!bllQuanLyDanhSach.kiemTraTenTK(taiKhoan)){
-                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                        		JOptionPane.showMessageDialog(null, "Tài khoản không được trùng lập!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                         	}
                         	else if(!m_account.matches()) {
-                        		JOptionPane.showMessageDialog(null, "Tài khoản không được chứa kí tự đặc biệt và phải dài từ 5 đến 20 kí tự!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                        		JOptionPane.showMessageDialog(null, "Tài khoản không được chứa kí tự đặc biệt và phải dài từ 5 đến 20 kí tự!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                         	}
                         	
@@ -474,11 +480,11 @@ public class QuanLyBangNhanVienCTR {
             		        Pattern p_userName = Pattern.compile(regex_userName);
             	            Matcher m_userName = p_userName.matcher(ten);
             	            if(!(ten.length() > 0 && ten.length()<=50)) {
-            	            	JOptionPane.showMessageDialog(null, "Tên nhân viên dài từ 1 đến 50 kí tự", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
+            	            	JOptionPane.showMessageDialog(null, "Tên nhân viên dài từ 1 đến 50 kí tự", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);;
             	            	return;
             	            }
             	            else if(!m_userName.matches()) {
-            	            	JOptionPane.showMessageDialog(null, "Tên nhân viên không được chứa kí tự đặc biệt và số", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
+            	            	JOptionPane.showMessageDialog(null, "Tên nhân viên không được chứa kí tự đặc biệt và số", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);;
             	            	return;
             	            }
             	            
@@ -499,14 +505,14 @@ public class QuanLyBangNhanVienCTR {
                     		int currentDay = Calendar.getInstance().get(Calendar.DATE);
                     		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
             				if (currentYear - year < 18) {
-            				    JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+            				    JOptionPane.showMessageDialog(null, "Tuổi của nhân viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
             				    return;
             				} 
             				else if (currentYear - year == 18) {
             				    // Kiểm tra tháng và ngày
             				    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
             				    	System.out.println((currentDay) + " " + day);				    
-            				        JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+            				        JOptionPane.showMessageDialog(null, "Tuổi của nhân viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
             				        return;
             				    }
             				}
@@ -587,11 +593,16 @@ public class QuanLyBangNhanVienCTR {
                 String maGoc = new String();
                 String tenGoc = new String();
                 String taiKhoanGoc = new String();
+                String gioiTinhGoc = new String();
+                String ngaySinhGoc = new String();
+                String cccdGoc = new String();
 				if(i>=0) {
+					ngaySinhGoc = bang.getValueAt(i, 3).toString().trim();
 					maGoc = bang.getValueAt(i, 0).toString().trim();
 					tenGoc = bang.getValueAt(i, 1).toString().trim();
 					taiKhoanGoc = bang.getValueAt(i, 9).toString().trim();
-					
+					gioiTinhGoc = bang.getValueAt(i, 2).toString().trim();
+					cccdGoc = bang.getValueAt(i, 5).toString().trim();
 					int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
 					int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
 					int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
@@ -615,7 +626,26 @@ public class QuanLyBangNhanVienCTR {
                     else {
                     	IDQuyen = "Q0003";
                     }
-                    
+                    //không cho sửa cccd
+                    if(!cccdGoc.equals(cccd)) {
+                    	JOptionPane.showMessageDialog(null, "Không được sửa căn cước công dân hội viên!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
+                    //không cho sửa ngày sinh
+                    if(!ngaySinhGoc.equals(String.format("%d-%d-%d",year,month,day))) {
+                    	JOptionPane.showMessageDialog(null, "Không được sửa ngày sinh của hội viên vui lòng chỉnh lại đúng ngày!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
+                    //kiểm tra số điện thoại
+                    if(!bllQuanLyDanhSach.kiemTraSDT(sdt)) {
+                    	JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
+                    System.out.println(gioitinh +" "+ gioiTinhGoc);
+                    if(!gioitinh.equals(gioiTinhGoc)) {
+                    	JOptionPane.showMessageDialog(null, "Không được sửa giới tính nhân viên","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
                     //kiểm tra không cho sửa mã nhân viên
 					if(!maGoc.equals(jtf_manv.getText())) {
 						JOptionPane.showMessageDialog(rightPanel, "Không được sửa mã nhân viên","Sửa thông tin",JOptionPane.ERROR_MESSAGE);
@@ -686,14 +716,14 @@ public class QuanLyBangNhanVienCTR {
             		int currentDay = Calendar.getInstance().get(Calendar.DATE);
             		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
     				if (currentYear - year < 18) {
-    				    JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+    				    JOptionPane.showMessageDialog(null, "Tuổi của nhân viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
     				    return;
     				} 
     				else if (currentYear - year == 18) {
     				    // Kiểm tra tháng và ngày
     				    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
     				    	System.out.println((currentDay) + " " + day);				    
-    				        JOptionPane.showMessageDialog(null, "Tuổi của hội viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
+    				        JOptionPane.showMessageDialog(null, "Tuổi của nhân viên chưa đủ 18, vui lòng kiểm tra lại!", "Error", JOptionPane.ERROR_MESSAGE);
     				        return;
     				    }
     				}

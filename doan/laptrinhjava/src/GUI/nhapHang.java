@@ -483,15 +483,30 @@ public class nhapHang {
             btnCapNhat.setFont(new Font("Times New Roman", Font.BOLD, 20));
             btnCapNhat.setBackground(Color.WHITE);
         
+            String oldSoLuongText = tfSoLuong.getText();
+            String oldGiaNhapText = tfGiaNhap.getText();
             btnCapNhat.addActionListener(e -> {
+            
                 String soLuongText = tfSoLuong.getText();
                 String giaNhapText = tfGiaNhap.getText();
                 int soLuong;
                 int giaNhap;
-            
+                
                 try {
                     soLuong = Integer.valueOf(soLuongText);
                     giaNhap = Integer.valueOf(giaNhapText);
+            
+                    if (soLuong <= 0) {
+                        JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        tfSoLuong.setText(oldSoLuongText);
+                        return;
+                    }
+                    if (giaNhap <= 0){
+                        JOptionPane.showMessageDialog(null, "Giá nhập phải lớn hơn 0!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        tfGiaNhap.setText(oldGiaNhapText);
+                        return;
+                    }
+            
                     NhapHang.updateGiavaSoLuong(donNhapItem.getMaPhieuNhap(), donNhapItem.getMaHangHoa(), soLuong, giaNhap);
                     JOptionPane.showMessageDialog(null, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 } catch (NumberFormatException ex) {

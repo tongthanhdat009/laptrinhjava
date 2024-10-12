@@ -236,7 +236,11 @@ public class delegateCTR extends JPanel {
 							tempCheckBox.setSelected(false);
 							return;
 						}
-						
+						if (iDQuyen.equals("Q0002") && (cNang.getTenChucNang().trim().equals("Duyệt phiếu nhập"))){
+							JOptionPane.showMessageDialog(null, "Nhóm quyền ngày không có quyền được có chức năng duyệt phiếu nhập");
+							tempCheckBox.setSelected(false);
+							return;
+						}
 						int result = JOptionPane.showConfirmDialog(funcContent, "Bạn có chắc muốn thêm phân quyền cho chức năng này chứ?");
 						if (result == JOptionPane.YES_OPTION) {
 							DTOPhanQuyen pQuyen = new DTOPhanQuyen(iDQuyen, tempCheckBox.getName());

@@ -1,4 +1,4 @@
-package GUI;
+package GUI.CONTROLLER;
 
 import java.util.ArrayList;
 import java.util.Locale;

@@ -24,6 +24,7 @@ import GUI.CONTROLLER.QuanLyThietBiCTR;
 import GUI.CONTROLLER.delegateCTR;
 import GUI.CONTROLLER.hoiVienCTR;
 import GUI.CONTROLLER.informationCTR;
+import GUI.CONTROLLER.nhapHang;
 import GUI.CONTROLLER.xuLyDSCTR;
 import GUI.CONTROLLER.xulyDDNCTR;
 

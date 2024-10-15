@@ -13,6 +13,8 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.jar.Attributes.Name;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,9 +36,12 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.formula.functions.Value;
+
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
+import DTO.HoiVien;
 import DTO.NhanVien;
 
 public class QuanLyBangNhanVienCTR {
@@ -86,15 +91,6 @@ public class QuanLyBangNhanVienCTR {
         them.setHorizontalAlignment(SwingConstants.CENTER);
         them.setBorder(null);
 
-    	JButton xoa  = new JButton();
-        xoa.setPreferredSize(new Dimension (110,35));
-        ImageIcon xoaBtnImg = new ImageIcon("src/asset/img/button/xoa-hv.png");
-        Image scaleXoaBtnImg = xoaBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
-        xoa.setPreferredSize(new Dimension (130,35));
-        xoa.setIcon(new ImageIcon(scaleXoaBtnImg));
-        xoa.setHorizontalAlignment(SwingConstants.CENTER);
-        xoa.setBorder(null);
-
     	JButton sua = new JButton();
         sua.setPreferredSize(new Dimension (110,35));
         ImageIcon suaBtnImg = new ImageIcon("src/asset/img/button/sua-hv.png");
@@ -106,7 +102,6 @@ public class QuanLyBangNhanVienCTR {
 
     	JButton timkiem = new JButton();
         timkiem.setPreferredSize(new Dimension (110,35));
-        timkiem.setPreferredSize(new Dimension (110,35));
         ImageIcon timKiemBtnImg = new ImageIcon("src/asset/img/button/tim-hv.png");
         Image scaletimKiemBtnImg = timKiemBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
         timkiem.setPreferredSize(new Dimension (130,35));
@@ -114,11 +109,20 @@ public class QuanLyBangNhanVienCTR {
         timkiem.setHorizontalAlignment(SwingConstants.CENTER);
         timkiem.setBorder(null);
 
+    	JButton reset  = new JButton();
+        reset.setPreferredSize(new Dimension (110,35));
+        ImageIcon resetBtnImg = new ImageIcon("src/asset/img/button/reset-hv.png");
+        Image scaleXoaBtnImg = resetBtnImg.getImage().getScaledInstance(130,35,Image.SCALE_DEFAULT);
+        reset.setPreferredSize(new Dimension (130,35));
+        reset.setIcon(new ImageIcon(scaleXoaBtnImg));
+        reset.setHorizontalAlignment(SwingConstants.CENTER);
+        reset.setBorder(null);
+        
     	JPanel chucnang = new JPanel(new FlowLayout());
     	chucnang.add(them);
-//    	chucnang.add(xoa);
     	chucnang.add(sua);
     	chucnang.add(timkiem);
+    	chucnang.add(reset);
     	chucnang.setBounds(5,100,rightPanel.getWidth()-5,40);
         chucnang.setBackground(new Color(241,255,250));
         rightPanel.add(chucnang);
@@ -525,7 +529,11 @@ public class QuanLyBangNhanVienCTR {
         						return;
         					}
         					else {
-        						newLuong = Integer.parseInt(luong); 
+        						newLuong = Integer.parseInt(luong);
+        						if(newLuong <=0) {
+        							JOptionPane.showMessageDialog(null, "Lương phải lớn hơn hoặc bằng 0!","Thêm nhân viên",JOptionPane.ERROR_MESSAGE);
+        							return;
+        						}
         					}
         					
                             NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
@@ -555,32 +563,23 @@ public class QuanLyBangNhanVienCTR {
                 
             }
         });
-        //xóa nhân viên
-//        xoa.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
-//				int i = bang.getSelectedRow();
-//				if(i>=0) {
-//					if(bllqlds.xoaNV(jtf_manv.getText()) && bllqlds.xoaTK(jtf_idAccount.getText())) {
-//						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên thành công","Success",JOptionPane.INFORMATION_MESSAGE);
-//						jtf_manv.setText("");jtf_hoten.setText("");jtf_sdt.setText("");jtf_cccd.setText("");
-//                        cbb_CoSo.setSelectedItem("Cơ sở");;btngr.clearSelection();cbb_vaiTro.setSelectedItem("Nhân viên");jtf_luong.setText("");
-//                        jtf_account.setText("");jtf_password.setText("");jtf_idAccount.setText("");dayCBB.setSelectedItem(1);monthCBB.setSelectedItem(1);yearCBB.setSelectedItem(2000);
-//                        model.removeRow(i);
-//						return;
-//					}
-//					else {
-//						JOptionPane.showMessageDialog(rightPanel, "Xóa nhân viên không thành công","Error",JOptionPane.ERROR_MESSAGE);
-//						return;
-//					}
-//				}
-//				else {
-//					JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn 1 dòng dữ liệu muốn xóa","Error",JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//			}
-//		});
+        //nút reset
+        reset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+                rightPanel.repaint(); // Vẽ lại JPanel
+        		rightPanel.setLayout(null);
+        		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+        		ArrayList<NhanVien> dsNV = new ArrayList<>();
+        		ArrayList<DTOQuyen> dsQuyen = bllQuanLyDanhSach.layDSQuyenNV();
+                dsNV = bllQuanLyDanhSach.getDataNhanVien();
+                ArrayList<DTOTaiKhoan>dsTKNV = bllQuanLyDanhSach.layDSTKNV();
+                QuanLyBangNhanVienCTR qlbnvCTR = new QuanLyBangNhanVienCTR();
+                qlbnvCTR.QuanLyBangNhanVien(dsNV,dsTKNV,dsQuyen, rightPanel, tk, coSoHienTai);
+			}
+		});
         
         //sửa thông tin nhân viên
         sua.addActionListener(new ActionListener() {
@@ -760,15 +759,16 @@ public class QuanLyBangNhanVienCTR {
 		});
 //        tìm kiếm nhân viên
         timkiem.addActionListener(new ActionListener() {
-            @Override
+            @SuppressWarnings({ "unchecked", "unchecked", "unchecked" })
+			@Override
             public void actionPerformed(ActionEvent e) {
-                model.setRowCount(0); // Xóa dữ liệu cũ trong bảng
 				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
 				int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
 				int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
 				int day = Integer.parseInt(dayCBB.getSelectedItem().toString());
 				@SuppressWarnings("deprecation")
-                Date date = new Date(year - 1900, month, day - 1);
+                Date date = new Date(year - 1900, month-1, day);
+				System.out.println(date);
 				String ma = jtf_manv.getText().trim();
 				String ten = jtf_hoten.getText().trim();
 				String sdt = jtf_sdt.getText().trim();
@@ -792,47 +792,59 @@ public class QuanLyBangNhanVienCTR {
 				if(bllqlds.kiemTraLuong(luong)==-1) {
 					newLuong = 0; 
 				}
+				else {
+					newLuong = Integer.parseInt(luong);
+					if(newLuong <=0) {
+						JOptionPane.showMessageDialog(null, "Lương phải lớn hơn hoặc bằng 0!","Thêm nhân viên",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+				System.out.println(luong);
                 NhanVien nv = new NhanVien(ma, ten, gioitinh, date, sdt, cccd, macoso, vaitro, IDTaiKhoan, newLuong);
-                ArrayList<NhanVien> dsNhanVien = bllqlds.timKiemNV(nv);
-                ArrayList<DTOTaiKhoan> dsTKNV2 = bllqlds.timKiemTKNV(nv);
-                if(bllqlds.timKiemNV(nv).size()!=0) {
-                	JOptionPane.showMessageDialog(rightPanel, "Tìm kiếm thành công","Tìm kiếm thông tin",JOptionPane.INFORMATION_MESSAGE);
-                	for (int i = 0; i < dsNhanVien.size(); i++) {
-                		model.addRow(new Object[] {
-                    			dsNhanVien.get(i).getMaNhanVien(),
-                    			dsNhanVien.get(i).getHoten().trim(),
-                    			dsNhanVien.get(i).getGioitinh(),
-                    			dsNhanVien.get(i).getNgaysinh(),
-                    			dsNhanVien.get(i).getSdt(),
-                    			dsNhanVien.get(i).getSocccd(),
-                    			dsNhanVien.get(i).getMacoso(),
-                    			dsNhanVien.get(i).getVaitro().trim(),
-                    			dsNhanVien.get(i).getLuong(),
-                    			dsTKNV2.get(i).getTaiKhoan().trim(),
-                    			dsTKNV2.get(i).getMatKhau().trim(),
-                    			dsNhanVien.get(i).getIDTaiKhoan()
-                        	});
-                    }
-                	return;
+                DTOTaiKhoan tk = new DTOTaiKhoan(IDTaiKhoan, taiKhoan, matKhau, "", "");
+                if(bllQuanLyDanhSach.timKiemNV(nv,tk) != null) {
+                	Map<String, ArrayList<?>> testMap = bllQuanLyDanhSach.timKiemNV(nv,tk);
+                	ArrayList<NhanVien> dsNhanVien = new ArrayList<NhanVien> ();
+                	ArrayList<DTOTaiKhoan> dsTK = new ArrayList<DTOTaiKhoan>();
+                	ArrayList<String> dsTenQuyen = new ArrayList<String>();
+                	for (Entry<String, ArrayList<?>> entry : testMap.entrySet()) {
+                		String key = entry.getKey(); // Lấy khóa
+                		ArrayList<?> value = entry.getValue(); // Lấy giá trị
+                		if (key.equals("TaiKhoan")) {
+                			dsTK = (ArrayList<DTOTaiKhoan>) value;
+                			System.out.println(dsTK.size());
+                		}
+                		else if(key.equals("NhanVien")){
+                			dsNhanVien = (ArrayList<NhanVien>)value;
+                			System.out.println(dsNV.size());
+                		}
+                		else {
+                			dsTenQuyen = (ArrayList<String>)value;
+                			System.out.println(dsNV.size());
+                		}
+                	}
+                	model.setRowCount(0);
+                	for(int i=0;i<dsNhanVien.size();i++) {
+                		if((dsTK.get(i).getIDQuyen().equals("Q0002") || dsTK.get(i).getIDQuyen().equals("Q0003"))) {
+                    		model.addRow(new Object[] {
+                    				dsNhanVien.get(i).getMaNhanVien(),dsNhanVien.get(i).getHoten().trim(),dsNhanVien.get(i).getGioitinh(),dsNhanVien.get(i).getNgaysinh(),
+                    				dsNhanVien.get(i).getSdt(),dsNhanVien.get(i).getSocccd(),dsNhanVien.get(i).getMacoso(),dsTenQuyen.get(i).trim(),
+                    				dsNhanVien.get(i).getLuong(),dsTK.get(i).getTaiKhoan().trim(), dsTK.get(i).getMatKhau().trim(),dsNhanVien.get(i).getIDTaiKhoan()
+                    		});
+                    	}
+                    	else if(dsTK.get(i).getIDQuyen().equals("Q0004")){
+                    		model.addRow(new Object[] {
+                    				dsNhanVien.get(i).getMaNhanVien(),dsNhanVien.get(i).getHoten().trim(),dsNhanVien.get(i).getGioitinh(),dsNhanVien.get(i).getNgaysinh(),
+                    				dsNhanVien.get(i).getSdt(),dsNhanVien.get(i).getSocccd(),dsNhanVien.get(i).getMacoso(),dsTenQuyen.get(i).trim(),
+                    				dsNhanVien.get(i).getLuong(),dsTK.get(i).getTaiKhoan().trim(), dsTK.get(i).getMatKhau().trim(),dsNhanVien.get(i).getIDTaiKhoan()
+                    		});
+                    	}
+                	}
+                	bang.setModel(model);
                 }
                 else {
-                	JOptionPane.showMessageDialog(rightPanel, "Tìm kiếm không thành công vui lòng chọn thêm đầy đủ thông tin như giới tính, vai trò, cơ sở","Tìm kiếm thông tin",JOptionPane.ERROR_MESSAGE);
-                	for(int i = 0; i < dsNV.size();i++) {
-                		if(coSoHienTai.equals(dsNV.get(i).getMacoso())&&(tk.getIDQuyen().equals("Q0002") || tk.getIDQuyen().equals("Q0003"))) {
-                    		model.addRow(new Object[] {
-                    				dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
-                    				dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
-                    				dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
-                    		});
-                    	}
-                    	else if(tk.getIDQuyen().equals("Q0004")){
-                    		model.addRow(new Object[] {
-                    				dsNV.get(i).getMaNhanVien(),dsNV.get(i).getHoten().trim(),dsNV.get(i).getGioitinh(),dsNV.get(i).getNgaysinh(),
-                    				dsNV.get(i).getSdt(),dsNV.get(i).getSocccd(),dsNV.get(i).getMacoso(),dsQuyen.get(i).getTenQuyen().trim(),
-                    				dsNV.get(i).getLuong(),dsTKNV.get(i).getTaiKhoan().trim(), dsTKNV.get(i).getMatKhau().trim(),dsNV.get(i).getIDTaiKhoan()
-                    		});
-                    	}
-                    }
+                	JOptionPane.showMessageDialog(null, "Không có kết quả cần tìm!", "Tìm kiếm", JOptionPane.INFORMATION_MESSAGE);
+                	return;
                 }
             }
         });

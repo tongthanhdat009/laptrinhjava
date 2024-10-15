@@ -1,8 +1,15 @@
 package DAL;
+import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.openxmlformats.schemas.drawingml.x2006.main.STLightRigDirection;
+
+import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
+import DTO.ThongTinChiTietHangHoa;
 import DTO.dsHoiVien;
 public class DataHoiVien {
     private Connection con;
@@ -78,50 +85,134 @@ public class DataHoiVien {
         return false;
     }
     
-    public dsHoiVien timKiem(HoiVien a) //Chưa test
-    {
-        ArrayList<String> ds = new ArrayList<String>();
-        dsHoiVien dsHoiVien = new dsHoiVien();
-        String truyVan = "SELECT *, TK.IDTaiKhoan FROM HoiVien, TaiKhoan TK Where HoiVien.IDTaiKhoan = TK.IDTaiKhoan AND ";
-        if(!a.getMaHoiVien().equals(""))
-        {
-            truyVan+= "MaHV = ? AND ";
-            ds.add(a.getMaHoiVien());
-        } 
-        if(!a.getGioitinh().equals(""))
-        {
-            truyVan+="GioiTinh = ? AND ";
-            ds.add(a.getGioitinh());
-        } 
-        if(!a.getSdt().equals(""))
-        {
-            truyVan+="SoDienThoai = ? ";
-            ds.add(a.getSdt());
-        }
-        truyVan = truyVan.trim();
-        if (truyVan.endsWith("AND")) {
-            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
-            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
-        }
+//    public dsHoiVien timKiem(HoiVien a) //Chưa test
+//    {
+//        ArrayList<String> ds = new ArrayList<String>();
+//        dsHoiVien dsHoiVien = new dsHoiVien();
+//        String truyVan = "SELECT *, TK.IDTaiKhoan FROM HoiVien, TaiKhoan TK Where HoiVien.IDTaiKhoan = TK.IDTaiKhoan AND ";
+//        if(!a.getMaHoiVien().equals(""))
+//        {
+//            truyVan+= "MaHV = ? AND ";
+//            ds.add(a.getMaHoiVien());
+//        } 
+//        if(!a.getGioitinh().equals(""))
+//        {
+//            truyVan+="GioiTinh = ? AND ";
+//            ds.add(a.getGioitinh());
+//        } 
+//        if(!a.getSdt().equals(""))
+//        {
+//            truyVan+="SoDienThoai = ? ";
+//            ds.add(a.getSdt());
+//        }
+//        truyVan = truyVan.trim();
+//        if (truyVan.endsWith("AND")) {
+//            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
+//            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+//        }
+//
+//        try
+//        {
+//            con = DriverManager.getConnection(dbUrl, userName, password);
+//            PreparedStatement statement = con.prepareStatement(truyVan);
+//            for(int i=0;i<ds.size();i++)
+//                statement.setString(i+1, ds.get(i));
+//            ResultSet rs = statement.executeQuery();
+//            while(rs.next())
+//            {
+//                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8)));
+//            }
+//        }catch(Exception e)
+//        {
+//            System.out.println(e);
+//        }
+//        return dsHoiVien;
+//    }
 
-        try
-        {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement statement = con.prepareStatement(truyVan);
-            for(int i=0;i<ds.size();i++)
-                statement.setString(i+1, ds.get(i));
-            ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
-                dsHoiVien.them(new HoiVien(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8)));
-            }
-        }catch(Exception e)
-        {
-            System.out.println(e);
+    //tìm kiếm hội viên
+    public Map<String, ArrayList<?>> timKiem(ArrayList<String> thongTin) {
+    	dsHoiVien dsHV = new dsHoiVien();
+    	ArrayList<DTOTaiKhoan> dsTK = new ArrayList<DTOTaiKhoan>();
+    	Map<String, ArrayList<?>> resultMap = new HashMap<>();
+    	String truyVan = "SELECT DISTINCT * FROM HoiVien JOIN TaiKhoan ON HoiVien.IDTaiKhoan = TaiKhoan.IDTaiKhoan WHERE ";
+    	// thongTin.get(0) là Mã hội viên (MaHV)
+        // thongTin.get(1) là Họ tên (HoTenHV)
+        // thongTin.get(2) là giới tính (GioiTinh)
+    	// thongTin.get(3) là gmail (Gmail)
+    	// thongTin.get(5) là số điện thoại (SoDienThoai)
+    	// thongTin.get(6) là Ngày Sinh (NgaySinh)
+    	// thongTin.get(7) là Tài khoản hội viên (TaiKhoan)
+    	// thongTin.get(8) là Mật khẩu tài khoản hội viên (MatKhau)
+    	if(!thongTin.get(0).trim().equals("")) {
+    		String maHV = "MaHV LIKE '%"+thongTin.get(0).trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += maHV;
+    	}
+    	if(!thongTin.get(1).trim().equals("")) {
+    		String hoTen = "HoTenHV LIKE N'%"+thongTin.get(1).trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += hoTen;
+    	}
+    	if(!thongTin.get(2).trim().equals("")) {
+    		String gioiTinh = "GioiTinh = N'"+thongTin.get(2).trim()+"' AND ";
+    		truyVan += gioiTinh;
+    	}
+    	if(!thongTin.get(3).trim().equals("")) {
+    		String gmail = "Gmail LIKE '%"+thongTin.get(3).trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan +=gmail;
+    	}
+    	if(!thongTin.get(5).trim().equals("")) {
+    		String sdt = "SoDienThoai LIKE '%"+thongTin.get(5).trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan +=sdt;
+    	}
+    	if(!thongTin.get(6).trim().equals("2024-1-1")) {
+    		String ngaySinh = "NgaySinh = '"+thongTin.get(6).trim()+"' AND ";
+    		truyVan += ngaySinh;
+    	}
+    	if(!thongTin.get(7).trim().equals("")){
+    		String taiKhoan = "TaiKhoan LIKE '%"+thongTin.get(7).trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += taiKhoan;
+    	}
+    	if(!thongTin.get(8).trim().equals("")) {
+    		String matKhau = "MatKhau LIKE '%"+thongTin.get(8).trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI";
+    		truyVan += matKhau;
+    	}
+    	
+    	if (truyVan.endsWith(" AND ")) {
+    	    truyVan = truyVan.substring(0, truyVan.length() - 5); // Cắt 5 ký tự cuối (AND)
+    	}
+    	if (truyVan.endsWith(" WHERE ")) {
+    		return null;
+    	}
+    	try {
+    		PreparedStatement stmt = con.prepareStatement(truyVan);
+    		ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+    			HoiVien hv = new HoiVien();
+                hv.setMaHoiVien(rs.getString("MaHV"));
+                hv.setHoten(rs.getString("HoTenHV"));
+                hv.setGioitinh(rs.getString("GioiTinh"));
+                hv.setMail(rs.getString("Gmail"));
+                hv.setSdt(rs.getString("SoDienThoai"));
+                hv.setNgaysinh(rs.getDate("NgaySinh"));
+                hv.setAnh(rs.getString("Anh"));
+                dsHV.dsHV.add(hv);
+                
+                DTOTaiKhoan tk = new DTOTaiKhoan(rs.getString("IDTaiKhoan"),
+                					rs.getString("TaiKhoan"),
+                					rs.getString("MatKhau"),
+                					rs.getString("IDQuyen"),
+                					rs.getString("Status"));
+				dsTK.add(tk);
+    		}
+    	}
+    	catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi nếu có
         }
-        return dsHoiVien;
+    	System.out.println(truyVan);
+    	resultMap.put("HoiVien", dsHV.dsHV);
+    	resultMap.put("TaiKhoan", dsTK);
+    	return resultMap;
     }
-
+    
     public boolean timKiemHV(String maHV) //test rồi
     {
         String truyVan = "SELECT * FROM HoiVien Where MaHV = ?";

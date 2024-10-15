@@ -1,5 +1,6 @@
 package BLL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Vector;
@@ -105,7 +106,7 @@ public class BLLQuanLyDanhSach{
     public boolean suaThongTinHV(HoiVien a){
         return dataHoiVien.sua(a);
     }
-    public dsHoiVien timKiemHoiVien(HoiVien a) {
+    public Map<String, ArrayList<?>> timKiemHoiVien(ArrayList<String> a) {
         return dataHoiVien.timKiem(a);
     }
     
@@ -459,8 +460,8 @@ public class BLLQuanLyDanhSach{
     }
 
     // Tìm kiếm nhân viên
-    public ArrayList<NhanVien> timKiemNV(NhanVien nv) {
-        return dataNhanVien.timkiemnhanvien(nv);
+    public Map<String, ArrayList<?>> timKiemNV(NhanVien nv, DTOTaiKhoan tk) {
+        return dataNhanVien.timkiemnhanvien(nv,tk);
     }
     
     // Danh sách dịch vụ

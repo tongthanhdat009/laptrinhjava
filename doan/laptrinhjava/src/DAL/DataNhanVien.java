@@ -3,10 +3,17 @@ package DAL;
 import java.awt.Component;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import DTO.DTOQuyen;
+import DTO.DTOTaiKhoan;
+import DTO.HoiVien;
 import DTO.NhanVien;
+import DTO.dsHoiVien;
+import GUI.CONTROLLER.nhapHang;
 
 public class DataNhanVien {
     private Connection con;
@@ -126,53 +133,95 @@ public class DataNhanVien {
 //        return result;
 //    }
 
-    public ArrayList<NhanVien> timkiemnhanvien(NhanVien a){
-    	ArrayList<String> ds = new ArrayList<String>();
-        ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
-        String truyVan = "SELECT nv.MaNV, nv.HoTenNV, nv.GioiTinh, nv.NgaySinh, nv.SoDienThoai, nv.SoCCCD, nv.MaCoSo, q.TenQuyen, nv.Luong, nv.IDTaiKhoan\r\n"
-        		+ "FROM  NhanVien nv,\r\n"
-        		+ "	TaiKhoan tk,\r\n"
-        		+ "	Quyen q\r\n"
-        		+ "	Where nv.IDTaiKhoan = tk.IDTaiKhoan\r\n"
-        		+ "		And tk.IDQuyen = q.IDQuyen AND ";
-        if(!a.getMaNhanVien().equals(""))
-        {
-            truyVan+= "nv.MaNV = ? AND ";
-            ds.add(a.getMaNhanVien());
-        } 
-        if(!a.getGioitinh().equals(""))
-        {
-            truyVan+="nv.GioiTinh = N'"+a.getGioitinh()+"' AND ";
-        } 
-        if(!a.getVaitro().equals("Vai Trò")) {
-        	truyVan+="q.TenQuyen = N'"+a.getVaitro()+"' AND ";
+    public Map<String, ArrayList<?>> timkiemnhanvien(NhanVien nv,DTOTaiKhoan tk){
+    	ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
+    	ArrayList<DTOTaiKhoan> dsTK = new ArrayList<DTOTaiKhoan>();
+    	ArrayList<String> dsQUYEN = new ArrayList<String>();
+    	Map<String, ArrayList<?>> resultMap = new HashMap<>();
+    	String truyVan = "SELECT DISTINCT * FROM NhanVien JOIN TaiKhoan ON NhanVien.IDTaiKhoan = TaiKhoan.IDTaiKhoan JOIN Quyen ON Quyen.IDQuyen = TaiKhoan.IDQuyen WHERE ";
+    	if(!nv.getMaNhanVien().equals("")) {
+    		String maNV = "MaNV LIKE '%"+nv.getMaNhanVien().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += maNV;
+    	}
+    	if(!nv.getHoten().trim().equals("")) {
+    		String hoTen = "HoTenNV LIKE N'%"+nv.getHoten().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += hoTen;
+    	}
+    	if(!nv.getGioitinh().trim().equals("")) {
+    		String gioiTinh = "GioiTinh = N'"+nv.getGioitinh().trim()+"' AND ";
+    		truyVan += gioiTinh;
+    	}
+    	if(!nv.getNgaysinh().trim().equals("2024-1-1")) {
+    		String ngaySinh = "NgaySinh = '"+nv.getNgaysinh().trim()+"' AND ";
+    		truyVan +=ngaySinh;
+    	}
+    	if(!nv.getSdt().trim().equals("")) {
+    		String sdt = "SoDienThoai LIKE '%"+nv.getSdt().trim()+"%' AND ";
+    		truyVan +=sdt;
+    	}
+    	if(!nv.getSocccd().trim().equals("")) {
+    		String socccd = "SoCCCD LIKE '%"+nv.getSocccd().trim()+"%' AND ";
+    		truyVan += socccd;
+    	}
+    	if(!nv.getMacoso().trim().equals("Cơ sở")){
+    		String taiKhoan = "MaCoSo LIKE '"+nv.getMacoso().trim()+"' AND ";
+    		truyVan += taiKhoan;
+    	}
+    	if(!nv.getVaitro().trim().equals("Vai trò")) {
+    		String matKhau = "VaiTro = N'"+nv.getVaitro().trim()+"' AND ";
+    		truyVan += matKhau;
+    	}
+    	if(nv.getLuong()>0) {
+    		String luong = "Luong = "+nv.getLuong()+" AND ";
+    		truyVan += luong;
+    	}
+    	if(!tk.getTaiKhoan().trim().equals("")) {
+    		String taiKhoan = "TaiKhoan LIKE '%"+tk.getTaiKhoan().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += taiKhoan;
+    	}
+    	if(!tk.getMatKhau().trim().equals("")) {
+    		String matKhau = "MatKhau LIKE '%"+tk.getMatKhau().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI";
+    		truyVan += matKhau;
+    	}
+    	if (truyVan.endsWith(" AND ")) {
+    	    truyVan = truyVan.substring(0, truyVan.length() - 5); // Cắt 5 ký tự cuối (AND)
+    	}
+    	if (truyVan.endsWith(" WHERE ")) {
+    		return null;
+    	}
+    	try {
+    		PreparedStatement stmt = con.prepareStatement(truyVan);
+    		ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+    			dsNV.add(new NhanVien(rs.getString("MaNV"),
+    					rs.getString("HoTenNV"),
+    					rs.getString("GioiTinh"),
+    					rs.getDate("NgaySinh"),
+    					rs.getString("SoDienThoai"),
+    					rs.getString("SoCCCD"),
+    					rs.getString("MaCoSo"),
+    					rs.getString("VaiTro"),
+    					rs.getString("IDTaiKhoan"),
+    					rs.getInt("Luong")));
+                
+                DTOTaiKhoan tKhoan = new DTOTaiKhoan(rs.getString("IDTaiKhoan"),
+                					rs.getString("TaiKhoan"),
+                					rs.getString("MatKhau"),
+                					rs.getString("IDQuyen"),
+                					rs.getString("Status"));
+				dsTK.add(tKhoan);
+				
+				dsQUYEN.add(rs.getString("TenQuyen"));
+    		}
+    	}
+    	catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi nếu có
         }
-        if(!a.getMacoso().equals("Cơ Sở")) {
-        	truyVan+="nv.MaCoSo = ? AND ";
-        	ds.add(a.getMacoso());
-        }
-        
-        truyVan = truyVan.trim();
-        if (truyVan.endsWith("AND")) {
-            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
-            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
-        }
-        try
-        {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement statement = con.prepareStatement(truyVan);
-            for(int i=0;i<ds.size();i++)
-                statement.setString(i+1, ds.get(i));
-            ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
-                dsNV.add(new NhanVien(rs.getString("MaNV"), rs.getString("HoTenNV"), rs.getString("GioiTinh"), rs.getDate("NgaySinh"), rs.getString("SoDienThoai"), rs.getString("SoCCCD"), rs.getString("MaCoSo"), rs.getString("TenQuyen"), rs.getString("IDTaiKhoan"), rs.getInt("Luong")));
-            }
-        }catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        return dsNV;
+    	System.out.println(truyVan);
+    	resultMap.put("NhanVien", dsNV);
+    	resultMap.put("TaiKhoan", dsTK);
+    	resultMap.put("TenQuyen", dsQUYEN);
+    	return resultMap;
     }
     
     public boolean xoanv(String manv) {

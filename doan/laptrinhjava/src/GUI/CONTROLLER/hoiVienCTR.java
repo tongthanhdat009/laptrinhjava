@@ -13,6 +13,10 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -154,8 +158,6 @@ public class hoiVienCTR {
             }
             else if(i==6){
                 Font font = new Font("Times New Roman", Font.BOLD, 20); // Thay đổi font và kích thước chữ ở đây
-                
-                
                 for(int day=1; day<=31 ;day++){
                     dayCBB.addItem(day);
                 }
@@ -179,7 +181,7 @@ public class hoiVienCTR {
                 yearCBB.setFont(font);
                 yearCBB.setBackground(Color.white);
                 yearCBB.setName("Year");
-                yearCBB.setSelectedItem(2000);
+                yearCBB.setSelectedItem(2024);
 
                 // Listener thay đổi tháng và năm để cập nhật ngày
                 ActionListener updateDaysListener = new ActionListener() {
@@ -224,13 +226,14 @@ public class hoiVienCTR {
         dataTable.getColumnModel().getColumn(9).setCellRenderer(rd);
         
         //nút chức năng
-        String[] cmtNut = {"add", "edit", "Search"};
+        String[] cmtNut = {"add", "edit", "Search","Reset"};
         String[] anhStrings = {
             "src/asset/img/button/them-hv.png",
             "src/asset/img/button/sua-hv.png",
-            "src/asset/img/button/tim-hv.png"
+            "src/asset/img/button/tim-hv.png",
+            "src/asset/img/button/reset-hv.png"
         };
-        int a=335;
+        int a=275;
         for(int i=0;i<cmtNut.length;i++){
             JButton tempBtn = new JButton();
             ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
@@ -433,64 +436,7 @@ public class hoiVienCTR {
                             return;
                         }
                     }
-//                    else if (e.getActionCommand().equals(cmtNut[1])) {//XÓA HỘI VIÊN
-//                        int i=dataTable.getSelectedRow();
-//                        if(i>=0){
-//                            Component[] components = bangChinhSua.getComponents();
-//                            hvList.removeRow(i);
-//                            ArrayList<String> maTKVaHV = new ArrayList<String>();
-//                            for (Component component : components) {
-//                                if (component instanceof JPanel) {
-//                                    JPanel tempPanel = (JPanel) component;
-//                                    Component[] smallComponents = tempPanel.getComponents();
-//                                    for (Component smallComponent : smallComponents) {
-//                                        if(smallComponent instanceof JTextField){
-//                                            JTextField textField = (JTextField) smallComponent;
-//                                            if(components[4] == component || components[0] == component){
-//            									maTKVaHV.add(textField.getText().trim());
-//                                            }
-//                                        }
-//                                        
-//                                    }
-//                                }
-//                            }
-//                            if(bllQuanLyDanhSach.xoaHV(maTKVaHV.get(0))&&bllQuanLyDanhSach.xoaTK(maTKVaHV.get(1))) {
-//                                JOptionPane.showMessageDialog(bangChinhSua, "Xóa thành công!");
-//                                for (Component component : components) {
-//                                  if (component instanceof JPanel) {
-//                                      JPanel tempPanel = (JPanel) component;
-//                                      Component[] smallComponents = tempPanel.getComponents();
-//                                      for (Component smallComponent : smallComponents) {
-//                                          if(smallComponent instanceof JTextField){
-//                                              JTextField textField = (JTextField) smallComponent;
-//                                                  textField.setText("");
-//                                          }
-//                                          else if(smallComponent instanceof JComboBox){
-//                                              @SuppressWarnings("rawtypes")
-//                                              JComboBox cb = (JComboBox) smallComponent;
-//                                              if("Day".equals(cb.getName())){
-//                                                  cb.setSelectedItem(1);
-//                                              }
-//                                              if("Month".equals(cb.getName())){
-//                                                  cb.setSelectedItem(1);
-//                                              }
-//                                              if("Year".equals(cb.getName())){
-//                                                  cb.setSelectedItem(2000);
-//                                              }
-//                                          }
-//                                          
-//                                      }
-//                                  
-//                                  }
-//  
-//                              }
-//                            }
-//                            else {
-//                                JOptionPane.showMessageDialog(bangChinhSua, "Xóa không thành công!");
-//                                return;
-//                            }
-//                        }
-//                    } 
+
                     else if (e.getActionCommand().equals(cmtNut[1])) {//SỬA THÔNG TIN HỘI VIÊN
                         int i= dataTable.getSelectedRow();
                         Date date;
@@ -665,6 +611,7 @@ public class hoiVienCTR {
                         int day=1, month=1, year=2000;
                         Date date = new Date(year-1900, month-1, day);
                         int dateCount = 0;
+                        int gioiTinhTrong = 0;
                         for(Component component : components) {
                             if(component instanceof JPanel){
                                 JPanel panel = (JPanel) component;
@@ -683,6 +630,11 @@ public class hoiVienCTR {
                                         JRadioButton tempRB = (JRadioButton)smallComponent;
                                         if(tempRB.isSelected()){
                                             thongTin.add(tempRB.getText().toString());
+                                        }else {
+                                        	gioiTinhTrong ++;
+                                        }
+                                        if(gioiTinhTrong == 2) {
+                                        	thongTin.add("");
                                         }
                                     }
                                     if(smallComponent instanceof JComboBox){
@@ -708,55 +660,74 @@ public class hoiVienCTR {
                                 }
                             }
                         }
-                        if(thongTin.size()>=10){
-                        	System.out.println(thongTin);
-                        	HoiVien tempHV = new HoiVien(thongTin.get(0),
-		                            thongTin.get(1),
-		                            thongTin.get(2),
-		                            thongTin.get(3),
-		                            date,
-		                            thongTin.get(5),
-		                            thongTin.get(4),
-		                            thongTin.get(9));
-                            if(bllQuanLyDanhSach.timKiemHoiVien(tempHV).dsHV.size() != 0 && bllQuanLyDanhSach.timKiemTKHV(tempHV).size() != 0){
-                                JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm hội viên", JOptionPane.INFORMATION_MESSAGE);
-                                ArrayList<DTOTaiKhoan> dsTK2 = bllQuanLyDanhSach.timKiemTKHV(tempHV);
-                                dsHoiVien dsHV2 = bllQuanLyDanhSach.timKiemHoiVien(tempHV);
-                                hvList.setRowCount(0);
-                                for (int i = 0; i < dsHV2.dsHV.size(); i++) {
-                                    hvList.addRow(new Object[]{dsHV2.dsHV.get(i).getMaHoiVien(),
-                                        dsHV2.dsHV.get(i).getHoten().trim(),
-                                        dsHV2.dsHV.get(i).getGioitinh().trim(),
-                                        dsHV2.dsHV.get(i).getMail().trim(),
-                                        dsHV2.dsHV.get(i).getIDTaiKhoan().trim(),
-                                        dsHV2.dsHV.get(i).getSdt().trim(),
-                                        dsHV2.dsHV.get(i).getNgaysinh().trim(),
-                                        dsTK2.get(i).getTaiKhoan().trim(),
-                                        dsTK2.get(i).getMatKhau().trim(),
-                                        dsHV2.dsHV.get(i).getAnh()});
-                                }
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(bangChinhSua, "Vui lòng nhập thêm hoặc kiểm tra lại thông tin để có được kết quả tìm kiếm chính xác","Tìm kiếm hàng hóa", JOptionPane.ERROR_MESSAGE);
-                                for (int i = 0; i < dsHV.size(); i++) {
-                                    hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
+                        if(bllQuanLyDanhSach.timKiemHoiVien(thongTin) != null) {
+                        	Map<String, ArrayList<?>> testMap = bllQuanLyDanhSach.timKiemHoiVien(thongTin);
+                        	ArrayList<HoiVien> dsHV = new ArrayList<HoiVien> ();
+                        	ArrayList<DTOTaiKhoan> dsTK = new ArrayList<DTOTaiKhoan>();
+                        	for (Entry<String, ArrayList<?>> entry : testMap.entrySet()) {
+                        		String key = entry.getKey(); // Lấy khóa
+                        		ArrayList<?> value = entry.getValue(); // Lấy giá trị
+                        		if (key.equals("TaiKhoan")) {
+                        			dsTK = (ArrayList<DTOTaiKhoan>) value;
+                        		}
+                        		else if(key.equals("HoiVien")){
+                        			dsHV = (ArrayList<HoiVien>)value;
+                        		}
+                        	}
+                        	hvList.setRowCount(0);
+                        	for(int i=0;i<dsHV.size();i++) {
+                        		hvList.addRow(new Object[]{dsHV.get(i).getMaHoiVien(),
                                         dsHV.get(i).getHoten().trim(),
                                         dsHV.get(i).getGioitinh().trim(),
                                         dsHV.get(i).getMail().trim(),
-                                        dsHV.get(i).getIDTaiKhoan().trim(),
+                                        dsTK.get(i).getIDTaiKhoan().trim(),
                                         dsHV.get(i).getSdt().trim(),
                                         dsHV.get(i).getNgaysinh().trim(),
                                         dsTK.get(i).getTaiKhoan().trim(),
                                         dsTK.get(i).getMatKhau().trim(),
-                                        dsHV.get(i).getAnh()});
-                                }
-                            }
+                                        dsHV.get(i).getAnh(),
+                                        });
+                        	}
                         }
-                        else{
-                            JOptionPane.showMessageDialog(bangChinhSua, "Thiếu thông tin vui lòng chọn thêm giới tính","Thiếu thông tin", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        } 
+                        else {
+                        	JOptionPane.showMessageDialog(null, "Không có kết quả cần tìm!", "Tìm kiếm", JOptionPane.INFORMATION_MESSAGE);
+                        	return;
+                        }
                     }
+		            else if (e.getActionCommand().equals(cmtNut[3])) {
+		            	rightPanel.removeAll(); // Xóa tất cả các thành phần con khỏi JPanel
+		                rightPanel.revalidate(); // Cập nhật lại JPanel để hiển thị thay đổi
+		                rightPanel.repaint(); // Vẽ lại JPanel
+		        		rightPanel.setLayout(null);
+//		        		BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+//		        		ArrayList<HoiVienCoSo> ds = new ArrayList<>();
+//		                Vector<String> dsCoSo = new Vector<>();
+//		                dsCoSo = bllQuanLyDanhSach.layDSMaCoSo();
+//		                ds = bllQuanLyDanhSach.layDSHoiVienCoSo();
+//		                QuanLyHoiVienCoSoCTR qlhvcsCTR = new QuanLyHoiVienCoSoCTR();
+//		                qlhvcsCTR.QuanLyHoiVienCoSo(ds,dsCoSo,rightPanel);
+//		                
+		                JTable dataTable = new JTable();
+		                JScrollPane scrollPane = new JScrollPane();
+		                JPanel bangChinhSua = new JPanel();
+		                
+		                BLLQuanLyDanhSach bllQuanLyDanhSach = new BLLQuanLyDanhSach();
+
+		                ArrayList<String> tenCotHV = new ArrayList<String>();
+		                ArrayList<HoiVien> dsHV = bllQuanLyDanhSach.getDataHoiVien();
+		                tenCotHV.add("Mã hội viên");
+		                tenCotHV.add("Họ tên hội viên");
+		                tenCotHV.add("Giới tính");
+		                tenCotHV.add("Gmail");
+		                tenCotHV.add("Mã Tài khoản");
+		                tenCotHV.add("Số điện thoại");
+		                tenCotHV.add("Ngày sinh");
+		                tenCotHV.add("Tài khoản");
+		                tenCotHV.add("Mật khẩu");
+		                tenCotHV.add("Ảnh đại diện");
+		                hoiVienCTR hvCTR = new hoiVienCTR(rightPanel,tenCotHV,dsHV,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
+		                hvCTR.update();
+		            } 
                 }
             });
             a+=175;

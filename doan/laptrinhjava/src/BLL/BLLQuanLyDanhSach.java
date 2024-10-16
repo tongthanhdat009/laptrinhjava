@@ -33,7 +33,6 @@ import DTO.ThongTinChiTietHangHoa;
 import DTO.Xa;
 import DTO.dichVu;
 import DTO.dsHangHoa;
-import DTO.dsHoiVien;
 import DTO.hangHoa;
 import DTO.hangHoaCoSo;
 
@@ -164,6 +163,15 @@ public class BLLQuanLyDanhSach{
     }
     public boolean suaThongTinCS(CoSo cs){
         return dataCoSo.suaThongTinCS(cs);
+    }
+    public boolean kiemTraTonTaiSDTCoSo(String sdt) {
+    	return dataCoSo.kiemTraTonTaiSDT(sdt);
+    }
+    public boolean kiemTraTonTaiTenCoSo(String tenCS) {
+    	return dataCoSo.kiemTraTonTaiTenCoSo(tenCS);
+    }
+    public boolean kiemTraTonTaiDiaChi(String diaChi) {
+    	return dataCoSo.kiemTraTonTaiDiaChi(diaChi);
     }
     //danh sách thiết bị
     public DSLoaiThietBi layDSLoaiThietBiKhac(){

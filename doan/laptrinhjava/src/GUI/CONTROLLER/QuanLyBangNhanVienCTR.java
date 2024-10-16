@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.jar.Attributes.Name;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,12 +35,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.poi.ss.formula.functions.Value;
 
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
-import DTO.HoiVien;
 import DTO.NhanVien;
 
 public class QuanLyBangNhanVienCTR {
@@ -759,7 +756,7 @@ public class QuanLyBangNhanVienCTR {
 		});
 //        tìm kiếm nhân viên
         timkiem.addActionListener(new ActionListener() {
-            @SuppressWarnings({ "unchecked", "unchecked", "unchecked" })
+            @SuppressWarnings({ "unchecked" })
 			@Override
             public void actionPerformed(ActionEvent e) {
 				BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();

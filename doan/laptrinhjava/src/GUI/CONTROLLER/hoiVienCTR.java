@@ -13,8 +13,6 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -40,7 +38,6 @@ import javax.swing.table.DefaultTableModel;
 import BLL.BLLQuanLyDanhSach;
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
-import DTO.dsHoiVien;
 import GUI.renderer;
 
 public class hoiVienCTR {
@@ -244,7 +241,7 @@ public class hoiVienCTR {
             tempBtn.setHorizontalAlignment(SwingConstants.CENTER);
             tempBtn.setBorder(null);
             tempBtn.addActionListener(new ActionListener() {
-                @SuppressWarnings("deprecation")
+                @SuppressWarnings({ "deprecation", "unchecked" })
                 public void actionPerformed(ActionEvent e) {
                     if (e.getActionCommand().equals(cmtNut[0])) { //THÊM HỘI VIÊN
                         boolean flag = true; // cờ hiệu gán giá trị cho mã hội viên
@@ -609,7 +606,7 @@ public class hoiVienCTR {
                         ArrayList<String> thongTin = new ArrayList<String>();
                         Component[] components = bangChinhSua.getComponents();
                         int day=1, month=1, year=2000;
-                        Date date = new Date(year-1900, month-1, day);
+                        // Date date = new Date(year-1900, month-1, day);
                         int dateCount = 0;
                         int gioiTinhTrong = 0;
                         for(Component component : components) {
@@ -654,7 +651,7 @@ public class hoiVienCTR {
                                         }
                                         if(dateCount == 3){
                                             thongTin.add(year+"-"+month+"-"+day);
-                                            date = new Date(year-1900, month-1, day);
+                                            // date = new Date(year-1900, month-1, day);
                                         }
                                     }
                                 }

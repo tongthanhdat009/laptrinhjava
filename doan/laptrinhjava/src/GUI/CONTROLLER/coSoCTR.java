@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -129,14 +131,14 @@ public class coSoCTR {
         scrollPane.setBounds(5,460,(int)(width*0.75)-20,400);
         
         //thêm nút chức năng
-        String[] cmtNut = {"add", "edit", "Search"};
+        String[] cmtNut = {"add", "edit", "Search", "Reset"};
         String[] anhStrings = {
             "src/asset/img/button/them-cs.png",
-//            "src/asset/img/button/xoa-cs.png",
             "src/asset/img/button/sua-cs.png",
-            "src/asset/img/button/tim-cs.png"
+            "src/asset/img/button/tim-cs.png",
+            "src/asset/img/button/reset-cs.png"
         };
-        int a=335;
+        int a=300;
         for(int i=0;i<cmtNut.length;i++){
             JButton tempBtn = new JButton();
             ImageIcon tempBtnImg = new ImageIcon(anhStrings[i]);
@@ -181,6 +183,42 @@ public class coSoCTR {
                                     }
                                 }
                             }
+                        }
+                        //kiểm tra độ dài tên cơ sở
+                        System.out.println(thongTinMoi.get(1).trim().length());
+                        if(!(thongTinMoi.get(1).trim().length()>0 && thongTinMoi.get(1).trim().length()<=20)) {
+                        	JOptionPane.showMessageDialog(null, "Tên cơ sở phải dài từ 1 đến 20 kí tự","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                        	return;
+                        }
+                        //kiểm tra tên cơ sở đã được sử dụng hay chưa
+                        if(bllQuanLyDanhSach.kiemTraTonTaiTenCoSo(thongTinMoi.get(1).trim())) {
+                        	JOptionPane.showMessageDialog(null,"Tên cơ sở không được trùng với các cơ sở khác!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                        	return;
+                        }
+                        //kiểm tra định dạng số điện thoại
+                        if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(4).trim())) {
+                        	JOptionPane.showMessageDialog(null,"Số điện thoại không hợp lệ!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                        	return;
+                        }
+                        //kiểm tra số điện thoại đã được sử dụng hay chưa
+                        if(bllQuanLyDanhSach.kiemTraTonTaiSDTCoSo(thongTinMoi.get(4).trim())) {
+                        	JOptionPane.showMessageDialog(null,"Số điện thoại không được trùng với các cơ sở khác!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                        	return;
+                        }
+                        //kiểm tra độ dài địa chỉ cơ sở
+                        if(!(thongTinMoi.get(2).trim().length()>0 && thongTinMoi.get(2).length()<=40)) {
+                        	JOptionPane.showMessageDialog(null, "Địa chỉ cơ sở phải dài từ 1 đến 40 kí tự","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
+                        	return;
+                        }
+                        //kiểm tra địa chỉ đã được sử dụng hay chưa
+                        if(bllQuanLyDanhSach.kiemTraTonTaiDiaChi(thongTinMoi.get(2).trim())) {
+                        	JOptionPane.showMessageDialog(null, "Địa chỉ này đã có cơ sở sử dụng vui lòng kiểm tra lại","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
+                        	return;
+                        }
+                        //kiểm tra độ dài thời gian hoạt động
+                        if(!(thongTinMoi.get(3).trim().length()>0 && thongTinMoi.get(3).length()<=30)) {
+                        	JOptionPane.showMessageDialog(null, "Thời gian hoạt động phải dài từ 1 đến 30 kí tự","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
+                        	return;
                         }
                         System.out.println(thongTinMoi);
                          // Kiểm tra xem thongTinMoi có đủ 6 phần tử không trước khi thêm vào hvList
@@ -255,18 +293,49 @@ public class coSoCTR {
                                 }
                             }
                             
-                            String sdtCS = thongTinMoi.get(4);
-                            if(!bllQuanLyDanhSach.kiemTraSDT(sdtCS)){
-                                JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
-                                return;
+                            //kiểm tra độ dài tên cơ sở
+                            System.out.println(thongTinMoi.get(1).trim().length());
+                            if(!(thongTinMoi.get(1).trim().length()>0 && thongTinMoi.get(1).trim().length()<=20)) {
+                            	JOptionPane.showMessageDialog(null, "Tên cơ sở phải dài từ 1 đến 20 kí tự","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                            	return;
                             }
-                            System.out.println(maGoc);
+                            //kiểm tra tên cơ sở đã được sử dụng hay chưa
+                            if(bllQuanLyDanhSach.kiemTraTonTaiTenCoSo(thongTinMoi.get(1).trim())) {
+                            	JOptionPane.showMessageDialog(null,"Tên cơ sở không được trùng với các cơ sở khác!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            //kiểm tra định dạng số điện thoại
+                            if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(4).trim())) {
+                            	JOptionPane.showMessageDialog(null,"Số điện thoại không hợp lệ!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            //kiểm tra số điện thoại đã được sử dụng hay chưa
+                            if(bllQuanLyDanhSach.kiemTraTonTaiSDTCoSo(thongTinMoi.get(4).trim())) {
+                            	JOptionPane.showMessageDialog(null,"Số điện thoại không được trùng với các cơ sở khác!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            //kiểm tra độ dài địa chỉ cơ sở
+                            if(!(thongTinMoi.get(2).trim().length()>0 && thongTinMoi.get(2).length()<=40)) {
+                            	JOptionPane.showMessageDialog(null, "Địa chỉ cơ sở phải dài từ 1 đến 40 kí tự","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            //kiểm tra địa chỉ đã được sử dụng hay chưa
+                            if(bllQuanLyDanhSach.kiemTraTonTaiDiaChi(thongTinMoi.get(2).trim())) {
+                            	JOptionPane.showMessageDialog(null, "Địa chỉ này đã có cơ sở sử dụng vui lòng kiểm tra lại","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            //kiểm tra độ dài thời gian hoạt động
+                            if(!(thongTinMoi.get(3).trim().length()>0 && thongTinMoi.get(3).length()<=30)) {
+                            	JOptionPane.showMessageDialog(null, "Thời gian hoạt động phải dài từ 1 đến 30 kí tự","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
+                            	return;
+                            }
+                            System.out.println(thongTinMoi.toString());
                             if(!thongTinMoi.get(0).equals("") && thongTinMoi.get(0).equals(maGoc)) {
 	                                CoSo tempCS = new CoSo(thongTinMoi.get(0),
 	                                                            thongTinMoi.get(1),
 	                                                            thongTinMoi.get(2),
 	                                                            thongTinMoi.get(3),
-	                                                            sdtCS,
+	                                                            thongTinMoi.get(4),
 	                                                            Integer.parseInt(thongTinMoi.get(5)));
 	                                if(bllQuanLyDanhSach.suaThongTinCS(tempCS)){
 	                                    JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin",JOptionPane.DEFAULT_OPTION);
@@ -311,48 +380,41 @@ public class coSoCTR {
                                 }
                             }
                         }
-                        if(thongTin.size()>=5){
-                        	int doanhThu = 0;
-                        	try {
-                    			doanhThu = Integer.parseInt(thongTin.get(5));
-                        	}
-                        	catch(NumberFormatException ex) {
-                        		doanhThu = 0;
-                        	}
-                            CoSo tempCS = new CoSo(thongTin.get(0),
-                                                        thongTin.get(1),
-                                                        thongTin.get(2),
-                                                        thongTin.get(3),
-                                                        thongTin.get(4),
-                                                        doanhThu);
-                            System.out.println(bllQuanLyDanhSach.timKiemCS(tempCS).dsCoSo.size());
-                            if(bllQuanLyDanhSach.timKiemCS(tempCS).dsCoSo.size() != 0 && bllQuanLyDanhSach.timKiemCS(tempCS).dsCoSo.size() != dsCS.dsCoSo.size()){
-                                JOptionPane.showMessageDialog(bangChinhSua, "Tìm kiếm thành công","Tìm kiếm cơ sở", JOptionPane.INFORMATION_MESSAGE);
-                                DSCoSo dsCS2 = bllQuanLyDanhSach.timKiemCS(tempCS);
-                                csList.setRowCount(0);
-                                
-                                for (int i = 0; i < dsCS2.dsCoSo.size(); i++) {
-                                    csList.addRow(new Object[]{dsCS2.dsCoSo.get(i).getMaCoSo().trim(),
-                                    		dsCS2.dsCoSo.get(i).getTenCoSo().trim(),
-                                    		dsCS2.dsCoSo.get(i).getDiaChi().trim(),
-                                    		dsCS2.dsCoSo.get(i).getThoiGianHoatDong().trim(),
-                                    		dsCS2.dsCoSo.get(i).getSDT().trim(),
-                                    		dsCS2.dsCoSo.get(i).getDoanhThu()});
-                                }
+                        CoSo tempCS = new CoSo(thongTin.get(0),
+                                thongTin.get(1),
+                                thongTin.get(2),
+                                thongTin.get(3),
+                                thongTin.get(4),
+                                0);
+                        DSCoSo dsCoSoNew = new DSCoSo();
+                        if(bllQuanLyDanhSach.timKiemCS(tempCS)!=null) {
+                        	csList.setRowCount(0);
+                        	dsCoSoNew = bllQuanLyDanhSach.timKiemCS(tempCS);
+                        	System.out.println(dsCoSoNew.dsCoSo.toString());
+                        	for (int i = 0; i < dsCoSoNew.dsCoSo.size(); i++) {
+                                csList.addRow(new Object[]{
+                                		dsCoSoNew.dsCoSo.get(i).getMaCoSo(),
+                                		dsCoSoNew.dsCoSo.get(i).getTenCoSo(),
+                                		dsCoSoNew.dsCoSo.get(i).getDiaChi(),
+                                		dsCoSoNew.dsCoSo.get(i).getThoiGianHoatDong(),
+                                		dsCoSoNew.dsCoSo.get(i).getSDT(),
+                                		dsCoSoNew.dsCoSo.get(i).getDoanhThu()
+                                });
                             }
-                            else{
-                                JOptionPane.showMessageDialog(bangChinhSua, "Vui lòng nhập thêm hoặc kiểm tra lại thông tin để có được kết quả tìm kiếm chính xác","Tìm kiếm cơ sở", JOptionPane.ERROR_MESSAGE);
-                                csList.setRowCount(0);
-                                for (int i = 0; i < dsCS.dsCoSo.size(); i++) {
-                                    csList.addRow(new Object[]{dsCS.dsCoSo.get(i).getMaCoSo(),
-                                		dsCS.dsCoSo.get(i).getTenCoSo().trim(),
-                                		dsCS.dsCoSo.get(i).getDiaChi().trim(),
-                                		dsCS.dsCoSo.get(i).getThoiGianHoatDong().trim(),
-                                		dsCS.dsCoSo.get(i).getSDT().trim(),
-                                		dsCS.dsCoSo.get(i).getDoanhThu()});
-                                }
-                            }
+                        	dataTable.setModel(csList);
                         }
+                        else {
+                        	JOptionPane.showMessageDialog(null, "Không có thông tin cần tìm!","Tìm kiếm thông tin",JOptionPane.INFORMATION_MESSAGE);
+                        	return;
+                        }
+                    }
+                    else if(tempBtn.getActionCommand().equals(cmtNut[3])) {
+                    	
+                        JTable dataTable = new JTable();
+		                JScrollPane scrollPane = new JScrollPane();
+		                JPanel bangChinhSua = new JPanel();
+                    	coSoCTR csCTR = new coSoCTR(rightPanel,tenCotCS,dsCS,bangChinhSua,dataTable,scrollPane,bllQuanLyDanhSach);
+                    	csCTR.update();
                     }
                 }
                 

@@ -2,10 +2,15 @@ package DAL;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import DTO.CoSo;
 import DTO.DSCoSo;
+import DTO.DTOTaiKhoan;
+import DTO.HoiVien;
+import DTO.dsHoiVien;
 public class DataCoSo {
     private Connection con;
     private String dbUrl ="jdbc:sqlserver://localhost:1433;databaseName=main;encrypt=true;trustServerCertificate=true;";
@@ -196,55 +201,51 @@ public class DataCoSo {
     }
     public DSCoSo timKiem(CoSo a) //Chưa test
     {
-        ArrayList<String> ds = new ArrayList<String>();
-        DSCoSo dsCS = new DSCoSo();
-        String truyVan = "SELECT * FROM CoSo Where ";
-        if(!a.getMaCoSo().equals(""))
-        {
-            truyVan+= "MaCoSo = ? AND ";
-            ds.add(a.getMaCoSo());
-        } 
-        if(!a.getSDT().equals(""))
-        {
-            truyVan+="SoDienThoai = ? AND ";
-            ds.add(a.getSDT());
-        } 
-        if(!a.getTenCoSo().equals(""))
-        {
-            truyVan+="TenCoSo = ? AND ";
-            ds.add(a.getTenCoSo());
-        } 
-        if(!a.getDiaChi().equals(""))
-        {
-            truyVan+="DiaChi = ? AND ";
-            ds.add(a.getDiaChi());
-        } 
-        if(!a.getThoiGianHoatDong().equals(""))
-        {
-            truyVan+="ThoiGianHoatDong = ? AND ";
-            ds.add(a.getThoiGianHoatDong());
-        } 
-        truyVan = truyVan.trim();
-        if (truyVan.endsWith("AND")) {
-            // Xóa "AND" cuối cùng bằng cách cắt chuỗi từ đầu đến vị trí cuối cùng của "AND"
-            truyVan = truyVan.substring(0, truyVan.lastIndexOf("AND")).trim();
+    	DSCoSo dsCS = new DSCoSo();
+    	String truyVan = "SELECT * FROM CoSo WHERE ";
+    	if(!a.getMaCoSo().trim().equals("")) {
+    		String maCS = "MaCoSo LIKE '%"+a.getMaCoSo().trim()+"%' AND ";
+    		truyVan += maCS;
+    	}
+    	if(!a.getTenCoSo().trim().equals("")) {
+    		String tenCS = "TenCoSo LIKE N'%"+a.getTenCoSo().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += tenCS;
+    	}
+    	if(!a.getDiaChi().trim().equals("")) {
+    		String diaChi = "DiaChi LIKE N'%"+a.getDiaChi().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan += diaChi;
+    	}
+    	if(!a.getThoiGianHoatDong().trim().equals("")) {
+    		String thoiGian = "ThoiGianHoatDong LIKE '%"+a.getThoiGianHoatDong().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan +=thoiGian;
+    	}
+    	if(!a.getSDT().trim().equals("")) {
+    		String sdt = "SoDienThoai LIKE '%"+a.getSDT().trim()+"%' COLLATE SQL_Latin1_General_CP1_CI_AI AND ";
+    		truyVan +=sdt;
+    	}
+    	
+    	if (truyVan.endsWith(" AND ")) {
+    	    truyVan = truyVan.substring(0, truyVan.length() - 5); // Cắt 5 ký tự cuối (AND)
+    	}
+    	if (truyVan.endsWith(" WHERE ")) {
+    		return null;
+    	}
+    	try {
+    		PreparedStatement stmt = con.prepareStatement(truyVan);
+    		ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+    			dsCS.dsCoSo.add(new CoSo(rs.getString("MaCoSo"),
+    					rs.getString("TenCoSo"),
+    					rs.getString("DiaChi"),
+    					rs.getString("ThoiGianHoatDong"),
+    					rs.getString("SoDienThoai"),
+    					rs.getInt("DoanhThu")));
+    		}
+    	}
+    	catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi nếu có
         }
-        try
-        {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement statement = con.prepareStatement(truyVan);
-            for(int i=0;i<ds.size();i++)
-                statement.setString(i+1, ds.get(i));
-            ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
-                dsCS.them(new CoSo(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6)));
-            }
-        }catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        return dsCS;
+    	return dsCS;
     }
 
     public String getTenCoSo(String maCoSo) {
@@ -264,5 +265,53 @@ public class DataCoSo {
             e.printStackTrace();
         }
         return tenCoSo;
+    }
+    
+    //kiểm tra xem tên cơ sở đã tồn tại chưa
+    public boolean kiemTraTonTaiTenCoSo(String tenCS) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM CoSo WHERE TenCoSo = ?");
+            ps.setString(1, tenCS);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    //kiểm tra xem số điện thoại cơ sở đã tồn tại chưa
+    public boolean kiemTraTonTaiSDT(String sdt) {
+    	try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM CoSo WHERE SoDienThoai = ?");
+            ps.setString(1, sdt);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    //kiểm tra xem địa chỉ cơ sở đã tồn tại chưa
+    public boolean kiemTraTonTaiDiaChi(String diaChi) {
+    	try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM CoSo WHERE DiaChi = ?");
+            ps.setString(1, diaChi);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

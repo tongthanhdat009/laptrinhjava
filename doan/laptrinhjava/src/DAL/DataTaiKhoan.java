@@ -95,7 +95,7 @@ public class DataTaiKhoan {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-            	ds.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),"Q0001","OFF"));
+            	ds.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),"Q0001"));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -106,13 +106,13 @@ public class DataTaiKhoan {
 	//lấy danh sách tài khoan nhân viên
 	public ArrayList<DTOTaiKhoan> layDanhSachTKNV() {
 		ArrayList<DTOTaiKhoan> ds = new ArrayList<DTOTaiKhoan>();
-        String query = "SELECT IDTaiKhoan, TaiKhoan, MatKhau, Quyen.IDQuyen, TK.Status From TaiKhoan TK, Quyen WHERE TK.IDQuyen = Quyen.IDQuyen AND (Quyen.IDQuyen = 'Q0002' OR Quyen.IDQUYEN = 'Q0003')";
+        String query = "SELECT IDTaiKhoan, TaiKhoan, MatKhau, Quyen.IDQuyen From TaiKhoan TK, Quyen WHERE TK.IDQuyen = Quyen.IDQuyen AND (Quyen.IDQuyen = 'Q0002' OR Quyen.IDQUYEN = 'Q0003')";
         try {
         	con = DriverManager.getConnection(dbUrl, userName, password);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-            	ds.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+            	ds.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -125,13 +125,12 @@ public class DataTaiKhoan {
     {
         try{
             con = DriverManager.getConnection(dbUrl, userName, password);
-            String sql = "INSERT INTO TaiKhoan (IDTaiKhoan, TaiKhoan, MatKhau, IDQuyen, Status) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO TaiKhoan (IDTaiKhoan, TaiKhoan, MatKhau, IDQuyen) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, TK.getIDTaiKhoan());
             preparedStatement.setString(2, TK.getTaiKhoan());
             preparedStatement.setString(3, TK.getMatKhau());
             preparedStatement.setString(4, TK.getIDQuyen());
-            preparedStatement.setString(5, "OFF");
             if (preparedStatement.executeUpdate() > 0)  return true;
         } catch(Exception e){
             System.out.println(e);
@@ -209,7 +208,7 @@ public class DataTaiKhoan {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-            	dsTK.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+            	dsTK.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
             }
         }catch(Exception e)
         {
@@ -263,7 +262,7 @@ public class DataTaiKhoan {
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
-            	dsTK.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),"OFF"));
+            	dsTK.add(new DTOTaiKhoan(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
             }
         }catch(Exception e)
         {
@@ -423,40 +422,40 @@ public class DataTaiKhoan {
 		return true;
 	}
 
-    public boolean phienDangNhapTK(DTOTaiKhoan taiKhoan){
-        String truyVan = "SELECT * FROM TaiKhoan WHERE IDTaiKhoan = ? ";
-        try {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(1, taiKhoan.getIDTaiKhoan());
-            ResultSet rs = statement.executeQuery();
+    // public boolean phienDangNhapTK(DTOTaiKhoan taiKhoan){
+    //     String truyVan = "SELECT * FROM TaiKhoan WHERE IDTaiKhoan = ? ";
+    //     try {
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         PreparedStatement statement = con.prepareStatement(truyVan);
+    //         statement.setString(1, taiKhoan.getIDTaiKhoan());
+    //         ResultSet rs = statement.executeQuery();
             
-            // Di chuyển con trỏ tới hàng đầu tiên trước khi lấy dữ liệu
-            while (rs.next()) {
-                String stt = rs.getString("Status");
-                if (stt.trim().equals("OFF")) {
-                    return true; // có thể đăng nhập
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false; // tài khoản đã được đăng nhập ở một nơi khác
-    }
+    //         // Di chuyển con trỏ tới hàng đầu tiên trước khi lấy dữ liệu
+    //         while (rs.next()) {
+    //             String stt = rs.getString("Status");
+    //             if (stt.trim().equals("OFF")) {
+    //                 return true; // có thể đăng nhập
+    //             }
+    //         }
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+    //     }
+    //     return false; // tài khoản đã được đăng nhập ở một nơi khác
+    // }
     
-    public boolean suaTrangThaiTK(DTOTaiKhoan taiKhoan) { 
-        String truyVan = "UPDATE TaiKhoan SET Status = ? WHERE IDTaiKhoan = ? ";
-        try {
-            con = DriverManager.getConnection(dbUrl, userName, password);
-            PreparedStatement statement = con.prepareStatement(truyVan);
-            statement.setString(1, taiKhoan.getStatus());  // Gán giá trị cho Status
-            statement.setString(2, taiKhoan.getIDTaiKhoan());  // Gán giá trị cho IDTaiKhoan
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) return true;
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false;
-    }
+    // public boolean suaTrangThaiTK(DTOTaiKhoan taiKhoan) { 
+    //     String truyVan = "UPDATE TaiKhoan SET Status = ? WHERE IDTaiKhoan = ? ";
+    //     try {
+    //         con = DriverManager.getConnection(dbUrl, userName, password);
+    //         PreparedStatement statement = con.prepareStatement(truyVan);
+    //         statement.setString(1, taiKhoan.getStatus());  // Gán giá trị cho Status
+    //         statement.setString(2, taiKhoan.getIDTaiKhoan());  // Gán giá trị cho IDTaiKhoan
+    //         int rowsAffected = statement.executeUpdate();
+    //         if (rowsAffected > 0) return true;
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+    //     }
+    //     return false;
+    // }
     
 }

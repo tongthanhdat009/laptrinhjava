@@ -136,17 +136,17 @@ public class GUIUser extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Xử lý khi JFrame đang được đóng
-                tk.setStatus("OFF");
-                if(bllDangNhap.suaTrangThaiTK(tk)){
-                    System.out.println("JFrame da dong");
+                // tk.setStatus("OFF");
+                // if(bllDangNhap.suaTrangThaiTK(tk)){
+                    // System.out.println("JFrame da dong");
                     dispose();
-                    new GUILogin();
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Trạng thái tài khoản chưa được thay đổi","Error",JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                dispose();
+                //     new GUILogin();
+                // }
+                // else{
+                //     JOptionPane.showMessageDialog(null,"Trạng thái tài khoản chưa được thay đổi","Error",JOptionPane.ERROR_MESSAGE);
+                //     return;
+                // }
+                // dispose();
             }
         });
 
@@ -438,15 +438,15 @@ public class GUIUser extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		int result = JOptionPane.showConfirmDialog(null, "Bạn muốn đăng xuất chứ?");
         		if(result == 0) {
-                    tk.setStatus("OFF");
-                    if(bllDangNhap.suaTrangThaiTK(tk)){
-                        dispose();
-                        new GUILogin();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null,"Đăng xuất không thành công!","Error",JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
+                    // tk.setStatus("OFF");
+                    // if(bllDangNhap.suaTrangThaiTK(tk)){
+                    dispose();
+                    //     new GUILogin();
+                    // }
+                    // else{
+                        // JOptionPane.showMessageDialog(null,"Đăng xuất không thành công!","Error",JOptionPane.ERROR_MESSAGE);
+                        // return;
+                    // }
         		}
         		else {
         			return;

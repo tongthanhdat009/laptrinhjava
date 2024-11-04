@@ -7,19 +7,12 @@ public class DTOTaiKhoan {
 	private String IDQuyen;
 	private String Status;//trạng thái hoạt động
 	
-	public DTOTaiKhoan(String IDTaiKhoan, String taiKhoan, String matKhau, String IDQuyen, String Status) {
+	public DTOTaiKhoan(String IDTaiKhoan, String taiKhoan, String matKhau, String IDQuyen) {
 		setIDTaiKhoan(IDTaiKhoan);
 		setTaiKhoan(taiKhoan);
 		setMatKhau(matKhau);
 		setIDQuyen(IDQuyen);
-		setStatus(Status);
 		
-	}
-	public String getStatus() {
-		return Status;
-	}
-	public void setStatus(String status) {
-		Status = status;
 	}
 	public String getIDTaiKhoan() {
 		return IDTaiKhoan;

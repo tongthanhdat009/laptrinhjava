@@ -178,7 +178,7 @@ public class GUILogin extends JFrame implements ActionListener{
                 }
                 else {
                     String[] parts = trangThaiDangNhap.split(":");
-                    DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim(), "ON");
+                    DTOTaiKhoan tk = new DTOTaiKhoan(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim());
                     if(parts[3].trim().equals("Q0004")) { //mã quyền admin
                     	ArrayList<String> options = dangNhap.dsMaCS();
                         JComboBox<String> comboBox = new JComboBox<String>(options.toArray(new String[0]));
@@ -188,30 +188,30 @@ public class GUILogin extends JFrame implements ActionListener{
 
                         if (result == JOptionPane.OK_OPTION) {
                             // System.out.println(dangNhap.kiemTraPhienDangNhap(tk) +" "+ dangNhap.suaTrangThaiTK(tk));
-                            if(dangNhap.kiemTraPhienDangNhap(tk) && dangNhap.suaTrangThaiTK(tk)) { 
+                            // if(dangNhap.kiemTraPhienDangNhap(tk) && dangNhap.suaTrangThaiTK(tk)) { 
                                 String coSoDaChon = (String) comboBox.getSelectedItem();
                                 JOptionPane.showMessageDialog(null, "Đăng nhập thành công!" + coSoDaChon);
                                 new GUIAdmin(tk, coSoDaChon);
                                 dispose();
                                 return;
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null, "Tài khoản đã được đăng nhập ở một nơi khác!","Error",JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }
+                            // }
+                            // else{
+                                // JOptionPane.showMessageDialog(null, "Tài khoản đã được đăng nhập ở một nơi khác!","Error",JOptionPane.ERROR_MESSAGE);
+                                // return;
+                            // }
                         }
                     }
                     else if (parts[3].trim().equals("Q0001")){
 //                    	tạo giao diện hội viên
                     	System.out.println("Đăng nhập thành công");
-                        if(dangNhap.kiemTraPhienDangNhap(tk) && dangNhap.suaTrangThaiTK(tk)){
+                        // if(dangNhap.kiemTraPhienDangNhap(tk) && dangNhap.suaTrangThaiTK(tk)){
                             new GUIUser(tk,"");
                             dispose();
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, "Tài khoản đã được đăng nhập ở một nơi khác!","Error",JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
+                        // }
+                        // else{
+                        //     JOptionPane.showMessageDialog(null, "Tài khoản đã được đăng nhập ở một nơi khác!","Error",JOptionPane.ERROR_MESSAGE);
+                        //     return;
+                        // }
                     }
                     else {
 //                    	if(dangNhap.kiemTraTaiKhoanCoSo(tk, trangThaiDangNhap))

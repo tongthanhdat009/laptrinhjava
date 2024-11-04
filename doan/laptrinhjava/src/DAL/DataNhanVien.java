@@ -8,12 +8,8 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import DTO.DTOQuyen;
 import DTO.DTOTaiKhoan;
-import DTO.HoiVien;
 import DTO.NhanVien;
-import DTO.dsHoiVien;
-import GUI.CONTROLLER.nhapHang;
 
 public class DataNhanVien {
     private Connection con;
@@ -207,8 +203,7 @@ public class DataNhanVien {
                 DTOTaiKhoan tKhoan = new DTOTaiKhoan(rs.getString("IDTaiKhoan"),
                 					rs.getString("TaiKhoan"),
                 					rs.getString("MatKhau"),
-                					rs.getString("IDQuyen"),
-                					rs.getString("Status"));
+                					rs.getString("IDQuyen"));
 				dsTK.add(tKhoan);
 				
 				dsQUYEN.add(rs.getString("TenQuyen"));

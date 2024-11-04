@@ -1,15 +1,11 @@
 package DAL;
-import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openxmlformats.schemas.drawingml.x2006.main.STLightRigDirection;
-
 import DTO.DTOTaiKhoan;
 import DTO.HoiVien;
-import DTO.ThongTinChiTietHangHoa;
 import DTO.dsHoiVien;
 public class DataHoiVien {
     private Connection con;
@@ -199,8 +195,7 @@ public class DataHoiVien {
                 DTOTaiKhoan tk = new DTOTaiKhoan(rs.getString("IDTaiKhoan"),
                 					rs.getString("TaiKhoan"),
                 					rs.getString("MatKhau"),
-                					rs.getString("IDQuyen"),
-                					rs.getString("Status"));
+                					rs.getString("IDQuyen"));
 				dsTK.add(tk);
     		}
     	}

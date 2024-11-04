@@ -454,7 +454,7 @@ public class GUISignup extends JFrame {
 			            String matkhau = passString.trim();
 			            String sdt = phoneNumberTF.getText().trim();
 			            HoiVien hv = new HoiVien(mahv, hoten, gioitinh, email, sqlBirthDate, sdt, maTaiKhoan, anh);
-			            DTOTaiKhoan tKhoan = new DTOTaiKhoan(maTaiKhoan, tk, matkhau, "Q0001","OFF");
+			            DTOTaiKhoan tKhoan = new DTOTaiKhoan(maTaiKhoan, tk, matkhau, "Q0001");
 			            if(blldk.themTKhoan(tKhoan)&& blldk.KiemTraDangKy(hv)) {
 			            	JOptionPane.showMessageDialog(GUISignup.this, "Đăng kí thành công","Đăng ký tài khoản",JOptionPane.INFORMATION_MESSAGE);
 			            	new GUILogin();

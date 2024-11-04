@@ -418,7 +418,7 @@ public class hoiVienCTR {
                             DTOTaiKhoan tempTK = new DTOTaiKhoan(thongTinMoi.get(4),
                             		thongTinMoi.get(7),
                             		thongTinMoi.get(8),
-                            		"Q0001","OFF");
+                            		"Q0001");
                             if(bllQuanLyDanhSach.themTK(tempTK)&&bllQuanLyDanhSach.themHV(tempHV)){
                                 JOptionPane.showMessageDialog(bangChinhSua, "Thêm thành công hội viên và tài khoản thành công!");
                                 hvList.addRow(thongTinMoi.toArray());
@@ -579,7 +579,7 @@ public class hoiVienCTR {
                                 DTOTaiKhoan tempTK = new DTOTaiKhoan(thongTinMoi.get(4),
                                 		thongTinMoi.get(7),
                                 		thongTinMoi.get(8),
-                                		"Q0001","OFF");
+                                		"Q0001");
                                 if (bllQuanLyDanhSach.suaThongTinTK(tempTK)&&bllQuanLyDanhSach.suaThongTinHV(tempHV)) {
                                     JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin", JOptionPane.DEFAULT_OPTION);
                                     for (int j=0;j<thongTinMoi.size();j++) {

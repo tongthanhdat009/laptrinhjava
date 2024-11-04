@@ -343,6 +343,7 @@ public class DataHoiVien {
         }
         return null; 
     }
+    
     private boolean kiemTraTonTaiMaHV(String maHV) {
         try {
             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM HoiVien WHERE MaHV = ?");
@@ -410,4 +411,7 @@ public class DataHoiVien {
         }
         return false;
     }
+
+    
+
 }

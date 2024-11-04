@@ -293,6 +293,10 @@ public class hoiVienCTR {
                             					JOptionPane.showMessageDialog(null, "Email không đúng định dạng", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
                             	            	return;
                             				}
+                                            else if(bllQuanLyDanhSach.kiemTraMailTonTaiHV(text)) {
+                                                JOptionPane.showMessageDialog(null, "Email đã được sử dụng!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                                return;
+                                            }
                             				else {
                             	            	thongTinMoi.add(text);
                             				}
@@ -305,6 +309,10 @@ public class hoiVienCTR {
                                             String hvSDT = textField.getText().trim();
                                             if(!bllQuanLyDanhSach.kiemTraSDT(hvSDT)){
                                                 JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
+                                                return;
+                                            }
+                                            else if (bllQuanLyDanhSach.kiemTraSDTTonTaiHV(hvSDT)) {
+                                                JOptionPane.showMessageDialog(null, "Số điện thoại đã được sử dụng!", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);
                                                 return;
                                             }
                                             else{
@@ -444,12 +452,16 @@ public class hoiVienCTR {
                         String taiKhoanGoc = new String();
                         String ngaySinhGoc = new String();
                         String gioiTinhGoc = new String();
+                        String soDienThoaiGoc = new String();
+                        String mailGoc = new String();
                         if (i>=0){
                         	maGoc = hvList.getValueAt(i, 0).toString().trim();
                         	tenGoc = hvList.getValueAt(i, 1).toString();
                         	taiKhoanGoc = hvList.getValueAt(i, 7).toString().trim();
                         	ngaySinhGoc = hvList.getValueAt(i, 6).toString().trim();
                         	gioiTinhGoc = hvList.getValueAt(i, 2).toString().trim();
+                            soDienThoaiGoc = hvList.getValueAt(i, 5).toString().trim();
+                            mailGoc = hvList.getValueAt(i, 3).toString().trim();
                         	System.out.println(taiKhoanGoc);
                             int countDate = 0;
                             Component[] components = bangChinhSua.getComponents();
@@ -519,7 +531,8 @@ public class hoiVienCTR {
                             	return;
                             }
                             //thông báo không cho chỉnh ngày sinh hội viên
-                            if(!ngaySinhGoc.equals(thongTinMoi.get(6))) {
+                            System.out.println(ngaySinhGoc);
+                            if(!ngaySinhGoc.equals(new Date(year - 1900, month - 1, day).toString())) {
                             	JOptionPane.showMessageDialog(null, "Không được sửa ngày sinh của hội viên vui lòng chỉnh lại đúng ngày!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
@@ -547,10 +560,18 @@ public class hoiVienCTR {
             					JOptionPane.showMessageDialog(null, "Email không đúng định dạng", "Thêm hội viên", JOptionPane.ERROR_MESSAGE);;
             	            	return;
             				}
+                            else if(bllQuanLyDanhSach.kiemTraMailTonTaiHV(thongTinMoi.get(3))&& thongTinMoi.get(3).trim().equals(mailGoc.trim())==false) {
+                                JOptionPane.showMessageDialog(null, "Email đã được sử dụng!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
 
             				//kiểm tra số điện thoại
                             if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(5))){
                                 JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            else if (bllQuanLyDanhSach.kiemTraSDTTonTaiHV(thongTinMoi.get(5)) && thongTinMoi.get(5).trim().equals(soDienThoaiGoc.trim())==false) {
+                                JOptionPane.showMessageDialog(null, "Số điện thoại đã được sử dụng!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
                             //Không cho phép sửa họ tên của hội viên
@@ -584,6 +605,9 @@ public class hoiVienCTR {
                                     JOptionPane.showMessageDialog(null, "Sửa thông tin thành công", "Sửa thông tin", JOptionPane.DEFAULT_OPTION);
                                     for (int j=0;j<thongTinMoi.size();j++) {
                                 		hvList.setValueAt(thongTinMoi.get(j), i, j);
+                                        if(j==6) {
+                                        	hvList.setValueAt(date.toString(), i, j);
+                                        }
                                     } 
                                 }
                                 else {

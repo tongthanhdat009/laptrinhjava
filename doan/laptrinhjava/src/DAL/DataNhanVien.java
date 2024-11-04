@@ -342,4 +342,34 @@ public class DataNhanVien {
         }
         return tenNV;
     }
+
+    public boolean kiemTraTonTaiSDTNhanVien(String sdt) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM NhanVien WHERE SoDienThoai = ?");
+            ps.setString(1, sdt);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean kiemTraTonTaiSoCCCDNhanVien(String soCCCD) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM NhanVien WHERE SoCCCD = ?");
+            ps.setString(1, soCCCD);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -276,6 +276,9 @@ public class coSoCTR {
                         ArrayList<String> thongTinMoi = new ArrayList<String>();
                         if (i>=0){
                         	String maGoc = csList.getValueAt(i, 0).toString();
+                            String tenCoSo = csList.getValueAt(i, 1).toString();
+                            String diaChi = csList.getValueAt(i, 2).toString();
+                            String soDienThoai = csList.getValueAt(i, 4).toString();
                             Component[] components = bangChinhSua.getComponents();
                             for (Component component : components) {
                                 if (component instanceof JPanel) {
@@ -297,28 +300,33 @@ public class coSoCTR {
                             	JOptionPane.showMessageDialog(null, "Tên cơ sở phải dài từ 1 đến 20 kí tự","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
+                            
                             //kiểm tra tên cơ sở đã được sử dụng hay chưa
-                            if(bllQuanLyDanhSach.kiemTraTonTaiTenCoSo(thongTinMoi.get(1).trim())) {
+                            if(bllQuanLyDanhSach.kiemTraTonTaiTenCoSo(thongTinMoi.get(1).trim()) && tenCoSo.equals(thongTinMoi.get(1).trim())==false) {
                             	JOptionPane.showMessageDialog(null,"Tên cơ sở không được trùng với các cơ sở khác!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
+
                             //kiểm tra định dạng số điện thoại
                             if(!bllQuanLyDanhSach.kiemTraSDT(thongTinMoi.get(4).trim())) {
                             	JOptionPane.showMessageDialog(null,"Số điện thoại không hợp lệ!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
+                            
                             //kiểm tra số điện thoại đã được sử dụng hay chưa
-                            if(bllQuanLyDanhSach.kiemTraTonTaiSDTCoSo(thongTinMoi.get(4).trim())) {
+                            if(bllQuanLyDanhSach.kiemTraTonTaiSDTCoSo(thongTinMoi.get(4).trim()) && soDienThoai.equals(thongTinMoi.get(4).trim())==false) {
                             	JOptionPane.showMessageDialog(null,"Số điện thoại không được trùng với các cơ sở khác!","Thêm cơ sở",JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
+
                             //kiểm tra độ dài địa chỉ cơ sở
                             if(!(thongTinMoi.get(2).trim().length()>0 && thongTinMoi.get(2).length()<=40)) {
                             	JOptionPane.showMessageDialog(null, "Địa chỉ cơ sở phải dài từ 1 đến 40 kí tự","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
+                        
                             //kiểm tra địa chỉ đã được sử dụng hay chưa
-                            if(bllQuanLyDanhSach.kiemTraTonTaiDiaChi(thongTinMoi.get(2).trim())) {
+                            if(bllQuanLyDanhSach.kiemTraTonTaiDiaChi(thongTinMoi.get(2).trim()) && thongTinMoi.get(2).trim().equals(diaChi)==false) {
                             	JOptionPane.showMessageDialog(null, "Địa chỉ này đã có cơ sở sử dụng vui lòng kiểm tra lại","Thêm cơ sở", JOptionPane.ERROR_MESSAGE);
                             	return;
                             }

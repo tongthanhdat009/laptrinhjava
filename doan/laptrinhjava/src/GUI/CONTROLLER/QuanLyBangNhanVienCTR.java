@@ -414,9 +414,7 @@ public class QuanLyBangNhanVienCTR {
                     	JOptionPane.showMessageDialog(rightPanel, "Mật khẩu phải từ 6 kí tự","Error",JOptionPane.ERROR_MESSAGE);
                     }
                     else {
-                    	try {
-                    		// Xử lý thêm nhân viên vào cơ sở dữ liệu
-                            
+                    	try {                            
                             BLLQuanLyDanhSach bllqlds = new BLLQuanLyDanhSach();
                             Date date = new Date(2000,1,1);
                             String ma = bllqlds.layMaNVchuaTonTai();
@@ -429,12 +427,17 @@ public class QuanLyBangNhanVienCTR {
                             String vaitro = cbb_vaiTro.getSelectedItem().toString().trim();
                             String matKhau = jtf_password.getText().trim();
                             String luong = jtf_luong.getText().trim();
-                            
                             //kiểm tra số điện thoại
                             if(!bllQuanLyDanhSach.kiemTraSDT(sdt)) {
                             	JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Thêm nhân viên",JOptionPane.ERROR_MESSAGE);
                             	return;
                             }
+                            
+                            if(bllQuanLyDanhSach.kiemTraTonTaiSDTNhanVien(sdt)){
+                                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại!", "Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+
                             //regex tài khoản
                             String regex_account = "^[a-zA-Z0-9]{5,20}$";
             				Pattern p_account = Pattern.compile(regex_account);
@@ -497,7 +500,11 @@ public class QuanLyBangNhanVienCTR {
                             	JOptionPane.showMessageDialog(null, "Căn cước công dân không hợp lệ!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            
+                            if(bllQuanLyDanhSach.kiemTraSoCCCDNhanVien(cccd)){
+                                JOptionPane.showMessageDialog(null, "Căn cước công dân đã tồn tại!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+
                             //kiểm tra tuổi của nhân viên
                         	int year = Integer.parseInt(yearCBB.getSelectedItem().toString());
                             int month = Integer.parseInt(monthCBB.getSelectedItem().toString());
@@ -622,14 +629,15 @@ public class QuanLyBangNhanVienCTR {
                     else {
                     	IDQuyen = "Q0003";
                     }
+
                     //không cho sửa cccd
                     if(!cccdGoc.equals(cccd)) {
-                    	JOptionPane.showMessageDialog(null, "Không được sửa căn cước công dân hội viên!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                    	JOptionPane.showMessageDialog(null, "Không được sửa căn cước công dân nhân viên!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                     	return;
                     }
                     //không cho sửa ngày sinh
-                    if(!ngaySinhGoc.equals(String.format("%d-%d-%d",year,month,day))) {
-                    	JOptionPane.showMessageDialog(null, "Không được sửa ngày sinh của hội viên vui lòng chỉnh lại đúng ngày!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
+                    if(!ngaySinhGoc.equals(new Date(year-1900,month-1,day).toString())) {
+                    	JOptionPane.showMessageDialog(null, "Không được sửa ngày sinh của nhân viên vui lòng chỉnh lại đúng ngày!","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
                     	return;
                     }
                     //kiểm tra số điện thoại
@@ -637,6 +645,7 @@ public class QuanLyBangNhanVienCTR {
                     	JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Sửa thông tin",JOptionPane.ERROR_MESSAGE);
                     	return;
                     }
+
                     System.out.println(gioitinh +" "+ gioiTinhGoc);
                     if(!gioitinh.equals(gioiTinhGoc)) {
                     	JOptionPane.showMessageDialog(null, "Không được sửa giới tính nhân viên","Sửa thông tin", JOptionPane.ERROR_MESSAGE);
@@ -656,7 +665,7 @@ public class QuanLyBangNhanVienCTR {
                     
                     //kiểm tra cơ sở nếu không chọn khi thêm
                     if(macoso.equals("Cơ sở")) {
-                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn cơ sở làm việc của nhân viên", "Chọn vai trò nhân viên", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(rightPanel, "Vui lòng chọn cơ sở làm việc của nhân viên", "Chọn cơ sở nhân viên", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     
@@ -668,9 +677,8 @@ public class QuanLyBangNhanVienCTR {
                     	JOptionPane.showMessageDialog(null, "Căn cước công dân của nhân viên không hợp lệ!", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    
-                    
-    	            
+
+                        	            
 					//kiểm tra số điện thoại
 					if(!bllqlds.kiemTraSDT(sdt)) {
 						JOptionPane.showMessageDialog(rightPanel, "Số điện thoại không hợp lệ","Sửa thông tin",JOptionPane.ERROR_MESSAGE);

@@ -83,6 +83,7 @@ public class BLLQuanLyDanhSach{
     public ArrayList<DTOTaiKhoan> timKiemTKHV(HoiVien a){
     	return dataTaiKhoan.timKiemTKHV(a);
     }
+
     //danh sách hội viên
     public ArrayList<HoiVien> getDataHoiVien(){
         return dataHoiVien.layDanhSachHoiVien();
@@ -119,6 +120,16 @@ public class BLLQuanLyDanhSach{
         }
         return false;
     }
+
+    public boolean kiemTraSDTTonTaiHV(String sdt) {
+    	return dataHoiVien.kiemTraSDTTonTai(sdt);
+    }
+
+    public boolean kiemTraMailTonTaiHV(String mail) {
+    	return dataHoiVien.kiemTraMailTonTai(mail);
+    }
+
+
     public boolean kiemTraMK(String a){
         if(a.length()>=6){
             return true;
@@ -439,15 +450,28 @@ public class BLLQuanLyDanhSach{
     public ArrayList<DTOQuyen> layDSQuyenNV(){
     	return dataQuyen.layQuyenNV();
     }
+
+    //kiểm tra trùng lập số điện thoại nhân viên
+    public boolean kiemTraTonTaiSDTNhanVien(String sdt){
+        return dataNhanVien.kiemTraTonTaiSDTNhanVien(sdt);
+    }
+    public boolean kiemTraSoCCCDNhanVien(String cccd){
+        return dataNhanVien.kiemTraTonTaiSoCCCDNhanVien(cccd);
+    }
+
+    //kiểm tra lương nhân viên 
     public int kiemTraLuong(String luong){
         if(!(luong!=null && luong.matches("\\d{1,18}$")))
             return -1;
         else
             return 1;
     }
+
+    //tìm kiếm nhân viên
     public ArrayList<DTOTaiKhoan> timKiemTKNV(NhanVien nv){
     	return dataTaiKhoan.timKiemTKNV(nv);
     }
+
     // Xóa nhân viên
     public boolean xoaNV(String maNhanVien) {
         return dataNhanVien.xoanv(maNhanVien);

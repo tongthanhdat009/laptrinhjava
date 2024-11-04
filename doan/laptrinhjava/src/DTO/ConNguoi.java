@@ -46,10 +46,7 @@ public class ConNguoi {
 
 	public String getNgaysinh() {
 		LocalDate a = ngaysinh.toLocalDate();
-		int y = a.getYear();
-		int m = a.getMonthValue();
-		int d = a.getDayOfMonth();
-		return y+"-"+m+"-"+d;
+		return a.toString();
 	}
 
 	public void setNgaysinh(Date ngaysinh) {
